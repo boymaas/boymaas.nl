@@ -1,0 +1,463 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--[if lt IE 7 ]> <html lang="<haml:loud> config[:meta_data][:lang] </haml:loud>" class="no-js ie ie6 lte7 lte8 lte9"> <![endif]-->
+<!--[if IE 7 ]> <html lang="<haml:loud> config[:meta_data][:lang] </haml:loud>" class="no-js ie ie7 lte7 lte8 lte9"> <![endif]-->
+<!--[if IE 8 ]> <html lang="<haml:loud> config[:meta_data][:lang] </haml:loud>" class="no-js ie ie8 lte8 lte9"> <![endif]-->
+<!--[if IE 9 ]> <html lang="<haml:loud> config[:meta_data][:lang] </haml:loud>" class="no-js ie ie9 lte9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]> ><! <![endif]-->
+<html class='no-js' lang='en'>
+  <!-- <![endif] -->
+  <head>
+    <meta charset='utf-8' />
+    <title>
+      Hack, Loli, the rake/webpy for Haskell?
+      &bull; Ramblings of Boy Maas
+    </title>
+    <meta content='width=device-width, initial-scale=1.0' name='viewport' />
+    <meta content='0B2b3BMieI7ywPGWTSIwssHMzAmCiTI1SI7sCe46sdk' name='google-site-verification' />
+    <link href='/feed' rel='alternate' title='Ramblings of Boy Maas Atom feed' type='application/atom+xml' />
+    <link href='/assets/styles.css' rel='stylesheet' />
+    <script src='/assets/lib.js' type='text/javascript'></script>
+    <link href='/favicon.png' rel='shortcut icon' />
+    <body>
+      <div id='page'>
+        <div id='header' role='banner'>
+          <h1>
+            <a href='/'>
+              Boy Maas
+              <span class='nick'>(m4nic)</span>
+            </a>
+            <br />
+            <span class='subtitle'>
+              <span class='about'>>> A minimalistic DSL to webapps in Haskell</span>
+               ....
+            </span>
+          </h1>
+          <div id='nav'>
+            <ul>
+              <li>
+                <a href='/'>Home</a>
+              </li>
+              <li>
+                <a class='clickme' href='/work.html'>Portfolio</a>
+              </li>
+              <li>
+                <a href='/posts.html'>All posts</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <!-- /header -->
+        <div id='content' role='maincontent'>
+          <h1>Hack</h1>
+
+<p>I am investing alternative ways of developing web apps. I've looked at
+PLT-Scheme which was a nice framework to develop in, but missing a nice
+database abstraction layer like fe. SQLAlchemy in python. And in retrospect my
+conclusion on Scheme is that I find it a little verbose, expecially compared to
+Haskell.  I like succintness, it gives a lot of power as descibed by Paul
+Graham in
+<a href="http://www.paulgraham.com/power.html">Succintness is Power</a>.</p>
+
+<blockquote>
+  The quantity of meaning compressed into a small space by algebraic signs, is another circumstance that facilitates the reasonings we are accustomed to carry on by their aid.
+  <br>
+  <strong>
+  Charles Babbage, quoted in Iverson's Turing Award Lecture
+  </strong>
+</blockquote>
+
+
+<h2>Wat is hack?</h2>
+
+<p>Hack is inspired from ruby's
+<a href="http://chneukirchen.org/blog/archive/2007/02/introducing-rack.html">Rack</a>, WSGI Python,
+Ring in Clojure. In abstract terms <code>Env -&gt; Reponse</code>. Hack is the Rack protocol implemented
+in Haskell. I stumbled upon hack while examining
+<a href="http://github.com/nfjinjing/loli/tree/">Loli</a> developed by the same author <a href="http://github.com/nfjinjing">Nfjinjing</a>.</p>
+
+<h2>MPS notiation</h2>
+
+<p>Nfjinjing likes to turn the normal Haskell syntax around and uses his own util library
+MPS (Message passing style) which turns the order of normal Haskell syntax around making it
+look like a OO language (to relieve his already punished OO brain).</p>
+
+<p>See <a href="http://github.com/nfjinjing/mps/blob/master/src/MPS/Light.hs">MPS</a> for the
+syntax implmeneted. I have collected the important code snippets from MPS:</p>
+
+<pre><code>  {-# INLINE (.) #-}
+  (.) :: a -&gt; (a -&gt; b) -&gt; b
+  a . f = f a
+  infixl 9 .
+
+  (&gt;) :: (Category cat) =&gt; cat a b -&gt; cat b c -&gt; cat a c
+  (&gt;) = (&gt;&gt;&gt;)
+  infixl 8 &gt;
+
+  (&lt;) :: (Category cat) =&gt; cat b c -&gt; cat a b -&gt; cat a c
+  (&lt;) = (&lt;&lt;&lt;)
+  infixr 8 &lt;
+
+  (^) :: (Functor f) =&gt; f a -&gt; (a -&gt; b) -&gt; f b
+  (^) = flip fmap
+  infixl 8 ^
+</code></pre>
+
+<p>Nothing really complicated but makes the code more succint. Which can be a good thing ;)</p>
+
+<h2>How does hack work?</h2>
+
+<pre><code>type Application = Env -&gt; IO Response
+
+type Middleware = Application -&gt; Application
+</code></pre>
+
+<p>In essence it is a mimimal representation of what every webserver does. It gets
+a Request which build an environment to which a Repsonse gets formed.</p>
+
+<p>To see the typedefinitions for <code>Env</code> and response look below. It comes back in
+Loli. It's a nice and minimal implementation consisting of one file Hacks.hs.
+Very minimal. Nice..</p>
+
+<h2>Hack-contrib</h2>
+
+<p>Contains functions to interact with the hack specification. The hack datatypes:</p>
+
+<ul>
+<li>Constants.hs
+constants for headers and other stuff</li>
+<li>Mime.hs
+mime-type map</li>
+<li>Request.hs
+which is in essence the Env, or the AppReader type in loli, explained later.</li>
+<li>Response.hs
+which is also Response in hack, and the AppState in loli, explained later</li>
+<li>Utils.hs
+handling hack namespaces ... what are they?</li>
+</ul>
+
+
+<h2>Hack-contrib middleware, or how to extend Hack</h2>
+
+<p>Just as in Clojures Ring, and Ruby's rack, middleware consists of a function
+which wraps another function which does something with either dispatching or
+the environment or the response. It is a very clean seperation of concerns which
+enables composition of components in a very flexible decoupled way.</p>
+
+<p>Take as example the regexp router, which is an example of a middleware compononent:</p>
+
+<pre><code>  type RoutePath = (String, Application)
+
+  type Middleware = Application -&gt; Application
+
+  type Application = Env -&gt; IO Response
+
+  regexp_router :: [RoutePath] -&gt; Middleware
+  regexp_router h app = \env -&gt;
+    let path = env.path_info
+    in
+    case h.find (fst &gt; flip match path &gt; isJust) of
+      Nothing -&gt; app env
+      Just (_, found_app) -&gt; found_app env
+</code></pre>
+
+<p>Returns a lambda which receives environment. Acts upon this evironment and
+runs the found_app if a route matches or dispatches to then next in middleware pipeline, ending utlimately in returning an IO Repsonse at the en of the  chain.</p>
+
+<p>Below another example of a middleware, this is static file serving.</p>
+
+<pre><code>  file :: Maybe String -&gt; Middleware
+  file root _ = \env -&gt; do
+    let path = env.path_info .unescape_uri
+    if ".." `isInfixOf` path
+      then forbidden
+      else path.serve root
+</code></pre>
+
+<p>Hack-contrib provides at this moment (Tue May 25 ) the following Middlewares:</p>
+
+<ul>
+<li>BounceFavicon.hs</li>
+<li>Censor.hs</li>
+<li>Config.hs</li>
+<li>ContentLength.hs</li>
+<li>ContentType.hs</li>
+<li>Debug.hs</li>
+<li>ETag.hs</li>
+<li>File.hs</li>
+<li>Head.hs</li>
+<li>Hub.hs</li>
+<li>IOConfig.hs</li>
+<li>Inspect.hs</li>
+<li>Lambda.hs</li>
+<li>Lucky.hs</li>
+<li>NotFound.hs</li>
+<li>RegexpRouter.hs</li>
+<li>ShowExceptions.hs</li>
+<li>SimpleAccessLogger.hs</li>
+<li>Static.hs</li>
+<li>URLMap.hs</li>
+<li>UTF8Body.hs</li>
+<li>UserMime.hs</li>
+</ul>
+
+
+<h1>Loli</h1>
+
+<h2>What is loli?</h2>
+
+<p>Minimal Web DSL written on top of hack. It's a very succint dsl language to define
+web apps. As 'webpy' in python.</p>
+
+<h2>Example app</h2>
+
+<pre><code>main ::  IO ()
+main = run 3000 . loli - do
+     get "/bench" - do
+        name &lt;- ask ^ params ^ lookup "name" ^ fromMaybe "nobody"
+        html ("&lt;h1&gt;" ++ name ++ "&lt;/h1&gt;")
+
+     get "/" (text "loli power")
+</code></pre>
+
+<h2>Lets dive in ..</h2>
+
+<p>Looks pretty efficient, what exactly happens here? To understand let's
+look at the used types.</p>
+
+<pre><code>run ::  Hack.Handler.SimpleServer.Port -&gt; Hack.Application -&gt; IO ()
+
+loli ::  Network.Loli.Type.Unit -&gt; Hack.Application
+
+-- Network.Loli.Type.Unit    
+type UnitT a = State Loli a
+type Unit    = UnitT ()
+
+data Loli = Loli
+  {
+    current_router  :: Router
+  , routes          :: [RouteConfig]
+  , middlewares     :: [Middleware]
+  , mimes           :: Assoc
+  }
+</code></pre>
+
+<p>So in abstracto Loli dsl functions like get. Define an Appunit.</p>
+
+<pre><code>get :: String -&gt; Network.Loli.Type.AppUnit -&gt; Network.Loli.Type.Unit
+</code></pre>
+
+<p>Appunit is defined as:</p>
+
+<pre><code>type AppReader    = Env
+type AppState     = Response
+type AppUnitT     = ReaderT AppReader (StateT AppState IO)
+type AppUnit      = AppUnitT ()
+</code></pre>
+
+<p>And could be seen as the AppUnit which will be run on a Hack Application</p>
+
+<p>AppUnitT is a double MonadTransformer</p>
+
+<ul>
+<li>State over Response (modifyable)</li>
+<li>Read over Env (the hack-environment)</li>
+</ul>
+
+
+<p>Env and Response are defined inside the Hack libraries and defined below.</p>
+
+<pre><code>data Env = Env 
+  {  requestMethod :: RequestMethod            -- ^ HTTP request method ....
+  ,  scriptName :: String                      -- ^ The initial portion o....
+  ,  pathInfo :: String                        -- ^ The remainder of the ....
+  ,  queryString :: String                     -- ^ The portion of the re....
+  ,  serverName :: String                      -- ^ When combined with SC....
+  ,  serverPort :: Int                         -- ^ preference to SERVER_....
+  ,  http    :: [(String, String)]              -- ^ All http header varia....
+  ,  hackVersion :: [Int]                      -- ^ The Array [0,1], repr....
+  ,  hackUrlScheme :: Hack_UrlScheme          -- ^ HTTP or HTTPS, depend....
+  ,  hackInput :: B.ByteString              -- ^ body of the request
+  ,  hackErrors :: HackErrors                  -- ^ error stream
+  ,  hackHeaders    :: [(String, String)]      -- ^ custom headers, inten....
+  }
+  deriving (Show) -- careful with showing this, it now causes an infinite
+                  -- loop with certain handlers due to the use of a
+                  -- lazy bytestring
+</code></pre>
+
+<p>Response defined by</p>
+
+<pre><code>data Response = Response
+  {  status :: Int                              -- ^ must be greater than ....
+  ,  headers :: [(String, String)]              -- ^ The header must not c....
+  ,  body :: B.ByteString                       -- ^ body of the response
+  }
+  deriving (Show)
+</code></pre>
+
+<h4>Let's dive in some more</h4>
+
+<p>Let's take for example the first line of code in our example:</p>
+
+<pre><code>name &lt;- ask ^ params ^ lookup "name" ^ fromMaybe "nobody"
+</code></pre>
+
+<p>What happens here:</p>
+
+<ul>
+<li>ask gets State from ReaderT countaining AppReader which is Hacks Env</li>
+<li><p>grabs <code>query_string</code> from Hacks Env and decodes the params</p>
+
+<p>  params :: Env -> [(String, String)]
+  params env =
+    if env.query_string.empty
+      then []
+      else env.query_string.formDecode</p></li>
+<li><p>which returns a map of the params on whick <code>lookup</code> is called which
+returns a <code>Maybe</code>.</p></li>
+<li>fromMaybe gives a default of nobody on a <code>Nothing</code>.</li>
+</ul>
+
+
+<h3>Templating using <code>Network.Loly.Template</code></h3>
+
+<p>Uses <code>StateMonad</code>s update function to update <code>Response</code> setting <code>content-type</code>
+and <code>body</code>.</p>
+
+<pre><code>html :: String -&gt; AppUnit
+html x = do
+  update - set_content_type _TextHtml
+  update - set_body (x.fromString)
+  render_layout
+</code></pre>
+
+<h2>Hacks middleware on Loli level</h2>
+
+<p>Network.Loli.Engine</p>
+
+<pre><code>add_middleware :: Middleware -&gt; Loli -&gt; Loli
+add_middleware x s = 
+  let xs = s.middlewares in s {middlewares = xs.insert_last x}
+</code></pre>
+
+<p>And ofcourse defined in Network.Loli.DSL on unit level.</p>
+
+<pre><code>middleware :: Middleware -&gt; Unit
+middleware = add_middleware &gt; update
+</code></pre>
+
+<h3>Loli Engine</h3>
+
+<p>Contains code</p>
+
+<pre><code>loli :: Unit -&gt; Application
+loli unit = run unit not_found_app
+  where
+    not_found_app = not_found dummy_app
+    run_route x = (x.router) loli_captures run_app (x.route_path)
+
+    run :: Unit -&gt; Middleware
+    run unit' = 
+      let loli_state    = execState unit' def
+          route_configs = loli_state.routes
+          route         = route_configs.map run_route .use
+          mime_filter   = user_mime (loli_state.mimes)
+          stack         = loli_state.middlewares.use
+          pre           = pre_installed_middlewares.use
+      in
+      use [pre, mime_filter, stack, route]
+</code></pre>
+
+<p>Where <code>use</code> is defined as:</p>
+
+<pre><code>-- | usage: app.use [content_type, cache]
+use :: [Middleware] -&gt; Middleware
+use = reduce (&lt;&lt;&lt;)
+</code></pre>
+
+<p>essentially right to left composition of all middlewares, thus wrapping them in one
+another:</p>
+
+<ul>
+<li>pre-installed middlewares</li>
+<li>the mime filter</li>
+<li>the subwrapped stack of user defined middlewares (loli-state)</li>
+<li>route config (loli-state)</li>
+</ul>
+
+
+<h3>Routing</h3>
+
+<pre><code>data RouteConfig = RouteConfig
+  {
+    route_path :: RoutePath
+  , router     :: Router
+  }
+
+data Loli = Loli
+  {
+    current_router  :: Router
+  , routes          :: [RouteConfig]
+  , middlewares     :: [Middleware]
+  , mimes           :: Assoc
+  }
+
+  instance Default Loli where
+    def = Loli loli_router def [dummy_middleware] def
+</code></pre>
+
+<h2>Zipping up ..</h2>
+
+<p>This is just a quick glance at how Hack and Loli where implemented. Shedding some light on
+the structure of this approach to web apps inside haskell.</p>
+<div id='disqus_thread'></div>
+<script src='http://disqus.com/forums/bloyg/embed.js' type='text/javascript'></script>
+<noscript>
+  <a href='http://disqus.com/forums/bloyg/?url=ref'>View the discussion thread.</a>
+</noscript>
+          <hr style='clear: both;width: 100%;height: 0px;' />
+        </div>
+        <!-- /content -->
+        <div id='footer' role='contentinfo'>
+          <p class='col'>
+            © Copyright 2010-2011 Boy Maas
+            // Powered by
+            <a href='https://www.github.com/boymaas/Hobber'>boymaas/Hobber</a>
+          </p>
+        </div>
+        <!-- /footer -->
+        <!-- /page -->
+      </div>
+      <a href='https://github.com/boymaas'>
+        <img alt='Fork me on GitHub' src='https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png' style='position: absolute; top: 0; right: 0; border: 0;' />
+      </a>
+      <script src='/assets/lib.js'></script>
+      <script type='text/javascript'>
+        //<![CDATA[
+          var _gaq = [['_setAccount', 'UA-561813-3'], ['_trackPageview']];
+          (function(d, t) {
+              var g = d.createElement(t),
+                  s = d.getElementsByTagName(t)[0];
+              g.async = true;
+              g.src = '//www.google-analytics.com/ga.js';
+              s.parentNode.insertBefore(g, s);
+          })(document, 'script');
+        //]]>
+      </script>
+      <script type='text/javascript'>
+        //<![CDATA[
+          (function() {
+              var links = document.getElementsByTagName('a');
+              var query = '?';
+              for(var i = 0; i < links.length; i++) {
+                  if(links[i].href.indexOf('#disqus_thread') >= 0) {
+                      query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
+                  }
+              }
+              document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/bloyg/get_num_replies.js' + query + '"></' + 'script>');
+          })();
+        //]]>
+      </script>
+    </body>
+  </head>
+</html>

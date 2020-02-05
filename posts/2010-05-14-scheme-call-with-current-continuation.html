@@ -1,0 +1,200 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--[if lt IE 7 ]> <html lang="<haml:loud> config[:meta_data][:lang] </haml:loud>" class="no-js ie ie6 lte7 lte8 lte9"> <![endif]-->
+<!--[if IE 7 ]> <html lang="<haml:loud> config[:meta_data][:lang] </haml:loud>" class="no-js ie ie7 lte7 lte8 lte9"> <![endif]-->
+<!--[if IE 8 ]> <html lang="<haml:loud> config[:meta_data][:lang] </haml:loud>" class="no-js ie ie8 lte8 lte9"> <![endif]-->
+<!--[if IE 9 ]> <html lang="<haml:loud> config[:meta_data][:lang] </haml:loud>" class="no-js ie ie9 lte9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]> ><! <![endif]-->
+<html class='no-js' lang='en'>
+  <!-- <![endif] -->
+  <head>
+    <meta charset='utf-8' />
+    <title>
+      Ying Yang call/cc or the call-with-current-continuation puzzle
+      &bull; Ramblings of Boy Maas
+    </title>
+    <meta content='width=device-width, initial-scale=1.0' name='viewport' />
+    <meta content='0B2b3BMieI7ywPGWTSIwssHMzAmCiTI1SI7sCe46sdk' name='google-site-verification' />
+    <link href='/feed' rel='alternate' title='Ramblings of Boy Maas Atom feed' type='application/atom+xml' />
+    <link href='/assets/styles.css' rel='stylesheet' />
+    <script src='/assets/lib.js' type='text/javascript'></script>
+    <link href='/favicon.png' rel='shortcut icon' />
+    <body>
+      <div id='page'>
+        <div id='header' role='banner'>
+          <h1>
+            <a href='/'>
+              Boy Maas
+              <span class='nick'>(m4nic)</span>
+            </a>
+            <br />
+            <span class='subtitle'>
+              <span class='about'>>> interesting scheme paradigm</span>
+               ....
+            </span>
+          </h1>
+          <div id='nav'>
+            <ul>
+              <li>
+                <a href='/'>Home</a>
+              </li>
+              <li>
+                <a class='clickme' href='/work.html'>Portfolio</a>
+              </li>
+              <li>
+                <a href='/posts.html'>All posts</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <!-- /header -->
+        <div id='content' role='maincontent'>
+          <p>One of the more interesting paradigms arising from Scheme is the
+<code>call-with-current-continuation</code>.  Let me try to explain this in abstract terms,
+a call/cc is passed a procedure <code>p</code>. This procedure takes one argument <code>k</code>
+which represents the continuation. The continuation <code>k</code> can be applied with a
+value.  This value will become the value of the application of call/cc. Easy heh?</p>
+
+<h2>Ok? Let's play a little with them</h2>
+
+<p>To give an example, this first example does <code>call/cc</code> which does not apply the
+continuation <code>k</code>:</p>
+
+<pre><code>(call/cc
+ (lambda (k)
+  (* 5 4))) =&gt;  20 
+</code></pre>
+
+<p>The lambda is called with our current-continuation which is ignored as it
+just returns the result of the calculation.</p>
+
+<p>In this next example the continuation is applied with an integer argument of 4,
+the return value of the call/cc lambda becomes the value passed to the
+continuation <code>k</code> and thus prints 4.</p>
+
+<pre><code>(call/cc
+ (lambda (k)
+  (* 5 (k 4)))) =&gt; 4 
+</code></pre>
+
+<p>We could argue that the continuation acts as a return statement. This
+facilitates returning from a recursion as described below.</p>
+
+<pre><code>(define product
+  (lambda (ls)
+    (call/cc
+      (lambda (break)
+        (let f ((ls ls))
+          (cond
+            ((null? ls) 1)
+            ((= (car ls) 0) (break 0))
+            (else (* (car ls) (f (cdr ls))))))))))
+</code></pre>
+
+<h2>This is simple, let's try to find something more interesting</h2>
+
+<p>Try this piece of code which I found in The Scheme Programming Language.</p>
+
+<pre><code>(let ((x (call/cc (lambda (k) k))))
+  (x (lambda (ignore) "hi"))) =&gt; "hi"
+</code></pre>
+
+<p>What happens here?</p>
+
+<ul>
+<li><code>x</code> gets bound to the continuation <code>k</code>
+
+<ul>
+<li>since call/cc calls lambda k: which returns itself</li>
+</ul>
+</li>
+<li><code>x</code>, which is the continuation <code>k</code>, is applied with the <code>(lambda (ignore) "h1")</code>
+
+<ul>
+<li>this has the effect of rebinding <code>x</code> to <code>(lambda (ignore) "hi")</code></li>
+</ul>
+</li>
+<li>control continues and comes again to the statement <code>(x (lambda (ignore) .. )</code>
+
+<ul>
+<li>and thus applies the lambda to the rebond <code>x</code> returning "hi"</li>
+</ul>
+</li>
+</ul>
+
+
+<h2>Now for something really interesting, the call/cc ying yang puzzle.</h2>
+
+<p>Reading the wikipedia article I stumbled upon this interesting puzzle. I was
+immediatly fascinated as it seemed difficult to explain why the below described call/cc combinations
+deliver the output as described.</p>
+
+<pre><code>(let* ((yin
+         ((lambda (cc) (display #\@) cc) (call-with-current-continuation (lambda (c) c))))
+       (yang
+         ((lambda (cc) (display #\*) cc) (call-with-current-continuation (lambda (c) c)))))
+    (yin yang))
+</code></pre>
+
+<p>Outputs an infinitive sequence, I have extracted the first output of this function below.</p>
+
+<pre><code>@*@**@***@****@*****@******@*******@********@*********@**********@*******
+****@************@*************@**************@***************@**********
+******@*****************@******************@*******************@*********
+***********@*********************@**********************@****************
+*******@************************@*************************@**************
+************@
+</code></pre>
+
+<p>Keep in mind that <code>(let* (b1 b2) e1 e2 ..)</code> translates to <code>(let (b1) (let (b2) e1 e2 .. )</code>.
+Try to explain this one .. good luck, heheh</p>
+<div id='disqus_thread'></div>
+<script src='http://disqus.com/forums/bloyg/embed.js' type='text/javascript'></script>
+<noscript>
+  <a href='http://disqus.com/forums/bloyg/?url=ref'>View the discussion thread.</a>
+</noscript>
+          <hr style='clear: both;width: 100%;height: 0px;' />
+        </div>
+        <!-- /content -->
+        <div id='footer' role='contentinfo'>
+          <p class='col'>
+            © Copyright 2010-2011 Boy Maas
+            // Powered by
+            <a href='https://www.github.com/boymaas/Hobber'>boymaas/Hobber</a>
+          </p>
+        </div>
+        <!-- /footer -->
+        <!-- /page -->
+      </div>
+      <a href='https://github.com/boymaas'>
+        <img alt='Fork me on GitHub' src='https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png' style='position: absolute; top: 0; right: 0; border: 0;' />
+      </a>
+      <script src='/assets/lib.js'></script>
+      <script type='text/javascript'>
+        //<![CDATA[
+          var _gaq = [['_setAccount', 'UA-561813-3'], ['_trackPageview']];
+          (function(d, t) {
+              var g = d.createElement(t),
+                  s = d.getElementsByTagName(t)[0];
+              g.async = true;
+              g.src = '//www.google-analytics.com/ga.js';
+              s.parentNode.insertBefore(g, s);
+          })(document, 'script');
+        //]]>
+      </script>
+      <script type='text/javascript'>
+        //<![CDATA[
+          (function() {
+              var links = document.getElementsByTagName('a');
+              var query = '?';
+              for(var i = 0; i < links.length; i++) {
+                  if(links[i].href.indexOf('#disqus_thread') >= 0) {
+                      query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
+                  }
+              }
+              document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/bloyg/get_num_replies.js' + query + '"></' + 'script>');
+          })();
+        //]]>
+      </script>
+    </body>
+  </head>
+</html>

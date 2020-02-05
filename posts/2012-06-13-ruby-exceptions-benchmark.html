@@ -1,0 +1,229 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--[if lt IE 7 ]> <html lang="<haml:loud> config[:meta_data][:lang] </haml:loud>" class="no-js ie ie6 lte7 lte8 lte9"> <![endif]-->
+<!--[if IE 7 ]> <html lang="<haml:loud> config[:meta_data][:lang] </haml:loud>" class="no-js ie ie7 lte7 lte8 lte9"> <![endif]-->
+<!--[if IE 8 ]> <html lang="<haml:loud> config[:meta_data][:lang] </haml:loud>" class="no-js ie ie8 lte8 lte9"> <![endif]-->
+<!--[if IE 9 ]> <html lang="<haml:loud> config[:meta_data][:lang] </haml:loud>" class="no-js ie ie9 lte9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]> ><! <![endif]-->
+<html class='no-js' lang='en'>
+  <!-- <![endif] -->
+  <head>
+    <meta charset='utf-8' />
+    <title>
+      Ruby exception handling benchmark
+      &bull; Ramblings of Boy Maas
+    </title>
+    <meta content='width=device-width, initial-scale=1.0' name='viewport' />
+    <meta content='0B2b3BMieI7ywPGWTSIwssHMzAmCiTI1SI7sCe46sdk' name='google-site-verification' />
+    <link href='/feed' rel='alternate' title='Ramblings of Boy Maas Atom feed' type='application/atom+xml' />
+    <link href='/assets/styles.css' rel='stylesheet' />
+    <script src='/assets/lib.js' type='text/javascript'></script>
+    <link href='/favicon.png' rel='shortcut icon' />
+    <body>
+      <div id='page'>
+        <div id='header' role='banner'>
+          <h1>
+            <a href='/'>
+              Boy Maas
+              <span class='nick'>(m4nic)</span>
+            </a>
+            <br />
+            <span class='subtitle'>
+              <span class='about'>>> Getting into the nitty gritty details</span>
+               ....
+            </span>
+          </h1>
+          <div id='nav'>
+            <ul>
+              <li>
+                <a href='/'>Home</a>
+              </li>
+              <li>
+                <a class='clickme' href='/work.html'>Portfolio</a>
+              </li>
+              <li>
+                <a href='/posts.html'>All posts</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <!-- /header -->
+        <div id='content' role='maincontent'>
+          <h1>Ruby exceptions</h1>
+
+<p>At work a discussion arised on how fast a ruby exception is. And if it is
+usable in Rails projects. The discussion started after the conclusion that
+performance dramatically degraded in a project using the Rails framework.</p>
+
+<p>The question arose how fast ruby handles exceptions. After doing
+a quick google I could not find an isolated benchmark so I whipped up
+one myself.</p>
+
+<p>Below the result of the benchmark.</p>
+
+<h1>ruby 1.8.7 (2012-02-08 patchlevel 358) [i686-darwin11.2.0]</h1>
+
+<pre><code>  Rehearsal ----------------------------------------------------
+  exception          0.770000   0.030000   0.800000 (  0.809420)
+  exception with e   0.780000   0.040000   0.820000 (  0.814608)
+  multi exception    0.850000   0.040000   0.890000 (  0.885843)
+  symbol             0.040000   0.000000   0.040000 (  0.035782)
+  ------------------------------------------- total: 2.550000sec
+
+                         user     system      total        real
+  exception          0.770000   0.030000   0.800000 (  0.808482)
+  exception with e   0.780000   0.040000   0.820000 (  0.817195)
+  multi exception    0.850000   0.040000   0.890000 (  0.889478)
+  symbol             0.040000   0.000000   0.040000 (  0.036175)
+</code></pre>
+
+<h1>ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-darwin11.2.0]</h1>
+
+<pre><code>  Rehearsal ----------------------------------------------------
+  exception          0.890000   0.040000   0.930000 (  0.929162)
+  exception with e   0.890000   0.030000   0.920000 (  0.934193)
+  multi exception    0.970000   0.040000   1.010000 (  0.999004)
+  symbol             0.020000   0.000000   0.020000 (  0.017207)
+  ------------------------------------------- total: 2.880000sec
+
+                         user     system      total        real
+  exception          0.830000   0.040000   0.870000 (  0.867102)
+  exception with e   0.830000   0.030000   0.860000 (  0.873007)
+  multi exception    0.910000   0.040000   0.950000 (  0.938906)
+  symbol             0.020000   0.000000   0.020000 (  0.017294)
+</code></pre>
+
+<h1>jruby 1.6.7.2 (ruby-1.8.7-p357) (2012-05-01 26e08ba) (Java HotSpot(TM) 64-Bit Server VM 1.6.0_29) [darwin-x86_64-java]</h1>
+
+<pre><code>  Rehearsal ----------------------------------------------------
+  exception          8.044000   0.000000   8.044000 (  8.006000)
+  exception with e   7.704000   0.000000   7.704000 (  7.704000)
+  multi exception    7.791000   0.000000   7.791000 (  7.791000)
+  symbol             0.038000   0.000000   0.038000 (  0.038000)
+  ------------------------------------------ total: 23.577000sec
+
+                         user     system      total        real
+  exception          7.603000   0.000000   7.603000 (  7.603000)
+  exception with e   7.605000   0.000000   7.605000 (  7.605000)
+  multi exception    7.529000   0.000000   7.529000 (  7.529000)
+  symbol             0.009000   0.000000   0.009000 (  0.009000)
+</code></pre>
+
+<h1>The benchmark code</h1>
+
+<pre>
+  <code lang='ruby' class='highlight'>
+  require 'benchmark'
+
+  class E1 < StandardError; end
+  class E2 < StandardError; end
+  class E3 < StandardError; end
+
+  def outer_conditional
+    if inner_returns_symbol == :argument_error
+      :agument_error
+    end
+  end
+
+  def outer_multi_exception
+    inner_multi_exception
+  rescue E1
+    :E1
+  rescue E2
+    :E2
+  rescue E3
+    :E3
+  end
+
+  def inner_multi_exception
+    raise [E1, E2, E3][rand(3)]
+  end
+
+  def outer_exception
+    inner_raises_exception
+  rescue ArgumentError
+    :argument_error
+  end
+
+  def outer_exception_with_e
+    inner_raises_exception
+  rescue ArgumentError => e
+    :argument_error
+  end
+
+  def inner_raises_exception
+    raise ArgumentError
+  end
+
+  def inner_returns_symbol
+    :argument_error
+  end
+
+  COUNT = 100_000
+
+  Benchmark.bmbm { |x|
+    x.report("exception") do
+      COUNT.times { outer_exception }
+    end
+    x.report("exception with e") do
+      COUNT.times { outer_exception_with_e }
+    end
+    x.report("multi exception") do
+      COUNT.times { outer_multi_exception }
+    end
+    x.report("symbol") do
+      COUNT.times { outer_conditional } 
+    end
+  }
+  </code>
+</pre>
+<div id='disqus_thread'></div>
+<script src='http://disqus.com/forums/bloyg/embed.js' type='text/javascript'></script>
+<noscript>
+  <a href='http://disqus.com/forums/bloyg/?url=ref'>View the discussion thread.</a>
+</noscript>
+          <hr style='clear: both;width: 100%;height: 0px;' />
+        </div>
+        <!-- /content -->
+        <div id='footer' role='contentinfo'>
+          <p class='col'>
+            © Copyright 2010-2011 Boy Maas
+            // Powered by
+            <a href='https://www.github.com/boymaas/Hobber'>boymaas/Hobber</a>
+          </p>
+        </div>
+        <!-- /footer -->
+        <!-- /page -->
+      </div>
+      <a href='https://github.com/boymaas'>
+        <img alt='Fork me on GitHub' src='https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png' style='position: absolute; top: 0; right: 0; border: 0;' />
+      </a>
+      <script src='/assets/lib.js'></script>
+      <script type='text/javascript'>
+        //<![CDATA[
+          var _gaq = [['_setAccount', 'UA-561813-3'], ['_trackPageview']];
+          (function(d, t) {
+              var g = d.createElement(t),
+                  s = d.getElementsByTagName(t)[0];
+              g.async = true;
+              g.src = '//www.google-analytics.com/ga.js';
+              s.parentNode.insertBefore(g, s);
+          })(document, 'script');
+        //]]>
+      </script>
+      <script type='text/javascript'>
+        //<![CDATA[
+          (function() {
+              var links = document.getElementsByTagName('a');
+              var query = '?';
+              for(var i = 0; i < links.length; i++) {
+                  if(links[i].href.indexOf('#disqus_thread') >= 0) {
+                      query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
+                  }
+              }
+              document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/bloyg/get_num_replies.js' + query + '"></' + 'script>');
+          })();
+        //]]>
+      </script>
+    </body>
+  </head>
+</html>

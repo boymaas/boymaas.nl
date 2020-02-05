@@ -1,0 +1,237 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--[if lt IE 7 ]> <html lang="<haml:loud> config[:meta_data][:lang] </haml:loud>" class="no-js ie ie6 lte7 lte8 lte9"> <![endif]-->
+<!--[if IE 7 ]> <html lang="<haml:loud> config[:meta_data][:lang] </haml:loud>" class="no-js ie ie7 lte7 lte8 lte9"> <![endif]-->
+<!--[if IE 8 ]> <html lang="<haml:loud> config[:meta_data][:lang] </haml:loud>" class="no-js ie ie8 lte8 lte9"> <![endif]-->
+<!--[if IE 9 ]> <html lang="<haml:loud> config[:meta_data][:lang] </haml:loud>" class="no-js ie ie9 lte9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]> ><! <![endif]-->
+<html class='no-js' lang='en'>
+  <!-- <![endif] -->
+  <head>
+    <meta charset='utf-8' />
+    <title>
+      Web-apps with PLT-Scheme, snoozing while dispatching?
+      &bull; Ramblings of Boy Maas
+    </title>
+    <meta content='width=device-width, initial-scale=1.0' name='viewport' />
+    <meta content='0B2b3BMieI7ywPGWTSIwssHMzAmCiTI1SI7sCe46sdk' name='google-site-verification' />
+    <link href='/feed' rel='alternate' title='Ramblings of Boy Maas Atom feed' type='application/atom+xml' />
+    <link href='/assets/styles.css' rel='stylesheet' />
+    <script src='/assets/lib.js' type='text/javascript'></script>
+    <link href='/favicon.png' rel='shortcut icon' />
+    <body>
+      <div id='page'>
+        <div id='header' role='banner'>
+          <h1>
+            <a href='/'>
+              Boy Maas
+              <span class='nick'>(m4nic)</span>
+            </a>
+            <br />
+            <span class='subtitle'>
+              <span class='about'>>> Web apps in scheme, too good to be true?</span>
+               ....
+            </span>
+          </h1>
+          <div id='nav'>
+            <ul>
+              <li>
+                <a href='/'>Home</a>
+              </li>
+              <li>
+                <a class='clickme' href='/work.html'>Portfolio</a>
+              </li>
+              <li>
+                <a href='/posts.html'>All posts</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <!-- /header -->
+        <div id='content' role='maincontent'>
+          <p>Doing the tutorial on writing a blog using PLT-Scheme opened my eyes to some of
+the possibilities. Working lately primary on webapps using web.py, sqlalchemy I
+wanted to see what could be done using scheme. In this case browsing PLT's
+available libraries. After scanning PLT's PLaneT I have found some interesting
+libs opensourced by a company called <a href="http://www.untyped.com/">untyped</a>.</p>
+
+<p>The libs I found interesting where:</p>
+
+<ul>
+<li>untyped/dispatch</li>
+<li>untyped/snooze</li>
+<li>untyped/mirrors</li>
+</ul>
+
+
+<p>I decided to take a closer look at them and how untyped implemented its magic.</p>
+
+<h2>Dispatch, declare what you want</h2>
+
+<p>Dispatch is essentially syntax to declare routes and controllers. I wanted to know
+more so I analysed an example given by the documentation.</p>
+
+<h2>Define your site</h2>
+
+<pre><code>#lang scheme/base
+
+;; automaticly grab packages from PLaneT
+(require (planet untyped/dispatch))
+
+(define-site blog
+             ([(url "/") index]
+              [(url "/posts/" (string-arg)) review-post]
+              [(url "/archive/" (integer-arg) "/" (integer-arg))
+               review-archive]))
+</code></pre>
+
+<p>Essentially stating that <code>/archive/10</code> will call <code>review-archive</code> with one parameter <code>10</code>.</p>
+
+<h3>Controllers</h3>
+
+<p>Controllers for the rules above may be defined with:</p>
+
+<pre><code>(define-controller (controller request args ...)
+    exp ... )
+</code></pre>
+
+<p>An example being:</p>
+
+<pre><code>; request string -&gt; html-response
+(define-controller (review-post request slug)
+  `(html (head (title ,slug))
+         (body (h1 "You are viewing " ,(format "~s" slug))
+               (p "And now for some content..."))))
+</code></pre>
+
+<h3>Implementation</h3>
+
+<p>To find out what happens behind the syntax it helps to expand the syntax (or macro). The declarative statements above expand to:</p>
+
+<pre><code>   (require (planet untyped/dispatch))
+   (begin
+     (define-values (blog index review-post review-archive)
+       (let-values (((blog controllers)
+                     (make-site 'blog '(index review-post review-archive))))
+         (let-values (((index review-post review-archive)
+                       (apply values controllers)))
+           (set-site-rules!
+             blog
+             (list
+               (make-rule (make-pattern "/") index)
+               (make-rule (make-pattern "/posts/" (string-arg)) review-post)
+               (make-rule
+                 (make-pattern "/archive/" (integer-arg) "/" (integer-arg))
+                 review-archive)))
+           (values blog index review-post review-archive)))))
+</code></pre>
+
+<p>Effectively defining <code>blog</code> and the controllers <code>index review-post
+review-archive</code> on module level by the function <code>make-site</code>. This procedure
+also assigns an <code>undefined-controller</code> to the controllers <code>index review-post
+review-archive</code> to catch the undefined ones. These syntax-extentions are
+defined in <code>syntax.ss</code>.</p>
+
+<p>One can use the export-helper in a provide as such <code>(provide (site-out blog))</code>
+to export the defined site and the configured controllers.</p>
+
+<h4>Rule based routing</h4>
+
+<p>There is a function defined <code>(controller-url controller args ..)</code> which can be
+used to translate back from controller to path.</p>
+
+<h5>Rules</h5>
+
+<p>Rules like <code>[(url "/posts/" (string-arg)) review-post]</code> are declared when configuring the site. This rule effectively states that <code>/posts/([^/]+)</code> maps to controller <code>review-post</code>. This rule will be used to <code>dispatch</code> this request, but will also be used to translate <code>(controller-url 'review-post 10)</code> to the following link <code>/posts/10</code>.</p>
+
+<h5>Arguments</h5>
+
+<p>How is this implemented. In the files <code>pattern.ss</code> and <code>arg.ss</code> and <code>struct-private.ss</code> contain statements which describes elements
+to build reqexp matches and encode and decode arguments between the url and scheme domain. The args and eventually custom args
+are defined in the following struct. (i removed the display routines for clarity)</p>
+
+<pre><code>(define-struct arg
+  (id      ;; symbol to be used declaration 
+   pattern ;; regexp pattern
+   decoder ;; how to decode from captured arg to lisp domain
+   encoder ;; how to encode from lisp domain to captured arg
+  #:transparent)
+</code></pre>
+
+<p>A working example is <code>string-arg</code>:</p>
+
+<pre><code>(define (string-arg)
+  (make-arg 
+   'string                      ;; id
+   "[^/]+"                      ;; regexp
+   (lambda (raw)                ;; decode
+     (uri-decode raw))
+   (lambda (arg)                ;; encode
+     (if (string? arg)
+         (uri-encode arg)
+         (raise-exn exn:fail:dispatch
+           (format "Expected string, given: ~s" arg))))))
+</code></pre>
+
+<h5>Adding arguments</h5>
+
+<p>Adding cutom arguments is made trivial by this setup since one can just build a structure with encode and decode routines and can
+use it.</p>
+
+<h2>Snooze, ORM for Postgresql or Sqlite</h2>
+
+<p>Will come later ..</p>
+
+<h2>Mirrors, xhtml/xml generation or javascript. Whatever you want ..</h2>
+
+<p>Will come later ..</p>
+<div id='disqus_thread'></div>
+<script src='http://disqus.com/forums/bloyg/embed.js' type='text/javascript'></script>
+<noscript>
+  <a href='http://disqus.com/forums/bloyg/?url=ref'>View the discussion thread.</a>
+</noscript>
+          <hr style='clear: both;width: 100%;height: 0px;' />
+        </div>
+        <!-- /content -->
+        <div id='footer' role='contentinfo'>
+          <p class='col'>
+            © Copyright 2010-2011 Boy Maas
+            // Powered by
+            <a href='https://www.github.com/boymaas/Hobber'>boymaas/Hobber</a>
+          </p>
+        </div>
+        <!-- /footer -->
+        <!-- /page -->
+      </div>
+      <a href='https://github.com/boymaas'>
+        <img alt='Fork me on GitHub' src='https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png' style='position: absolute; top: 0; right: 0; border: 0;' />
+      </a>
+      <script src='/assets/lib.js'></script>
+      <script type='text/javascript'>
+        //<![CDATA[
+          var _gaq = [['_setAccount', 'UA-561813-3'], ['_trackPageview']];
+          (function(d, t) {
+              var g = d.createElement(t),
+                  s = d.getElementsByTagName(t)[0];
+              g.async = true;
+              g.src = '//www.google-analytics.com/ga.js';
+              s.parentNode.insertBefore(g, s);
+          })(document, 'script');
+        //]]>
+      </script>
+      <script type='text/javascript'>
+        //<![CDATA[
+          (function() {
+              var links = document.getElementsByTagName('a');
+              var query = '?';
+              for(var i = 0; i < links.length; i++) {
+                  if(links[i].href.indexOf('#disqus_thread') >= 0) {
+                      query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
+                  }
+              }
+              document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/bloyg/get_num_replies.js' + query + '"></' + 'script>');
+          })();
+        //]]>
+      </script>
+    </body>
+  </head>
+</html>

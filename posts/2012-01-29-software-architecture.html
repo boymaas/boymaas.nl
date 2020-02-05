@@ -1,0 +1,405 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--[if lt IE 7 ]> <html lang="<haml:loud> config[:meta_data][:lang] </haml:loud>" class="no-js ie ie6 lte7 lte8 lte9"> <![endif]-->
+<!--[if IE 7 ]> <html lang="<haml:loud> config[:meta_data][:lang] </haml:loud>" class="no-js ie ie7 lte7 lte8 lte9"> <![endif]-->
+<!--[if IE 8 ]> <html lang="<haml:loud> config[:meta_data][:lang] </haml:loud>" class="no-js ie ie8 lte8 lte9"> <![endif]-->
+<!--[if IE 9 ]> <html lang="<haml:loud> config[:meta_data][:lang] </haml:loud>" class="no-js ie ie9 lte9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]> ><! <![endif]-->
+<html class='no-js' lang='en'>
+  <!-- <![endif] -->
+  <head>
+    <meta charset='utf-8' />
+    <title>
+      Software architecture
+      &bull; Ramblings of Boy Maas
+    </title>
+    <meta content='width=device-width, initial-scale=1.0' name='viewport' />
+    <meta content='0B2b3BMieI7ywPGWTSIwssHMzAmCiTI1SI7sCe46sdk' name='google-site-verification' />
+    <link href='/feed' rel='alternate' title='Ramblings of Boy Maas Atom feed' type='application/atom+xml' />
+    <link href='/assets/styles.css' rel='stylesheet' />
+    <script src='/assets/lib.js' type='text/javascript'></script>
+    <link href='/favicon.png' rel='shortcut icon' />
+    <body>
+      <div id='page'>
+        <div id='header' role='banner'>
+          <h1>
+            <a href='/'>
+              Boy Maas
+              <span class='nick'>(m4nic)</span>
+            </a>
+            <br />
+            <span class='subtitle'>
+              <span class='about'>>> Elements of software architecture</span>
+               ....
+            </span>
+          </h1>
+          <div id='nav'>
+            <ul>
+              <li>
+                <a href='/'>Home</a>
+              </li>
+              <li>
+                <a class='clickme' href='/work.html'>Portfolio</a>
+              </li>
+              <li>
+                <a href='/posts.html'>All posts</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <!-- /header -->
+        <div id='content' role='maincontent'>
+          <h1>Elements of a good architecture</h1>
+
+<p>I was working with some legacy code lately  where commercial goals where given
+precedence over technical quality.  All rules on writing solid, maintainable
+software where broken. The situation was terrible, and with no future sign of
+improvement. Architecture just wasn't part of the culture and had no real value
+in the perception of the technical lead and the commercial department. I was
+working with this code for over 2 weeks, and just could not continue working
+with it.</p>
+
+<p>I had to give the advise to either start over from scratch and do it right, or
+continue with a cycle of bugfixes and "hoping" everything would keep on running
+<em>without</em> me. The quote below adequately describes the state of their software.</p>
+
+<blockquote>
+  A Big Ball of Mud is a haphazardly structured, sprawling, sloppy,
+  duct-tape-and-baling-wire, spaghetti-code jungle. These systems show
+  unmistakable signs of unregulated growth, and repeated, expedient repair.
+  Information is shared promiscuously among distant elements of the system,
+  often to the point where nearly all the important information becomes global
+  or duplicated. The overall structure of the system may never have been well
+  defined. If it was, it may have eroded beyond recognition. Programmers with a
+  shred of architectural sensibility shun these quagmires. Only those who are
+  unconcerned about architecture, and, perhaps, are comfortable with the
+  inertia of the day-to-day chore of patching the holes in these failing dikes,
+  are content to work on such systems.
+</blockquote>
+
+
+<p>It resulted in me and another healthy motivated programmer leaving the team.</p>
+
+<p>We belong to the later category: "Programmers with a shred of architectural
+sensibility shun these quagmires."</p>
+
+<h2>Software design is like a game of chess</h2>
+
+<p>Software architecture/design is like a game of chess. You have many options but
+some just give your position more options than other positions. You could argue
+that the adaptability of you position is an indicator of quality. Higher
+adaptability is higher quality. Since the probability you can adapt to the
+attacks of your opponent increases.</p>
+
+<p>Good, solid and robust software also share these characteristics. In this article I
+would like to address <em>cohesion</em> and <em>coupling</em>, and show you they (should) underly many
+architectural choices.</p>
+
+<blockquote>
+  Cohesion is often contrasted with coupling, a different concept. Nonetheless
+  high cohesion often correlates with loose coupling, and vice versa. The
+  software quality metrics of coupling and cohesion were invented by Larry
+  Constantine based on characteristics of "good" programming practices that
+  reduced maintenance and modification costs.
+</blockquote>
+
+
+<p>So we could state that any choice that increases cohesion and decreases coupling
+in a certain domain would be a good architectural choice.</p>
+
+<p>I believe this is correct from a purely technical point of view. There is also
+the human (cognitive) point of view. Good programs tend to have their naming
+down. Reading this software is easy, the whole structure adapts naturally to the
+domain and to the vectors of change.</p>
+
+<blockquote>
+  There are only two hard things in Computer Science: cache invalidation and
+  naming things.
+  <author>Phil Karlton</author>
+</blockquote>
+
+
+<p>The vectors of change is an important element, some vectors of change are easy
+to spot and others are difficult to spot. It's a predicting game, and is heavily
+dependent on the perception of the architect and the domain expert at the
+time the design is constructed.</p>
+
+<p>Too much anticipation on change may lead to
+<a href="http://en.wikipedia.org/wiki/Inner-platform_effect">Inner Platform</a>
+anti-pattern. Writing a language a language.</p>
+
+<h2>Extract knowledge from the domain expert</h2>
+
+<p>The knowledge of the domain-expert is captured in the language he/she uses to
+express this knowledge. As a good architect, one of the more important skills is
+knowing how to listen, and extract the right knowledge and patterns so you
+can model the domain correctly in software.</p>
+
+<p>If it's modelled correctly the probability the system can adapt correctly to
+anticipated change increases and the software communicates the knowledge of the
+domain. The domain expert should be able to read the domain level code and
+verify it's correctness.</p>
+
+<h2>What is the "best" approach</h2>
+
+<p>Following these assumptions you can conclude there is no such thing as "one
+superior design methodology", good software design is partly science
+and partly art.</p>
+
+<p>Lets look at some popular architectural choices made these days.</p>
+
+<h1>Rails architecture</h1>
+
+<p>Rails is a great platform for quickly realising a prototype. You can create
+models, attach validation to these models, and render forms using the models
+meta-data and more. This is all great for initial speed, but the whole idea
+that form validation (view) information comes directly out of the model
+(persistence) ties the view to the model. Something I would rather avoid.</p>
+
+<p>The design of Rails rewards this behaviour (speed). Behaviour which finally
+will end the creation of yet another <em>big ball of mud</em>, especially when
+applications grow >50k lines of code.</p>
+
+<p>Using Rails as an architectural choice for all domains, is essentially saying
+MVC is a solution for all problems.</p>
+
+<p>DCI could be a solution in some domains to keep everything clean and simple within
+a MVC structure.</p>
+
+<h2>Data, Context and Interaction to supplement MVC</h2>
+
+<blockquote>
+  The paradigm separates the domain model (data) from use cases (context) and
+  roles that objects play (interaction). DCI is complementary to
+  model–view–controller (MVC). MVC as a pattern language is still used to
+  separate the data and its processing from presentation.
+</blockquote>
+
+
+<p>Why would we want this?</p>
+
+<ul>
+<li>To improve the readability of object-oriented code by giving system behavior first-class status</li>
+<li>To cleanly separate code for rapidly changing system behavior (what the system does) from code for slowly changing domain knowledge (what the system is), instead of combining both in one class interface</li>
+<li>To help software developers reason about system-level state and behavior instead of only object state and behavior</li>
+<li>To support an object style of thinking that is close to peoples' mental models, rather than the class style of thinking that overshadowed object thinking early in the history of object-oriented programming languages</li>
+</ul>
+
+
+<h3>So what is it ...</h3>
+
+<p>Context makes sure the data stays decoupled by providing an extra layer
+on top of the interaction. Introducing the role on the data and directing the
+interaction of all the components</p>
+
+<p>Essentially it boils down to this:</p>
+
+<p>1) Data(objects) are simple, they only contain functionality regarding persistence.
+2) Roles describe a certain behaviour of data object.
+3) The Context loads the different DataObjects, injects certain roles on them
+and directs the interaction between them.</p>
+
+<h3>So how does this tie into the cohesion and coupling paradigm.</h3>
+
+<p>Data are kept slim, and no behaviour is specified on them. Since behaviour
+is specified in Roles it is <em>decoupled</em> from the Context.</p>
+
+<pre><code>Context
+initialize
+   # instantizes all dataobjects and makes sure they can perform
+   # the requested roles
+
+call/execute
+   # perform the sequential logic using the dataobjects
+</code></pre>
+
+<p>So by this we could say a Context is <em>coupled</em> to (one or more) Roles. And a Role
+is <em>coupled</em> to a DataObject.</p>
+
+<pre><code>Context --&gt; *Roles --&gt; *DataObject
+</code></pre>
+
+<p>For more information read: <a href="http://en.wikipedia.org/wiki/Data,_context_and_interaction">Data context and interaction</a></p>
+
+<h1>Ruby community heuristics (and the relation to coupling and cohesion)</h1>
+
+<p>Spending a lot of time in the Ruby community lately. I hear the following a lot
+from experienced Ruby programmers: <em>Tell don't ask</em>, <em>Law of Demeter</em>, <em>Single
+Repsonsibility Principle</em></p>
+
+<p>It's my belief that all these elements can be traced back to the root ideas of
+cohesion and coupling.</p>
+
+<h3>Tell don't ask</h3>
+
+<p>Reduces data coupling, especially 2 way coupling. If object
+(A) request data form (B) both object get tightly coupled.
+There is 2 way communication. Tying both <code>A -&gt; B</code>, and <code>B -&gt; A</code>.</p>
+
+<h3>Law of Demeter</h3>
+
+<p>Reduces data coupling. If <code>(A)</code> accesses a specific data-structure of <code>(B)</code> one
+cannot freely change the internals of <code>B</code> since <code>A</code> will have to be changed as
+well. Keeping knowledge internal.</p>
+
+<h3>Single Responsibility Principle</h3>
+
+<p>Increases cohesion, always a good thing.</p>
+
+<h1>Cohesion and Coupling</h1>
+
+<p>So cohesion and coupling should be a dominant factor on which you should
+make architectural choices.</p>
+
+<p>For an overview of the different forms of cohesion I have grabbed their definitions
+from Wikipedia. Maybe an interesting read.</p>
+
+<h2>Cohesion</h2>
+
+<p>Modules with high cohesion tend to be preferable because high cohesion is
+associated with several desirable traits of software including robustness,
+reliability, re-usability, and understandability whereas low cohesion is
+associated with undesirable traits such as being difficult to maintain,
+difficult to test, difficult to reuse, and even difficult to understand.</p>
+
+<h3>Coincidental cohesion (worst)</h3>
+
+<p>Coincidental cohesion is when parts of a module are grouped arbitrarily; the
+only relationship between the parts is that they have been grouped together
+(e.g. a "Utilities" class).</p>
+
+<h3>Logical cohesion</h3>
+
+<p>Logical cohesion is when parts of a module are grouped because they
+logically are categorized to do the same thing, even if they are different
+by nature (e.g. grouping all mouse and keyboard input handling routines).</p>
+
+<h3>Temporal cohesion</h3>
+
+<p>Temporal cohesion is when parts of a module are grouped by when they are
+processed - the parts are processed at a particular time in program
+execution (e.g. a function which is called after catching an exception
+which closes open files, creates an error log, and notifies the user).</p>
+
+<h3>Procedural cohesion</h3>
+
+<p>Procedural cohesion is when parts of a module are grouped because they
+always follow a certain sequence of execution (e.g. a function which checks
+file permissions and then opens the file).</p>
+
+<h3>Communicational cohesion</h3>
+
+<p>Communicational cohesion is when parts of a module are grouped because they
+operate on the same data (e.g. a module which operates on the same record
+of information).</p>
+
+<h3>Sequential cohesion</h3>
+
+<p>Sequential cohesion is when parts of a module are grouped because the output
+from one part is the input to another part like an assembly line (e.g. a
+function which reads data from a file and processes the data).</p>
+
+<h3>Functional cohesion (best)</h3>
+
+<p>Functional cohesion is when parts of a module are grouped because they all
+contribute to a single well-defined task of the module (e.g. tokenizing a
+string of XML).</p>
+
+<h2>Coupling</h2>
+
+<p>Coupling can be "low" (also "loose" and "weak") or "high" (also "tight" and "strong"). Some types of coupling, in order of highest to lowest coupling, are as follows:</p>
+
+<h3>Content coupling (high)</h3>
+
+<p>Content coupling (also known as Pathological coupling) is when one module modifies or relies on the internal workings of another module (e.g., accessing local data of another module).
+Therefore changing the way the second module produces data (location, type, timing) will lead to changing the dependent module.</p>
+
+<h3>Common coupling</h3>
+
+<p>Common coupling (also known as Global coupling) is when two modules share the same global data (e.g., a global variable).
+Changing the shared resource implies changing all the modules using it.</p>
+
+<h3>External coupling</h3>
+
+<p>External coupling occurs when two modules share an externally imposed data format, communication protocol, or device interface.This is basically related to the communication to external tools and devices.</p>
+
+<h3>Control coupling</h3>
+
+<p>Control coupling is one module controlling the flow of another, by passing it information on what to do (e.g., passing a what-to-do flag).</p>
+
+<h3>Stamp coupling (Data-structured coupling)</h3>
+
+<p>Stamp coupling is when modules share a composite data structure and use only a part of it, possibly a different part (e.g., passing a whole record to a function that only needs one field of it).
+This may lead to changing the way a module reads a record because a field that the module doesn't need has been modified.</p>
+
+<h3>Data coupling</h3>
+
+<p>Data coupling is when modules share data through, for example, parameters. Each datum is an elementary piece, and these are the only data shared (e.g., passing an integer to a function that computes a square root).</p>
+
+<h3>Message coupling (low)</h3>
+
+<p>This is the loosest type of coupling. It can be achieved by state decentralization (as in objects) and component communication is done via parameters or message passing (see Message passing).</p>
+
+<h3>No coupling</h3>
+
+<p>Modules do not communicate at all with one another.</p>
+
+<h3>Object-oriented programming</h3>
+
+<h4>Subclass Coupling</h4>
+
+<p>Describes the relationship between a child and its parent. The child is connected to its parent, but the parent isn't connected to the child.</p>
+
+<h4>Temporal coupling</h4>
+
+<p>When two actions are bundled together into one module just because they happen to occur at the same time.</p>
+<div id='disqus_thread'></div>
+<script src='http://disqus.com/forums/bloyg/embed.js' type='text/javascript'></script>
+<noscript>
+  <a href='http://disqus.com/forums/bloyg/?url=ref'>View the discussion thread.</a>
+</noscript>
+          <hr style='clear: both;width: 100%;height: 0px;' />
+        </div>
+        <!-- /content -->
+        <div id='footer' role='contentinfo'>
+          <p class='col'>
+            © Copyright 2010-2011 Boy Maas
+            // Powered by
+            <a href='https://www.github.com/boymaas/Hobber'>boymaas/Hobber</a>
+          </p>
+        </div>
+        <!-- /footer -->
+        <!-- /page -->
+      </div>
+      <a href='https://github.com/boymaas'>
+        <img alt='Fork me on GitHub' src='https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png' style='position: absolute; top: 0; right: 0; border: 0;' />
+      </a>
+      <script src='/assets/lib.js'></script>
+      <script type='text/javascript'>
+        //<![CDATA[
+          var _gaq = [['_setAccount', 'UA-561813-3'], ['_trackPageview']];
+          (function(d, t) {
+              var g = d.createElement(t),
+                  s = d.getElementsByTagName(t)[0];
+              g.async = true;
+              g.src = '//www.google-analytics.com/ga.js';
+              s.parentNode.insertBefore(g, s);
+          })(document, 'script');
+        //]]>
+      </script>
+      <script type='text/javascript'>
+        //<![CDATA[
+          (function() {
+              var links = document.getElementsByTagName('a');
+              var query = '?';
+              for(var i = 0; i < links.length; i++) {
+                  if(links[i].href.indexOf('#disqus_thread') >= 0) {
+                      query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
+                  }
+              }
+              document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/bloyg/get_num_replies.js' + query + '"></' + 'script>');
+          })();
+        //]]>
+      </script>
+    </body>
+  </head>
+</html>

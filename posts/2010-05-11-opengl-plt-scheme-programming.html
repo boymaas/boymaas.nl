@@ -1,0 +1,267 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--[if lt IE 7 ]> <html lang="<haml:loud> config[:meta_data][:lang] </haml:loud>" class="no-js ie ie6 lte7 lte8 lte9"> <![endif]-->
+<!--[if IE 7 ]> <html lang="<haml:loud> config[:meta_data][:lang] </haml:loud>" class="no-js ie ie7 lte7 lte8 lte9"> <![endif]-->
+<!--[if IE 8 ]> <html lang="<haml:loud> config[:meta_data][:lang] </haml:loud>" class="no-js ie ie8 lte8 lte9"> <![endif]-->
+<!--[if IE 9 ]> <html lang="<haml:loud> config[:meta_data][:lang] </haml:loud>" class="no-js ie ie9 lte9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]> ><! <![endif]-->
+<html class='no-js' lang='en'>
+  <!-- <![endif] -->
+  <head>
+    <meta charset='utf-8' />
+    <title>
+      Live coding OpenGl in PLT-Scheme
+      &bull; Ramblings of Boy Maas
+    </title>
+    <meta content='width=device-width, initial-scale=1.0' name='viewport' />
+    <meta content='0B2b3BMieI7ywPGWTSIwssHMzAmCiTI1SI7sCe46sdk' name='google-site-verification' />
+    <link href='/feed' rel='alternate' title='Ramblings of Boy Maas Atom feed' type='application/atom+xml' />
+    <link href='/assets/styles.css' rel='stylesheet' />
+    <script src='/assets/lib.js' type='text/javascript'></script>
+    <link href='/favicon.png' rel='shortcut icon' />
+    <body>
+      <div id='page'>
+        <div id='header' role='banner'>
+          <h1>
+            <a href='/'>
+              Boy Maas
+              <span class='nick'>(m4nic)</span>
+            </a>
+            <br />
+            <span class='subtitle'>
+              <span class='about'>>> Evolutionary coding in scheme</span>
+               ....
+            </span>
+          </h1>
+          <div id='nav'>
+            <ul>
+              <li>
+                <a href='/'>Home</a>
+              </li>
+              <li>
+                <a class='clickme' href='/work.html'>Portfolio</a>
+              </li>
+              <li>
+                <a href='/posts.html'>All posts</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <!-- /header -->
+        <div id='content' role='maincontent'>
+          <p>Live coding <a href="http://www.pawfal.org/fluxus/">(fluxus)</a> captured my interest.  Evolutionary
+programming a game system using scheme will be a nice pet project to experiment with.</p>
+
+<h2>PLT-Scheme</h2>
+
+<p>Checking out different versions of scheme i stumbled upon gambit and ypsilon and
+plt-scheme. After some deliberation i chose plt-scheme. Nicely organised, good
+documentation and standard libraries and big community. Very active irc channel
+on irc.freenode.org #scheme which answered my questions within 5 minutes.</p>
+
+<p>Wikipedia describes PLT scheme in a nice fashion:</p>
+
+<blockquote><p>From the beginning, the PLT project was also an experiment in evaluating the
+suitability of Scheme as a programming language for large projects. In a sense,
+the language failed and yet it also proved to be an ideal platform.
+Scheme per se failed because the standard language, as defined in the reports,
+is too small for a team of 20-30 developers, distributed across three
+continents. If taken as an ideal kernel, however, Scheme succeeded beyond the
+team's expectations.</p></blockquote>
+
+<h2>We need a window to run our app in</h2>
+
+<p>PLT Scheme has a gui toolkit which can be loaded with.</p>
+
+<pre><code>(require scheme/gui/base)
+</code></pre>
+
+<p>This library needs primitive graphics support at runtime an cannot
+be executed with <code>mzscheme</code>. For these programs we have <code>mred</code>.</p>
+
+<h2>MzScheme, MrEd, PLT's graphical user toolkit</h2>
+
+<p>As I understand it, PLT-Scheme has mzscheme as an ideal lightweight scripting
+environment. And MrEd for GUI based apps.</p>
+
+<pre><code> mred -iz -l readline -l scheme/enter
+</code></pre>
+
+<p>We load 2 libraries not standard included in my version of <code>mred</code>:</p>
+
+<ul>
+<li><code>readline</code>, up/down, tab-completion etc</li>
+<li><code>scheme/enter</code>, to be able to reload modules and change evaluation contexts,
+provides <code>enter!</code> procedure.</li>
+</ul>
+
+
+<h2>Windowing time</h2>
+
+<p>The gui/base consist of an
+<a href="http://docs.plt-scheme.org/gui/Windowing_Classes.html">hierarchy of classes</a>,
+interesting for us are:</p>
+
+<ul>
+<li>canvas%, a general-purpose window for drawing and handling events.</li>
+<li>frame%, a top-level container window. It has a title bar (which displays the
+frame's label), an optional menu bar, and an optional status line.</li>
+</ul>
+
+
+<h3>Every painter needs a canvas</h3>
+
+<p>For our app to at least draw anything we need an opengl ready canvas. The window
+should also be able to recognize size changes and a method to actually draw
+something on our canvas.</p>
+
+<p>the functions <code>resize</code> and <code>paint</code> will be defined later.</p>
+
+<pre><code>(define gl-canvas%
+  (class* canvas% ()
+          (inherit with-gl-context swap-gl-buffers)
+
+          (define/override (on-paint)
+                           (with-gl-context
+                             (lambda ()
+                               (paint)
+                               (swap-gl-buffers))))
+
+          (define/override (on-size width height)
+                           (with-gl-context
+                             (lambda ()
+                               (resize width height))))
+
+          (super-instantiate () (style '(gl))))) 
+</code></pre>
+
+<h3>Without the frame we cannot hang the painting</h3>
+
+<p>Our canvas needs to <a href="http://docs.plt-scheme.org/gui/frame_.html">framed</a> for the os to display it.</p>
+
+<pre><code>(define window 
+  (new frame% (label "Minimal") (min-width 200) (min-height 200)))
+</code></pre>
+
+<h3>Rendering time</h3>
+
+<p>Now we have setup a minimal frame with a canvas which is opengl ready. Now we
+can execute OpenGl calls to actually start drawing. <code>resize</code> is called on a
+resize and since this is minimal does nothing. <code>paint</code> is called when the
+canvas is exposed or resized so that the image in the canvas can be repainted.</p>
+
+<pre><code>;; gl-canvas functions resise and main draw
+(define (resize w h) #t)
+
+(define (paint)
+  (glClearColor 0.0 0.0 0.0 0.0)
+  (glClear GL_COLOR_BUFFER_BIT)
+  (glColor3d 1.0 1.0 1.0)
+
+  (glMatrixMode GL_PROJECTION)
+  (glLoadIdentity)
+  (glOrtho 0.0 1.0 0.0 1.0 -1.0 1.0)
+  (glMatrixMode GL_MODELVIEW)
+  (glLoadIdentity)
+
+  (glBegin GL_QUADS)
+  (glVertex3d 0.25 0.25 0.0)
+  (glVertex3d 0.75 0.25 0.0)
+  (glVertex3d 0.75 0.75 0.0)
+  (glVertex3d 0.25 0.75 0.0)
+  (glEnd)
+  )
+</code></pre>
+
+<h3>Putting it all together</h3>
+
+<p>To actually create the frame canvas, and fire the on-paint and on-size triggers
+send the window instance the show message. This should create all.</p>
+
+<pre><code>;; show window
+(send window show #t)
+</code></pre>
+
+<h2>And now for live coding!</h2>
+
+<p>The essential element here is the live coding. This is accomplished by changing
+the paint function and sending it to your repl. First we need to change the
+evaluation context. This is done by:</p>
+
+<pre><code>(enter! "minimal.ss")
+</code></pre>
+
+<p>and redefining <code>paint</code>:</p>
+
+<pre><code>(define (paint)
+  (glClearColor 0.0 0.0 0.0 0.0)
+  (glClear GL_COLOR_BUFFER_BIT)
+  (glColor3d 0.0 1.0 1.0)
+
+  (glMatrixMode GL_PROJECTION)
+  (glLoadIdentity)
+  (glOrtho 0.0 1.0 0.0 1.0 -1.0 1.0)
+  (glMatrixMode GL_MODELVIEW)
+  (glLoadIdentity)
+
+  (glBegin GL_QUADS)
+  (glVertex3d 0.25 0.25 0.0)
+  (glVertex3d 0.75 0.25 0.0)
+  (glVertex3d 0.75 0.75 0.0)
+  (glVertex3d 0.25 0.75 0.0)
+  (glEnd)
+  )
+</code></pre>
+
+<p>now change size of the window to trigger a <code>on-paint</code> and the colour of the
+square changes. The basic elements of live coding are accomplished.</p>
+<div id='disqus_thread'></div>
+<script src='http://disqus.com/forums/bloyg/embed.js' type='text/javascript'></script>
+<noscript>
+  <a href='http://disqus.com/forums/bloyg/?url=ref'>View the discussion thread.</a>
+</noscript>
+          <hr style='clear: both;width: 100%;height: 0px;' />
+        </div>
+        <!-- /content -->
+        <div id='footer' role='contentinfo'>
+          <p class='col'>
+            © Copyright 2010-2011 Boy Maas
+            // Powered by
+            <a href='https://www.github.com/boymaas/Hobber'>boymaas/Hobber</a>
+          </p>
+        </div>
+        <!-- /footer -->
+        <!-- /page -->
+      </div>
+      <a href='https://github.com/boymaas'>
+        <img alt='Fork me on GitHub' src='https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png' style='position: absolute; top: 0; right: 0; border: 0;' />
+      </a>
+      <script src='/assets/lib.js'></script>
+      <script type='text/javascript'>
+        //<![CDATA[
+          var _gaq = [['_setAccount', 'UA-561813-3'], ['_trackPageview']];
+          (function(d, t) {
+              var g = d.createElement(t),
+                  s = d.getElementsByTagName(t)[0];
+              g.async = true;
+              g.src = '//www.google-analytics.com/ga.js';
+              s.parentNode.insertBefore(g, s);
+          })(document, 'script');
+        //]]>
+      </script>
+      <script type='text/javascript'>
+        //<![CDATA[
+          (function() {
+              var links = document.getElementsByTagName('a');
+              var query = '?';
+              for(var i = 0; i < links.length; i++) {
+                  if(links[i].href.indexOf('#disqus_thread') >= 0) {
+                      query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
+                  }
+              }
+              document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/bloyg/get_num_replies.js' + query + '"></' + 'script>');
+          })();
+        //]]>
+      </script>
+    </body>
+  </head>
+</html>
