@@ -1,45 +1,43 @@
-# Brief: boymaas.nl
+# Brief v2: alive, bubbly, pixel nostalgia
 
-Personal site of Boy Maas (m4nic): coder, terminal generation, Den Haag.
-Loves complex dynamic systems, asynchronous agents, science, magic, mystery, colour, sculpture, rain, hermetism, meditation.
-The site has 17 blog posts (2010-2015), 8 portfolio projects, a short bio, a contact line.
-It must remain a real, readable blog.
+Personal site of Boy Maas (m4nic), Den Haag.
+Coder from the terminal generation who loves complex dynamic systems, asynchronous agents, science, magic, mystery, colour, sculpture, rain, food, exercise, human behaviour, crypto, hermetism, meditation, hypnosis.
+17 blog posts (2010-2015), 8 portfolio projects, a short bio, a contact line.
 
-## Direction: A over B
+The first brief (a quiet Omarchy-style colony) was rejected as boring.
+Restraint is not the axis.
+Energy is.
 
-### Surface: the colony
+## What it must feel like
 
-Omarchy's silence and monospace discipline, but in colour.
-One monospace face, one weight, body text in one ink, enormous whitespace.
-The ground is a tinted field, never grey, never black.
+Alive.
+Bubbly.
+A page that is a place, not a document: the moment it loads, something is already happening, and it keeps happening.
+Things rise, wobble, pop, bounce, breathe, react to the cursor, and hand off to each other.
+Joy first; a visitor should grin within two seconds.
 
-Scattered pixel cells across the page are a slow cellular automaton, running live.
-The cells carry a real palette: many hues from one saturation family, so colour is everywhere and nothing is loud.
-The field thins around text so the page stays readable.
-It rains in the field when it rains in Den Haag; without a weather source, a rain toggle.
+Old pixel nostalgia, done straight and done well: chunky pixels, a limited but saturated palette, dithering, sprite animation with real frames, parallax, an attract mode.
+The seed decides which nostalgia: Game Boy Color, SNES, Amiga demoscene, arcade cabinet, C64, DOS VGA, Mac System 7, Flash-era web toy.
+Commit to one era completely; a mix reads as a costume.
 
-Three or four pixel-art agents work inside the field, each with a visible job: one collects posts, one tends the cells, one carries things between the others, one sits still.
-They hand work to each other.
-They are workers, not mascots: small, deliberate, never cute.
+## What it must contain
 
-Text prints at reading speed on first view, once, and never blocks reading.
-The pixel portrait dissolves into cells and reforms on scroll, like Omarchy's logo.
+The whole list of loves must be visible as things in the world, not as a list.
+Bubbling flasks, rain on a roof, a meditating sprite, a coin that is a crypto token, a hermetic sigil hidden somewhere, agents that pass work to each other.
+Real content, presented in-world: posts as items or cartridges or signs, portfolio as levels or rooms, the bio as a character card, the contact as a mailbox.
+Every post and every portfolio project is reachable and readable; the text itself stays legible, pixel font for display only, a real mono or sans for body copy.
+Works at 1440 and at 390 wide.
+Sound is welcome but off until the visitor turns it on.
 
-### Hidden layer: the figure
+## What it must not be
 
-Beneath the surface is one hermetic figure drawn in strict pixel line-work: circles, a tablet, "as above so below", with stations for lab, dojo, kitchen, temple, trading floor.
-Hold space, or wait through a slow breath timer, and it shows through in full colour; the colony was walking on it the whole time.
-Release, and the surface returns.
-Meditation is the interaction model; mystery is the payoff.
-
-## Content
-
-Real content only: the post list with dates and one-line subtitles, the bio, the portfolio, the contact line.
-Navigation must work without the hidden layer.
+A text column with decoration around it.
+A grey or beige page.
+Purple gradients, glows, cards, kicker labels, icon tiles, or any pattern that reads as generated.
+Cute mascots; sprites are characters with jobs.
 
 ## Constraints
 
-Static HTML, CSS, and JS in one file per variant; no framework, no build step.
-Works at 1440 and 390 wide.
-No purple gradients, glows, cards, kicker labels, or icon tiles.
-Restraint everywhere the system is not.
+Static HTML, CSS, and JS in one file per variant; no framework, no build.
+Draw sprites and scenes in code (canvas or CSS pixels) with real frames; hand-drawn SVG scenes are out.
+If you think "there is no way this will work", you are on the right track.
