@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Boy Maas (m4nic)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fragment+Mono&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ground:#f3f6e5;
+  --ink:#32351d;
+  --muted:#7a7e63;
+  --rule:#d7dbbd;
+  --ghost:.42;
+  --col:68ch;
+}
+*{box-sizing:border-box}
+html{background:var(--ground)}
+body{
+  margin:0;
+  background:var(--ground);
+  color:var(--ink);
+  font-family:"Fragment Mono","SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
+  font-weight:400;
+  font-size:15px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+#field{position:fixed;left:0;top:0;width:100%;height:100%;z-index:0;pointer-events:none}
+#page{
+  position:relative;z-index:1;
+  max-width:var(--col);
+  margin:0;
+  padding:72px 20px 96px clamp(20px,11vw,180px);
+  box-sizing:content-box;
+  transition:opacity .6s ease;
+}
+#page.dim{opacity:.22}
+a{color:inherit;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px;text-decoration-color:rgba(50,53,29,.35)}
+a:hover{text-decoration-color:var(--ink)}
+h1,h2{font-size:inherit;font-weight:400;margin:0}
+h2{margin:0 0 6px}
+h2::before{content:"# ";color:var(--muted)}
+p{margin:0 0 1.65em}
+section{margin:0 0 4.4em}
+header{margin:0 0 3.3em}
+header .sub{color:var(--muted)}
+nav{margin-top:1.65em}
+nav a{margin-right:1.6em}
+#portrait{display:block;width:100%;height:auto;margin:0 0 3.3em}
+ul{list-style:none;margin:0;padding:0}
+.posts li{margin:0 0 1.1em}
+.posts .date{color:var(--muted);white-space:nowrap;margin-right:1ch}
+.posts .sub{display:block;color:var(--muted);padding-left:12ch}
+.work li{margin:0 0 .55em}
+.work .client{color:var(--muted)}
+footer{margin-top:2.2em;color:var(--muted)}
+footer .sep{margin:0 .8em}
+footer button{
+  font:inherit;color:inherit;background:none;border:0;padding:0;margin:0;cursor:pointer;
+  text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px;text-decoration-color:rgba(50,53,29,.35);
+}
+footer button:hover{text-decoration-color:var(--ink)}
+.tt .g{opacity:var(--ghost)}
+.tt .c{background:var(--rule)}
+@media (max-width:640px){
+  body{font-size:14px}
+  #page{padding:40px 20px 72px 20px}
+  .posts .sub{padding-left:0}
+  .posts .date{display:block;margin-right:0}
+}
+@media (prefers-reduced-motion:reduce){
+  #page{transition:none}
+}
+</style>
+</head>
+<body>
+<canvas id="field" aria-hidden="true"></canvas>
+
+<div id="page">
+  <header>
+    <h1 class="tt">Boy Maas <span class="sub">(m4nic)</span></h1>
+    <div class="sub tt">coder, terminal generation, Den Haag</div>
+    <nav class="tt"><a href="#posts">posts</a><a href="#work">work</a><a href="#about">about</a><a href="https://github.com/boymaas">github</a></nav>
+  </header>
+
+  <canvas id="portrait" width="280" height="157" aria-label="Portrait of Boy Maas"></canvas>
+
+  <section id="about">
+    <h2 class="tt">about</h2>
+    <p class="tt">Entrepreneur, programmer, designer, philosopher, AI enthusiast. I write haskell, scheme, ruby, python, clojure, perl, lisp, C/C++ and assembler, in vim. Away from the keyboard: chess, martial arts, music.</p>
+    <p class="tt">I run a small development studio in Den Haag, founded in March 1998. Clients have included Voetbal International, Coca-Cola, Sponsorloterij, De Telegraaf and Telfort BV.</p>
+  </section>
+
+  <section id="posts">
+    <h2 class="tt">posts</h2>
+    <ul class="posts">
+      <li class="post tt"><span class="date">2015-10-31</span> <a href="/posts/2015-10-31-coffeescript-screencasts.html">CoffeeScript screencasts</a><span class="sub">Overflowing backend technologies in the frontend</span></li>
+      <li class="post tt"><span class="date">2015-08-05</span> <a href="/posts/2015-08-05-clojure-screencasts.html">Clojure screencasts</a><span class="sub">what gets measured, gets managed</span></li>
+      <li class="post tt"><span class="date">2012-07-03</span> <a href="/posts/2012-07-03-adam-curtis-all-watched-over-by-machines-of-loving-grace.html">An alternative view on the foundations of our society</a><span class="sub">All watched over by machines of loving grace</span></li>
+      <li class="post tt"><span class="date">2012-06-13</span> <a href="/posts/2012-06-13-ruby-exceptions-benchmark.html">Ruby exception handling benchmark</a><span class="sub">Getting into the nitty gritty details</span></li>
+      <li class="post tt"><span class="date">2012-02-10</span> <a href="/posts/2012-02-10-ruby-org-mode-parser-development-log.html">Ruby org-mode parser development log</a><span class="sub">Development log</span></li>
+      <li class="post tt"><span class="date">2012-01-29</span> <a href="/posts/2012-01-29-software-architecture.html">Software architecture</a><span class="sub">Elements of software architecture</span></li>
+      <li class="post tt"><span class="date">2011-09-07</span> <a href="/posts/2011-09-07-kinetic-typography.html">Kinetic Typography</a><span class="sub">How movement conveys emotion</span></li>
+      <li class="post tt"><span class="date">2011-02-20</span> <a href="/posts/2011-02-20-rails-experiences.html">Rails experiences</a><span class="sub">Reasons why rails development seems so productive</span></li>
+      <li class="post tt"><span class="date">2010-06-15</span> <a href="/posts/2010-06-15-clocks-portmortem.html">Clocks webdsl postmortem</a><span class="sub">Designing a webdsl in clojure</span></li>
+      <li class="post tt"><span class="date">2010-05-24</span> <a href="/posts/2010-05-24-webapps-haskell-loli-hack.html">Hack, Loli, the rake/webpy for Haskell?</a><span class="sub">A minimalistic DSL to webapps in Haskell</span></li>
+      <li class="post tt"><span class="date">2010-05-20</span> <a href="/posts/2010-05-20-currying-in-scheme.html">Currying in scheme</a><span class="sub">define-syntax beauty</span></li>
+      <li class="post tt"><span class="date">2010-05-15</span> <a href="/posts/2010-05-15-web-apps-in-plt-scheme.html">Web-apps with PLT-Scheme, snoozing while dispatching?</a><span class="sub">Web apps in scheme, too good to be true?</span></li>
+      <li class="post tt"><span class="date">2010-05-14</span> <a href="/posts/2010-05-14-scheme-call-with-current-continuation.html">Ying Yang call/cc or the call-with-current-continuation puzzle</a><span class="sub">interesting scheme paradigm</span></li>
+      <li class="post tt"><span class="date">2010-05-11</span> <a href="/posts/2010-05-11-opengl-plt-scheme-programming.html">Live coding OpenGl in PLT-Scheme</a><span class="sub">Evolutionary coding in scheme</span></li>
+      <li class="post tt"><span class="date">2010-05-04</span> <a href="/posts/2010-05-04-html5-canvas-element.html">Playing around with the HTML5 Canvas element</a><span class="sub">What is the fuzz all about</span></li>
+      <li class="post tt"><span class="date">2010-02-17</span> <a href="/posts/2010-02-17-procedural-generation.html">Procedural Generation, a way to go?</a><span class="sub">The art of generating content procedurally</span></li>
+      <li class="post tt"><span class="date">2010-02-09</span> <a href="/posts/2010-02-09-a-haskel-blog.html">Hakyll blog setup</a><span class="sub">Setting up a maintainable blog using haskell</span></li>
+    </ul>
+  </section>
+
+  <section id="work">
+    <h2 class="tt">work</h2>
+    <ul class="work">
+      <li class="tt"><a href="/portfolio/07_stockers.html">Stockers</a> <span class="client">EduConcepts</span></li>
+      <li class="tt"><a href="/portfolio/06_keygamesnetwork.html">Keygamesnetwork</a> <span class="client">Spele.nl, I-Med</span></li>
+      <li class="tt"><a href="/portfolio/05_gamebattle.html">Gamebattle</a> <span class="client">AD, Spele.nl, WNF</span></li>
+      <li class="tt"><a href="/portfolio/04_transferspel.html">Transferspel</a> <span class="client">De Telegraaf</span></li>
+      <li class="tt"><a href="/portfolio/03_nvq.html">Nationale Voetbal Quiz</a> <span class="client">Voetbal International</span></li>
+      <li class="tt"><a href="/portfolio/02_hitmasterv20.html">Hitmaster 2.0</a> <span class="client">Coca-Cola, Radio538, Hitkrant</span></li>
+      <li class="tt"><a href="/portfolio/01_hitmasterv10.html">Hitmaster</a> <span class="client">Coca-Cola</span></li>
+      <li class="tt"><a href="/portfolio/00_freelance.html">Freelance projects</a></li>
+    </ul>
+  </section>
+
+  <section id="contact">
+    <h2 class="tt">contact</h2>
+    <p class="tt">boy.maas (at) gmail.com<br><a href="https://github.com/boymaas">github.com/boymaas</a></p>
+  </section>
+
+  <footer>
+    <p class="tt"><button id="rain" type="button" aria-pressed="false">rain: off</button><span class="sep">/</span><span id="hint">hold space</span><span class="sep">/</span>1998-2026 Boy Maas</p>
+  </footer>
+</div>
+
+<script>
+(function(){
+'use strict';
+
+// ---------- constants ----------
+var P = 8;          // grid pitch
+var S = 6;          // cell size
+var TICK = 680;     // automaton period
+var STEP = 110;     // agent step period
+var HUES = 24;
+var BREATH_IDLE = 68000;
+var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+var params = new URLSearchParams(location.search);
+
+var surf = [], fig = [];
+for (var i = 0; i < HUES; i++) {
+  surf.push('hsl(' + (i * 15) + ' 52% 58%)');
+  fig.push('hsl(' + (i * 15) + ' 72% 46%)');
+}
+var INK = '#32351d';
+var RAIN = 'hsl(205 52% 62%)';
+
+// ---------- grid over the document ----------
+var canvas = document.getElementById('field');
+var ctx = canvas.getContext('2d');
+var page = document.getElementById('page');
+var cols = 0, rows = 0, cells, hue, age, mask, figure, next, nextHue;
+var vw = 0, vh = 0, dpr = 1;
+var docW = 0, docH = 0;
+
+function rnd(n) { return (Math.random() * n) | 0; }
+
+function contentBox() {
+  var pr = page.getBoundingClientRect(), cs = getComputedStyle(page);
+  return { left: pr.left + parseFloat(cs.paddingLeft), right: pr.right - parseFloat(cs.paddingRight) };
+}
+function docSize() {
+  docW = document.documentElement.clientWidth;
+  docH = Math.max(document.documentElement.scrollHeight, window.innerHeight);
+}
+
+function setupGrid() {
+  docSize();
+  var c = Math.ceil(docW / P), r = Math.ceil(docH / P);
+  if (c === cols && r === rows && cells) { buildMask(); buildFigure(); return; }
+  var oldCells = cells, oldHue = hue, oc = cols, or = rows;
+  cols = c; rows = r;
+  var n = cols * rows;
+  cells = new Uint8Array(n); hue = new Uint8Array(n); age = new Uint8Array(n);
+  next = new Uint8Array(n); nextHue = new Uint8Array(n);
+  mask = new Uint8Array(n); figure = new Uint8Array(n);
+  if (oldCells) {
+    for (var y = 0; y < Math.min(or, rows); y++) for (var x = 0; x < Math.min(oc, cols); x++) {
+      cells[y * cols + x] = oldCells[y * oc + x]; hue[y * cols + x] = oldHue[y * oc + x];
+    }
+  } else {
+    seed();
+  }
+  buildMask(); buildFigure();
+}
+
+function seed() {
+  var n = cols * rows;
+  for (var i = 0; i < n; i++) {
+    if (Math.random() < 0.13) { cells[i] = 1; hue[i] = rnd(HUES); age[i] = 3; }
+  }
+  // clusters so the first frame has some structure
+  for (var k = 0; k < n / 900; k++) {
+    var cx = rnd(cols), cy = rnd(rows), h = rnd(HUES);
+    for (var j = 0; j < 9; j++) {
+      var x = cx + rnd(5) - 2, y = cy + rnd(5) - 2;
+      if (x >= 0 && y >= 0 && x < cols && y < rows) { cells[y * cols + x] = 1; hue[y * cols + x] = (h + rnd(3)) % HUES; age[y * cols + x] = 3; }
+    }
+  }
+}
+
+function markRect(arr, x0, y0, x1, y1, v) {
+  var cx0 = Math.max(0, Math.floor(x0 / P)), cy0 = Math.max(0, Math.floor(y0 / P));
+  var cx1 = Math.min(cols - 1, Math.ceil(x1 / P)), cy1 = Math.min(rows - 1, Math.ceil(y1 / P));
+  for (var y = cy0; y <= cy1; y++) for (var x = cx0; x <= cx1; x++) arr[y * cols + x] = v;
+}
+
+function buildMask() {
+  mask.fill(0);
+  var sy = window.pageYOffset, sx = window.pageXOffset;
+  var els = page.querySelectorAll('h1, h2, p, li, nav, .sub, #portrait');
+  for (var i = 0; i < els.length; i++) {
+    var r = els[i].getBoundingClientRect();
+    if (r.width === 0) continue;
+    markRect(mask, r.left + sx - 6, r.top + sy - 4, r.right + sx + 6, r.bottom + sy + 4, 1);
+  }
+  // seed respects the mask: thin the initial field under text
+  for (var j = 0; j < cells.length; j++) if (mask[j] && cells[j] && Math.random() < 0.8) cells[j] = 0;
+}
+
+// ---------- automaton: HighLife B36/S23 ----------
+function tick() {
+  var n = cols * rows, w = cols;
+  for (var y = 0; y < rows; y++) {
+    var up = y > 0, dn = y < rows - 1;
+    for (var x = 0; x < w; x++) {
+      var i = y * w + x, c = 0, lf = x > 0, rt = x < w - 1, ph = -1;
+      if (up) { if (lf && cells[i - w - 1]) { c++; ph = i - w - 1; } if (cells[i - w]) { c++; ph = i - w; } if (rt && cells[i - w + 1]) { c++; ph = i - w + 1; } }
+      if (lf && cells[i - 1]) { c++; ph = i - 1; }
+      if (rt && cells[i + 1]) { c++; ph = i + 1; }
+      if (dn) { if (lf && cells[i + w - 1]) { c++; ph = i + w - 1; } if (cells[i + w]) { c++; ph = i + w; } if (rt && cells[i + w + 1]) { c++; ph = i + w + 1; } }
+      var alive = cells[i], m = mask[i], v = 0, h = hue[i];
+      if (alive) {
+        v = (c === 2 || c === 3) ? 1 : 0;
+        if (v && m && Math.random() > 0.25) v = 0;
+        if (!v && !m && c === 1 && Math.random() < 0.08) v = 1; // loners linger
+      } else if (!m) {
+        if (c === 3 || c === 6) { v = 1; h = figure[i] ? figure[i] - 1 : (hue[ph] + 1) % HUES; }
+        else if (Math.random() < 0.0006) { v = 1; h = figure[i] ? figure[i] - 1 : rnd(HUES); }
+      }
+      next[i] = v; nextHue[i] = h;
+      age[i] = v ? (alive ? Math.min(age[i] + 1, 250) : 1) : 0;
+    }
+  }
+  var t = cells; cells = next; next = t;
+  t = hue; hue = nextHue; nextHue = t;
+}
+
+function birth(x, y, h) {
+  if (x < 0 || y < 0 || x >= cols || y >= rows) return;
+  var i = y * cols + x;
+  if (mask[i]) return;
+  cells[i] = 1; hue[i] = h; age[i] = 2;
+}
+function kill(x, y) {
+  if (x < 0 || y < 0 || x >= cols || y >= rows) return;
+  cells[y * cols + x] = 0;
+}
+function countAround(x, y, r) {
+  var c = 0;
+  for (var yy = y - r; yy <= y + r; yy++) for (var xx = x - r; xx <= x + r; xx++)
+    if (xx >= 0 && yy >= 0 && xx < cols && yy < rows && cells[yy * cols + xx]) c++;
+  return c;
+}
+
+// ---------- the figure ----------
+function fpx(x, y, h) { if (x >= 0 && y >= 0 && x < cols && y < rows) figure[y * cols + x] = h + 1; }
+function fline(x0, y0, x1, y1, h) {
+  var dx = Math.abs(x1 - x0), dy = -Math.abs(y1 - y0), sx = x0 < x1 ? 1 : -1, sy = y0 < y1 ? 1 : -1, err = dx + dy;
+  for (var k = 0; k < 4000; k++) {
+    fpx(x0, y0, h);
+    if (x0 === x1 && y0 === y1) break;
+    var e2 = 2 * err;
+    if (e2 >= dy) { err += dy; x0 += sx; }
+    if (e2 <= dx) { err += dx; y0 += sy; }
+  }
+}
+function fcircle(cx, cy, r, h) {
+  var x = r, y = 0, err = 1 - r;
+  while (x >= y) {
+    fpx(cx + x, cy + y, h); fpx(cx + y, cy + x, h); fpx(cx - y, cy + x, h); fpx(cx - x, cy + y, h);
+    fpx(cx - x, cy - y, h); fpx(cx - y, cy - x, h); fpx(cx + y, cy - x, h); fpx(cx + x, cy - y, h);
+    y++;
+    if (err < 0) err += 2 * y + 1; else { x--; err += 2 * (y - x) + 1; }
+  }
+}
+function frect(x0, y0, x1, y1, h) { fline(x0, y0, x1, y0, h); fline(x1, y0, x1, y1, h); fline(x1, y1, x0, y1, h); fline(x0, y1, x0, y0, h); }
+function fglyph(rowsStr, x, y, h) {
+  for (var j = 0; j < rowsStr.length; j++) for (var i = 0; i < rowsStr[j].length; i++) if (rowsStr[j][i] === '#') fpx(x + i, y + j, h);
+}
+var FONT = {
+  A: ['.#.', '#.#', '###', '#.#', '#.#'], S: ['###', '#..', '###', '..#', '###'], B: ['##.', '#.#', '##.', '#.#', '##.'],
+  O: ['###', '#.#', '#.#', '#.#', '###'], V: ['#.#', '#.#', '#.#', '#.#', '.#.'], E: ['###', '#..', '##.', '#..', '###'],
+  L: ['#..', '#..', '#..', '#..', '###'], W: ['#.#', '#.#', '#.#', '###', '#.#'], ' ': ['...', '...', '...', '...', '...']
+};
+function ftext(str, cx, y, h) {
+  var x0 = cx - (str.length * 4 - 1 >> 1);
+  for (var k = 0; k < str.length; k++) fglyph(FONT[str[k]] || FONT[' '], x0 + k * 4, y, h);
+}
+var GL = {
+  lab: ['..#####..', '...#.#...', '...#.#...', '...#.#...', '..#...#..', '.#.....#.', '#..###..#', '#.#####.#', '.#######.'],
+  dojo: ['....#....', '...###...', '....#....', '.#######.', '#...#...#', '....#....', '...#.#...', '..#...#..', '.#.....#.'],
+  kitchen: ['..#...#..', '.#...#...', '..#...#..', '.........', '#########', '.#.....#.', '.#.....#.', '.#.....#.', '..#####..'],
+  temple: ['....#....', '..#####..', '#########', '.........', '.#..#..#.', '.#..#..#.', '.#..#..#.', '.#..#..#.', '#########'],
+  trading: ['........#', '.......#.', '....#.#..', '...#.#...', '..#......', '.#.......', '#........', '.........', '#########']
+};
+function buildFigure() {
+  figure.fill(0);
+  var cb = contentBox();
+  var left = cb.left + window.pageXOffset, right = cb.right + window.pageXOffset;
+  var cx = Math.round((left + right) / 2 / P);
+  var rad = Math.max(9, Math.min(26, Math.floor(Math.min(cols, rows) / 6)));
+  var top = rad + 3, bot = rows - rad - 4;
+  var H = { gold: 3, blue: 15, axis: 5, emerald: 10, red: 0, lab: 13, dojo: 23, kitchen: 2, temple: 18, trading: 8 };
+  fcircle(cx, top, rad, H.gold); fcircle(cx, top, rad >> 1, H.gold);
+  fpx(cx, top, H.gold);
+  fcircle(cx, bot, rad, H.blue); fcircle(cx, bot, rad >> 1, H.blue);
+  fpx(cx, bot, H.blue);
+  fline(cx, top + rad + 1, cx, bot - rad - 1, H.axis);
+  ftext('AS ABOVE', cx, top + rad + 3, H.red);
+  ftext('SO BELOW', cx, bot - rad - 9, H.red);
+  var mid = Math.round((top + bot) / 2);
+  var tw = Math.round(rad * 0.75), th = Math.round(rad * 0.95);
+  frect(cx - tw, mid - th, cx + tw, mid + th, H.emerald);
+  for (var k = -1; k <= 1; k++) fline(cx - tw + 3, mid + k * Math.round(th / 2), cx + tw - 3, mid + k * Math.round(th / 2), H.emerald);
+  fline(cx - tw + 3, mid - th + 3, cx - tw + 3, mid + th - 3, H.emerald);
+  var ring = rad * 1.9, names = ['temple', 'dojo', 'trading', 'kitchen', 'lab'];
+  for (var s = 0; s < 5; s++) {
+    var a = -Math.PI / 2 + s * Math.PI * 2 / 5;
+    var gx = Math.round(cx + Math.cos(a) * ring), gy = Math.round(mid + Math.sin(a) * ring);
+    var ex = Math.round(cx + Math.cos(a) * (Math.max(tw, th) + 2)), ey = Math.round(mid + Math.sin(a) * (Math.max(tw, th) + 2));
+    var sx = Math.round(cx + Math.cos(a) * (ring - 7)), sy = Math.round(mid + Math.sin(a) * (ring - 7));
+    fline(ex, ey, sx, sy, H.axis);
+    fglyph(GL[names[s]], gx - 4, gy - 4, H[names[s]]);
+  }
+}
+
+// ---------- reveal ----------
+var revealTarget = 0, reveal = 0, spaceHeld = false, touchHeld = false, breathUntil = 0, forced = params.get('reveal') === '1';
+var lastInput = performance.now();
+if (forced) { reveal = 1; revealTarget = 1; page.classList.add('dim'); }
+function updateReveal(dt) {
+  var want = (spaceHeld || touchHeld || forced || performance.now() < breathUntil) ? 1 : 0;
+  revealTarget = want;
+  var tau = (breathUntil > 0 && performance.now() < breathUntil + 4000) ? 2.4 : 0.6;
+  reveal += (revealTarget - reveal) * Math.min(1, dt / tau);
+  if (Math.abs(reveal - revealTarget) < 0.005) reveal = revealTarget;
+  page.classList.toggle('dim', reveal > 0.5);
+}
+function noteInput() { lastInput = performance.now(); }
+document.addEventListener('keydown', function (e) {
+  noteInput();
+  if (e.code === 'Space' && ['INPUT', 'TEXTAREA', 'BUTTON', 'A'].indexOf(document.activeElement.tagName) < 0) { e.preventDefault(); spaceHeld = true; forced = false; }
+  finishPrint();
+});
+document.addEventListener('keyup', function (e) { if (e.code === 'Space') spaceHeld = false; });
+window.addEventListener('blur', function () { spaceHeld = false; touchHeld = false; });
+var touchTimer = null;
+document.addEventListener('touchstart', function (e) {
+  noteInput();
+  if (e.target.closest && e.target.closest('a, button')) return;
+  clearTimeout(touchTimer);
+  touchTimer = setTimeout(function () { touchHeld = true; forced = false; }, 450);
+}, { passive: true });
+function endTouch() { clearTimeout(touchTimer); touchHeld = false; }
+document.addEventListener('touchend', endTouch); document.addEventListener('touchcancel', endTouch);
+document.addEventListener('touchmove', function () { clearTimeout(touchTimer); }, { passive: true });
+document.addEventListener('mousemove', noteInput, { passive: true });
+document.addEventListener('scroll', noteInput, { passive: true });
+document.addEventListener('pointerdown', function () { noteInput(); finishPrint(); });
+
+// ---------- rain ----------
+var raining = false, drops = [];
+var rainBtn = document.getElementById('rain');
+try { raining = localStorage.getItem('rain') === '1'; } catch (e) {}
+function setRain(on) {
+  raining = on;
+  rainBtn.textContent = 'rain: ' + (on ? 'on' : 'off');
+  rainBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
+  try { localStorage.setItem('rain', on ? '1' : '0'); } catch (e) {}
+}
+setRain(raining);
+rainBtn.addEventListener('click', function () { setRain(!raining); rainBtn.blur(); });
+function updateRain(dt) {
+  var sy = window.pageYOffset;
+  if (raining && !reduced) {
+    var want = vw / 80 * dt * 6;
+    for (var k = want; k > 0; k--) if (Math.random() < k) drops.push({ x: rnd(Math.ceil(vw / P)), y: -16 - rnd(60), end: rnd(vh), v: 520 + rnd(300) });
+  }
+  for (var i = drops.length - 1; i >= 0; i--) {
+    var d = drops[i];
+    d.y += d.v * dt;
+    if (d.y >= d.end) {
+      drops.splice(i, 1);
+      var gx = d.x, gy = Math.floor((d.end + sy) / P);
+      if (Math.random() < 0.35) birth(gx, gy, 13 + rnd(2));
+    }
+  }
+}
+
+// ---------- agents ----------
+var SPR = {
+  walk0: ['..#..', '.###.', '..#..', '.###.', '#.#.#', '..#..', '.#.#.'],
+  walk1: ['..#..', '.###.', '..#..', '.###.', '#.#.#', '..#..', '#...#'],
+  sit:   ['..#..', '.###.', '..#..', '.####', '.#...', '.###.', '.#.#.']
+};
+var PX = 3;
+var agents = [], sitterPile = [], depot = { x: 0, y: 0 }, sitterPos = { x: 0, y: 0 };
+var vcols = 0, vrows = 0;
+
+function Agent(job) {
+  this.job = job; this.x = 0; this.y = 0; this.tx = 0; this.ty = 0; this.frame = 0;
+  this.token = -1; this.bundle = 0; this.state = 'idle'; this.wait = 0; this.tool = job;
+}
+function placeAgents() {
+  vcols = Math.ceil(vw / P); vrows = Math.ceil(vh / P);
+  var cb = contentBox();
+  var colRight = Math.floor(cb.right / P), colLeft = Math.floor(cb.left / P);
+  var wide = vw - cb.right > 140;
+  if (wide) {
+    depot = { x: colRight + 7, y: Math.floor(vrows * 0.42) };
+    sitterPos = { x: colRight + 16, y: Math.floor(vrows * 0.66) };
+  } else {
+    depot = { x: colLeft + 4, y: vrows - 5 };
+    sitterPos = { x: vcols - 6, y: vrows - 5 };
+  }
+  for (var i = 0; i < agents.length; i++) {
+    var a = agents[i];
+    a.x = Math.max(1, Math.min(vcols - 2, a.x)); a.y = Math.max(2, Math.min(vrows - 2, a.y));
+    if (a.job === 'sitter') { a.x = sitterPos.x; a.y = sitterPos.y; }
+  }
+}
+function makeAgents() {
+  var c = new Agent('collector'), k = new Agent('carrier'), t = new Agent('tender'), s = new Agent('sitter');
+  agents = [c, k, t, s];
+  placeAgents();
+  c.x = depot.x - 6; c.y = depot.y + 4;
+  k.x = depot.x; k.y = depot.y;
+  t.x = Math.floor(vcols * 0.5); t.y = Math.floor(vrows * 0.8);
+  s.x = sitterPos.x; s.y = sitterPos.y;
+  c.state = 'toPost'; k.state = 'wait'; t.state = 'pick';
+}
+function visiblePosts() {
+  var out = [], els = document.querySelectorAll('.post');
+  for (var i = 0; i < els.length; i++) {
+    var r = els[i].getBoundingClientRect();
+    if (r.top > 24 && r.bottom < vh - 24) out.push({ el: els[i], top: r.top, left: r.left, height: r.height, year: parseInt(els[i].textContent, 10) || 2010 });
+  }
+  return out;
+}
+function setTarget(a, x, y) {
+  a.tx = Math.max(1, Math.min(vcols - 2, x)); a.ty = Math.max(2, Math.min(vrows - 2, y));
+}
+function walk(a) {
+  if (a.x === a.tx && a.y === a.ty) return true;
+  if (a.x !== a.tx && (a.y === a.ty || Math.random() < 0.6)) a.x += a.x < a.tx ? 1 : -1;
+  else a.y += a.y < a.ty ? 1 : -1;
+  a.frame ^= 1;
+  return false;
+}
+function adjacent(a, b) { return Math.abs(a.x - b.x) <= 2 && Math.abs(a.y - b.y) <= 2; }
+function stepAgents() {
+  var collector = agents[0], carrier = agents[1], tender = agents[2], sitter = agents[3];
+  var sy = window.pageYOffset;
+  // collector
+  if (collector.wait > 0) collector.wait--;
+  else if (collector.state === 'toPost') {
+    if (!collector.hasTarget) {
+      var ps = visiblePosts();
+      if (ps.length) {
+        var r = ps[rnd(ps.length)];
+        setTarget(collector, Math.floor((r.left - 14) / P), Math.floor((r.top + r.height * 0.5) / P) + 1);
+        collector.postRect = r; collector.hasTarget = true;
+      } else {
+        setTarget(collector, depot.x - 4, depot.y + 3 + rnd(3) - 1);
+        collector.wait = 8;
+      }
+    } else if (walk(collector)) {
+      var ps2 = visiblePosts(), ok = false;
+      for (var i = 0; i < ps2.length; i++) if (ps2[i].el === collector.postRect.el) ok = true;
+      collector.hasTarget = false;
+      if (ok) { collector.state = 'collect'; collector.wait = 6; }
+    }
+  } else if (collector.state === 'collect') {
+    var yr = collector.postRect ? collector.postRect.year : 2010;
+    collector.token = (3 + Math.round(((yr - 2010) / 5) * 12) + rnd(2)) % HUES;
+    collector.state = 'toDepot'; collector.hasTarget = false;
+  } else if (collector.state === 'toDepot') {
+    if (!collector.hasTarget) { setTarget(collector, depot.x - 3, depot.y); collector.hasTarget = true; }
+    if (walk(collector) || adjacent(collector, carrier)) {
+      if (carrier.state === 'wait' && adjacent(collector, carrier)) {
+        carrier.token = collector.token; collector.token = -1;
+        carrier.state = 'toSitter'; carrier.hasTarget = false;
+        collector.state = 'toPost'; collector.hasTarget = false; collector.wait = 5;
+      } else if (collector.x === collector.tx && collector.y === collector.ty) collector.wait = 3;
+    }
+  }
+  // carrier
+  if (carrier.wait > 0) carrier.wait--;
+  else if (carrier.state === 'wait') {
+    if (!carrier.hasTarget) { setTarget(carrier, depot.x, depot.y); carrier.hasTarget = true; }
+    walk(carrier);
+    if (sitterPile.length >= 6 && carrier.token < 0) { carrier.state = 'fetch'; carrier.hasTarget = false; }
+  } else if (carrier.state === 'toSitter') {
+    if (!carrier.hasTarget) { setTarget(carrier, sitter.x - 3, sitter.y); carrier.hasTarget = true; }
+    if (walk(carrier) || adjacent(carrier, sitter)) {
+      sitterPile.push(carrier.token); carrier.token = -1;
+      carrier.state = 'wait'; carrier.hasTarget = false; carrier.wait = 4;
+    }
+  } else if (carrier.state === 'fetch') {
+    if (!carrier.hasTarget) { setTarget(carrier, sitter.x - 3, sitter.y); carrier.hasTarget = true; }
+    if (walk(carrier) || adjacent(carrier, sitter)) {
+      carrier.bundle = sitterPile.length; carrier.bundleHues = sitterPile.slice(); sitterPile = [];
+      carrier.token = carrier.bundleHues[0];
+      carrier.state = 'toTender'; carrier.hasTarget = false; carrier.wait = 3;
+    }
+  } else if (carrier.state === 'toTender') {
+    if (!carrier.hasTarget || (rnd(6) === 0)) { setTarget(carrier, tender.x - 3, tender.y); carrier.hasTarget = true; }
+    if (walk(carrier) || adjacent(carrier, tender)) {
+      if (adjacent(carrier, tender)) {
+        tender.bundleHues = carrier.bundleHues; carrier.bundleHues = null; carrier.bundle = 0; carrier.token = -1;
+        tender.state = 'plantBundle'; tender.hasTarget = false; tender.wait = 2;
+        carrier.state = 'wait'; carrier.hasTarget = false; carrier.wait = 3;
+      } else carrier.hasTarget = false;
+    }
+  }
+  // tender
+  if (tender.wait > 0) tender.wait--;
+  else if (tender.state === 'pick') {
+    setTarget(tender, 1 + rnd(vcols - 2), 2 + rnd(vrows - 4));
+    tender.state = 'go';
+  } else if (tender.state === 'go') {
+    if (walk(tender)) { tender.state = 'tend'; tender.wait = 4; }
+  } else if (tender.state === 'tend') {
+    var gx = tender.x + 2, gy = tender.y + Math.floor(sy / P);
+    var n = countAround(gx, gy, 3);
+    var h = (tender.token >= 0 ? tender.token : rnd(HUES));
+    if (n < 4) {
+      var pat = rnd(2) ? [[0, 0], [1, 0], [2, 0]] : [[1, 0], [2, 1], [0, 2], [1, 2], [2, 2]];
+      for (var p = 0; p < pat.length; p++) birth(gx + pat[p][0] - 1, gy + pat[p][1] - 1, (h + p) % HUES);
+    } else if (n > 22) {
+      for (var q = 0; q < 6; q++) kill(gx + rnd(5) - 2, gy + rnd(5) - 2);
+    }
+    tender.state = 'pick'; tender.wait = 6;
+  } else if (tender.state === 'plantBundle') {
+    var bx = tender.x + 3, by = tender.y + Math.floor(sy / P), hs = tender.bundleHues || [];
+    for (var b = 0; b < hs.length; b++) birth(bx + (b % 3), by - 1 + Math.floor(b / 3), hs[b]);
+    tender.bundleHues = null; tender.state = 'pick'; tender.wait = 8;
+  }
+}
+
+function drawSprite(a, ox, oy) {
+  var spr = a.job === 'sitter' ? SPR.sit : (a.frame ? SPR.walk1 : SPR.walk0);
+  var x0 = ox + a.x * P - 2 * PX, y0 = oy + a.y * P + P - 7 * PX;
+  ctx.fillStyle = INK;
+  for (var j = 0; j < 7; j++) for (var i = 0; i < 5; i++) if (spr[j][i] === '#') ctx.fillRect(x0 + i * PX, y0 + j * PX, PX, PX);
+  if (a.job === 'collector') { ctx.fillRect(x0 + 5 * PX, y0 + 3 * PX, 2 * PX, 2 * PX); }
+  if (a.job === 'tender') { ctx.fillRect(x0 + 6 * PX, y0, PX, 7 * PX); ctx.fillRect(x0 + 5 * PX, y0, PX, PX); }
+  if (a.token >= 0) { ctx.fillStyle = surf[a.token]; ctx.fillRect(x0 + 5 * PX, y0 + 2 * PX - (a.job === 'collector' ? PX : 0), PX + 1, PX + 1); }
+  if (a.job === 'carrier' && a.bundle > 1) {
+    for (var b = 1; b < Math.min(a.bundle, 6); b++) { ctx.fillStyle = surf[a.bundleHues[b]]; ctx.fillRect(x0 + 5 * PX + (b % 2) * (PX + 1), y0 - Math.floor(b / 2) * (PX + 1) - PX, PX, PX); }
+  }
+  if (a.job === 'sitter') {
+    for (var k = 0; k < sitterPile.length; k++) { ctx.fillStyle = surf[sitterPile[k]]; ctx.fillRect(x0 + 6 * PX + (k % 3) * (PX + 1), y0 + 6 * PX - Math.floor(k / 3) * (PX + 1), PX, PX); }
+  }
+}
+
+// ---------- draw ----------
+function draw() {
+  var sy = window.pageYOffset, sx = window.pageXOffset;
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.clearRect(0, 0, vw, vh);
+  var y0 = Math.max(0, Math.floor(sy / P)), y1 = Math.min(rows - 1, Math.ceil((sy + vh) / P));
+  var x0 = Math.max(0, Math.floor(sx / P)), x1 = Math.min(cols - 1, Math.ceil((sx + vw) / P));
+  var off = (P - S) / 2;
+  // figure beneath
+  if (reveal > 0.01) {
+    ctx.globalAlpha = reveal;
+    for (var y = y0; y <= y1; y++) for (var x = x0; x <= x1; x++) {
+      var f = figure[y * cols + x];
+      if (f) { ctx.fillStyle = fig[f - 1]; ctx.fillRect(x * P - sx, y * P - sy, P, P); }
+    }
+  }
+  // cells
+  for (var yy = y0; yy <= y1; yy++) for (var xx = x0; xx <= x1; xx++) {
+    var i = yy * cols + xx;
+    if (!cells[i]) continue;
+    var a = mask[i] ? 0.3 : 1;
+    if (reveal > 0.01) a *= (figure[i] ? 1 : 1 - 0.55 * reveal);
+    ctx.globalAlpha = a;
+    ctx.fillStyle = (reveal > 0.5 && figure[i]) ? fig[hue[i]] : surf[hue[i]];
+    var s = age[i] < 2 ? S - 2 : S;
+    ctx.fillRect(xx * P - sx + off + (S - s) / 2, yy * P - sy + off + (S - s) / 2, s, s);
+  }
+  ctx.globalAlpha = 1;
+  // rain
+  if (drops.length) {
+    ctx.fillStyle = RAIN; ctx.globalAlpha = 0.75;
+    for (var d = 0; d < drops.length; d++) ctx.fillRect(drops[d].x * P + off, drops[d].y, S - 2, P + S);
+    ctx.globalAlpha = 1;
+  }
+  // agents
+  ctx.globalAlpha = 1 - 0.5 * reveal;
+  for (var k = 0; k < agents.length; k++) drawSprite(agents[k], 0, 0);
+  ctx.globalAlpha = 1;
+}
+
+// ---------- portrait ----------
+var por = document.getElementById('portrait'), pctx = por.getContext('2d');
+var pimg = new Image(), pready = false, pcells = null, pcols = 0, prows = 0, small = document.createElement('canvas'), pixels = null;
+var pW = 0, pH = 0, pPitch = P, pCell = S;
+pimg.onload = function () { pready = true; sizePortrait(); };
+pimg.onerror = function () { por.style.display = 'none'; };
+pimg.src = '../../../images/profile-picture-small.jpg';
+function sizePortrait() {
+  if (!pready) return;
+  var w = Math.min(por.getBoundingClientRect().width || 280, 480);
+  var imgW = Math.min(w, 420);
+  pcols = Math.floor(imgW / pPitch); prows = Math.floor(pcols * 157 / 280);
+  pW = Math.floor(w); pH = prows * pPitch + 40;
+  por.width = Math.floor(pW * dpr); por.height = Math.floor(pH * dpr);
+  por.style.height = pH + 'px';
+  small.width = pcols; small.height = prows;
+  var sc = small.getContext('2d');
+  sc.drawImage(pimg, 0, 0, pcols, prows);
+  pixels = null;
+  try { pixels = sc.getImageData(0, 0, pcols, prows).data; } catch (e) { pixels = null; }
+  pcells = [];
+  for (var j = 0; j < prows; j++) for (var i = 0; i < pcols; i++) {
+    pcells.push({ t: Math.random() * 0.85, dx: (Math.random() - 0.5) * 140 + 20, dy: (Math.random() - 0.5) * 90 + 10 });
+  }
+  drawPortrait();
+}
+var lastP = -1;
+function drawPortrait() {
+  if (!pcells) return;
+  var p = reduced ? 0 : Math.max(0, Math.min(1, (window.pageYOffset - 30) / 380));
+  if (p === lastP) return; lastP = p;
+  pctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  pctx.clearRect(0, 0, pW, pH);
+  pctx.imageSmoothingEnabled = false;
+  var n = 0;
+  for (var j = 0; j < prows; j++) for (var i = 0; i < pcols; i++, n++) {
+    var c = pcells[n], x = i * pPitch + 1, y = j * pPitch + 1 + 8, a = 1, s = pCell;
+    if (p > c.t) {
+      var q = (p - c.t) / (1 - c.t);
+      x += c.dx * q; y += c.dy * q; a = 1 - q; s = pCell - 2 * q;
+      if (a <= 0.02) continue;
+    }
+    pctx.globalAlpha = a;
+    if (pixels) {
+      var k = n * 4;
+      pctx.fillStyle = 'rgb(' + pixels[k] + ',' + pixels[k + 1] + ',' + pixels[k + 2] + ')';
+      pctx.fillRect(x, y, s, s);
+    } else {
+      pctx.drawImage(small, i, j, 1, 1, x, y, s, s);
+    }
+  }
+  pctx.globalAlpha = 1;
+}
+
+// ---------- teletype ----------
+var printDone = false, printItems = [], printIdx = 0, printChar = 0, printAcc = 0, printing = false;
+try { printDone = localStorage.getItem('printed') === '1'; } catch (e) {}
+function preparePrint() {
+  var els = document.querySelectorAll('.tt');
+  for (var i = 0; i < els.length; i++) {
+    var el = els[i], spans = [];
+    var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null);
+    var texts = [], t;
+    while ((t = walker.nextNode())) texts.push(t);
+    for (var j = 0; j < texts.length; j++) {
+      var tn = texts[j], str = tn.nodeValue;
+      if (!str.trim()) continue;
+      var frag = document.createDocumentFragment();
+      for (var k = 0; k < str.length; k++) {
+        var sp = document.createElement('span'); sp.className = 'g'; sp.textContent = str[k];
+        frag.appendChild(sp); spans.push(sp);
+      }
+      tn.parentNode.replaceChild(frag, tn);
+    }
+    printItems.push({ el: el, spans: spans });
+  }
+  printing = true;
+}
+function finishPrint() {
+  if (!printing) return;
+  for (var i = printIdx; i < printItems.length; i++) {
+    var sp = printItems[i].spans;
+    for (var k = 0; k < sp.length; k++) sp[k].className = '';
+  }
+  printing = false;
+  try { localStorage.setItem('printed', '1'); } catch (e) {}
+  for (var j = 0; j < printItems.length; j++) printItems[j].el.classList.remove('tt');
+}
+function updatePrint(dt) {
+  if (!printing) return;
+  // skip ahead to what is on screen
+  var top = 0;
+  while (printIdx < printItems.length) {
+    var r = printItems[printIdx].el.getBoundingClientRect();
+    if (r.bottom < top && printIdx < printItems.length - 1) {
+      var sp0 = printItems[printIdx].spans;
+      for (var k = 0; k < sp0.length; k++) sp0[k].className = '';
+      printIdx++; printChar = 0;
+    } else break;
+  }
+  printAcc += dt * 40;
+  while (printAcc >= 1 && printIdx < printItems.length) {
+    printAcc -= 1;
+    var it = printItems[printIdx];
+    if (printChar > 0) it.spans[printChar - 1].className = '';
+    if (printChar < it.spans.length) { it.spans[printChar].className = 'c'; printChar++; }
+    else { printIdx++; printChar = 0; printAcc -= 6; }
+  }
+  if (printIdx >= printItems.length) finishPrint();
+}
+
+// ---------- loop ----------
+function resize() {
+  dpr = Math.min(2, window.devicePixelRatio || 1);
+  vw = window.innerWidth; vh = window.innerHeight;
+  canvas.width = Math.floor(vw * dpr); canvas.height = Math.floor(vh * dpr);
+  sizePortrait();
+  setupGrid();
+  placeAgents();
+  lastP = -1; drawPortrait();
+}
+var lastT = performance.now(), tickAcc = 0, stepAcc = 0, lastDocH = 0;
+function frame(now) {
+  var dt = Math.min(0.1, (now - lastT) / 1000); lastT = now;
+  if (!reduced) {
+    tickAcc += dt * 1000; stepAcc += dt * 1000;
+    if (tickAcc >= TICK) { tickAcc -= TICK; tick(); }
+    while (stepAcc >= STEP) { stepAcc -= STEP; stepAgents(); }
+  } else {
+    tickAcc += dt * 1000; if (tickAcc >= TICK * 4) { tickAcc = 0; tick(); }
+  }
+  if (!forced && !spaceHeld && !touchHeld && now - lastInput > BREATH_IDLE && now > breathUntil + 8000) { breathUntil = now + 7000; lastInput = now; }
+  updateReveal(dt);
+  updateRain(dt);
+  updatePrint(dt);
+  drawPortrait();
+  draw();
+  requestAnimationFrame(frame);
+}
+
+function relayout() {
+  docSize();
+  if (Math.abs(docH - lastDocH) > 8) { lastDocH = docH; setupGrid(); }
+}
+
+window.addEventListener('resize', resize);
+if (!printDone && !reduced) preparePrint();
+resize();
+makeAgents();
+lastDocH = docH;
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { resize(); });
+window.addEventListener('load', function () { setTimeout(resize, 50); });
+setInterval(relayout, 1500);
+requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
