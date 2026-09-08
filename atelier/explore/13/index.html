@@ -9,32 +9,35 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&display=swap" rel="stylesheet">
 <style>
 :root{
-  --cream:#F3EEE2; --ink:#1C1B22; --dim:#6E6A70; --rule:#D9D2C2;
-  --cobalt:#2D5DD6; --teal:#1E9E8A; --amber:#F2A33A; --coral:#E4553F;
+  --ground:#0B1029; --ink:#EEF1FA; --dim:#8C95B6; --rule:#323853;
+  --blue:#4F8DFF; --aqua:#2ED3C6; --mint:#8FE388; --gold:#F5B942; --coral:#FF6A5B; --rose:#EE6FB5;
   --col:min(1168px, 100% - 48px);
 }
 *{box-sizing:border-box}
-html{background:var(--cream)}
-body{margin:0;background:var(--cream);color:var(--ink);font:400 16px/1.6 "IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;-webkit-font-smoothing:antialiased}
+html{background:var(--ground)}
+body{margin:0;background:var(--ground);color:var(--ink);font:400 16px/1.6 "IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;-webkit-font-smoothing:antialiased}
 a{color:inherit;text-decoration:none}
-a:hover{color:var(--cobalt)}
+a:hover{color:var(--blue)}
 canvas{display:block}
+/* the sky: fixed, full bleed, behind everything, one canvas pixel per css pixel */
+#sky{position:fixed;left:0;top:0;width:100vw;height:100vh;z-index:0;pointer-events:none;image-rendering:pixelated;image-rendering:crisp-edges}
+header,main{position:relative;z-index:1}
 .wrap{width:var(--col);margin:0 auto}
 .dim{color:var(--dim)}
 /* header */
 .top{display:flex;justify-content:space-between;align-items:baseline;padding:24px 0;font-size:13px;line-height:1.6}
 .top nav{display:flex;gap:24px;align-items:baseline}
 .top button{font:inherit;color:var(--dim);background:none;border:0;padding:0;cursor:pointer}
-.top button:hover{color:var(--cobalt)}
+.top button:hover{color:var(--blue)}
 .top button.on{color:var(--coral)}
-/* hero: the toy box */
+/* hero: the toy floats in the field; the frame is a faint boundary */
 .hero{padding:40px 0 0}
 .box{height:520px;border:1px solid var(--rule);display:flex;align-items:center;justify-content:center;cursor:crosshair;touch-action:pan-y;overflow:hidden}
 .cap{display:flex;justify-content:space-between;gap:16px;font-size:13px;line-height:1.6;margin:8px 0 0}
 .cap b{font-weight:400}
 .hero h1{font-size:26px;line-height:1.3;font-weight:400;text-align:center;margin:56px auto 16px;max-width:36ch}
 .hero .lede{font-size:16px;color:var(--dim);text-align:center;margin:0 auto;max-width:56ch}
-.hero .whisper{font-size:13px;color:var(--teal);text-align:center;margin:24px 0 0;min-height:21px}
+.hero .whisper{font-size:13px;color:var(--aqua);text-align:center;margin:24px 0 0;min-height:21px}
 .hero .whisper[hidden]{display:block;visibility:hidden}
 .hero .pad{height:72px;border-bottom:1px solid var(--rule)}
 /* sections */
@@ -75,6 +78,7 @@ footer{margin-top:96px;border-top:1px solid var(--rule);padding:32px 0 64px;font
 </style>
 </head>
 <body>
+<canvas id="sky" aria-hidden="true"></canvas>
 <header class="wrap top">
   <a href="/">Boy Maas <span class="dim">(m4nic)</span></a>
   <nav>
@@ -91,7 +95,7 @@ footer{margin-top:96px;border-top:1px solid var(--rule);padding:32px 0 64px;font
     <p class="cap"><b id="sysname">bouncy balls</b><span class="dim" id="sysrole">cursor pushes</span></p>
     <h1>Entrepreneur, programmer, designer, philosopher.</h1>
     <p class="lede">Terminal generation. Complex dynamic systems, asynchronous agents, and a small development studio in Den Haag since March 1998.</p>
-    <p class="whisper" id="whisper" hidden>sandbox open: keys 1 to 9 pick a system, space restarts it, type play to close</p>
+    <p class="whisper" id="whisper" hidden></p>
     <div class="pad"></div>
   </section>
   <section id="posts" class="wrap grid">
@@ -147,15 +151,15 @@ footer{margin-top:96px;border-top:1px solid var(--rule);padding:32px 0 64px;font
   </section>
   <footer class="wrap">
     <span>Boy Maas, Den Haag. Studio est. March 1998.</span>
-    <span>The logo is a toy: nine systems, drawn at random. Break one, it heals.</span>
+    <span>The logo is a toy: nine systems, drawn at random. Break one, it heals. The sky flies on.</span>
   </footer>
 </main>
 <script>
 (function () {
 'use strict';
 /* ---------- palette ---------- */
-var P = { cream:'#F3EEE2', ink:'#1C1B22', dim:'#6E6A70', rule:'#D9D2C2',
-          cobalt:'#2D5DD6', teal:'#1E9E8A', amber:'#F2A33A', coral:'#E4553F' };
+var P = { ground:'#0B1029', star:'#EEF1FA', mist:'#8C95B6', rule:'#323853',
+          blue:'#4F8DFF', aqua:'#2ED3C6', mint:'#8FE388', gold:'#F5B942', coral:'#FF6A5B', rose:'#EE6FB5' };
 function rgb(h){ return [parseInt(h.slice(1,3),16), parseInt(h.slice(3,5),16), parseInt(h.slice(5,7),16)]; }
 function hex(c){ return '#' + c.map(function(v){ return ('0' + Math.round(v).toString(16)).slice(-2); }).join(''); }
 function mix(a, b, t){ var A = rgb(a), B = rgb(b); return hex([A[0]+(B[0]-A[0])*t, A[1]+(B[1]-A[1])*t, A[2]+(B[2]-A[2])*t]); }
@@ -200,8 +204,8 @@ var LOGO = [];
   }
 })();
 var LW = 58, LH = 14;
-var ROWCOL = [P.coral, P.coral, P.ink, P.ink, P.coral, mix(P.coral, P.amber, 0.5), P.amber,
-              P.cobalt, P.cobalt, mix(P.cobalt, P.teal, 0.5), P.teal, P.ink, P.amber, mix(P.amber, P.cream, 0.35)];
+var ROWCOL = [P.coral, P.coral, P.star, P.star, P.coral, mix(P.coral, P.gold, 0.5), P.gold,
+              P.blue, P.blue, mix(P.blue, P.aqua, 0.5), P.aqua, P.star, P.gold, mix(P.gold, P.star, 0.35)];
 /* ---------- world ---------- */
 var box = document.getElementById('box'), cvs = document.getElementById('hero'), ctx = cvs.getContext('2d');
 var cellPx = 12, W = 0, H = 0, OX = 0, OY = 0, S = 1, dpr = 1;
@@ -305,7 +309,7 @@ function drawCells(hot){
 /* ================= the system library ================= */
 var systems = [];
 /* 1. bouncy balls: gravity, restitution, ball-ball collisions, then springs. cursor pushes */
-systems.push({ name:'bouncy balls', role:'cursor pushes', hot:P.cream, max:13,
+systems.push({ name:'bouncy balls', role:'cursor pushes', hot:P.star, max:13,
   init:function(){
     this.t = 0; this.T1 = 4.2 + rng() * 1.6;
     cells.forEach(function(c){ c.rel = rng() * 0.9; c.e = 0.5 + rng() * 0.3; c.vx = 0; c.vy = 0; c.r = 0.5; c.free = false; });
@@ -345,7 +349,7 @@ systems.push({ name:'bouncy balls', role:'cursor pushes', hot:P.cream, max:13,
   done:function(){ return this.t > this.T1 + 1 && allHome(0.03); }
 });
 /* 2. magnet: a ghost magnet on a Lissajous path attracts, flips, repels. cursor is the magnet, press to repel */
-systems.push({ name:'magnet', role:'cursor attracts, press repels', hot:P.cream, max:14,
+systems.push({ name:'magnet', role:'cursor attracts, press repels', hot:P.star, max:14,
   init:function(){
     this.t = 0; this.T1 = 6 + rng() * 2;
     this.a = 0.9 + rng() * 1.6; this.b = 0.9 + rng() * 1.6; this.ph = rng() * 6.28;
@@ -378,14 +382,14 @@ systems.push({ name:'magnet', role:'cursor attracts, press repels', hot:P.cream,
   draw:function(){
     drawCells(this.hot);
     if (this.on && this.ghost){
-      ctx.strokeStyle = P.ink; ctx.lineWidth = 1.5 / cellPx; ctx.beginPath();
+      ctx.strokeStyle = P.star; ctx.lineWidth = 1.5 / cellPx; ctx.beginPath();
       ctx.arc(this.mx, this.my, this.pol > 0 ? 0.9 : 1.4, 0, 6.2832); ctx.stroke();
     }
   },
   done:function(){ return this.t > this.T1 + 0.5 && !cursor.inside && allHome(0.03); }
 });
 /* 3. sand: falling-sand automaton drains the letters, then they refill bottom-up. cursor digs */
-systems.push({ name:'sand', role:'cursor digs', hot:P.cream, max:17,
+systems.push({ name:'sand', role:'cursor digs', hot:P.star, max:17,
   init:function(){
     snapHome();
     this.t = 0; this.acc = 0; this.T1 = 5.2 + rng() * 1.2;
@@ -454,7 +458,7 @@ systems.push({ name:'sand', role:'cursor digs', hot:P.cream, max:17,
   done:function(){ return this.t > this.T1 + 3 && allHome(0.03); }
 });
 /* 4. life: Conway on the whole box seeded by the logo, then error-corrected back. cursor paints */
-systems.push({ name:'life', role:'cursor paints', hot:P.teal, max:16,
+systems.push({ name:'life', role:'cursor paints', hot:P.aqua, max:16,
   init:function(){
     snapHome();
     var g = this.g = new Uint8Array(W * H); this.g2 = new Uint8Array(W * H);
@@ -504,10 +508,10 @@ systems.push({ name:'life', role:'cursor paints', hot:P.teal, max:16,
   draw:function(){
     var g = this.g, born = this.born, fl = this.flash;
     for (var y = 0; y < H; y++) for (var x = 0; x < W; x++){ var i = y * W + x;
-      if (!g[i]){ if (fl[i] > 0){ ctx.fillStyle = mixQ(P.cream, P.coral, fl[i] * 0.6); ctx.fillRect(x, y, 1, 1); } continue; }
+      if (!g[i]){ if (fl[i] > 0){ ctx.fillStyle = mixQ(P.ground, P.rose, fl[i] * 0.6); ctx.fillRect(x, y, 1, 1); } continue; }
       var li = logoAt[i], col;
-      if (li >= 0) col = fl[i] > 0 ? mixQ(cells[li].col, P.coral, fl[i]) : cells[li].col;
-      else col = born[i] ? P.amber : P.teal;
+      if (li >= 0) col = fl[i] > 0 ? mixQ(cells[li].col, P.rose, fl[i]) : cells[li].col;
+      else col = born[i] ? P.mint : P.aqua;
       ctx.fillStyle = col; ctx.fillRect(x, y, 1, 1);
     }
   },
@@ -519,7 +523,7 @@ systems.push({ name:'life', role:'cursor paints', hot:P.teal, max:16,
   }
 });
 /* 5. bubbles: cells sink, rise back as bubbles, pop into place. cursor pops */
-systems.push({ name:'bubbles', role:'cursor pops', hot:P.cream, max:16,
+systems.push({ name:'bubbles', role:'cursor pops', hot:P.star, max:16,
   init:function(){
     this.t = 0;
     cells.forEach(function(c){ c.rel = rng() * 1.6; c.mode = 0; c.wob = rng() * 6.28; c.spd = 7 + rng() * 8; c.r = 0; c.ring = 0; c.vx = 0; c.vy = 0; });
@@ -548,17 +552,17 @@ systems.push({ name:'bubbles', role:'cursor pops', hot:P.cream, max:16,
     for (var i = 0; i < cells.length; i++){ var c = cells[i];
       if (c.mode === 2){
         ctx.strokeStyle = c.col; ctx.lineWidth = lw; ctx.beginPath(); ctx.arc(c.x + 0.5, c.y + 0.5, 0.42, 0, 6.2832); ctx.stroke();
-        ctx.fillStyle = mixQ(c.col, P.cream, 0.6); ctx.fillRect(c.x + 0.6, c.y + 0.22, 0.16, 0.16);
+        ctx.fillStyle = mixQ(c.col, P.star, 0.6); ctx.fillRect(c.x + 0.6, c.y + 0.22, 0.16, 0.16);
       } else {
         drawCell(c, c.mode === 1 ? mixQ(c.col, this.hot, 0.35) : c.col);
-        if (c.ring > 0){ ctx.strokeStyle = mixQ(c.col, P.cream, 1 - c.ring); ctx.lineWidth = lw; ctx.beginPath(); ctx.arc(c.x + 0.5, c.y + 0.5, 0.5 + (1 - c.ring) * 1.6, 0, 6.2832); ctx.stroke(); }
+        if (c.ring > 0){ ctx.strokeStyle = mixQ(c.col, P.star, 1 - c.ring); ctx.lineWidth = lw; ctx.beginPath(); ctx.arc(c.x + 0.5, c.y + 0.5, 0.5 + (1 - c.ring) * 1.6, 0, 6.2832); ctx.stroke(); }
       }
     }
   },
   done:function(){ if (this.t < 3) return false; for (var i = 0; i < cells.length; i++){ var c = cells[i]; if (c.mode !== 3 || c.ring > 0) return false; } return true; }
 });
 /* 6. swarm: boids at radius nine, walls, then a home pull. cursor is a predator */
-systems.push({ name:'swarm', role:'cursor scatters', hot:P.ink, max:16,
+systems.push({ name:'swarm', role:'cursor scatters', hot:P.mist, max:16,
   init:function(){
     this.t = 0; this.T1 = 5 + rng() * 3;
     cells.forEach(function(c){ var a = rng() * 6.28, s = 8 + rng() * 4; c.vx = Math.cos(a) * s; c.vy = Math.sin(a) * s; c.rel = rng() * 0.7; c.r = 0.2; });
@@ -610,7 +614,7 @@ systems.push({ name:'swarm', role:'cursor scatters', hot:P.ink, max:16,
   done:function(){ return this.t > this.T1 + 1.5 && allHome(0.04); }
 });
 /* 7. spring mesh: nodes linked to letter neighbours; plucks ring through. cursor grabs and releases */
-systems.push({ name:'spring mesh', role:'cursor plucks', hot:P.cream, max:14,
+systems.push({ name:'spring mesh', role:'cursor plucks', hot:P.star, max:14,
   init:function(){
     this.t = 0; var links = this.links = [];
     var at = {}; cells.forEach(function(c){ at[c.hx + ',' + c.hy] = c; });
@@ -652,7 +656,7 @@ systems.push({ name:'spring mesh', role:'cursor plucks', hot:P.cream, max:14,
     } else if (this.grab){ this.grab = null; sound('pluck'); }
   },
   draw:function(){
-    ctx.strokeStyle = P.rule; ctx.lineWidth = 1 / cellPx; ctx.beginPath();
+    ctx.strokeStyle = P.mist; ctx.lineWidth = 1 / cellPx; ctx.beginPath();
     var links = this.links;
     for (var i = 0; i < links.length; i++){ var a = links[i][0], b = links[i][1]; ctx.moveTo(a.x + 0.5, a.y + 0.5); ctx.lineTo(b.x + 0.5, b.y + 0.5); }
     ctx.stroke();
@@ -661,7 +665,7 @@ systems.push({ name:'spring mesh', role:'cursor plucks', hot:P.cream, max:14,
   done:function(){ return this.t > this.last + 1 && !this.grab && allHome(0.04); }
 });
 /* 8. fluid: a stable-fluids velocity field stirs the cells as markers; it damps and they drift home. cursor stirs */
-systems.push({ name:'fluid', role:'cursor stirs', hot:P.cream, max:14,
+systems.push({ name:'fluid', role:'cursor stirs', hot:P.star, max:14,
   init:function(){
     this.t = 0;
     var fw = this.fw = Math.ceil(W / 2), fh = this.fh = Math.ceil(H / 2), n = (fw + 2) * (fh + 2);
@@ -743,14 +747,14 @@ systems.push({ name:'fluid', role:'cursor stirs', hot:P.cream, max:14,
     ctx.lineWidth = 0.6; ctx.lineCap = 'round';
     for (var i = 0; i < cells.length; i++){ var c = cells[i]; var col = c.k > 0 ? mixQ(c.col, this.hot, c.k) : c.col;
       var sp = Math.sqrt(c.vx*c.vx + c.vy*c.vy);
-      if (sp > 2){ var L = Math.min(3, sp * 0.1); ctx.strokeStyle = mixQ(col, P.cream, 0.5); ctx.beginPath(); ctx.moveTo(c.x + 0.5, c.y + 0.5); ctx.lineTo(c.x + 0.5 - c.vx / sp * L, c.y + 0.5 - c.vy / sp * L); ctx.stroke(); }
+      if (sp > 2){ var L = Math.min(3, sp * 0.1); ctx.strokeStyle = mixQ(col, P.star, 0.5); ctx.beginPath(); ctx.moveTo(c.x + 0.5, c.y + 0.5); ctx.lineTo(c.x + 0.5 - c.vx / sp * L, c.y + 0.5 - c.vy / sp * L); ctx.stroke(); }
       drawCell(c, col);
     }
   },
   done:function(){ return this.t > this.T1 + 1 && allHome(0.04); }
 });
 /* 9. crystal: diffusion-limited aggregation from one seed per letter. cursor melts */
-systems.push({ name:'crystal', role:'cursor melts', hot:P.teal, max:18,
+systems.push({ name:'crystal', role:'cursor melts', hot:P.aqua, max:18,
   init:function(){
     snapHome();
     this.t = 0; this.acc = 0; this.stuckAt = new Uint8Array(W * H);
@@ -791,12 +795,137 @@ systems.push({ name:'crystal', role:'cursor melts', hot:P.teal, max:18,
   },
   draw:function(){
     for (var i = 0; i < cells.length; i++){ var c = cells[i];
-      if (c.stuck){ ctx.fillStyle = c.flash > 0 ? mixQ(c.col, P.cream, c.flash * 0.7) : c.col; ctx.fillRect(c.x, c.y, 1, 1); }
-      else { ctx.fillStyle = mixQ(P.teal, P.cream, 0.25); ctx.fillRect(c.x + 0.25, c.y + 0.25, 0.5, 0.5); }
+      if (c.stuck){ ctx.fillStyle = c.flash > 0 ? mixQ(c.col, P.star, c.flash * 0.7) : c.col; ctx.fillRect(c.x, c.y, 1, 1); }
+      else { ctx.fillStyle = P.mint; ctx.fillRect(c.x + 0.25, c.y + 0.25, 0.5, 0.5); }
     }
   },
   done:function(){ if (this.t < 2) return false; for (var i = 0; i < cells.length; i++) if (!cells[i].stuck || cells[i].flash > 0) return false; return true; }
 });
+/* ================= the sky: warp ================= */
+/* a 3D starfield flying to a vanishing point, the flower of life turning there, six states over minutes.
+   its own seeded stream, so playing with the toy never changes what the sky does. */
+var sky = (function(){
+  var cv = document.getElementById('sky'), sc = cv.getContext('2d');
+  var srng = mulberry32((SEED ^ 0x9E3779B9) >>> 0);
+  var vw = 1, vh = 1, vpx = 0, vpy = 0, F = 1, R = 100;
+  var NMAX = 789;
+  var sx = new Float32Array(NMAX), sy = new Float32Array(NMAX), sz = new Float32Array(NMAX);
+  var scol = new Uint8Array(NMAX), on = new Uint8Array(NMAX), live = 0;
+  var LUM = [P.blue, P.aqua, P.mint, P.gold, P.coral, P.rose];
+  /* depth bands: far, mid, near. index 0 is the neutral star, 1..6 the luminous ones */
+  var BAND = [[mix(P.ground, P.mist, 0.6), P.mist, P.star]];
+  LUM.forEach(function(c){ BAND.push([mix(P.ground, c, 0.55), mix(P.ground, c, 0.8), c]); });
+  var STREAK = [P.gold, P.coral, P.rose, P.blue];
+  var RING = [P.blue, P.aqua, P.mint];
+  var BAYER = [0, 8, 2, 10, 12, 4, 14, 6, 3, 11, 1, 9, 15, 7, 13, 5];
+  var STATES = [
+    { name:'cruise', n:298, speed:1,   roll:0, veer:0, hold:[43, 89] },
+    { name:'dense',  n:789, speed:0.7, roll:0, veer:0, hold:[43, 89] },
+    { name:'burst',  n:500, speed:9,   roll:0, veer:0, hold:[3.5, 5] },
+    { name:'roll',   n:298, speed:1,   roll:1, veer:0, hold:[43, 89] },
+    { name:'veer',   n:400, speed:1.2, roll:0, veer:0.111, hold:[43, 89] },
+    { name:'passer', n:298, speed:0.8, roll:0, veer:0, hold:[29, 43] }
+  ];
+  var st = null, stIdx = -1, bt = 0, nextAt = 0, stT0 = 0;
+  var spd = 1, rollRate = 0, theta = 0, veerAmp = 0, ph1 = srng() * 6.28, ph2 = srng() * 6.28;
+  var phi = 0, pulse = 0, dis = 0, warp = 1, moon = null, helm = false;
+  /* a star is born at the far plane inside the view (a 1.1 margin), and leaves by the edges as it nears */
+  function born(i){ sx[i] = (srng() * 2 - 1) * 0.55 * vw / F; sy[i] = (srng() * 2 - 1) * 0.55 * vh / F; sz[i] = 1; scol[i] = srng() < 0.15 ? 1 + Math.floor(srng() * 6) : 0; }
+  function layout(){
+    vw = Math.max(1, window.innerWidth); vh = Math.max(1, window.innerHeight);
+    cv.width = vw; cv.height = vh;
+    F = 0.6 * Math.max(vw, vh);
+    /* the flower is sized by width, capped by height: 288px at 1440, 172px at 390, never grown by a tall viewport */
+    R = Math.min(vw <= 720 ? 0.44 * vw : 0.2 * vw, 0.32 * vh);
+    var br = box.getBoundingClientRect();
+    vpx = vw / 2; vpy = Math.max(0.12 * vh, Math.min(0.55 * vh, br.top + br.height / 2));
+  }
+  function makeMoon(){
+    var r = Math.max(24, Math.round(0.07 * Math.min(vw, vh)));
+    var tint = [P.mist, P.gold, P.blue, P.rose][Math.floor(srng() * 4)], lit = mix(tint, P.star, 0.5);
+    var a = srng() * 6.28, lx = Math.cos(a) * 0.8, ly = Math.sin(a) * 0.8, lz = 0.6;
+    var spr = document.createElement('canvas'); spr.width = spr.height = r * 2; var g = spr.getContext('2d');
+    for (var by = 0; by < r; by++) for (var bx = 0; bx < r; bx++){
+      var nx = (bx * 2 + 1 - r) / r, ny = (by * 2 + 1 - r) / r, q = nx * nx + ny * ny; if (q > 1) continue;
+      var nz = Math.sqrt(1 - q), l = Math.max(0, nx * lx + ny * ly + nz * lz) * 2, th = (BAYER[(by & 3) * 4 + (bx & 3)] + 0.5) / 16;
+      g.fillStyle = l > 1 + th ? lit : l > th ? tint : P.ground;
+      g.fillRect(bx * 2, by * 2, 2, 2);
+    }
+    return { spr:spr, r:r, y:vpy + (srng() - 0.5) * 0.6 * vh, dir:srng() < 0.5 ? 1 : -1, z:0.35 };
+  }
+  function enter(i){
+    stIdx = i; st = STATES[i]; stT0 = bt; nextAt = bt + st.hold[0] + srng() * (st.hold[1] - st.hold[0]);
+    moon = st.name === 'passer' ? makeMoon() : null;
+    if (st.name === 'burst') cells.forEach(function(c){ c.vx += (srng() - 0.5) * 8; c.vy += (srng() - 0.5) * 8; });
+  }
+  function pick(){ var i; do { i = Math.floor(srng() * STATES.length); } while (i === stIdx); enter(i); }
+  function step(dt){
+    bt += dt;
+    if (bt >= nextAt) pick();
+    /* ship's inertia: first-order lag toward the state's targets */
+    var lag = 1 - Math.exp(-dt / 1.5);
+    spd += (st.speed - spd) * lag; rollRate += (st.roll * 6.2832 / 480 - rollRate) * lag; veerAmp += (st.veer - veerAmp) * lag;
+    /* the toy's disorder slows the ship */
+    var d = 0; for (var k = 0; k < cells.length; k++){ var c = cells[k]; d += Math.min(1, (Math.abs(c.x - c.hx) + Math.abs(c.y - c.hy)) / 6); }
+    d /= cells.length; dis += (d - dis) * (1 - Math.exp(-dt / 1.2));
+    warp = spd * (1 - 0.65 * dis);
+    theta += rollRate * dt; phi += 6.2832 / 64 * dt; pulse = Math.max(0, pulse - dt / 1.5);
+    var dz = 0.08 * warp * dt, i;
+    for (i = 0; i < NMAX; i++){ if (!on[i]) continue;
+      sz[i] -= dz;
+      if (sz[i] <= 0.04){ if (live > st.n){ on[i] = 0; live--; } else born(i); }
+    }
+    if (live < st.n){ var want = Math.min(3, st.n - live);
+      for (i = 0; i < NMAX && want > 0; i++) if (!on[i]){ on[i] = 1; born(i); live++; want--; } }
+  }
+  function flower(cx, cy){
+    var r = R / 3, b = 0.35 + pulse * 0.45, cyc = Math.floor(bt / 4), rings = [[], [], []], k, a;
+    rings[0].push([0, 0]);
+    for (k = 0; k < 6; k++){ a = phi + k * 1.0472; rings[1].push([Math.cos(a) * r, Math.sin(a) * r]); }
+    for (k = 0; k < 6; k++){ a = phi + k * 1.0472; rings[2].push([Math.cos(a) * 2 * r, Math.sin(a) * 2 * r]);
+      a += 0.5236; rings[2].push([Math.cos(a) * r * 1.7321, Math.sin(a) * r * 1.7321]); }
+    sc.lineWidth = 1;
+    for (k = 0; k < 3; k++){ sc.strokeStyle = mix(P.ground, RING[(cyc + k) % 3], b); sc.beginPath();
+      for (var j = 0; j < rings[k].length; j++){ var p = rings[k][j]; sc.moveTo(cx + p[0] + r, cy + p[1]); sc.arc(cx + p[0], cy + p[1], r, 0, 6.2832); }
+      sc.stroke(); }
+    sc.strokeStyle = mix(P.ground, P.mist, b); sc.beginPath();
+    sc.moveTo(cx + R, cy); sc.arc(cx, cy, R, 0, 6.2832); sc.moveTo(cx + R + 4, cy); sc.arc(cx, cy, R + 4, 0, 6.2832); sc.stroke();
+  }
+  function stars(cx, cy, zmin, zmax){
+    var c = Math.cos(theta), s = Math.sin(theta), i;
+    for (i = 0; i < NMAX; i++){ if (!on[i]) continue; var z = sz[i]; if (z < zmin || z >= zmax) continue;
+      var X = sx[i] / z * F, Y = sy[i] / z * F, x = cx + X * c - Y * s, y = cy + X * s + Y * c;
+      if (x < 0 || y < 0 || x >= vw || y >= vh) continue;
+      var band = z > 0.66 ? 0 : z > 0.33 ? 1 : 2, sz1 = z < 0.12 ? 3 : z < 0.33 ? 2 : 1;
+      sc.fillStyle = BAND[scol[i]][band]; sc.fillRect(x | 0, y | 0, sz1, sz1);
+    }
+    if (warp > 2.5){ /* hyperspace: every star a streak, four palette colours cycling */
+      var back = 0.08 * warp * DT * 4, cyc = Math.floor(bt * 15);
+      for (var k = 0; k < 4; k++){ sc.strokeStyle = STREAK[k]; sc.lineWidth = 1; sc.beginPath();
+        for (i = 0; i < NMAX; i++){ if (!on[i] || ((i + cyc) & 3) !== k) continue; var z = sz[i]; if (z < zmin || z >= zmax) continue;
+          var z1 = z + back, X0 = sx[i] / z * F, Y0 = sy[i] / z * F, X1 = sx[i] / z1 * F, Y1 = sy[i] / z1 * F;
+          sc.moveTo(cx + X1 * c - Y1 * s, cy + X1 * s + Y1 * c); sc.lineTo(cx + X0 * c - Y0 * s, cy + X0 * s + Y0 * c); }
+        sc.stroke(); }
+    }
+  }
+  function paint(){
+    sc.fillStyle = P.ground; sc.fillRect(0, 0, vw, vh);
+    var cx = vpx + veerAmp * vw * Math.sin(bt * 0.21 + ph1), cy = vpy + veerAmp * vh * Math.sin(bt * 0.17 + ph2);
+    flower(cx, cy);
+    if (moon){
+      var u = (bt - stT0) / (nextAt - stT0), mx = moon.dir > 0 ? -moon.r + u * (vw + 2 * moon.r) : vw + moon.r - u * (vw + 2 * moon.r);
+      stars(cx, cy, moon.z, 2); sc.drawImage(moon.spr, Math.round(mx - moon.r), Math.round(moon.y - moon.r)); stars(cx, cy, 0, moon.z);
+    } else stars(cx, cy, 0, 2);
+  }
+  layout(); pick();
+  /* the flight is already underway when the page opens: the first field is born at every depth, not in a wave from the far plane */
+  for (var w = 0; w < st.n; w++){ on[w] = 1; born(w); sz[w] = 0.04 + srng() * 0.96; live++; }
+  return { step:step, paint:paint, layout:layout,
+    pulse:function(){ pulse = 1; },
+    helm:function(v){ helm = v; }, isHelm:function(){ return helm; },
+    set:function(i){ if (i >= 0 && i < STATES.length) enter(i); },
+    names:STATES.map(function(s){ return s.name; }) };
+})();
 /* ================= scheduler ================= */
 var cur = null, curIdx = -1, state = 'run', sysT = 0, holdT = 0, sandbox = false;
 var nameEl = document.getElementById('sysname'), roleEl = document.getElementById('sysrole');
@@ -810,14 +939,15 @@ function start(i){
 function pick(){ var i; do { i = Math.floor(rng() * systems.length); } while (i === curIdx); start(i); }
 function step(){
   cursorStep(); var dt = DT, i;
+  sky.step(dt);
   if (state === 'run'){
     sysT += dt; cur.step(dt);
-    if (cur.done()){ snapHome(); state = 'hold'; holdT = 0; }
+    if (cur.done()){ snapHome(); state = 'hold'; holdT = 0; sky.pulse(); }
     else if (sysT > cur.max){ state = 'heal'; holdT = 0; cells.forEach(function(c){ c.a = 1; }); }
   } else if (state === 'heal'){
     holdT += dt;
     for (i = 0; i < cells.length; i++){ var c = cells[i]; homeSpring(c, 40, 0.86, dt); c.r = Math.max(0, c.r - dt); c.k = Math.max(0, c.k - dt); }
-    if (allHome(0.03) || holdT > 2.5){ snapHome(); state = 'hold'; holdT = 0; }
+    if (allHome(0.03) || holdT > 2.5){ snapHome(); state = 'hold'; holdT = 0; sky.pulse(); }
   } else {
     holdT += dt;
     for (i = 0; i < cells.length; i++){ var h = cells[i]; repel(h, 5, 220, dt); homeSpring(h, 40, 0.86, dt); h.r = Math.max(0, h.r - dt); }
@@ -825,16 +955,26 @@ function step(){
   }
 }
 function paint(){
+  sky.paint();
   ctx.setTransform(S, 0, 0, S, 0, 0);
-  ctx.fillStyle = P.cream; ctx.fillRect(0, 0, W, H);
+  ctx.clearRect(0, 0, W, H);
   if (state === 'run' && cur.draw) cur.draw(); else drawCells(cur.hot);
 }
-/* ---------- the secret: type play ---------- */
-var typed = '', whisper = document.getElementById('whisper');
+/* ---------- the secrets: type play, type warp ---------- */
+var typed = '', whisper = document.getElementById('whisper'), HELMKEYS = 'zxcvbn';
+function whisperSet(){
+  var parts = [];
+  if (sandbox) parts.push('sandbox open: keys 1 to 9 pick a system, space restarts it, type play to close');
+  if (sky.isHelm()) parts.push('helm open: keys z x c v b n pick a sky (' + sky.names.join(', ') + '), type warp to close');
+  whisper.textContent = parts.join(' / '); whisper.hidden = !parts.length;
+}
 window.addEventListener('keydown', function(e){
   if (e.key === ' ' && sandbox){ start(curIdx); e.preventDefault(); return; }
   if (sandbox && e.key >= '1' && e.key <= '9'){ start(parseInt(e.key, 10) - 1); return; }
-  if (e.key && e.key.length === 1){ typed = (typed + e.key.toLowerCase()).slice(-4); if (typed === 'play'){ sandbox = !sandbox; whisper.hidden = !sandbox; typed = ''; } }
+  if (sky.isHelm() && e.key && HELMKEYS.indexOf(e.key) >= 0){ sky.set(HELMKEYS.indexOf(e.key)); return; }
+  if (e.key && e.key.length === 1){ typed = (typed + e.key.toLowerCase()).slice(-4);
+    if (typed === 'play'){ sandbox = !sandbox; typed = ''; whisperSet(); }
+    else if (typed === 'warp'){ sky.helm(!sky.isHelm()); typed = ''; whisperSet(); } }
 });
 /* ---------- clock ---------- */
 layout();
@@ -853,6 +993,7 @@ function frame(now){
 requestAnimationFrame(frame);
 var lastW = W, lastH = H;
 window.addEventListener('resize', function(){
+  sky.layout();
   var bw = box.clientWidth, bh = box.clientHeight, cp = Math.max(5, Math.min(12, Math.floor(bw / 62)));
   if (Math.floor(bw / cp) === lastW && Math.floor(bh / cp) === lastH) return;
   layout(); lastW = W; lastH = H; start(curIdx); paint();

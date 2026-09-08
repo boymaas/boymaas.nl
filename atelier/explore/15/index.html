@@ -9,16 +9,19 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&display=swap" rel="stylesheet">
 <style>
 :root{
-  --cream:#F3EEE2; --ink:#1C1B22; --dim:#6E6A70; --rule:#D9D2C2;
-  --cobalt:#2D5DD6; --teal:#1E9E8A; --amber:#F2A33A; --coral:#E4553F;
+  --abyss:#0A0E24; --star:#E8E6F0; --dim:#8E90A8; --rule:#323550;
+  --cobalt:#4C7DFF; --teal:#2ED3B7; --amber:#FFB547; --coral:#FF6B5B; --lilac:#B79CFF; --gold:#E8CF7A;
   --col:min(1168px, 100% - 48px);
 }
 *{box-sizing:border-box}
-html{background:var(--cream)}
-body{margin:0;background:var(--cream);color:var(--ink);font:400 16px/1.6 "IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;-webkit-font-smoothing:antialiased}
+html{background:var(--abyss)}
+body{margin:0;background:var(--abyss);color:var(--star);font:400 16px/1.6 "IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;-webkit-font-smoothing:antialiased}
 a{color:inherit;text-decoration:none}
 a:hover{color:var(--cobalt)}
 canvas{display:block}
+/* the wormhole: fixed, full bleed, behind everything, chunky */
+#bg{position:fixed;inset:0;width:100%;height:100%;z-index:0;image-rendering:pixelated;image-rendering:crisp-edges}
+main,header{position:relative;z-index:1}
 .wrap{width:var(--col);margin:0 auto}
 .dim{color:var(--dim)}
 /* header */
@@ -40,7 +43,7 @@ canvas{display:block}
 /* sections */
 .grid{display:grid;grid-template-columns:3fr 9fr;gap:32px;padding:96px 0 0}
 .label{font-size:13px;line-height:1.6;color:var(--dim)}
-.label b{font-weight:400;color:var(--ink);display:block;font-size:20px;line-height:1.3;margin-bottom:8px}
+.label b{font-weight:400;color:var(--star);display:block;font-size:20px;line-height:1.3;margin-bottom:8px}
 ol{list-style:none;margin:0;padding:0}
 .posts li{display:grid;grid-template-columns:11ch 1fr;gap:24px;padding:12px 0;border-top:1px solid var(--rule)}
 .posts li:last-child{border-bottom:1px solid var(--rule)}
@@ -75,6 +78,7 @@ footer{margin-top:96px;border-top:1px solid var(--rule);padding:32px 0 64px;font
 </style>
 </head>
 <body>
+<canvas id="bg" aria-hidden="true"></canvas>
 <header class="wrap top">
   <a href="/">Boy Maas <span class="dim">(m4nic)</span></a>
   <nav>
@@ -147,15 +151,15 @@ footer{margin-top:96px;border-top:1px solid var(--rule);padding:32px 0 64px;font
   </section>
   <footer class="wrap">
     <span>Boy Maas, Den Haag. Studio est. March 1998.</span>
-    <span>The logo is a toy: nine systems, drawn at random. Break one, it heals.</span>
+    <span>The logo is a toy: nine systems, drawn at random. Break one, it heals. Behind it, a wormhole.</span>
   </footer>
 </main>
 <script>
 (function () {
 'use strict';
 /* ---------- palette ---------- */
-var P = { cream:'#F3EEE2', ink:'#1C1B22', dim:'#6E6A70', rule:'#D9D2C2',
-          cobalt:'#2D5DD6', teal:'#1E9E8A', amber:'#F2A33A', coral:'#E4553F' };
+var P = { abyss:'#0A0E24', star:'#E8E6F0', dim:'#8E90A8', rule:'#323550',
+          cobalt:'#4C7DFF', teal:'#2ED3B7', amber:'#FFB547', coral:'#FF6B5B', lilac:'#B79CFF', gold:'#E8CF7A' };
 function rgb(h){ return [parseInt(h.slice(1,3),16), parseInt(h.slice(3,5),16), parseInt(h.slice(5,7),16)]; }
 function hex(c){ return '#' + c.map(function(v){ return ('0' + Math.round(v).toString(16)).slice(-2); }).join(''); }
 function mix(a, b, t){ var A = rgb(a), B = rgb(b); return hex([A[0]+(B[0]-A[0])*t, A[1]+(B[1]-A[1])*t, A[2]+(B[2]-A[2])*t]); }
@@ -188,7 +192,17 @@ var FONT = {
   '4':['...#.','..##.','.#.#.','#..#.','#####','...#.','...#.'],
   N:['#...#','##..#','#.#.#','#..##','#...#','#...#','#...#'],
   I:['#####','..#..','..#..','..#..','..#..','..#..','#####'],
-  C:['.####','#....','#....','#....','#....','#....','.####']
+  C:['.####','#....','#....','#....','#....','#....','.####'],
+  /* the rest of the alphabet the rings need */
+  A:['.###.','#...#','#...#','#####','#...#','#...#','#...#'],
+  S:['.####','#....','#....','.###.','....#','....#','####.'],
+  B:['####.','#...#','#...#','####.','#...#','#...#','####.'],
+  O:['.###.','#...#','#...#','#...#','#...#','#...#','.###.'],
+  V:['#...#','#...#','#...#','#...#','#...#','.#.#.','..#..'],
+  E:['#####','#....','#....','####.','#....','#....','#####'],
+  L:['#....','#....','#....','#....','#....','#....','#####'],
+  W:['#...#','#...#','#...#','#.#.#','#.#.#','##.##','#...#'],
+  ' ':['.....','.....','.....','.....','.....','.....','.....']
 };
 var LOGO = [];
 (function(){
@@ -200,8 +214,8 @@ var LOGO = [];
   }
 })();
 var LW = 58, LH = 14;
-var ROWCOL = [P.coral, P.coral, P.ink, P.ink, P.coral, mix(P.coral, P.amber, 0.5), P.amber,
-              P.cobalt, P.cobalt, mix(P.cobalt, P.teal, 0.5), P.teal, P.ink, P.amber, mix(P.amber, P.cream, 0.35)];
+var ROWCOL = [P.coral, P.coral, P.star, P.star, P.coral, mix(P.coral, P.amber, 0.5), P.amber,
+              P.cobalt, P.cobalt, mix(P.cobalt, P.teal, 0.5), P.teal, P.star, P.amber, mix(P.amber, P.star, 0.35)];
 /* ---------- world ---------- */
 var box = document.getElementById('box'), cvs = document.getElementById('hero'), ctx = cvs.getContext('2d');
 var cellPx = 12, W = 0, H = 0, OX = 0, OY = 0, S = 1, dpr = 1;
@@ -305,7 +319,7 @@ function drawCells(hot){
 /* ================= the system library ================= */
 var systems = [];
 /* 1. bouncy balls: gravity, restitution, ball-ball collisions, then springs. cursor pushes */
-systems.push({ name:'bouncy balls', role:'cursor pushes', hot:P.cream, max:13,
+systems.push({ name:'bouncy balls', role:'cursor pushes', hot:P.star, max:13,
   init:function(){
     this.t = 0; this.T1 = 4.2 + rng() * 1.6;
     cells.forEach(function(c){ c.rel = rng() * 0.9; c.e = 0.5 + rng() * 0.3; c.vx = 0; c.vy = 0; c.r = 0.5; c.free = false; });
@@ -345,7 +359,7 @@ systems.push({ name:'bouncy balls', role:'cursor pushes', hot:P.cream, max:13,
   done:function(){ return this.t > this.T1 + 1 && allHome(0.03); }
 });
 /* 2. magnet: a ghost magnet on a Lissajous path attracts, flips, repels. cursor is the magnet, press to repel */
-systems.push({ name:'magnet', role:'cursor attracts, press repels', hot:P.cream, max:14,
+systems.push({ name:'magnet', role:'cursor attracts, press repels', hot:P.star, max:14,
   init:function(){
     this.t = 0; this.T1 = 6 + rng() * 2;
     this.a = 0.9 + rng() * 1.6; this.b = 0.9 + rng() * 1.6; this.ph = rng() * 6.28;
@@ -378,14 +392,14 @@ systems.push({ name:'magnet', role:'cursor attracts, press repels', hot:P.cream,
   draw:function(){
     drawCells(this.hot);
     if (this.on && this.ghost){
-      ctx.strokeStyle = P.ink; ctx.lineWidth = 1.5 / cellPx; ctx.beginPath();
+      ctx.strokeStyle = P.star; ctx.lineWidth = 1.5 / cellPx; ctx.beginPath();
       ctx.arc(this.mx, this.my, this.pol > 0 ? 0.9 : 1.4, 0, 6.2832); ctx.stroke();
     }
   },
   done:function(){ return this.t > this.T1 + 0.5 && !cursor.inside && allHome(0.03); }
 });
 /* 3. sand: falling-sand automaton drains the letters, then they refill bottom-up. cursor digs */
-systems.push({ name:'sand', role:'cursor digs', hot:P.cream, max:17,
+systems.push({ name:'sand', role:'cursor digs', hot:P.star, max:17,
   init:function(){
     snapHome();
     this.t = 0; this.acc = 0; this.T1 = 5.2 + rng() * 1.2;
@@ -504,7 +518,7 @@ systems.push({ name:'life', role:'cursor paints', hot:P.teal, max:16,
   draw:function(){
     var g = this.g, born = this.born, fl = this.flash;
     for (var y = 0; y < H; y++) for (var x = 0; x < W; x++){ var i = y * W + x;
-      if (!g[i]){ if (fl[i] > 0){ ctx.fillStyle = mixQ(P.cream, P.coral, fl[i] * 0.6); ctx.fillRect(x, y, 1, 1); } continue; }
+      if (!g[i]){ if (fl[i] > 0){ ctx.fillStyle = mixQ(P.abyss, P.coral, fl[i] * 0.6); ctx.fillRect(x, y, 1, 1); } continue; }
       var li = logoAt[i], col;
       if (li >= 0) col = fl[i] > 0 ? mixQ(cells[li].col, P.coral, fl[i]) : cells[li].col;
       else col = born[i] ? P.amber : P.teal;
@@ -519,7 +533,7 @@ systems.push({ name:'life', role:'cursor paints', hot:P.teal, max:16,
   }
 });
 /* 5. bubbles: cells sink, rise back as bubbles, pop into place. cursor pops */
-systems.push({ name:'bubbles', role:'cursor pops', hot:P.cream, max:16,
+systems.push({ name:'bubbles', role:'cursor pops', hot:P.star, max:16,
   init:function(){
     this.t = 0;
     cells.forEach(function(c){ c.rel = rng() * 1.6; c.mode = 0; c.wob = rng() * 6.28; c.spd = 7 + rng() * 8; c.r = 0; c.ring = 0; c.vx = 0; c.vy = 0; });
@@ -548,17 +562,17 @@ systems.push({ name:'bubbles', role:'cursor pops', hot:P.cream, max:16,
     for (var i = 0; i < cells.length; i++){ var c = cells[i];
       if (c.mode === 2){
         ctx.strokeStyle = c.col; ctx.lineWidth = lw; ctx.beginPath(); ctx.arc(c.x + 0.5, c.y + 0.5, 0.42, 0, 6.2832); ctx.stroke();
-        ctx.fillStyle = mixQ(c.col, P.cream, 0.6); ctx.fillRect(c.x + 0.6, c.y + 0.22, 0.16, 0.16);
+        ctx.fillStyle = mixQ(c.col, P.star, 0.6); ctx.fillRect(c.x + 0.6, c.y + 0.22, 0.16, 0.16);
       } else {
         drawCell(c, c.mode === 1 ? mixQ(c.col, this.hot, 0.35) : c.col);
-        if (c.ring > 0){ ctx.strokeStyle = mixQ(c.col, P.cream, 1 - c.ring); ctx.lineWidth = lw; ctx.beginPath(); ctx.arc(c.x + 0.5, c.y + 0.5, 0.5 + (1 - c.ring) * 1.6, 0, 6.2832); ctx.stroke(); }
+        if (c.ring > 0){ ctx.strokeStyle = mixQ(c.col, P.star, 1 - c.ring); ctx.lineWidth = lw; ctx.beginPath(); ctx.arc(c.x + 0.5, c.y + 0.5, 0.5 + (1 - c.ring) * 1.6, 0, 6.2832); ctx.stroke(); }
       }
     }
   },
   done:function(){ if (this.t < 3) return false; for (var i = 0; i < cells.length; i++){ var c = cells[i]; if (c.mode !== 3 || c.ring > 0) return false; } return true; }
 });
 /* 6. swarm: boids at radius nine, walls, then a home pull. cursor is a predator */
-systems.push({ name:'swarm', role:'cursor scatters', hot:P.ink, max:16,
+systems.push({ name:'swarm', role:'cursor scatters', hot:P.lilac, max:16,
   init:function(){
     this.t = 0; this.T1 = 5 + rng() * 3;
     cells.forEach(function(c){ var a = rng() * 6.28, s = 8 + rng() * 4; c.vx = Math.cos(a) * s; c.vy = Math.sin(a) * s; c.rel = rng() * 0.7; c.r = 0.2; });
@@ -610,7 +624,7 @@ systems.push({ name:'swarm', role:'cursor scatters', hot:P.ink, max:16,
   done:function(){ return this.t > this.T1 + 1.5 && allHome(0.04); }
 });
 /* 7. spring mesh: nodes linked to letter neighbours; plucks ring through. cursor grabs and releases */
-systems.push({ name:'spring mesh', role:'cursor plucks', hot:P.cream, max:14,
+systems.push({ name:'spring mesh', role:'cursor plucks', hot:P.star, max:14,
   init:function(){
     this.t = 0; var links = this.links = [];
     var at = {}; cells.forEach(function(c){ at[c.hx + ',' + c.hy] = c; });
@@ -661,7 +675,7 @@ systems.push({ name:'spring mesh', role:'cursor plucks', hot:P.cream, max:14,
   done:function(){ return this.t > this.last + 1 && !this.grab && allHome(0.04); }
 });
 /* 8. fluid: a stable-fluids velocity field stirs the cells as markers; it damps and they drift home. cursor stirs */
-systems.push({ name:'fluid', role:'cursor stirs', hot:P.cream, max:14,
+systems.push({ name:'fluid', role:'cursor stirs', hot:P.star, max:14,
   init:function(){
     this.t = 0;
     var fw = this.fw = Math.ceil(W / 2), fh = this.fh = Math.ceil(H / 2), n = (fw + 2) * (fh + 2);
@@ -743,7 +757,7 @@ systems.push({ name:'fluid', role:'cursor stirs', hot:P.cream, max:14,
     ctx.lineWidth = 0.6; ctx.lineCap = 'round';
     for (var i = 0; i < cells.length; i++){ var c = cells[i]; var col = c.k > 0 ? mixQ(c.col, this.hot, c.k) : c.col;
       var sp = Math.sqrt(c.vx*c.vx + c.vy*c.vy);
-      if (sp > 2){ var L = Math.min(3, sp * 0.1); ctx.strokeStyle = mixQ(col, P.cream, 0.5); ctx.beginPath(); ctx.moveTo(c.x + 0.5, c.y + 0.5); ctx.lineTo(c.x + 0.5 - c.vx / sp * L, c.y + 0.5 - c.vy / sp * L); ctx.stroke(); }
+      if (sp > 2){ var L = Math.min(3, sp * 0.1); ctx.strokeStyle = mixQ(col, P.star, 0.5); ctx.beginPath(); ctx.moveTo(c.x + 0.5, c.y + 0.5); ctx.lineTo(c.x + 0.5 - c.vx / sp * L, c.y + 0.5 - c.vy / sp * L); ctx.stroke(); }
       drawCell(c, col);
     }
   },
@@ -791,12 +805,179 @@ systems.push({ name:'crystal', role:'cursor melts', hot:P.teal, max:18,
   },
   draw:function(){
     for (var i = 0; i < cells.length; i++){ var c = cells[i];
-      if (c.stuck){ ctx.fillStyle = c.flash > 0 ? mixQ(c.col, P.cream, c.flash * 0.7) : c.col; ctx.fillRect(c.x, c.y, 1, 1); }
-      else { ctx.fillStyle = mixQ(P.teal, P.cream, 0.25); ctx.fillRect(c.x + 0.25, c.y + 0.25, 0.5, 0.5); }
+      if (c.stuck){ ctx.fillStyle = c.flash > 0 ? mixQ(c.col, P.star, c.flash * 0.7) : c.col; ctx.fillRect(c.x, c.y, 1, 1); }
+      else { ctx.fillStyle = mixQ(P.teal, P.star, 0.25); ctx.fillRect(c.x + 0.25, c.y + 0.25, 0.5, 0.5); }
     }
   },
   done:function(){ if (this.t < 2) return false; for (var i = 0; i < cells.length; i++) if (!cells[i].stuck || cells[i].flash > 0) return false; return true; }
 });
+/* ================= the wormhole (background) =================
+   A tunnel computed per pixel into a small buffer and scaled up with smoothing off.
+   Its own PRNG stream, so the toy's stream is exactly variant 12's.
+   Advances in step(), is drawn in paint(): ?t= fast-forwards it with the toy. */
+var brg = mulberry32((SEED ^ 0x5EED1A7E) >>> 0);
+var bgc = document.getElementById('bg'), bgx = bgc.getContext('2d');
+var lo = document.createElement('canvas'), lox = lo.getContext('2d');
+var BW = 0, BH = 0, TW = 0, TH = 0, img = null, pix = null, tabD = null, tabA = null, tabS = null, KR = 0, SR = 0, RR = 0;
+var BAYER = [0, 8, 2, 10, 12, 4, 14, 6, 3, 11, 1, 9, 15, 7, 13, 5];
+function u32(h){ var c = rgb(h); return (255 << 24 | c[2] << 16 | c[1] << 8 | c[0]) >>> 0; }
+/* six ramps of ten: abyss to hue to starlight; the dither picks between neighbours */
+var HUES = [P.cobalt, P.teal, P.lilac, P.coral, P.amber, P.gold];
+var RAMPS = HUES.map(function(h){
+  var r = new Uint32Array(10);
+  [0, 0.12, 0.24, 0.38, 0.55, 0.75, 1].forEach(function(k, i){ r[i] = u32(mix(P.abyss, h, k)); });
+  r[7] = u32(mix(h, P.star, 0.35)); r[8] = u32(mix(h, P.star, 0.7)); r[9] = u32(P.star);
+  return r;
+});
+var WHEEL = [0, 1, 0, 2]; /* the walls' hue wheel: cobalt, teal, cobalt, lilac */
+var C_STAR = u32(P.star), C_DUST = u32(P.dim);
+/* wall textures, 256 x 256 texels of intensity and hue class (class 4 = amber, never cycled) */
+var texI = [], texC = [];
+(function(){
+  for (var n = 0; n < 5; n++){ texI.push(new Uint8Array(65536)); texC.push(new Uint8Array(65536)); }
+  for (var v = 0; v < 256; v++) for (var u = 0; u < 256; u++){ var i = v << 8 | u;
+    texI[0][i] = 40 + (v & 31) * 6; texC[0][i] = (v >> 5) & 3;                                   /* rings */
+    texI[1][i] = (((u >> 5) ^ (v >> 5)) & 1) ? 200 : 70; texC[1][i] = ((v >> 5) + (u >> 6)) & 3;   /* checker */
+    texI[2][i] = ((u + v * 2) & 63) < 32 ? 200 : 60; texC[2][i] = ((u + v * 2) >> 6) & 3;           /* spiral */
+    var row = v >> 4, off = (row & 1) * 16, mortar = ((u + off) & 31) < 2 || (v & 15) < 2;
+    texI[3][i] = mortar ? 220 : 60; texC[3][i] = row & 3;                                          /* lattice */
+    texI[4][i] = 30 + ((v >> 1) & 31) * 2; texC[4][i] = (v >> 6) & 3;                              /* words, base */
+  }
+  /* AS ABOVE on the upper wall, SO BELOW on the lower wall as its reflection; 5x7 glyphs at two texels per pixel */
+  function band(text, v0, u0, flip){
+    for (var ci = 0; ci < text.length; ci++){ var g = FONT[text[ci]];
+      for (var gy = 0; gy < 7; gy++) for (var gx = 0; gx < 5; gx++){ if (g[gy][gx] !== '#') continue;
+        for (var sy = 0; sy < 2; sy++) for (var sx = 0; sx < 2; sx++){
+          var col = ci * 12 + gx * 2 + sx, u = flip ? u0 + 95 - col : u0 + col, v = v0 + gy * 2 + sy;
+          var k = (v & 255) << 8 | (u & 255); texI[4][k] = 255; texC[4][k] = 4;
+        } } }
+  }
+  for (var b = 0; b < 4; b++){ band('AS ABOVE', 8 + b * 64, 144, false); band('SO BELOW', 8 + b * 64, 16, true); }
+})();
+/* the lookup table, twice the buffer: depth K/r, angle, shade by radius. the window slides over it to bend */
+function bgLayout(){
+  var w = innerWidth, h = innerHeight;
+  if (bgc.width !== w || bgc.height !== h){ bgc.width = w; bgc.height = h; }
+  var sc = Math.min(0.25, Math.sqrt(48000 / (w * h)));
+  var bw = Math.max(48, Math.round(w * sc)), bh = Math.max(48, Math.round(h * sc));
+  if (bw === BW && bh === BH) return;
+  BW = bw; BH = bh; TW = BW * 2; TH = BH * 2;
+  lo.width = BW; lo.height = BH; img = lox.createImageData(BW, BH); pix = new Uint32Array(img.data.buffer);
+  tabD = new Uint16Array(TW * TH); tabA = new Uint8Array(TW * TH); tabS = new Uint8Array(TW * TH);
+  RR = Math.min(BW, BH); KR = RR * 24; SR = RR * 0.24;
+  /* shade: the hole (inside the sigil) is a dark disc with the one bright point; a narrow rim just outside lifts, then the walls fall to dark */
+  var fog = RR * 0.08;
+  for (var y = 0; y < TH; y++) for (var x = 0; x < TW; x++){
+    var dx = x - BW + 0.5, dy = y - BH + 0.5, r = Math.sqrt(dx*dx + dy*dy), i = y * TW + x;
+    tabD[i] = Math.min(65535, Math.round(KR / Math.max(0.5, r)));
+    tabA[i] = Math.round(Math.atan2(dy, dx) / 6.2832 * 256 + 256) & 255;
+    var sh = r < SR ? 0.26 : 0.18 + 0.36 * Math.exp(-(r - SR) / fog);
+    tabS[i] = r < 2.5 ? 255 : Math.min(254, Math.round(255 * sh));
+  }
+}
+/* the stars: angle and depth; depth grows, they fall into the hole and are reborn at the rim */
+var STARS = [];
+function starReset(s, first){ s.a = brg() * 6.2832; s.d = first ? 6 + brg() * 130 : 5 + brg() * 4; s.sp = 0.55 + brg() * 0.6; }
+for (var si = 0; si < 98; si++){ var st = {}; starReset(st, true); STARS.push(st); }
+/* states */
+var ST = ['drift', 'bend', 'weave', 'as above', 'plunge'];
+var RINGD = 12.8 * 26; /* travel per ring of the sigil */
+var bg = { st:-1, t:0, T:0, trav:0, rot:0, rotV:0, cyc:0, cycT:0, tex:0, base:0, texB:-1, fade:0,
+           bx:0, by:0, benda:1, bendb:1, bendp:0, pulse:0, pulseT:0, pulseHue:3, rings:3, ringFlash:0, above:false, wave:0 };
+bg.tex = bg.base = Math.floor(brg() * 4);
+bg.rotV = (brg() < 0.5 ? -1 : 1) * (0.4 + brg() * 0.4);
+bg.trav = brg() * RINGD;
+function fadeTo(i){
+  if (bg.texB >= 0) bg.tex = bg.texB;
+  if (i === bg.tex){ bg.texB = -1; return; }
+  bg.texB = i; bg.fade = 0; if (i < 4) bg.base = i;
+}
+function bgNext(){
+  var i; do { i = Math.floor(brg() * ST.length); } while (i === bg.st);
+  bg.st = i; bg.t = 0; bg.T = 47 + brg() * 51;
+  var name = ST[i];
+  if (name === 'weave') fadeTo((bg.base + 1) % 4);
+  else if (name === 'as above' || bg.above) fadeTo(4);
+  else if (bg.tex === 4 || bg.texB === 4) fadeTo(bg.base);
+  if (name === 'bend'){ bg.benda = 0.6 + brg() * 1.2; bg.bendb = 0.6 + brg() * 1.2; bg.bendp = brg() * 6.28; }
+}
+function bgPulse(hot){ bg.pulse = 1; bg.pulseT = 0; bg.pulseHue = hot === P.teal ? 1 : hot === P.lilac ? 2 : 3; }
+function bgAbove(){
+  bg.above = !bg.above;
+  if (bg.above) fadeTo(4); else if (ST[bg.st] !== 'as above') fadeTo(bg.base);
+}
+function bgStep(dt){
+  bg.t += dt; if (bg.st < 0 || bg.t > bg.T) bgNext();
+  var name = ST[bg.st], plunge = name === 'plunge', speed = plunge ? 4 : 1;
+  bg.trav += 12.8 * speed * dt; bg.wave += dt;
+  bg.rot += bg.rotV * dt;
+  if (name === 'as above' || bg.above){ var near = Math.round(bg.rot / 256) * 256; bg.rot += (near - bg.rot) * Math.min(1, dt * 1.2); }
+  bg.cycT += dt; if (bg.cycT >= 9){ bg.cycT -= 9; bg.cyc = (bg.cyc + 1) & 3; }
+  if (bg.texB >= 0){ bg.fade += dt / 8; if (bg.fade >= 1){ bg.tex = bg.texB; bg.texB = -1; } }
+  if (name === 'bend'){
+    var p = bg.t / bg.T, env = Math.sin(3.1416 * p); env *= env;
+    bg.bx = Math.sin(bg.t * bg.benda * 0.1 + bg.bendp) * env * 0.5; bg.by = Math.sin(bg.t * bg.bendb * 0.1) * env * 0.5;
+  } else { bg.bx *= 1 - dt * 0.5; bg.by *= 1 - dt * 0.5; }
+  if (bg.pulse){ bg.pulseT += dt; if (bg.pulseT > 3) bg.pulse = 0; }
+  var rings = bg.above ? 7 : 3 + (Math.floor(bg.trav / RINGD) % 5);
+  if (rings !== bg.rings){ bg.rings = rings; bg.ringFlash = 1; }
+  bg.ringFlash = Math.max(0, bg.ringFlash - dt / 1.5);
+  for (var i = 0; i < STARS.length; i++){ var s = STARS[i]; s.d += s.sp * 12 * speed * dt; if (s.d > 140) starReset(s, false); }
+}
+/* rasterizers into the pixel buffer: one buffer pixel wide, no antialiasing */
+function pxl(x, y, c){ x = Math.round(x); y = Math.round(y); if (x >= 0 && y >= 0 && x < BW && y < BH) pix[y * BW + x] = c; }
+function line(x0, y0, x1, y1, c){
+  x0 = Math.round(x0); y0 = Math.round(y0); x1 = Math.round(x1); y1 = Math.round(y1);
+  var dx = Math.abs(x1 - x0), sx = x0 < x1 ? 1 : -1, dy = -Math.abs(y1 - y0), sy = y0 < y1 ? 1 : -1, err = dx + dy, n = 0;
+  for (;;){ pxl(x0, y0, c); if (x0 === x1 && y0 === y1) break; var e2 = 2 * err; if (e2 >= dy){ err += dy; x0 += sx; } if (e2 <= dx){ err += dx; y0 += sy; } if (++n > 4096) break; }
+}
+function circle(cx, cy, r, c){ var n = Math.max(8, Math.ceil(r * 6.3)); for (var k = 0; k < n; k++){ var a = k / n * 6.2832; pxl(cx + r * Math.cos(a), cy + r * Math.sin(a), c); } }
+function starPoly(cx, cy, r, n, stepk, rot, c){
+  var pts = []; for (var k = 0; k < n; k++){ var a = rot + k / n * 6.2832; pts.push([cx + r * Math.cos(a), cy + r * Math.sin(a)]); }
+  for (k = 0; k < n; k++){ var a1 = pts[k], b1 = pts[(k + stepk) % n]; line(a1[0], a1[1], b1[0], b1[1], c); }
+}
+/* the sigil: seven rings, inside out, revealed by travel */
+function sigil(cx, cy){
+  var t = bg.wave, n = bg.rings, fl = bg.ringFlash, gold = RAMPS[5], lilac = RAMPS[2];
+  function lv(i){ return (i === n - 1 && fl > 0) ? 5 + Math.round(fl * 4) : 5; }
+  var u = SR / 7;
+  if (n > 0){ circle(cx, cy, u, gold[lv(0)]); pxl(cx, cy, gold[lv(0)]); }
+  if (n > 1) starPoly(cx, cy, u * 2, 6, 2, t * 0.06, lilac[lv(1)]);
+  if (n > 2) circle(cx, cy, u * 3, gold[lv(2)]);
+  if (n > 3) starPoly(cx, cy, u * 4, 7, 3, -t * 0.05, lilac[lv(3)]);
+  if (n > 4){ var r5 = u * 5, c5 = gold[lv(4)]; circle(cx, cy, r5, c5);
+    for (var k = 0; k < 12; k++){ var a = t * 0.03 + k / 12 * 6.2832, ca = Math.cos(a), sa = Math.sin(a); line(cx + (r5 - 1.5) * ca, cy + (r5 - 1.5) * sa, cx + (r5 + 1.5) * ca, cy + (r5 + 1.5) * sa, c5); } }
+  if (n > 5) starPoly(cx, cy, u * 6, 8, 2, -t * 0.04, lilac[lv(5)]);
+  if (n > 6){ var c7 = gold[lv(6)]; circle(cx, cy, SR, c7);
+    for (k = 0; k < 4; k++){ var a7 = t * 0.02 + k * 1.5708; circle(cx + SR * Math.cos(a7), cy + SR * Math.sin(a7), SR * 0.1, c7); } }
+}
+function bgPaint(){
+  var ox = Math.max(0, Math.min(BW, Math.round(BW * (0.5 - bg.bx * 0.5)))), oy = Math.max(0, Math.min(BH, Math.round(BH * (0.6 - bg.by * 0.5))));
+  var trav = bg.trav | 0, rot = Math.round(bg.rot) & 255, cyc = bg.cyc;
+  var tI = texI[bg.tex], tC = texC[bg.tex], fading = bg.texB >= 0, tI2 = fading ? texI[bg.texB] : tI, tC2 = fading ? texC[bg.texB] : tC, fth = fading ? (bg.fade * 16) | 0 : 0;
+  var pulse = bg.pulse > 0, D = 16 * Math.exp(bg.pulseT / 3 * 2.5257), Dlo = (D * 0.93) | 0, Dhi = (D * 1.07) | 0, pc = RAMPS[bg.pulseHue][6];
+  var far = RAMPS[4][8], R0 = RAMPS[0], R1 = RAMPS[1], R2 = RAMPS[2], R4 = RAMPS[4];
+  for (var y = 0; y < BH; y++){ var row = (oy + y) * TW + ox, by = (y & 3) << 2, o = y * BW;
+    for (var x = 0; x < BW; x++){ var ti = row + x, b = BAYER[by | (x & 3)], s = tabS[ti];
+      if (s === 255){ pix[o + x] = far; continue; }
+      var d = tabD[ti], k = ((d + trav) & 255) << 8 | ((tabA[ti] + rot) & 255), it, cl;
+      if (b < fth){ it = tI2[k]; cl = tC2[k]; } else { it = tI[k]; cl = tC[k]; }
+      var li = (((it * s) >> 8) * 9 + b * 16) >> 8, w = cl < 4 ? WHEEL[(cl + cyc) & 3] : 4;
+      pix[o + x] = (w === 0 ? R0 : w === 1 ? R1 : w === 2 ? R2 : R4)[li];
+      if (pulse && d > Dlo && d < Dhi && b >= 8) pix[o + x] = pc;
+    }
+  }
+  var cx = BW - ox, cy = BH - oy, plunge = ST[bg.st] === 'plunge';
+  for (var i = 0; i < STARS.length; i++){ var st = STARS[i], r = KR / st.d; if (r > RR * 1.6 || r < SR * 0.9) continue;
+    var ca = Math.cos(st.a), sa = Math.sin(st.a), sx = cx + r * ca, sy = cy + r * sa;
+    var c = r < SR * 1.6 ? R0[5] : r < RR * 0.45 ? C_STAR : C_DUST;
+    pxl(sx, sy, c); if (plunge){ pxl(sx + ca, sy + sa, c); pxl(sx + ca * 2, sy + sa * 2, c); }
+  }
+  sigil(cx, cy);
+  lox.putImageData(img, 0, 0);
+  bgx.imageSmoothingEnabled = false;
+  bgx.drawImage(lo, 0, 0, bgc.width, bgc.height);
+}
 /* ================= scheduler ================= */
 var cur = null, curIdx = -1, state = 'run', sysT = 0, holdT = 0, sandbox = false;
 var nameEl = document.getElementById('sysname'), roleEl = document.getElementById('sysrole');
@@ -806,10 +987,12 @@ function start(i){
   cur.init();
   nameEl.textContent = cur.name; roleEl.textContent = cur.role;
   sound('switch', i);
+  bgPulse(cur.hot);
 }
 function pick(){ var i; do { i = Math.floor(rng() * systems.length); } while (i === curIdx); start(i); }
 function step(){
   cursorStep(); var dt = DT, i;
+  bgStep(dt);
   if (state === 'run'){
     sysT += dt; cur.step(dt);
     if (cur.done()){ snapHome(); state = 'hold'; holdT = 0; }
@@ -825,8 +1008,9 @@ function step(){
   }
 }
 function paint(){
+  bgPaint();
   ctx.setTransform(S, 0, 0, S, 0, 0);
-  ctx.fillStyle = P.cream; ctx.fillRect(0, 0, W, H);
+  ctx.clearRect(0, 0, W, H);
   if (state === 'run' && cur.draw) cur.draw(); else drawCells(cur.hot);
 }
 /* ---------- the secret: type play ---------- */
@@ -834,9 +1018,12 @@ var typed = '', whisper = document.getElementById('whisper');
 window.addEventListener('keydown', function(e){
   if (e.key === ' ' && sandbox){ start(curIdx); e.preventDefault(); return; }
   if (sandbox && e.key >= '1' && e.key <= '9'){ start(parseInt(e.key, 10) - 1); return; }
-  if (e.key && e.key.length === 1){ typed = (typed + e.key.toLowerCase()).slice(-4); if (typed === 'play'){ sandbox = !sandbox; whisper.hidden = !sandbox; typed = ''; } }
+  if (e.key && e.key.length === 1){ typed = (typed + e.key.toLowerCase()).slice(-5);
+    if (typed.slice(-4) === 'play'){ sandbox = !sandbox; whisper.hidden = !sandbox; typed = ''; }
+    else if (typed === 'above'){ bgAbove(); typed = ''; } }
 });
 /* ---------- clock ---------- */
+bgLayout();
 layout();
 pick();
 var pre = Math.round(T0 / 1000 / DT);
@@ -853,8 +1040,9 @@ function frame(now){
 requestAnimationFrame(frame);
 var lastW = W, lastH = H;
 window.addEventListener('resize', function(){
+  bgLayout();
   var bw = box.clientWidth, bh = box.clientHeight, cp = Math.max(5, Math.min(12, Math.floor(bw / 62)));
-  if (Math.floor(bw / cp) === lastW && Math.floor(bh / cp) === lastH) return;
+  if (Math.floor(bw / cp) === lastW && Math.floor(bh / cp) === lastH){ paint(); return; }
   layout(); lastW = W; lastH = H; start(curIdx); paint();
 });
 })();
