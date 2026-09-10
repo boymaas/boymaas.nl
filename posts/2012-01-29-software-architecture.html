@@ -1,55 +1,41 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<!--[if lt IE 7 ]> <html lang="<haml:loud> config[:meta_data][:lang] </haml:loud>" class="no-js ie ie6 lte7 lte8 lte9"> <![endif]-->
-<!--[if IE 7 ]> <html lang="<haml:loud> config[:meta_data][:lang] </haml:loud>" class="no-js ie ie7 lte7 lte8 lte9"> <![endif]-->
-<!--[if IE 8 ]> <html lang="<haml:loud> config[:meta_data][:lang] </haml:loud>" class="no-js ie ie8 lte8 lte9"> <![endif]-->
-<!--[if IE 9 ]> <html lang="<haml:loud> config[:meta_data][:lang] </haml:loud>" class="no-js ie ie9 lte9"> <![endif]-->
-<!--[if (gt IE 9)|!(IE)]> ><! <![endif]-->
-<html class='no-js' lang='en'>
-  <!-- <![endif] -->
-  <head>
-    <meta charset='utf-8' />
-    <title>
-      Software architecture
-      &bull; Ramblings of Boy Maas
-    </title>
-    <meta content='width=device-width, initial-scale=1.0' name='viewport' />
-    <meta content='0B2b3BMieI7ywPGWTSIwssHMzAmCiTI1SI7sCe46sdk' name='google-site-verification' />
-    <link href='/feed' rel='alternate' title='Ramblings of Boy Maas Atom feed' type='application/atom+xml' />
-    <link href='/assets/styles.css' rel='stylesheet' />
-    <script src='/assets/lib.js' type='text/javascript'></script>
-    <link href='/favicon.png' rel='shortcut icon' />
-    <body>
-      <div id='page'>
-        <div id='header' role='banner'>
-          <h1>
-            <a href='/'>
-              Boy Maas
-              <span class='nick'>(m4nic)</span>
-            </a>
-            <br />
-            <span class='subtitle'>
-              <span class='about'>>> Elements of software architecture</span>
-               ....
-            </span>
-          </h1>
-          <div id='nav'>
-            <ul>
-              <li>
-                <a href='/'>Home</a>
-              </li>
-              <li>
-                <a class='clickme' href='/work.html'>Portfolio</a>
-              </li>
-              <li>
-                <a href='/posts.html'>All posts</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <!-- /header -->
-        <div id='content' role='maincontent'>
-          <h1>Elements of a good architecture</h1>
-
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Software architecture - Boy Maas (m4nic)</title>
+<meta name="description" content="Elements of software architecture">
+<link rel="icon" href="/favicon.png">
+<link rel="alternate" type="application/atom+xml" title="Boy Maas, posts" href="/feed.xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&text=%E2%94%80%E2%94%82%E2%94%8C%E2%94%90%E2%94%94%E2%94%98%E2%94%9C%E2%94%A4%E2%96%88&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/tui.css">
+</head>
+<body data-page="article" data-back="/posts.html" data-pos="posts 6/17" data-prev="/posts/2012-02-10-ruby-org-mode-parser-development-log.html" data-next="/posts/2011-09-07-kinetic-typography.html">
+<canvas id="sky" aria-hidden="true"></canvas>
+<header class="wrap top">
+  <a class="who" href="/">Boy Maas <span class="dim">(m4nic)</span></a>
+  <nav>
+    <a href="/posts.html" class="here">posts</a>
+    <a href="/work.html">work</a>
+    <a href="/#bio">bio</a>
+    <a href="/#mail">mail</a>
+    <button id="snd" type="button" aria-pressed="false">sound off</button>
+  </nav>
+</header>
+<main class="wrap stack">
+  <div class="acols">
+    <article class="pane focus" id="posts" aria-label="posts/2012-01-29-software-architecture">
+      <div class="bt"><span>┌─</span><span class="tt"><span>posts/2012-01-29-software-architecture</span></span><span>─</span><span class="meta"> entry 6 of 17 </span><span class="ln"></span><span>┐</span></div>
+      <div class="bl"></div><div class="br"></div>
+      <div class="in">
+        <header class="head">
+          <h1>Software architecture</h1>
+          <p class="sub"><time>2012-01-29</time>Elements of software architecture</p>
+        </header>
+        <div class="article">
 <p>I was working with some legacy code lately  where commercial goals where given
 precedence over technical quality.  All rules on writing solid, maintainable
 software where broken. The situation was terrible, and with no future sign of
@@ -62,7 +48,7 @@ with it.</p>
 continue with a cycle of bugfixes and "hoping" everything would keep on running
 <em>without</em> me. The quote below adequately describes the state of their software.</p>
 
-<blockquote>
+<blockquote><span class="gut" aria-hidden="true"></span>
   A Big Ball of Mud is a haphazardly structured, sprawling, sloppy,
   duct-tape-and-baling-wire, spaghetti-code jungle. These systems show
   unmistakable signs of unregulated growth, and repeated, expedient repair.
@@ -75,7 +61,6 @@ continue with a cycle of bugfixes and "hoping" everything would keep on running
   inertia of the day-to-day chore of patching the holes in these failing dikes,
   are content to work on such systems.
 </blockquote>
-
 
 <p>It resulted in me and another healthy motivated programmer leaving the team.</p>
 
@@ -94,14 +79,13 @@ attacks of your opponent increases.</p>
 would like to address <em>cohesion</em> and <em>coupling</em>, and show you they (should) underly many
 architectural choices.</p>
 
-<blockquote>
+<blockquote><span class="gut" aria-hidden="true"></span>
   Cohesion is often contrasted with coupling, a different concept. Nonetheless
   high cohesion often correlates with loose coupling, and vice versa. The
   software quality metrics of coupling and cohesion were invented by Larry
   Constantine based on characteristics of "good" programming practices that
   reduced maintenance and modification costs.
 </blockquote>
-
 
 <p>So we could state that any choice that increases cohesion and decreases coupling
 in a certain domain would be a good architectural choice.</p>
@@ -111,12 +95,11 @@ the human (cognitive) point of view. Good programs tend to have their naming
 down. Reading this software is easy, the whole structure adapts naturally to the
 domain and to the vectors of change.</p>
 
-<blockquote>
+<blockquote><span class="gut" aria-hidden="true"></span>
   There are only two hard things in Computer Science: cache invalidation and
   naming things.
   <author>Phil Karlton</author>
 </blockquote>
-
 
 <p>The vectors of change is an important element, some vectors of change are easy
 to spot and others are difficult to spot. It's a predicting game, and is heavily
@@ -147,7 +130,7 @@ and partly art.</p>
 
 <p>Lets look at some popular architectural choices made these days.</p>
 
-<h1>Rails architecture</h1>
+<h2>Rails architecture</h2>
 
 <p>Rails is a great platform for quickly realising a prototype. You can create
 models, attach validation to these models, and render forms using the models
@@ -167,13 +150,12 @@ a MVC structure.</p>
 
 <h2>Data, Context and Interaction to supplement MVC</h2>
 
-<blockquote>
+<blockquote><span class="gut" aria-hidden="true"></span>
   The paradigm separates the domain model (data) from use cases (context) and
   roles that objects play (interaction). DCI is complementary to
   model–view–controller (MVC). MVC as a pattern language is still used to
   separate the data and its processing from presentation.
 </blockquote>
-
 
 <p>Why would we want this?</p>
 
@@ -183,7 +165,6 @@ a MVC structure.</p>
 <li>To help software developers reason about system-level state and behavior instead of only object state and behavior</li>
 <li>To support an object style of thinking that is close to peoples' mental models, rather than the class style of thinking that overshadowed object thinking early in the history of object-oriented programming languages</li>
 </ul>
-
 
 <h3>So what is it ...</h3>
 
@@ -203,24 +184,22 @@ and directs the interaction between them.</p>
 <p>Data are kept slim, and no behaviour is specified on them. Since behaviour
 is specified in Roles it is <em>decoupled</em> from the Context.</p>
 
-<pre><code>Context
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><div class="bl"></div><div class="br"></div><pre><code>Context
 initialize
    # instantizes all dataobjects and makes sure they can perform
    # the requested roles
 
 call/execute
-   # perform the sequential logic using the dataobjects
-</code></pre>
+   # perform the sequential logic using the dataobjects</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
 <p>So by this we could say a Context is <em>coupled</em> to (one or more) Roles. And a Role
 is <em>coupled</em> to a DataObject.</p>
 
-<pre><code>Context --&gt; *Roles --&gt; *DataObject
-</code></pre>
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><div class="bl"></div><div class="br"></div><pre><code>Context --&gt; *Roles --&gt; *DataObject</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
 <p>For more information read: <a href="http://en.wikipedia.org/wiki/Data,_context_and_interaction">Data context and interaction</a></p>
 
-<h1>Ruby community heuristics (and the relation to coupling and cohesion)</h1>
+<h2>Ruby community heuristics (and the relation to coupling and cohesion)</h2>
 
 <p>Spending a lot of time in the Ruby community lately. I hear the following a lot
 from experienced Ruby programmers: <em>Tell don't ask</em>, <em>Law of Demeter</em>, <em>Single
@@ -245,7 +224,7 @@ well. Keeping knowledge internal.</p>
 
 <p>Increases cohesion, always a good thing.</p>
 
-<h1>Cohesion and Coupling</h1>
+<h2>Cohesion and Coupling</h2>
 
 <p>So cohesion and coupling should be a dominant factor on which you should
 make architectural choices.</p>
@@ -352,54 +331,33 @@ This may lead to changing the way a module reads a record because a field that t
 <h4>Temporal coupling</h4>
 
 <p>When two actions are bundled together into one module just because they happen to occur at the same time.</p>
-<div id='disqus_thread'></div>
-<script src='http://disqus.com/forums/bloyg/embed.js' type='text/javascript'></script>
-<noscript>
-  <a href='http://disqus.com/forums/bloyg/?url=ref'>View the discussion thread.</a>
-</noscript>
-          <hr style='clear: both;width: 100%;height: 0px;' />
         </div>
-        <!-- /content -->
-        <div id='footer' role='contentinfo'>
-          <p class='col'>
-            © Copyright 2010-2011 Boy Maas
-            // Powered by
-            <a href='https://www.github.com/boymaas/Hobber'>boymaas/Hobber</a>
-          </p>
-        </div>
-        <!-- /footer -->
-        <!-- /page -->
       </div>
-      <a href='https://github.com/boymaas'>
-        <img alt='Fork me on GitHub' src='https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png' style='position: absolute; top: 0; right: 0; border: 0;' />
-      </a>
-      <script src='/assets/lib.js'></script>
-      <script type='text/javascript'>
-        //<![CDATA[
-          var _gaq = [['_setAccount', 'UA-561813-3'], ['_trackPageview']];
-          (function(d, t) {
-              var g = d.createElement(t),
-                  s = d.getElementsByTagName(t)[0];
-              g.async = true;
-              g.src = '//www.google-analytics.com/ga.js';
-              s.parentNode.insertBefore(g, s);
-          })(document, 'script');
-        //]]>
-      </script>
-      <script type='text/javascript'>
-        //<![CDATA[
-          (function() {
-              var links = document.getElementsByTagName('a');
-              var query = '?';
-              for(var i = 0; i < links.length; i++) {
-                  if(links[i].href.indexOf('#disqus_thread') >= 0) {
-                      query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
-                  }
-              }
-              document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/bloyg/get_num_replies.js' + query + '"></' + 'script>');
-          })();
-        //]]>
-      </script>
-    </body>
-  </head>
+      <div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div>
+    </article>
+    <div class="side">
+      <section class="pane" id="nav" aria-label="nav">
+        <div class="bt"><span>┌─</span><span class="tt">nav</span><span class="ln"></span><span>┐</span></div>
+        <div class="bl"></div><div class="br"></div>
+        <div class="in">
+        <ol class="navrows">
+          <li><b>h</b><span>prev</span><a href="/posts/2012-02-10-ruby-org-mode-parser-development-log.html">Ruby org-mode parser development log</a></li>
+          <li><b>l</b><span>next</span><a href="/posts/2011-09-07-kinetic-typography.html">Kinetic Typography</a></li>
+          <li><b>q</b><span>back</span><a href="/posts.html">posts</a></li>
+        </ol>
+        </div>
+        <div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div>
+      </section>
+    </div>
+  </div>
+
+</main>
+<div class="hints"><div class="wrap">
+  <span class="keys"><b>j/k</b> scroll  <b>h/l</b> prev/next  <b>q</b> back  <span class="kb"><b>gg/G</b> ends  <b>s</b> sound</span></span>
+  <span class="whisper" id="whisper" hidden>sandbox open: keys 1 to 9 pick a system, space restarts it, type play to close</span>
+  <span class="pos" id="pos"></span>
+</div></div>
+<script src="/assets/sky.js"></script>
+<script src="/assets/tui.js"></script>
+</body>
 </html>

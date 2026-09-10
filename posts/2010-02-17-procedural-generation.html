@@ -1,63 +1,48 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<!--[if lt IE 7 ]> <html lang="<haml:loud> config[:meta_data][:lang] </haml:loud>" class="no-js ie ie6 lte7 lte8 lte9"> <![endif]-->
-<!--[if IE 7 ]> <html lang="<haml:loud> config[:meta_data][:lang] </haml:loud>" class="no-js ie ie7 lte7 lte8 lte9"> <![endif]-->
-<!--[if IE 8 ]> <html lang="<haml:loud> config[:meta_data][:lang] </haml:loud>" class="no-js ie ie8 lte8 lte9"> <![endif]-->
-<!--[if IE 9 ]> <html lang="<haml:loud> config[:meta_data][:lang] </haml:loud>" class="no-js ie ie9 lte9"> <![endif]-->
-<!--[if (gt IE 9)|!(IE)]> ><! <![endif]-->
-<html class='no-js' lang='en'>
-  <!-- <![endif] -->
-  <head>
-    <meta charset='utf-8' />
-    <title>
-      Procedural Generation, a way to go?
-      &bull; Ramblings of Boy Maas
-    </title>
-    <meta content='width=device-width, initial-scale=1.0' name='viewport' />
-    <meta content='0B2b3BMieI7ywPGWTSIwssHMzAmCiTI1SI7sCe46sdk' name='google-site-verification' />
-    <link href='/feed' rel='alternate' title='Ramblings of Boy Maas Atom feed' type='application/atom+xml' />
-    <link href='/assets/styles.css' rel='stylesheet' />
-    <script src='/assets/lib.js' type='text/javascript'></script>
-    <link href='/favicon.png' rel='shortcut icon' />
-    <body>
-      <div id='page'>
-        <div id='header' role='banner'>
-          <h1>
-            <a href='/'>
-              Boy Maas
-              <span class='nick'>(m4nic)</span>
-            </a>
-            <br />
-            <span class='subtitle'>
-              <span class='about'>>> The art of generating content procedurally</span>
-               ....
-            </span>
-          </h1>
-          <div id='nav'>
-            <ul>
-              <li>
-                <a href='/'>Home</a>
-              </li>
-              <li>
-                <a class='clickme' href='/work.html'>Portfolio</a>
-              </li>
-              <li>
-                <a href='/posts.html'>All posts</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <!-- /header -->
-        <div id='content' role='maincontent'>
-          
-
-<blockquote>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Procedural Generation, a way to go? - Boy Maas (m4nic)</title>
+<meta name="description" content="The art of generating content procedurally">
+<link rel="icon" href="/favicon.png">
+<link rel="alternate" type="application/atom+xml" title="Boy Maas, posts" href="/feed.xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&text=%E2%94%80%E2%94%82%E2%94%8C%E2%94%90%E2%94%94%E2%94%98%E2%94%9C%E2%94%A4%E2%96%88&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/tui.css">
+</head>
+<body data-page="article" data-back="/posts.html" data-pos="posts 16/17" data-prev="/posts/2010-05-04-html5-canvas-element.html" data-next="/posts/2010-02-09-a-haskel-blog.html">
+<canvas id="sky" aria-hidden="true"></canvas>
+<header class="wrap top">
+  <a class="who" href="/">Boy Maas <span class="dim">(m4nic)</span></a>
+  <nav>
+    <a href="/posts.html" class="here">posts</a>
+    <a href="/work.html">work</a>
+    <a href="/#bio">bio</a>
+    <a href="/#mail">mail</a>
+    <button id="snd" type="button" aria-pressed="false">sound off</button>
+  </nav>
+</header>
+<main class="wrap stack">
+  <div class="acols">
+    <article class="pane focus" id="posts" aria-label="posts/2010-02-17-procedural-generation">
+      <div class="bt"><span>┌─</span><span class="tt"><span>posts/2010-02-17-procedural-generation</span></span><span>─</span><span class="meta"> entry 16 of 17 </span><span class="ln"></span><span>┐</span></div>
+      <div class="bl"></div><div class="br"></div>
+      <div class="in">
+        <header class="head">
+          <h1>Procedural Generation, a way to go?</h1>
+          <p class="sub"><time>2010-02-17</time>The art of generating content procedurally</p>
+        </header>
+        <div class="article">
+<blockquote><span class="gut" aria-hidden="true"></span>
     The light flows,  
     the smell of electricity;  
     implicit order,  
     outward manifestation ..<br>  
     => Boy Maas (2005) <=
 </blockquote>
-
 
 <p>Working as a small development studio, often in small teams with limited
 resources, you start looking at alternative ways to do things. Large development
@@ -84,8 +69,7 @@ challenges of content is <a href="http://en.wikipedia.org/wiki/Procedural_genera
 
 <h2>Let's dive in with .kkrieger</h2>
 
-<object style="float:right" width="425" height="344"><param name="movie" value="http://www.youtube.com/v/1VqzjafwCNA&hl=en_US&fs=1&"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/1VqzjafwCNA&hl=en_US&fs=1&" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="425" height="344"></embed></object>
-
+<iframe width="425" height="344" src="https://www.youtube.com/embed/1VqzjafwCNA" frameborder="0" allowfullscreen style="width:425px;aspect-ratio:425/344"></iframe>
 
 <p>Before studying the process of procedural generation in some more detail let's
 look at what is done at this moment. A brilliant example of procedural
@@ -123,7 +107,7 @@ the generation functions.</p>
 <a href="http://en.wikipedia.org/wiki/Exile_(video_game_series">Exile</a>), I found <a href="http://exile.acornarcade.com/devel.html">an interesting read</a>
 giving some interesting quotes from the developers:</p>
 
-<blockquote><p>Technical issues aside, and against all modern business rules, the Exile game
+<blockquote><span class="gut" aria-hidden="true"></span><p>Technical issues aside, and against all modern business rules, the Exile game
 itself was allowed to evolve from little more than having a spaceman exploring
 a cavern system. We didn't know where it was going in the early stages and
 really just thought about new experiences for the hero and new technical
@@ -141,7 +125,7 @@ creativity.</p>
 the gameplay of Exile is stunning. Think only about the map in Exile, another
 quote from the article:</p>
 
-<blockquote><p>The huge map of Exile was generated by an algorithm which from an input of the
+<blockquote><span class="gut" aria-hidden="true"></span><p>The huge map of Exile was generated by an algorithm which from an input of the
 xy map coordinates created tunnels, solid rock, or one of the few special
 blocks that could have manually defined objects in them, like creatures,
 doors, guns, etc. It took a long time to fiddle with this algorithm to produce
@@ -157,54 +141,33 @@ with are generated. Their intelligence adapts to the way you play the game. Keep
 at your level. The AI is finding your weak spots and is trying to exploit them. You have to adapt to
 a world that is adapting to you and challenging you. All you see is generated on the fly. No element of
 the game is designed by an artist. Any ideas?</p>
-<div id='disqus_thread'></div>
-<script src='http://disqus.com/forums/bloyg/embed.js' type='text/javascript'></script>
-<noscript>
-  <a href='http://disqus.com/forums/bloyg/?url=ref'>View the discussion thread.</a>
-</noscript>
-          <hr style='clear: both;width: 100%;height: 0px;' />
         </div>
-        <!-- /content -->
-        <div id='footer' role='contentinfo'>
-          <p class='col'>
-            © Copyright 2010-2011 Boy Maas
-            // Powered by
-            <a href='https://www.github.com/boymaas/Hobber'>boymaas/Hobber</a>
-          </p>
-        </div>
-        <!-- /footer -->
-        <!-- /page -->
       </div>
-      <a href='https://github.com/boymaas'>
-        <img alt='Fork me on GitHub' src='https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png' style='position: absolute; top: 0; right: 0; border: 0;' />
-      </a>
-      <script src='/assets/lib.js'></script>
-      <script type='text/javascript'>
-        //<![CDATA[
-          var _gaq = [['_setAccount', 'UA-561813-3'], ['_trackPageview']];
-          (function(d, t) {
-              var g = d.createElement(t),
-                  s = d.getElementsByTagName(t)[0];
-              g.async = true;
-              g.src = '//www.google-analytics.com/ga.js';
-              s.parentNode.insertBefore(g, s);
-          })(document, 'script');
-        //]]>
-      </script>
-      <script type='text/javascript'>
-        //<![CDATA[
-          (function() {
-              var links = document.getElementsByTagName('a');
-              var query = '?';
-              for(var i = 0; i < links.length; i++) {
-                  if(links[i].href.indexOf('#disqus_thread') >= 0) {
-                      query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
-                  }
-              }
-              document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/bloyg/get_num_replies.js' + query + '"></' + 'script>');
-          })();
-        //]]>
-      </script>
-    </body>
-  </head>
+      <div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div>
+    </article>
+    <div class="side">
+      <section class="pane" id="nav" aria-label="nav">
+        <div class="bt"><span>┌─</span><span class="tt">nav</span><span class="ln"></span><span>┐</span></div>
+        <div class="bl"></div><div class="br"></div>
+        <div class="in">
+        <ol class="navrows">
+          <li><b>h</b><span>prev</span><a href="/posts/2010-05-04-html5-canvas-element.html">Playing around with the HTML5 Canvas element</a></li>
+          <li><b>l</b><span>next</span><a href="/posts/2010-02-09-a-haskel-blog.html">Hakyll blog setup</a></li>
+          <li><b>q</b><span>back</span><a href="/posts.html">posts</a></li>
+        </ol>
+        </div>
+        <div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div>
+      </section>
+    </div>
+  </div>
+
+</main>
+<div class="hints"><div class="wrap">
+  <span class="keys"><b>j/k</b> scroll  <b>h/l</b> prev/next  <b>q</b> back  <span class="kb"><b>gg/G</b> ends  <b>s</b> sound</span></span>
+  <span class="whisper" id="whisper" hidden>sandbox open: keys 1 to 9 pick a system, space restarts it, type play to close</span>
+  <span class="pos" id="pos"></span>
+</div></div>
+<script src="/assets/sky.js"></script>
+<script src="/assets/tui.js"></script>
+</body>
 </html>

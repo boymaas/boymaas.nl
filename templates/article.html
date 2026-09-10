@@ -1,0 +1,30 @@
+  <div class="acols">
+    <article class="pane focus" id="{{id}}" aria-label="{{kind}}/{{slug}}">
+      <div class="bt"><span>┌─</span><span class="tt"><span>{{kind}}/{{slug}}</span></span><span>─</span><span class="meta"> {{meta}} </span><span class="ln"></span><span>┐</span></div>
+      <div class="bl"></div><div class="br"></div>
+      <div class="in">
+        <header class="head">
+          <h1>{{title}}</h1>
+          <p class="sub">{{sub}}</p>
+        </header>
+        <div class="article">
+{{body}}
+        </div>
+      </div>
+      <div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div>
+    </article>
+    <div class="side">
+      <section class="pane" id="nav" aria-label="nav">
+        <div class="bt"><span>┌─</span><span class="tt">nav</span><span class="ln"></span><span>┐</span></div>
+        <div class="bl"></div><div class="br"></div>
+        <div class="in">
+        <ol class="navrows">
+          <li><b>h</b><span>prev</span>{{prev}}</li>
+          <li><b>l</b><span>next</span>{{next}}</li>
+          <li><b>q</b><span>back</span><a href="{{back}}">{{back_label}}</a></li>
+        </ol>
+        </div>
+        <div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div>
+      </section>
+    </div>
+  </div>

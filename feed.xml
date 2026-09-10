@@ -1,0 +1,2141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Boy Maas (m4nic)</title>
+  <subtitle>Posts on programming, design and thought.</subtitle>
+  <link href="https://boymaas.nl/feed.xml" rel="self"/>
+  <link href="https://boymaas.nl/"/>
+  <id>https://boymaas.nl/</id>
+  <updated>2015-10-31T00:00:00Z</updated>
+  <author><name>Boy Maas</name></author>
+  <entry>
+    <title>CoffeeScript screencasts</title>
+    <link href="https://boymaas.nl/posts/2015-10-31-coffeescript-screencasts.html"/>
+    <id>https://boymaas.nl/posts/2015-10-31-coffeescript-screencasts.html</id>
+    <updated>2015-10-31T00:00:00Z</updated>
+    <summary>Overflowing backend technoligies in the frontend</summary>
+    <content type="html">&lt;h2&gt;Client side CoffeeScript hacking screencasts&lt;/h2&gt;
+
+&lt;p&gt;Some other fast-forwards of me hacking a proof-of-concept videoslot machine
+on top of a home-grown rendering engine. Notice the old school switch window, refresh, &quot;re-massage the application in the desired state&quot; development style. Something clojurescript&#x27;s figwheel and other technologies have fixed for me. Thanks &lt;a href=&quot;https://github.com/bhauman&quot;&gt;bhauman&lt;/a&gt;!!!&lt;/p&gt;
+
+&lt;h3&gt;Part I&lt;/h3&gt;
+
+&lt;iframe width=&quot;640&quot; height=&quot;400&quot; src=&quot;https://www.youtube.com/embed/qS3ZP1NBYpM&quot; frameborder=&quot;0&quot; allowfullscreen&gt;&lt;/iframe&gt;
+
+&lt;h3&gt;Part II&lt;/h3&gt;
+
+&lt;iframe width=&quot;640&quot; height=&quot;400&quot; src=&quot;https://www.youtube.com/embed/FRHsHQgp1Bs&quot; frameborder=&quot;0&quot; allowfullscreen&gt;&lt;/iframe&gt;
+
+&lt;p&gt;After these proof of concepts a complete new way of approaching client side development arose. But still nostalgic to see how I worked in 2014.&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <title>Clojure screencasts</title>
+    <link href="https://boymaas.nl/posts/2015-08-05-clojure-screencasts.html"/>
+    <id>https://boymaas.nl/posts/2015-08-05-clojure-screencasts.html</id>
+    <updated>2015-08-05T00:00:00Z</updated>
+    <summary>what gets measured, gets managed</summary>
+    <content type="html">&lt;p&gt;A while ago, I started the habit of recording hacking sessions, and
+replaying them with a factor of 10. This way I can review my own actions
+and learn from the way I work, how I refactor, and the way I solve problems.&lt;/p&gt;
+
+&lt;h2&gt;Monadic bitfinex trading bot&lt;/h2&gt;
+
+&lt;p&gt;Part of me developing a trading bot, on top of
+&lt;a href=&quot;http://www.datomic.com&quot;&gt;datomic&lt;/a&gt; to allow
+&lt;a href=&quot;https://en.wikipedia.org/wiki/Multivariate_statistics&quot;&gt;multi-variable regression testing&lt;/a&gt;
+based on actual orderbooks configurations gathered while running the bot on bitfinex.&lt;/p&gt;
+
+&lt;h3&gt;Part I&lt;/h3&gt;
+
+&lt;iframe width=&quot;640&quot; height=&quot;480&quot; src=&quot;https://www.youtube.com/embed/uiPVSTurVMY&quot; frameborder=&quot;0&quot; allowfullscreen&gt;&lt;/iframe&gt;
+
+&lt;h3&gt;Part II&lt;/h3&gt;
+
+&lt;iframe width=&quot;640&quot; height=&quot;480&quot; src=&quot;https://www.youtube.com/embed/9BoORe94ZqM&quot; frameborder=&quot;0&quot; allowfullscreen&gt;&lt;/iframe&gt;</content>
+  </entry>
+  <entry>
+    <title>An alternative view on the foundations of our society</title>
+    <link href="https://boymaas.nl/posts/2012-07-03-adam-curtis-all-watched-over-by-machines-of-loving-grace.html"/>
+    <id>https://boymaas.nl/posts/2012-07-03-adam-curtis-all-watched-over-by-machines-of-loving-grace.html</id>
+    <updated>2012-07-03T00:00:00Z</updated>
+    <summary>All watched over by machines of loving grace</summary>
+    <content type="html">&lt;p&gt;A few years back I accidently stumbled on Adam Curtis &lt;a href=&quot;http://en.wikipedia.org/wiki/The_Century_of_the_Self&quot;&gt;The Century of Self&lt;/a&gt;
+and &lt;a href=&quot;http://en.wikipedia.org/wiki/All_Watched_Over_by_Machines_of_Loving_Grace_(TV_series&quot;&gt;All watched over by Machines of Loving Grace&lt;/a&gt;).&lt;/p&gt;
+
+&lt;p&gt;I have found them to be an interesting view on the foundations of our modern
+society. I really liked the two mentioned above and embedded them below for your
+viewing pleasure. I recommend watching at least the first 20 minutes and then
+decide wether to continue. I have found them worthy of my time.&lt;/p&gt;
+
+&lt;h2&gt;All watched over by Machines of Loving grace&lt;/h2&gt;
+
+&lt;blockquote&gt;
+All Watched Over by Machines of Loving Grace is a 2011 BBC documentary series
+by filmmaker Adam Curtis. The series argues that computers have failed to
+liberate humanity and instead have &quot;distorted and simplified our view of the
+world around us&quot;.
+&lt;/blockquote&gt;
+
+&lt;iframe src=&quot;https://player.vimeo.com/video/27393748&quot; width=&quot;500&quot; height=&quot;282&quot; frameborder=&quot;0&quot; webkitAllowFullScreen mozallowfullscreen allowFullScreen&gt;&lt;/iframe&gt;
+
+&lt;p&gt; &lt;p&gt;&lt;a href=&quot;http://vimeo.com/27393748&quot;&gt;All watched over by machines of loving grace&lt;/a&gt; from &lt;a href=&quot;http://vimeo.com/user8030122&quot;&gt;mayo11&lt;/a&gt; on &lt;a href=&quot;http://vimeo.com&quot;&gt;Vimeo&lt;/a&gt;.&lt;/p&gt;&lt;/p&gt;
+
+&lt;h2&gt;The century of Self&lt;/h2&gt;
+
+&lt;blockquote&gt;
+This series is about how those in power have used Freud&#x27;s theories to try and control the dangerous crowd in an age of mass democracy.&quot; 
+&lt;author&gt;Adam Curtis&lt;/author&gt;
+&lt;/blockquote&gt;
+
+&lt;iframe src=&quot;https://player.vimeo.com/video/24959321&quot; width=&quot;500&quot; height=&quot;383&quot; frameborder=&quot;0&quot; webkitAllowFullScreen mozallowfullscreen allowFullScreen&gt;&lt;/iframe&gt;
+
+&lt;p&gt; &lt;p&gt;&lt;a href=&quot;http://vimeo.com/24959321&quot;&gt;The Century of the self [1/4] Happiness Machines&lt;/a&gt; from &lt;a href=&quot;http://vimeo.com/user7327587&quot;&gt;zerzoura&lt;/a&gt; on &lt;a href=&quot;http://vimeo.com&quot;&gt;Vimeo&lt;/a&gt;.&lt;/p&gt;&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <title>Ruby exception handling benchmark</title>
+    <link href="https://boymaas.nl/posts/2012-06-13-ruby-exceptions-benchmark.html"/>
+    <id>https://boymaas.nl/posts/2012-06-13-ruby-exceptions-benchmark.html</id>
+    <updated>2012-06-13T00:00:00Z</updated>
+    <summary>Getting into the nitty gritty details</summary>
+    <content type="html">&lt;p&gt;At work a discussion arised on how fast a ruby exception is. And if it is
+usable in Rails projects. The discussion started after the conclusion that
+performance dramatically degraded in a project using the Rails framework.&lt;/p&gt;
+
+&lt;p&gt;The question arose how fast ruby handles exceptions. After doing
+a quick google I could not find an isolated benchmark so I whipped up
+one myself.&lt;/p&gt;
+
+&lt;p&gt;Below the result of the benchmark.&lt;/p&gt;
+
+&lt;h2&gt;ruby 1.8.7 (2012-02-08 patchlevel 358) [i686-darwin11.2.0]&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;  Rehearsal ----------------------------------------------------
+  exception          0.770000   0.030000   0.800000 (  0.809420)
+  exception with e   0.780000   0.040000   0.820000 (  0.814608)
+  multi exception    0.850000   0.040000   0.890000 (  0.885843)
+  symbol             0.040000   0.000000   0.040000 (  0.035782)
+  ------------------------------------------- total: 2.550000sec
+
+                         user     system      total        real
+  exception          0.770000   0.030000   0.800000 (  0.808482)
+  exception with e   0.780000   0.040000   0.820000 (  0.817195)
+  multi exception    0.850000   0.040000   0.890000 (  0.889478)
+  symbol             0.040000   0.000000   0.040000 (  0.036175)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-darwin11.2.0]&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;  Rehearsal ----------------------------------------------------
+  exception          0.890000   0.040000   0.930000 (  0.929162)
+  exception with e   0.890000   0.030000   0.920000 (  0.934193)
+  multi exception    0.970000   0.040000   1.010000 (  0.999004)
+  symbol             0.020000   0.000000   0.020000 (  0.017207)
+  ------------------------------------------- total: 2.880000sec
+
+                         user     system      total        real
+  exception          0.830000   0.040000   0.870000 (  0.867102)
+  exception with e   0.830000   0.030000   0.860000 (  0.873007)
+  multi exception    0.910000   0.040000   0.950000 (  0.938906)
+  symbol             0.020000   0.000000   0.020000 (  0.017294)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;jruby 1.6.7.2 (ruby-1.8.7-p357) (2012-05-01 26e08ba) (Java HotSpot(TM) 64-Bit Server VM 1.6.0_29) [darwin-x86_64-java]&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;  Rehearsal ----------------------------------------------------
+  exception          8.044000   0.000000   8.044000 (  8.006000)
+  exception with e   7.704000   0.000000   7.704000 (  7.704000)
+  multi exception    7.791000   0.000000   7.791000 (  7.791000)
+  symbol             0.038000   0.000000   0.038000 (  0.038000)
+  ------------------------------------------ total: 23.577000sec
+
+                         user     system      total        real
+  exception          7.603000   0.000000   7.603000 (  7.603000)
+  exception with e   7.605000   0.000000   7.605000 (  7.605000)
+  multi exception    7.529000   0.000000   7.529000 (  7.529000)
+  symbol             0.009000   0.000000   0.009000 (  0.009000)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;The benchmark code&lt;/h2&gt;
+
+&lt;pre&gt;
+  &lt;code lang=&#x27;ruby&#x27; class=&#x27;highlight&#x27;&gt;
+  require &#x27;benchmark&#x27;
+
+  class E1 &lt; StandardError; end
+  class E2 &lt; StandardError; end
+  class E3 &lt; StandardError; end
+
+  def outer_conditional
+    if inner_returns_symbol == :argument_error
+      :agument_error
+    end
+  end
+
+  def outer_multi_exception
+    inner_multi_exception
+  rescue E1
+    :E1
+  rescue E2
+    :E2
+  rescue E3
+    :E3
+  end
+
+  def inner_multi_exception
+    raise [E1, E2, E3][rand(3)]
+  end
+
+  def outer_exception
+    inner_raises_exception
+  rescue ArgumentError
+    :argument_error
+  end
+
+  def outer_exception_with_e
+    inner_raises_exception
+  rescue ArgumentError =&gt; e
+    :argument_error
+  end
+
+  def inner_raises_exception
+    raise ArgumentError
+  end
+
+  def inner_returns_symbol
+    :argument_error
+  end
+
+  COUNT = 100_000
+
+  Benchmark.bmbm { |x|
+    x.report(&quot;exception&quot;) do
+      COUNT.times { outer_exception }
+    end
+    x.report(&quot;exception with e&quot;) do
+      COUNT.times { outer_exception_with_e }
+    end
+    x.report(&quot;multi exception&quot;) do
+      COUNT.times { outer_multi_exception }
+    end
+    x.report(&quot;symbol&quot;) do
+      COUNT.times { outer_conditional } 
+    end
+  }
+  &lt;/code&gt;
+&lt;/pre&gt;</content>
+  </entry>
+  <entry>
+    <title>Ruby org-mode parser development log</title>
+    <link href="https://boymaas.nl/posts/2012-02-10-ruby-org-mode-parser-development-log.html"/>
+    <id>https://boymaas.nl/posts/2012-02-10-ruby-org-mode-parser-development-log.html</id>
+    <updated>2012-02-10T00:00:00Z</updated>
+    <summary>Development log</summary>
+    <content type="html">&lt;p&gt;Usin Vim for a long time, and having used e-macs for a while I got hooked on
+org-mode.  The flexible plain-tekst planning mode.&lt;/p&gt;
+
+&lt;p&gt;Using org-mode was an eye-opener, brilliant idea, using it almost a reason to
+stick to emacs in combination with evil=mode. But it turns out I am more of a VIM
+person.&lt;/p&gt;
+
+&lt;p&gt;Looking on the web I found the
+&lt;a href=&quot;https://github.com/jceb/vim-orgmode&quot;&gt;vim-orgmode&lt;/a&gt; bundle. Which provides
+highlighting and other basic functionality. But I need more. An agenda view, A
+quick overview of open tasks per project, anything I would like to extract in
+the future.&lt;/p&gt;
+
+&lt;p&gt;To do this I need a nice abstracted setup of parsing org-files and
+re-writing/re-presenting the information in a nice and clean way.&lt;/p&gt;
+
+&lt;h2&gt;Goal&lt;/h2&gt;
+
+&lt;p&gt;Making lightweight/fast ruby org-mode executable to parse/reformat/analyse and
+report on my org-files or the one in my buffer. And following the Unix philosopy
+making a seperate process for it.&lt;/p&gt;
+
+&lt;h2&gt;What I want&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;flexible parsers&lt;/li&gt;
+&lt;li&gt;flexible writers&lt;/li&gt;
+&lt;li&gt;potentially database storage&lt;/li&gt;
+&lt;li&gt;maybe an org-mode website to upload / store org-mode files&lt;/li&gt;
+&lt;li&gt;well tested ruby code&lt;/li&gt;
+&lt;li&gt;integration with vim&lt;/li&gt;
+&lt;li&gt;flexible reporting&lt;/li&gt;
+&lt;li&gt;remember mode&lt;/li&gt;
+&lt;li&gt;git integration&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;Code&lt;/h2&gt;
+
+&lt;p&gt;Follow my progress at: &lt;a href=&quot;https://github.com/boymaas/orgy&quot;&gt;github&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2&gt;Main cmdline pipeline&lt;/h2&gt;
+
+&lt;p&gt;An org-mode script does the following:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;org-file(s) =&amp;gt; parse =&amp;gt; perform action =&amp;gt; present/write result
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;Design&lt;/h2&gt;
+
+&lt;p&gt;After some experimenting I came down with the following architecture for
+this commandline utility.&lt;/p&gt;
+
+&lt;h3&gt;Domain objects&lt;/h3&gt;
+
+&lt;p&gt;The domain objects of an org-mode file is pretty simple&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;OrgMode
+  FileCollection
+  File
+  Node
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Where file represents an org-mode file. It contains all necessary data
+to generate a nicely formatted org-mode file.&lt;/p&gt;
+
+&lt;p&gt;Node is an item in an org-mode file, always starting with a title following
+some content.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;* TODO I am a OrgMode node
+Content of orgmode node
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You can see the source here:
+&lt;a href=&quot;https://github.com/boymaas/orgy/blob/master/lib/org_mode.rb&quot;&gt;org_mode.rb&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3&gt;Parsers&lt;/h3&gt;
+
+&lt;p&gt;A parser is responsible for building up the domain objects
+out of a org-mode formatted file.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# parser -&amp;gt; returning domain objects
+OrgMode::FileParser -&amp;gt; OrgMode::File
+OrgMode::NodeParser -&amp;gt; OrgMode::Node
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;I start with a simple regexp based parser. Which ofcourse is well tested.
+&lt;a href=&quot;https://github.com/boymaas/orgy/blob/master/lib/org_mode/parser.rb&quot;&gt;parser&lt;/a&gt;
+&lt;a href=&quot;https://github.com/boymaas/orgy/blob/master/spec/lib/org_mode/parser_spec.rb&quot;&gt;spec&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3&gt;Reporters&lt;/h3&gt;
+
+&lt;p&gt;Reporters take the domain model and extract certain information out of the
+domain model. It essentially constructs datastructures which can be easily
+presented by the presenters.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;OrgMode::Reporters
+  Agenda
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3&gt;Presenters&lt;/h3&gt;
+
+&lt;p&gt;Presenters present the data contructed by the reporters in some kind of format.
+This can be anything. I will start with simple commandline interaction so they
+will be strings.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;OrgMode::Presenters::String
+  Agenda
+
+OrgMode::Presenters::Html
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3&gt;Commands&lt;/h3&gt;
+
+&lt;p&gt;Commands handle the command line interaction cmdline interaction essentially
+parses the supplied org-mode files or recursively scanned directory and displays
+the information use one of the available presenters&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;OrgMode::Commands
+  Agenda
+&lt;/code&gt;&lt;/pre&gt;</content>
+  </entry>
+  <entry>
+    <title>Software architecture</title>
+    <link href="https://boymaas.nl/posts/2012-01-29-software-architecture.html"/>
+    <id>https://boymaas.nl/posts/2012-01-29-software-architecture.html</id>
+    <updated>2012-01-29T00:00:00Z</updated>
+    <summary>Elements of software architecture</summary>
+    <content type="html">&lt;p&gt;I was working with some legacy code lately  where commercial goals where given
+precedence over technical quality.  All rules on writing solid, maintainable
+software where broken. The situation was terrible, and with no future sign of
+improvement. Architecture just wasn&#x27;t part of the culture and had no real value
+in the perception of the technical lead and the commercial department. I was
+working with this code for over 2 weeks, and just could not continue working
+with it.&lt;/p&gt;
+
+&lt;p&gt;I had to give the advise to either start over from scratch and do it right, or
+continue with a cycle of bugfixes and &quot;hoping&quot; everything would keep on running
+&lt;em&gt;without&lt;/em&gt; me. The quote below adequately describes the state of their software.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  A Big Ball of Mud is a haphazardly structured, sprawling, sloppy,
+  duct-tape-and-baling-wire, spaghetti-code jungle. These systems show
+  unmistakable signs of unregulated growth, and repeated, expedient repair.
+  Information is shared promiscuously among distant elements of the system,
+  often to the point where nearly all the important information becomes global
+  or duplicated. The overall structure of the system may never have been well
+  defined. If it was, it may have eroded beyond recognition. Programmers with a
+  shred of architectural sensibility shun these quagmires. Only those who are
+  unconcerned about architecture, and, perhaps, are comfortable with the
+  inertia of the day-to-day chore of patching the holes in these failing dikes,
+  are content to work on such systems.
+&lt;/blockquote&gt;
+
+&lt;p&gt;It resulted in me and another healthy motivated programmer leaving the team.&lt;/p&gt;
+
+&lt;p&gt;We belong to the later category: &quot;Programmers with a shred of architectural
+sensibility shun these quagmires.&quot;&lt;/p&gt;
+
+&lt;h2&gt;Software design is like a game of chess&lt;/h2&gt;
+
+&lt;p&gt;Software architecture/design is like a game of chess. You have many options but
+some just give your position more options than other positions. You could argue
+that the adaptability of you position is an indicator of quality. Higher
+adaptability is higher quality. Since the probability you can adapt to the
+attacks of your opponent increases.&lt;/p&gt;
+
+&lt;p&gt;Good, solid and robust software also share these characteristics. In this article I
+would like to address &lt;em&gt;cohesion&lt;/em&gt; and &lt;em&gt;coupling&lt;/em&gt;, and show you they (should) underly many
+architectural choices.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  Cohesion is often contrasted with coupling, a different concept. Nonetheless
+  high cohesion often correlates with loose coupling, and vice versa. The
+  software quality metrics of coupling and cohesion were invented by Larry
+  Constantine based on characteristics of &quot;good&quot; programming practices that
+  reduced maintenance and modification costs.
+&lt;/blockquote&gt;
+
+&lt;p&gt;So we could state that any choice that increases cohesion and decreases coupling
+in a certain domain would be a good architectural choice.&lt;/p&gt;
+
+&lt;p&gt;I believe this is correct from a purely technical point of view. There is also
+the human (cognitive) point of view. Good programs tend to have their naming
+down. Reading this software is easy, the whole structure adapts naturally to the
+domain and to the vectors of change.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  There are only two hard things in Computer Science: cache invalidation and
+  naming things.
+  &lt;author&gt;Phil Karlton&lt;/author&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;The vectors of change is an important element, some vectors of change are easy
+to spot and others are difficult to spot. It&#x27;s a predicting game, and is heavily
+dependent on the perception of the architect and the domain expert at the
+time the design is constructed.&lt;/p&gt;
+
+&lt;p&gt;Too much anticipation on change may lead to
+&lt;a href=&quot;http://en.wikipedia.org/wiki/Inner-platform_effect&quot;&gt;Inner Platform&lt;/a&gt;
+anti-pattern. Writing a language a language.&lt;/p&gt;
+
+&lt;h2&gt;Extract knowledge from the domain expert&lt;/h2&gt;
+
+&lt;p&gt;The knowledge of the domain-expert is captured in the language he/she uses to
+express this knowledge. As a good architect, one of the more important skills is
+knowing how to listen, and extract the right knowledge and patterns so you
+can model the domain correctly in software.&lt;/p&gt;
+
+&lt;p&gt;If it&#x27;s modelled correctly the probability the system can adapt correctly to
+anticipated change increases and the software communicates the knowledge of the
+domain. The domain expert should be able to read the domain level code and
+verify it&#x27;s correctness.&lt;/p&gt;
+
+&lt;h2&gt;What is the &quot;best&quot; approach&lt;/h2&gt;
+
+&lt;p&gt;Following these assumptions you can conclude there is no such thing as &quot;one
+superior design methodology&quot;, good software design is partly science
+and partly art.&lt;/p&gt;
+
+&lt;p&gt;Lets look at some popular architectural choices made these days.&lt;/p&gt;
+
+&lt;h2&gt;Rails architecture&lt;/h2&gt;
+
+&lt;p&gt;Rails is a great platform for quickly realising a prototype. You can create
+models, attach validation to these models, and render forms using the models
+meta-data and more. This is all great for initial speed, but the whole idea
+that form validation (view) information comes directly out of the model
+(persistence) ties the view to the model. Something I would rather avoid.&lt;/p&gt;
+
+&lt;p&gt;The design of Rails rewards this behaviour (speed). Behaviour which finally
+will end the creation of yet another &lt;em&gt;big ball of mud&lt;/em&gt;, especially when
+applications grow &gt;50k lines of code.&lt;/p&gt;
+
+&lt;p&gt;Using Rails as an architectural choice for all domains, is essentially saying
+MVC is a solution for all problems.&lt;/p&gt;
+
+&lt;p&gt;DCI could be a solution in some domains to keep everything clean and simple within
+a MVC structure.&lt;/p&gt;
+
+&lt;h2&gt;Data, Context and Interaction to supplement MVC&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  The paradigm separates the domain model (data) from use cases (context) and
+  roles that objects play (interaction). DCI is complementary to
+  model–view–controller (MVC). MVC as a pattern language is still used to
+  separate the data and its processing from presentation.
+&lt;/blockquote&gt;
+
+&lt;p&gt;Why would we want this?&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;To improve the readability of object-oriented code by giving system behavior first-class status&lt;/li&gt;
+&lt;li&gt;To cleanly separate code for rapidly changing system behavior (what the system does) from code for slowly changing domain knowledge (what the system is), instead of combining both in one class interface&lt;/li&gt;
+&lt;li&gt;To help software developers reason about system-level state and behavior instead of only object state and behavior&lt;/li&gt;
+&lt;li&gt;To support an object style of thinking that is close to peoples&#x27; mental models, rather than the class style of thinking that overshadowed object thinking early in the history of object-oriented programming languages&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3&gt;So what is it ...&lt;/h3&gt;
+
+&lt;p&gt;Context makes sure the data stays decoupled by providing an extra layer
+on top of the interaction. Introducing the role on the data and directing the
+interaction of all the components&lt;/p&gt;
+
+&lt;p&gt;Essentially it boils down to this:&lt;/p&gt;
+
+&lt;p&gt;1) Data(objects) are simple, they only contain functionality regarding persistence.
+2) Roles describe a certain behaviour of data object.
+3) The Context loads the different DataObjects, injects certain roles on them
+and directs the interaction between them.&lt;/p&gt;
+
+&lt;h3&gt;So how does this tie into the cohesion and coupling paradigm.&lt;/h3&gt;
+
+&lt;p&gt;Data are kept slim, and no behaviour is specified on them. Since behaviour
+is specified in Roles it is &lt;em&gt;decoupled&lt;/em&gt; from the Context.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Context
+initialize
+   # instantizes all dataobjects and makes sure they can perform
+   # the requested roles
+
+call/execute
+   # perform the sequential logic using the dataobjects
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;So by this we could say a Context is &lt;em&gt;coupled&lt;/em&gt; to (one or more) Roles. And a Role
+is &lt;em&gt;coupled&lt;/em&gt; to a DataObject.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Context --&amp;gt; *Roles --&amp;gt; *DataObject
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;For more information read: &lt;a href=&quot;http://en.wikipedia.org/wiki/Data,_context_and_interaction&quot;&gt;Data context and interaction&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2&gt;Ruby community heuristics (and the relation to coupling and cohesion)&lt;/h2&gt;
+
+&lt;p&gt;Spending a lot of time in the Ruby community lately. I hear the following a lot
+from experienced Ruby programmers: &lt;em&gt;Tell don&#x27;t ask&lt;/em&gt;, &lt;em&gt;Law of Demeter&lt;/em&gt;, &lt;em&gt;Single
+Repsonsibility Principle&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;It&#x27;s my belief that all these elements can be traced back to the root ideas of
+cohesion and coupling.&lt;/p&gt;
+
+&lt;h3&gt;Tell don&#x27;t ask&lt;/h3&gt;
+
+&lt;p&gt;Reduces data coupling, especially 2 way coupling. If object
+(A) request data form (B) both object get tightly coupled.
+There is 2 way communication. Tying both &lt;code&gt;A -&amp;gt; B&lt;/code&gt;, and &lt;code&gt;B -&amp;gt; A&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h3&gt;Law of Demeter&lt;/h3&gt;
+
+&lt;p&gt;Reduces data coupling. If &lt;code&gt;(A)&lt;/code&gt; accesses a specific data-structure of &lt;code&gt;(B)&lt;/code&gt; one
+cannot freely change the internals of &lt;code&gt;B&lt;/code&gt; since &lt;code&gt;A&lt;/code&gt; will have to be changed as
+well. Keeping knowledge internal.&lt;/p&gt;
+
+&lt;h3&gt;Single Responsibility Principle&lt;/h3&gt;
+
+&lt;p&gt;Increases cohesion, always a good thing.&lt;/p&gt;
+
+&lt;h2&gt;Cohesion and Coupling&lt;/h2&gt;
+
+&lt;p&gt;So cohesion and coupling should be a dominant factor on which you should
+make architectural choices.&lt;/p&gt;
+
+&lt;p&gt;For an overview of the different forms of cohesion I have grabbed their definitions
+from Wikipedia. Maybe an interesting read.&lt;/p&gt;
+
+&lt;h2&gt;Cohesion&lt;/h2&gt;
+
+&lt;p&gt;Modules with high cohesion tend to be preferable because high cohesion is
+associated with several desirable traits of software including robustness,
+reliability, re-usability, and understandability whereas low cohesion is
+associated with undesirable traits such as being difficult to maintain,
+difficult to test, difficult to reuse, and even difficult to understand.&lt;/p&gt;
+
+&lt;h3&gt;Coincidental cohesion (worst)&lt;/h3&gt;
+
+&lt;p&gt;Coincidental cohesion is when parts of a module are grouped arbitrarily; the
+only relationship between the parts is that they have been grouped together
+(e.g. a &quot;Utilities&quot; class).&lt;/p&gt;
+
+&lt;h3&gt;Logical cohesion&lt;/h3&gt;
+
+&lt;p&gt;Logical cohesion is when parts of a module are grouped because they
+logically are categorized to do the same thing, even if they are different
+by nature (e.g. grouping all mouse and keyboard input handling routines).&lt;/p&gt;
+
+&lt;h3&gt;Temporal cohesion&lt;/h3&gt;
+
+&lt;p&gt;Temporal cohesion is when parts of a module are grouped by when they are
+processed - the parts are processed at a particular time in program
+execution (e.g. a function which is called after catching an exception
+which closes open files, creates an error log, and notifies the user).&lt;/p&gt;
+
+&lt;h3&gt;Procedural cohesion&lt;/h3&gt;
+
+&lt;p&gt;Procedural cohesion is when parts of a module are grouped because they
+always follow a certain sequence of execution (e.g. a function which checks
+file permissions and then opens the file).&lt;/p&gt;
+
+&lt;h3&gt;Communicational cohesion&lt;/h3&gt;
+
+&lt;p&gt;Communicational cohesion is when parts of a module are grouped because they
+operate on the same data (e.g. a module which operates on the same record
+of information).&lt;/p&gt;
+
+&lt;h3&gt;Sequential cohesion&lt;/h3&gt;
+
+&lt;p&gt;Sequential cohesion is when parts of a module are grouped because the output
+from one part is the input to another part like an assembly line (e.g. a
+function which reads data from a file and processes the data).&lt;/p&gt;
+
+&lt;h3&gt;Functional cohesion (best)&lt;/h3&gt;
+
+&lt;p&gt;Functional cohesion is when parts of a module are grouped because they all
+contribute to a single well-defined task of the module (e.g. tokenizing a
+string of XML).&lt;/p&gt;
+
+&lt;h2&gt;Coupling&lt;/h2&gt;
+
+&lt;p&gt;Coupling can be &quot;low&quot; (also &quot;loose&quot; and &quot;weak&quot;) or &quot;high&quot; (also &quot;tight&quot; and &quot;strong&quot;). Some types of coupling, in order of highest to lowest coupling, are as follows:&lt;/p&gt;
+
+&lt;h3&gt;Content coupling (high)&lt;/h3&gt;
+
+&lt;p&gt;Content coupling (also known as Pathological coupling) is when one module modifies or relies on the internal workings of another module (e.g., accessing local data of another module).
+Therefore changing the way the second module produces data (location, type, timing) will lead to changing the dependent module.&lt;/p&gt;
+
+&lt;h3&gt;Common coupling&lt;/h3&gt;
+
+&lt;p&gt;Common coupling (also known as Global coupling) is when two modules share the same global data (e.g., a global variable).
+Changing the shared resource implies changing all the modules using it.&lt;/p&gt;
+
+&lt;h3&gt;External coupling&lt;/h3&gt;
+
+&lt;p&gt;External coupling occurs when two modules share an externally imposed data format, communication protocol, or device interface.This is basically related to the communication to external tools and devices.&lt;/p&gt;
+
+&lt;h3&gt;Control coupling&lt;/h3&gt;
+
+&lt;p&gt;Control coupling is one module controlling the flow of another, by passing it information on what to do (e.g., passing a what-to-do flag).&lt;/p&gt;
+
+&lt;h3&gt;Stamp coupling (Data-structured coupling)&lt;/h3&gt;
+
+&lt;p&gt;Stamp coupling is when modules share a composite data structure and use only a part of it, possibly a different part (e.g., passing a whole record to a function that only needs one field of it).
+This may lead to changing the way a module reads a record because a field that the module doesn&#x27;t need has been modified.&lt;/p&gt;
+
+&lt;h3&gt;Data coupling&lt;/h3&gt;
+
+&lt;p&gt;Data coupling is when modules share data through, for example, parameters. Each datum is an elementary piece, and these are the only data shared (e.g., passing an integer to a function that computes a square root).&lt;/p&gt;
+
+&lt;h3&gt;Message coupling (low)&lt;/h3&gt;
+
+&lt;p&gt;This is the loosest type of coupling. It can be achieved by state decentralization (as in objects) and component communication is done via parameters or message passing (see Message passing).&lt;/p&gt;
+
+&lt;h3&gt;No coupling&lt;/h3&gt;
+
+&lt;p&gt;Modules do not communicate at all with one another.&lt;/p&gt;
+
+&lt;h3&gt;Object-oriented programming&lt;/h3&gt;
+
+&lt;h4&gt;Subclass Coupling&lt;/h4&gt;
+
+&lt;p&gt;Describes the relationship between a child and its parent. The child is connected to its parent, but the parent isn&#x27;t connected to the child.&lt;/p&gt;
+
+&lt;h4&gt;Temporal coupling&lt;/h4&gt;
+
+&lt;p&gt;When two actions are bundled together into one module just because they happen to occur at the same time.&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <title>Kinetic Typography</title>
+    <link href="https://boymaas.nl/posts/2011-09-07-kinetic-typography.html"/>
+    <id>https://boymaas.nl/posts/2011-09-07-kinetic-typography.html</id>
+    <updated>2011-09-07T00:00:00Z</updated>
+    <summary>How movement conveys emotion</summary>
+    <content type="html">&lt;h2&gt;How movement conveys emotion&lt;/h2&gt;
+
+&lt;p&gt;Kinetic typography refers to the art and technique of expression with
+animated text. Similar to the study of traditional typography of
+designing static typographic forms, kinetic typography focuses on
+understanding the effect time has on the expression of text. Kinetic
+typography has demonstrated the ability to add significant emotive
+content and appeal to expressive text, allowing some of the qualities
+normally found in film and the spoken word to be added to static text.
+Kinetic type has been widely and successfully used in film as well as in
+television and computer-based advertising. Perceptual psychology research
+on attention, reading performance, and comprehension has indicated that
+time-based presentation of text can be used effectively to capture and
+manipulate a viewer&#x27;s attention and in some cases improve overall reading
+performance.&lt;/p&gt;
+
+&lt;p&gt;Below a few examples of material I found interesting ...&lt;/p&gt;
+
+&lt;iframe src=&quot;https://player.vimeo.com/video/24715531?title=0&amp;amp;byline=0&amp;amp;portrait=0&quot; width=&quot;400&quot; height=&quot;225&quot; frameborder=&quot;0&quot;&gt;&lt;/iframe&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://vimeo.com/24715531&quot;&gt;Ira Glass on Storytelling&lt;/a&gt; from &lt;a href=&quot;http://vimeo.com/thedak&quot;&gt;David Shiyang Liu&lt;/a&gt; on &lt;a href=&quot;http://vimeo.com&quot;&gt;Vimeo&lt;/a&gt;.&lt;/p&gt;
+
+&lt;iframe src=&quot;https://player.vimeo.com/video/12187489?title=0&amp;amp;byline=0&amp;amp;portrait=0&quot; width=&quot;400&quot; height=&quot;225&quot; frameborder=&quot;0&quot;&gt;&lt;/iframe&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://vimeo.com/12187489&quot;&gt;Terence McKenna - Reclaim your mind&lt;/a&gt; from &lt;a href=&quot;http://vimeo.com/azzurevision&quot;&gt;Olivier Ferland&lt;/a&gt; on &lt;a href=&quot;http://vimeo.com&quot;&gt;Vimeo&lt;/a&gt;.&lt;/p&gt;
+
+&lt;iframe src=&quot;https://player.vimeo.com/video/24381642?title=0&amp;amp;byline=0&amp;amp;portrait=0&quot; width=&quot;400&quot; height=&quot;225&quot; frameborder=&quot;0&quot;&gt;&lt;/iframe&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://vimeo.com/24381642&quot;&gt;Terence McKenna - Community of mind Kinetic Typography&lt;/a&gt; from &lt;a href=&quot;http://vimeo.com/azzurevision&quot;&gt;Olivier Ferland&lt;/a&gt; on &lt;a href=&quot;http://vimeo.com&quot;&gt;Vimeo&lt;/a&gt;.&lt;/p&gt;
+
+&lt;iframe src=&quot;https://player.vimeo.com/video/19509843?title=0&amp;amp;byline=0&amp;amp;portrait=0&quot; width=&quot;400&quot; height=&quot;225&quot; frameborder=&quot;0&quot;&gt;&lt;/iframe&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://vimeo.com/19509843&quot;&gt;Bill Hicks - It&#x27;s just a ride&lt;/a&gt; from &lt;a href=&quot;http://vimeo.com/azzurevision&quot;&gt;Olivier Ferland&lt;/a&gt; on &lt;a href=&quot;http://vimeo.com&quot;&gt;Vimeo&lt;/a&gt;.&lt;/p&gt;
+
+&lt;iframe src=&quot;https://player.vimeo.com/video/17546631?title=0&amp;amp;byline=0&amp;amp;portrait=0&quot; width=&quot;400&quot; height=&quot;225&quot; frameborder=&quot;0&quot;&gt;&lt;/iframe&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://vimeo.com/17546631&quot;&gt;Terence McKenna - Nobody is smarter than you are&lt;/a&gt; from &lt;a href=&quot;http://vimeo.com/azzurevision&quot;&gt;Olivier Ferland&lt;/a&gt; on &lt;a href=&quot;http://vimeo.com&quot;&gt;Vimeo&lt;/a&gt;.&lt;/p&gt;
+
+&lt;iframe src=&quot;https://player.vimeo.com/video/17296084?title=0&amp;amp;byline=0&amp;amp;portrait=0&quot; width=&quot;400&quot; height=&quot;225&quot; frameborder=&quot;0&quot;&gt;&lt;/iframe&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://vimeo.com/17296084&quot;&gt;Terence McKenna - Being Cool&lt;/a&gt; from &lt;a href=&quot;http://vimeo.com/azzurevision&quot;&gt;Olivier Ferland&lt;/a&gt; on &lt;a href=&quot;http://vimeo.com&quot;&gt;Vimeo&lt;/a&gt;.&lt;/p&gt;
+
+&lt;iframe src=&quot;https://player.vimeo.com/video/24715531?title=0&amp;amp;byline=0&amp;amp;portrait=0&quot; width=&quot;400&quot; height=&quot;225&quot; frameborder=&quot;0&quot;&gt;&lt;/iframe&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://vimeo.com/24715531&quot;&gt;Ira Glass on Storytelling&lt;/a&gt; from &lt;a href=&quot;http://vimeo.com/thedak&quot;&gt;David Shiyang Liu&lt;/a&gt; on &lt;a href=&quot;http://vimeo.com&quot;&gt;Vimeo&lt;/a&gt;.&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <title>Rails experiences</title>
+    <link href="https://boymaas.nl/posts/2011-02-20-rails-experiences.html"/>
+    <id>https://boymaas.nl/posts/2011-02-20-rails-experiences.html</id>
+    <updated>2011-02-20T00:00:00Z</updated>
+    <summary>Reasons why rails development seems so productive</summary>
+    <content type="html">&lt;p&gt;Revisited rails and the ruby after a few years to implement &lt;a href=&quot;http://www.keygamesnetwork.com&quot;&gt;Keygames Network&lt;/a&gt;, and found it extremely productive. Why?&lt;/p&gt;
+
+&lt;h2&gt;High level view of a software project&lt;/h2&gt;
+
+&lt;p&gt;Doing a new software project incorporates doing the following tasks:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Idea\
+Think about and spec the idea, provide the rationale behind the idea and prove design is valid.&lt;/li&gt;
+&lt;li&gt;Selecting open source components\
+Select and look into the different components to base the implementation on.
+Look into the code-base, read the forums to get an idea on the quality of
+those components.&lt;/li&gt;
+&lt;li&gt;Implementation\
+start incremental implementation of idea based on components. Every subcomponent will have a test-suite.&lt;/li&gt;
+&lt;li&gt;Dependency management\
+put all components into a dependency manager, like the Bundler and RVM combo, to make sure all
+component versions can be included and are documented. This will speed up
+further development with other developers since they will be able to get up
+and running quickly. And this process will ease deployment.&lt;/li&gt;
+&lt;li&gt;Deployment\
+automate the deployment procedure. Spend some time on this since this will be
+a big time saver in the future. (Capistrano)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Rails, and the extremely productive ruby community provide excellent tools to
+handle all these phases of the development process.&lt;/p&gt;
+
+&lt;h2&gt;Convention to ease the burden on human memory&lt;/h2&gt;
+
+&lt;p&gt;It&#x27;s a well known fact that most humans, ranging in intelligence can hold only
+7 to 10 items simultaneous in memory. This limitation in cognition explains why
+we as humans structure everything in layers, often every layer consists of
+those 7 or 10 elements. Think of how a business is organised, how a
+text-book is divided into chapters, or how the law of a country is divided.&lt;/p&gt;
+
+&lt;p&gt;When building software, one of the challenges is handling complexity in a way
+you and the other people working on a project can manage this complexity. We
+have different techniques to do this. Modularisation, object oriented designs,
+functional designs, and convention. Rails uses convention extensively, it is
+one of its key features and part of the marketing behind it: &quot;Convention over
+configuration&quot;.&lt;/p&gt;
+
+&lt;p&gt;The big plus of using convention is that one only has to keep the logical
+relations into memory. All derived elements can be generated from the naming of
+the defined root elements in combination with the logical relations.&lt;/p&gt;
+
+&lt;p&gt;Programmers, which (in my view) essentially means, organisers of information or complexity,
+develop a special skill for remembering methods. The &quot;how&quot; does one arrive to a
+specific goal. Facts are of less importance, structures are.&lt;/p&gt;
+
+&lt;p&gt;In rails a simple application reflects the naming and relations of the model throughout
+the system. This makes naming very consistent and predictable.&lt;/p&gt;
+
+&lt;p&gt;And as we all know consistency and predictability are measures of quality in
+software design, how this is implemented will follow.&lt;/p&gt;
+
+&lt;h2&gt;One abstract view of Rails application&lt;/h2&gt;
+
+&lt;p&gt;Most dynamic web-applications provide an interface to manipulate a model and
+provide a certain view to the data stored in the model. These views are
+controlled by a controller. This is the standard M(odel) V(iew) C(ontroller)
+paradigm. Rails is a certain implementation of this paradigm.&lt;/p&gt;
+
+&lt;p&gt;One could state that a Model (orders) is a resource which is manipulated by a
+view/controller combination. Rails provide a standard way of managing a
+resource using the following actions:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;list&lt;/li&gt;
+&lt;li&gt;create&lt;/li&gt;
+&lt;li&gt;edit&lt;/li&gt;
+&lt;li&gt;delete&lt;/li&gt;
+&lt;li&gt;show&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Most controllers will implement one or more of these five and some more
+complicated actions or specified actions to change state of the specified
+member or collection of the resource. This is the called CRUD.&lt;/p&gt;
+
+&lt;p&gt;The end-user will navigate the dynamic web-app using links. Which will point to
+screens to either View, List, or Manipulate state.&lt;/p&gt;
+
+&lt;h3&gt;How is it implemented&lt;/h3&gt;
+
+&lt;p&gt;Rails makes it easy to create web applications which more or less conform to
+the abstract view presented above. The normal method of working goes like this.&lt;/p&gt;
+
+&lt;p&gt;One defines a model, one continues to define controllers and routes. From
+within these definitions the rails system generates url functions which is a
+specific combination of the model names.&lt;/p&gt;
+
+&lt;p&gt;A very simple model example:&lt;/p&gt;
+
+&lt;pre&gt;
+&lt;code lang=&#x27;ruby&#x27; class=&#x27;highlight&#x27;&gt;
+  class Shop &lt; ActiveRecord::Base
+    has_many :orders
+  end
+
+  class Order &lt; ActiveRecord::Base
+    belongs_to :shop
+  end
+
+&lt;/code&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;A simple resource_full route definition:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;resources :shops do
+  resources :orders
+end
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Will generate:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;    shop_orders GET    /shops/:shop_id/orders(.:format)          {:action=&amp;gt;&quot;index&quot;, :controller=&amp;gt;&quot;orders&quot;}
+                POST   /shops/:shop_id/orders(.:format)          {:action=&amp;gt;&quot;create&quot;, :controller=&amp;gt;&quot;orders&quot;}
+ new_shop_order GET    /shops/:shop_id/orders/new(.:format)      {:action=&amp;gt;&quot;new&quot;, :controller=&amp;gt;&quot;orders&quot;}
+edit_shop_order GET    /shops/:shop_id/orders/:id/edit(.:format) {:action=&amp;gt;&quot;edit&quot;, :controller=&amp;gt;&quot;orders&quot;}
+     shop_order GET    /shops/:shop_id/orders/:id(.:format)      {:action=&amp;gt;&quot;show&quot;, :controller=&amp;gt;&quot;orders&quot;}
+                PUT    /shops/:shop_id/orders/:id(.:format)      {:action=&amp;gt;&quot;update&quot;, :controller=&amp;gt;&quot;orders&quot;}
+                DELETE /shops/:shop_id/orders/:id(.:format)      {:action=&amp;gt;&quot;destroy&quot;, :controller=&amp;gt;&quot;orders&quot;}
+          shops GET    /shops(.:format)                          {:action=&amp;gt;&quot;index&quot;, :controller=&amp;gt;&quot;shops&quot;}
+                POST   /shops(.:format)                          {:action=&amp;gt;&quot;create&quot;, :controller=&amp;gt;&quot;shops&quot;}
+       new_shop GET    /shops/new(.:format)                      {:action=&amp;gt;&quot;new&quot;, :controller=&amp;gt;&quot;shops&quot;}
+      edit_shop GET    /shops/:id/edit(.:format)                 {:action=&amp;gt;&quot;edit&quot;, :controller=&amp;gt;&quot;shops&quot;}
+           shop GET    /shops/:id(.:format)                      {:action=&amp;gt;&quot;show&quot;, :controller=&amp;gt;&quot;shops&quot;}
+                PUT    /shops/:id(.:format)                      {:action=&amp;gt;&quot;update&quot;, :controller=&amp;gt;&quot;shops&quot;}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;As one can see in this simple example the model is reflected in the routes and
+in the generated url functions using linguistic functions. This was a new
+technique invented by Rails.&lt;/p&gt;
+
+&lt;h3&gt;Actions&lt;/h3&gt;
+
+&lt;p&gt;As you can see above every resource route generates routes to 4 standardised actions inside the targeted controller. Conforming CRUD. Which
+one could split up in 2 categories. Actions manipulating the collection of the resource, and actions which manipulate a member of the collection.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;* collection -&amp;gt;      shop\_orders
+  * index
+  * create
+  * new     -&amp;gt; new\_shop\_order
+* member
+  * edit    -&amp;gt; edit\_shop\_order
+  * show    -&amp;gt;       shop\_order
+  * update
+  * destroy
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Notice the pluralization and singularization of the different pars and how the
+relations as defined in the data-model is reflected in the routes.&lt;/p&gt;
+
+&lt;h2&gt;More to come&lt;/h2&gt;
+
+&lt;p&gt;I will specify more functionality in the future. Models and relations, and more on controllers.&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <title>Clocks webdsl postmortem</title>
+    <link href="https://boymaas.nl/posts/2010-06-15-clocks-portmortem.html"/>
+    <id>https://boymaas.nl/posts/2010-06-15-clocks-portmortem.html</id>
+    <updated>2010-06-15T00:00:00Z</updated>
+    <summary>Designing a webdsl in clojure</summary>
+    <content type="html">&lt;p&gt;In this post I will summarize the lessons learned while implementing clocks.
+An opensourced test project to learn the in an outs of macros in clojure.&lt;/p&gt;
+
+&lt;p&gt;You can see the code at: &lt;a href=&quot;http://www.github.com/boymaas/clocks&quot;&gt;http://www.github.com/boymaas/clocks&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2&gt;On macros&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;if you don&#x27;t like something in the language, just adapt it.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This is a core design choice of lisps. It is called
+&lt;a href=&quot;http://en.wikipedia.org/wiki/Homoiconicity&quot;&gt;homoiconic&lt;/a&gt;.
+When code is data, data is changable by all the existing routines.&lt;/p&gt;
+
+&lt;p&gt;In practice this means when calling a macro you get the unevaluated
+code. You can than do all kinds of operations to this code, return it
+and the returned form will get evaluated.&lt;/p&gt;
+
+&lt;p&gt;This gives you the oppertunity to generate/transform/compile code
+which will get evaluated after the macroexpantion is done.&lt;/p&gt;
+
+&lt;h3&gt;First expand then evalutate&lt;/h3&gt;
+
+&lt;p&gt;The macro expander first expands all code recursively and then
+executes it.  So try to keep this in mind when creating more complex
+macro&#x27;s. Sometimes the two worlds get blurred. Such as I experienced
+while first generating functions in a macro and then storing
+references to these generated functions in expantion time when they
+are not yet evaluated.&lt;/p&gt;
+
+&lt;p&gt;It helps to think in two layers, macro-expantion time and evalutation time.&lt;/p&gt;
+
+&lt;h2&gt;Pitfall quasiquote symbol resolving&lt;/h2&gt;
+
+&lt;p&gt;Scheme has hygienic macros, which work well for me, Clojure resolves
+all symbols first in the namespace the macro is defined. (when quasiquote is used)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;outermacro defined in ns outerns
+   body resolved in ns outns
+   innermacro defined in ns innerns
+     body gets resolved in innerns
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This is a good thing in most cases since it avoids variable capture. But
+can be annoying when you just want to work with symbols.&lt;/p&gt;
+
+&lt;h3&gt;When you want unresolved symbols, a problem with quasiquote&lt;/h3&gt;
+
+&lt;p&gt;When defining a dsl using symbols not defined in the namespace this can pose
+a problem since quasiquote will try to resolve every symbol. There is a way
+to unresolve symbols. The &lt;code&gt;name&lt;/code&gt; function:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;(name resolved-symbol) 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;will give back the original symbol name as a string&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;(symbol (name resolved-symbol))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;will convert the returned string  back to the original symbol&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;(prewalk (fn [exp] (if (symbol? exp) (symbol (name exp)))) sexp)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;We can combine this with a walker to unresolve all resolved symbols in a form.
+Combine this with a lookup on a symbol map and you will leave
+only specified symbols unresolved.&lt;/p&gt;
+
+&lt;h3&gt;Prewalk? tools for transforming code, The walker&lt;/h3&gt;
+
+&lt;p&gt;&lt;code&gt;clojure.walk&lt;/code&gt; provides prewalk and postwalk, the walkers take a
+function and replace the walked node by the return value of this
+function.&lt;/p&gt;
+
+&lt;h4&gt;Sequence conversion&lt;/h4&gt;
+
+&lt;p&gt;While walking a piece of code you wish to convert, clojure has the tendency to convert
+the walked forms to sequences.  When walking code you want vectors to stay vectors, etc.
+These have to be converted back.&lt;/p&gt;
+
+&lt;p&gt;As can be seen in the code the walk function as defined in clojure.walk does this for you.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;(defn walk
+  &quot;Traverses form, an arbitrary data structure.  inner and outer are
+  functions.  Applies inner to each element of form, building up a
+  data structure of the same type, then applies outer to the result.
+  Recognizes all Clojure data structures except sorted-map-by.
+  Consumes seqs as with doall.&quot;
+  {:added &quot;1.1&quot;}
+  [inner outer form]
+  (cond
+   (list? form) (outer (apply list (map inner form)))
+   (seq? form) (outer (doall (map inner form)))
+   (vector? form) (outer (vec (map inner form)))
+   (map? form) (outer (into (if (sorted? form) (sorted-map) {})
+                            (map inner form)))
+   (set? form) (outer (into (if (sorted? form) (sorted-set) #{})
+                            (map inner form)))
+   :else (outer form)))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;Evaluation&lt;/h2&gt;
+
+&lt;p&gt;What exactly happens when calling a macro with the namespaces and the variables.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;(ns nsdefined)
+(def rv 100)
+(defmacro nstest [name]
+         (let [ns *ns* 
+              rv rv
+              rvr (resolve rv)]
+         `(def name rv))
+
+(ns nscalling)
+(def rv 1000)
+(nsdefined/nstest blah) # ns = nscalling, rv = 100, rvr = #&#x27;nscalling/rv
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Conclusion: macro gets executed inside namespace its defined in. The &lt;em&gt;ns&lt;/em&gt; is set to the calling ns, so resolve
+which uses &lt;em&gt;ns&lt;/em&gt; to resolve will resolve to nscalling/rv.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;(defmacro nstest [name]
+         (let [ns *ns* 
+              rv rv
+              rvr (resolve rv)]
+         `(def name ~&#x27;rv))
+
+(nsdefined/nstest blah) # ns = nscalling, rv = 100, rvr = #&#x27;nscalling/rv
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;In this case ~&#x27;rv will not be resolved by quasiquore and the symbol of nscalling will be used (symbol capture). Thus be bound to 1000.&lt;/p&gt;
+
+&lt;p&gt;Summarizing &lt;em&gt;ns&lt;/em&gt; is the namespace of the caller, quasiquote will try to resolve symbols inside the namespace the macro was defined. Unresolved symbols can lead to variable capture in the calling namespace.&lt;/p&gt;
+
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;It was an interesting journey into the world of macro&#x27;s inside clojure. A very different
+approach to the hygienic macro&#x27;s in scheme. Who are more template based. Resolving the symbols
+is a very good feature for the simpler macro&#x27;s but have to be compensated when designing
+a symbol dsl, It would be nice to have a special quasiquote which does not resolve.&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <title>Hack, Loli, the rake/webpy for Haskell?</title>
+    <link href="https://boymaas.nl/posts/2010-05-24-webapps-haskell-loli-hack.html"/>
+    <id>https://boymaas.nl/posts/2010-05-24-webapps-haskell-loli-hack.html</id>
+    <updated>2010-05-24T00:00:00Z</updated>
+    <summary>A minimalistic DSL to webapps in Haskell</summary>
+    <content type="html">&lt;p&gt;I am investing alternative ways of developing web apps. I&#x27;ve looked at
+PLT-Scheme which was a nice framework to develop in, but missing a nice
+database abstraction layer like fe. SQLAlchemy in python. And in retrospect my
+conclusion on Scheme is that I find it a little verbose, expecially compared to
+Haskell.  I like succintness, it gives a lot of power as descibed by Paul
+Graham in
+&lt;a href=&quot;http://www.paulgraham.com/power.html&quot;&gt;Succintness is Power&lt;/a&gt;.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  The quantity of meaning compressed into a small space by algebraic signs, is another circumstance that facilitates the reasonings we are accustomed to carry on by their aid.
+  &lt;br&gt;
+  &lt;strong&gt;
+  Charles Babbage, quoted in Iverson&#x27;s Turing Award Lecture
+  &lt;/strong&gt;
+&lt;/blockquote&gt;
+
+&lt;h2&gt;Wat is hack?&lt;/h2&gt;
+
+&lt;p&gt;Hack is inspired from ruby&#x27;s
+&lt;a href=&quot;http://chneukirchen.org/blog/archive/2007/02/introducing-rack.html&quot;&gt;Rack&lt;/a&gt;, WSGI Python,
+Ring in Clojure. In abstract terms &lt;code&gt;Env -&amp;gt; Reponse&lt;/code&gt;. Hack is the Rack protocol implemented
+in Haskell. I stumbled upon hack while examining
+&lt;a href=&quot;http://github.com/nfjinjing/loli/tree/&quot;&gt;Loli&lt;/a&gt; developed by the same author &lt;a href=&quot;http://github.com/nfjinjing&quot;&gt;Nfjinjing&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2&gt;MPS notiation&lt;/h2&gt;
+
+&lt;p&gt;Nfjinjing likes to turn the normal Haskell syntax around and uses his own util library
+MPS (Message passing style) which turns the order of normal Haskell syntax around making it
+look like a OO language (to relieve his already punished OO brain).&lt;/p&gt;
+
+&lt;p&gt;See &lt;a href=&quot;http://github.com/nfjinjing/mps/blob/master/src/MPS/Light.hs&quot;&gt;MPS&lt;/a&gt; for the
+syntax implmeneted. I have collected the important code snippets from MPS:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;  {-# INLINE (.) #-}
+  (.) :: a -&amp;gt; (a -&amp;gt; b) -&amp;gt; b
+  a . f = f a
+  infixl 9 .
+
+  (&amp;gt;) :: (Category cat) =&amp;gt; cat a b -&amp;gt; cat b c -&amp;gt; cat a c
+  (&amp;gt;) = (&amp;gt;&amp;gt;&amp;gt;)
+  infixl 8 &amp;gt;
+
+  (&amp;lt;) :: (Category cat) =&amp;gt; cat b c -&amp;gt; cat a b -&amp;gt; cat a c
+  (&amp;lt;) = (&amp;lt;&amp;lt;&amp;lt;)
+  infixr 8 &amp;lt;
+
+  (^) :: (Functor f) =&amp;gt; f a -&amp;gt; (a -&amp;gt; b) -&amp;gt; f b
+  (^) = flip fmap
+  infixl 8 ^
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Nothing really complicated but makes the code more succint. Which can be a good thing ;)&lt;/p&gt;
+
+&lt;h2&gt;How does hack work?&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;type Application = Env -&amp;gt; IO Response
+
+type Middleware = Application -&amp;gt; Application
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;In essence it is a mimimal representation of what every webserver does. It gets
+a Request which build an environment to which a Repsonse gets formed.&lt;/p&gt;
+
+&lt;p&gt;To see the typedefinitions for &lt;code&gt;Env&lt;/code&gt; and response look below. It comes back in
+Loli. It&#x27;s a nice and minimal implementation consisting of one file Hacks.hs.
+Very minimal. Nice..&lt;/p&gt;
+
+&lt;h2&gt;Hack-contrib&lt;/h2&gt;
+
+&lt;p&gt;Contains functions to interact with the hack specification. The hack datatypes:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Constants.hs
+constants for headers and other stuff&lt;/li&gt;
+&lt;li&gt;Mime.hs
+mime-type map&lt;/li&gt;
+&lt;li&gt;Request.hs
+which is in essence the Env, or the AppReader type in loli, explained later.&lt;/li&gt;
+&lt;li&gt;Response.hs
+which is also Response in hack, and the AppState in loli, explained later&lt;/li&gt;
+&lt;li&gt;Utils.hs
+handling hack namespaces ... what are they?&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;Hack-contrib middleware, or how to extend Hack&lt;/h2&gt;
+
+&lt;p&gt;Just as in Clojures Ring, and Ruby&#x27;s rack, middleware consists of a function
+which wraps another function which does something with either dispatching or
+the environment or the response. It is a very clean seperation of concerns which
+enables composition of components in a very flexible decoupled way.&lt;/p&gt;
+
+&lt;p&gt;Take as example the regexp router, which is an example of a middleware compononent:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;  type RoutePath = (String, Application)
+
+  type Middleware = Application -&amp;gt; Application
+
+  type Application = Env -&amp;gt; IO Response
+
+  regexp_router :: [RoutePath] -&amp;gt; Middleware
+  regexp_router h app = \env -&amp;gt;
+    let path = env.path_info
+    in
+    case h.find (fst &amp;gt; flip match path &amp;gt; isJust) of
+      Nothing -&amp;gt; app env
+      Just (_, found_app) -&amp;gt; found_app env
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Returns a lambda which receives environment. Acts upon this evironment and
+runs the found_app if a route matches or dispatches to then next in middleware pipeline, ending utlimately in returning an IO Repsonse at the en of the  chain.&lt;/p&gt;
+
+&lt;p&gt;Below another example of a middleware, this is static file serving.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;  file :: Maybe String -&amp;gt; Middleware
+  file root _ = \env -&amp;gt; do
+    let path = env.path_info .unescape_uri
+    if &quot;..&quot; `isInfixOf` path
+      then forbidden
+      else path.serve root
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Hack-contrib provides at this moment (Tue May 25 ) the following Middlewares:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;BounceFavicon.hs&lt;/li&gt;
+&lt;li&gt;Censor.hs&lt;/li&gt;
+&lt;li&gt;Config.hs&lt;/li&gt;
+&lt;li&gt;ContentLength.hs&lt;/li&gt;
+&lt;li&gt;ContentType.hs&lt;/li&gt;
+&lt;li&gt;Debug.hs&lt;/li&gt;
+&lt;li&gt;ETag.hs&lt;/li&gt;
+&lt;li&gt;File.hs&lt;/li&gt;
+&lt;li&gt;Head.hs&lt;/li&gt;
+&lt;li&gt;Hub.hs&lt;/li&gt;
+&lt;li&gt;IOConfig.hs&lt;/li&gt;
+&lt;li&gt;Inspect.hs&lt;/li&gt;
+&lt;li&gt;Lambda.hs&lt;/li&gt;
+&lt;li&gt;Lucky.hs&lt;/li&gt;
+&lt;li&gt;NotFound.hs&lt;/li&gt;
+&lt;li&gt;RegexpRouter.hs&lt;/li&gt;
+&lt;li&gt;ShowExceptions.hs&lt;/li&gt;
+&lt;li&gt;SimpleAccessLogger.hs&lt;/li&gt;
+&lt;li&gt;Static.hs&lt;/li&gt;
+&lt;li&gt;URLMap.hs&lt;/li&gt;
+&lt;li&gt;UTF8Body.hs&lt;/li&gt;
+&lt;li&gt;UserMime.hs&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;Loli&lt;/h2&gt;
+
+&lt;h2&gt;What is loli?&lt;/h2&gt;
+
+&lt;p&gt;Minimal Web DSL written on top of hack. It&#x27;s a very succint dsl language to define
+web apps. As &#x27;webpy&#x27; in python.&lt;/p&gt;
+
+&lt;h2&gt;Example app&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;main ::  IO ()
+main = run 3000 . loli - do
+     get &quot;/bench&quot; - do
+        name &amp;lt;- ask ^ params ^ lookup &quot;name&quot; ^ fromMaybe &quot;nobody&quot;
+        html (&quot;&amp;lt;h1&amp;gt;&quot; ++ name ++ &quot;&amp;lt;/h1&amp;gt;&quot;)
+
+     get &quot;/&quot; (text &quot;loli power&quot;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;Lets dive in ..&lt;/h2&gt;
+
+&lt;p&gt;Looks pretty efficient, what exactly happens here? To understand let&#x27;s
+look at the used types.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;run ::  Hack.Handler.SimpleServer.Port -&amp;gt; Hack.Application -&amp;gt; IO ()
+
+loli ::  Network.Loli.Type.Unit -&amp;gt; Hack.Application
+
+-- Network.Loli.Type.Unit    
+type UnitT a = State Loli a
+type Unit    = UnitT ()
+
+data Loli = Loli
+  {
+    current_router  :: Router
+  , routes          :: [RouteConfig]
+  , middlewares     :: [Middleware]
+  , mimes           :: Assoc
+  }
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;So in abstracto Loli dsl functions like get. Define an Appunit.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;get :: String -&amp;gt; Network.Loli.Type.AppUnit -&amp;gt; Network.Loli.Type.Unit
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Appunit is defined as:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;type AppReader    = Env
+type AppState     = Response
+type AppUnitT     = ReaderT AppReader (StateT AppState IO)
+type AppUnit      = AppUnitT ()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And could be seen as the AppUnit which will be run on a Hack Application&lt;/p&gt;
+
+&lt;p&gt;AppUnitT is a double MonadTransformer&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;State over Response (modifyable)&lt;/li&gt;
+&lt;li&gt;Read over Env (the hack-environment)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Env and Response are defined inside the Hack libraries and defined below.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;data Env = Env 
+  {  requestMethod :: RequestMethod            -- ^ HTTP request method ....
+  ,  scriptName :: String                      -- ^ The initial portion o....
+  ,  pathInfo :: String                        -- ^ The remainder of the ....
+  ,  queryString :: String                     -- ^ The portion of the re....
+  ,  serverName :: String                      -- ^ When combined with SC....
+  ,  serverPort :: Int                         -- ^ preference to SERVER_....
+  ,  http    :: [(String, String)]              -- ^ All http header varia....
+  ,  hackVersion :: [Int]                      -- ^ The Array [0,1], repr....
+  ,  hackUrlScheme :: Hack_UrlScheme          -- ^ HTTP or HTTPS, depend....
+  ,  hackInput :: B.ByteString              -- ^ body of the request
+  ,  hackErrors :: HackErrors                  -- ^ error stream
+  ,  hackHeaders    :: [(String, String)]      -- ^ custom headers, inten....
+  }
+  deriving (Show) -- careful with showing this, it now causes an infinite
+                  -- loop with certain handlers due to the use of a
+                  -- lazy bytestring
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Response defined by&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;data Response = Response
+  {  status :: Int                              -- ^ must be greater than ....
+  ,  headers :: [(String, String)]              -- ^ The header must not c....
+  ,  body :: B.ByteString                       -- ^ body of the response
+  }
+  deriving (Show)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4&gt;Let&#x27;s dive in some more&lt;/h4&gt;
+
+&lt;p&gt;Let&#x27;s take for example the first line of code in our example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;name &amp;lt;- ask ^ params ^ lookup &quot;name&quot; ^ fromMaybe &quot;nobody&quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;What happens here:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;ask gets State from ReaderT countaining AppReader which is Hacks Env&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;grabs &lt;code&gt;query_string&lt;/code&gt; from Hacks Env and decodes the params&lt;/p&gt;
+
+&lt;p&gt;  params :: Env -&gt; [(String, String)]
+  params env =
+    if env.query_string.empty
+      then []
+      else env.query_string.formDecode&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;which returns a map of the params on whick &lt;code&gt;lookup&lt;/code&gt; is called which
+returns a &lt;code&gt;Maybe&lt;/code&gt;.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;fromMaybe gives a default of nobody on a &lt;code&gt;Nothing&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3&gt;Templating using &lt;code&gt;Network.Loly.Template&lt;/code&gt;&lt;/h3&gt;
+
+&lt;p&gt;Uses &lt;code&gt;StateMonad&lt;/code&gt;s update function to update &lt;code&gt;Response&lt;/code&gt; setting &lt;code&gt;content-type&lt;/code&gt;
+and &lt;code&gt;body&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;html :: String -&amp;gt; AppUnit
+html x = do
+  update - set_content_type _TextHtml
+  update - set_body (x.fromString)
+  render_layout
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;Hacks middleware on Loli level&lt;/h2&gt;
+
+&lt;p&gt;Network.Loli.Engine&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;add_middleware :: Middleware -&amp;gt; Loli -&amp;gt; Loli
+add_middleware x s = 
+  let xs = s.middlewares in s {middlewares = xs.insert_last x}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And ofcourse defined in Network.Loli.DSL on unit level.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;middleware :: Middleware -&amp;gt; Unit
+middleware = add_middleware &amp;gt; update
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3&gt;Loli Engine&lt;/h3&gt;
+
+&lt;p&gt;Contains code&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;loli :: Unit -&amp;gt; Application
+loli unit = run unit not_found_app
+  where
+    not_found_app = not_found dummy_app
+    run_route x = (x.router) loli_captures run_app (x.route_path)
+
+    run :: Unit -&amp;gt; Middleware
+    run unit&#x27; = 
+      let loli_state    = execState unit&#x27; def
+          route_configs = loli_state.routes
+          route         = route_configs.map run_route .use
+          mime_filter   = user_mime (loli_state.mimes)
+          stack         = loli_state.middlewares.use
+          pre           = pre_installed_middlewares.use
+      in
+      use [pre, mime_filter, stack, route]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Where &lt;code&gt;use&lt;/code&gt; is defined as:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;-- | usage: app.use [content_type, cache]
+use :: [Middleware] -&amp;gt; Middleware
+use = reduce (&amp;lt;&amp;lt;&amp;lt;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;essentially right to left composition of all middlewares, thus wrapping them in one
+another:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;pre-installed middlewares&lt;/li&gt;
+&lt;li&gt;the mime filter&lt;/li&gt;
+&lt;li&gt;the subwrapped stack of user defined middlewares (loli-state)&lt;/li&gt;
+&lt;li&gt;route config (loli-state)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3&gt;Routing&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;data RouteConfig = RouteConfig
+  {
+    route_path :: RoutePath
+  , router     :: Router
+  }
+
+data Loli = Loli
+  {
+    current_router  :: Router
+  , routes          :: [RouteConfig]
+  , middlewares     :: [Middleware]
+  , mimes           :: Assoc
+  }
+
+  instance Default Loli where
+    def = Loli loli_router def [dummy_middleware] def
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;Zipping up ..&lt;/h2&gt;
+
+&lt;p&gt;This is just a quick glance at how Hack and Loli where implemented. Shedding some light on
+the structure of this approach to web apps inside haskell.&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <title>Currying in scheme</title>
+    <link href="https://boymaas.nl/posts/2010-05-20-currying-in-scheme.html"/>
+    <id>https://boymaas.nl/posts/2010-05-20-currying-in-scheme.html</id>
+    <updated>2010-05-20T00:00:00Z</updated>
+    <summary>define-syntax beauty</summary>
+    <content type="html">&lt;p&gt;Coming from haskell i was looking around for a way to apply currying inside scheme. I came
+on the following macro via: &lt;a href=&quot;http://paste.lisp.org/display/36324&quot;&gt;this paste&lt;/a&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;(define-syntax curried
+(syntax-rules ()
+    ((curried () body ...) (lambda () body ...))
+    ((curried (arg) body ...) (lambda (arg) body ...))
+    ((curried (arg args ...) body ...)
+     (lambda (arg . rest)
+         (let ((next (curried (args ...) body ...)))
+             (if (null? rest)
+                     next
+                     (apply next rest)))))))
+
+(define-syntax define-curried
+    (syntax-rules ()
+        ((define-curried (name args ...) body ...)
+         (define name (curried (args ...) body ...)))))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Notice how &lt;code&gt;define-curried&lt;/code&gt; uses the pattern match on &lt;code&gt;name&lt;/code&gt; recursively to recursivly apply the curried macro to every
+argument.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;(define-curried (mad a b c)
+    (+ (* a b) c))
+
+    (mad 2 3 4)
+    ((mad 2) 3 4)
+    ((mad 2 3) 4)
+    (((mad 2) 3) 4)
+&lt;/code&gt;&lt;/pre&gt;</content>
+  </entry>
+  <entry>
+    <title>Web-apps with PLT-Scheme, snoozing while dispatching?</title>
+    <link href="https://boymaas.nl/posts/2010-05-15-web-apps-in-plt-scheme.html"/>
+    <id>https://boymaas.nl/posts/2010-05-15-web-apps-in-plt-scheme.html</id>
+    <updated>2010-05-15T00:00:00Z</updated>
+    <summary>Web apps in scheme, too good to be true?</summary>
+    <content type="html">&lt;p&gt;Doing the tutorial on writing a blog using PLT-Scheme opened my eyes to some of
+the possibilities. Working lately primary on webapps using web.py, sqlalchemy I
+wanted to see what could be done using scheme. In this case browsing PLT&#x27;s
+available libraries. After scanning PLT&#x27;s PLaneT I have found some interesting
+libs opensourced by a company called &lt;a href=&quot;http://www.untyped.com/&quot;&gt;untyped&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;The libs I found interesting where:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;untyped/dispatch&lt;/li&gt;
+&lt;li&gt;untyped/snooze&lt;/li&gt;
+&lt;li&gt;untyped/mirrors&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;I decided to take a closer look at them and how untyped implemented its magic.&lt;/p&gt;
+
+&lt;h2&gt;Dispatch, declare what you want&lt;/h2&gt;
+
+&lt;p&gt;Dispatch is essentially syntax to declare routes and controllers. I wanted to know
+more so I analysed an example given by the documentation.&lt;/p&gt;
+
+&lt;h2&gt;Define your site&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;#lang scheme/base
+
+;; automaticly grab packages from PLaneT
+(require (planet untyped/dispatch))
+
+(define-site blog
+             ([(url &quot;/&quot;) index]
+              [(url &quot;/posts/&quot; (string-arg)) review-post]
+              [(url &quot;/archive/&quot; (integer-arg) &quot;/&quot; (integer-arg))
+               review-archive]))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Essentially stating that &lt;code&gt;/archive/10&lt;/code&gt; will call &lt;code&gt;review-archive&lt;/code&gt; with one parameter &lt;code&gt;10&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h3&gt;Controllers&lt;/h3&gt;
+
+&lt;p&gt;Controllers for the rules above may be defined with:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;(define-controller (controller request args ...)
+    exp ... )
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;An example being:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;; request string -&amp;gt; html-response
+(define-controller (review-post request slug)
+  `(html (head (title ,slug))
+         (body (h1 &quot;You are viewing &quot; ,(format &quot;~s&quot; slug))
+               (p &quot;And now for some content...&quot;))))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3&gt;Implementation&lt;/h3&gt;
+
+&lt;p&gt;To find out what happens behind the syntax it helps to expand the syntax (or macro). The declarative statements above expand to:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;   (require (planet untyped/dispatch))
+   (begin
+     (define-values (blog index review-post review-archive)
+       (let-values (((blog controllers)
+                     (make-site &#x27;blog &#x27;(index review-post review-archive))))
+         (let-values (((index review-post review-archive)
+                       (apply values controllers)))
+           (set-site-rules!
+             blog
+             (list
+               (make-rule (make-pattern &quot;/&quot;) index)
+               (make-rule (make-pattern &quot;/posts/&quot; (string-arg)) review-post)
+               (make-rule
+                 (make-pattern &quot;/archive/&quot; (integer-arg) &quot;/&quot; (integer-arg))
+                 review-archive)))
+           (values blog index review-post review-archive)))))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Effectively defining &lt;code&gt;blog&lt;/code&gt; and the controllers &lt;code&gt;index review-post
+review-archive&lt;/code&gt; on module level by the function &lt;code&gt;make-site&lt;/code&gt;. This procedure
+also assigns an &lt;code&gt;undefined-controller&lt;/code&gt; to the controllers &lt;code&gt;index review-post
+review-archive&lt;/code&gt; to catch the undefined ones. These syntax-extentions are
+defined in &lt;code&gt;syntax.ss&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;One can use the export-helper in a provide as such &lt;code&gt;(provide (site-out blog))&lt;/code&gt;
+to export the defined site and the configured controllers.&lt;/p&gt;
+
+&lt;h4&gt;Rule based routing&lt;/h4&gt;
+
+&lt;p&gt;There is a function defined &lt;code&gt;(controller-url controller args ..)&lt;/code&gt; which can be
+used to translate back from controller to path.&lt;/p&gt;
+
+&lt;h5&gt;Rules&lt;/h5&gt;
+
+&lt;p&gt;Rules like &lt;code&gt;[(url &quot;/posts/&quot; (string-arg)) review-post]&lt;/code&gt; are declared when configuring the site. This rule effectively states that &lt;code&gt;/posts/([^/]+)&lt;/code&gt; maps to controller &lt;code&gt;review-post&lt;/code&gt;. This rule will be used to &lt;code&gt;dispatch&lt;/code&gt; this request, but will also be used to translate &lt;code&gt;(controller-url &#x27;review-post 10)&lt;/code&gt; to the following link &lt;code&gt;/posts/10&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h5&gt;Arguments&lt;/h5&gt;
+
+&lt;p&gt;How is this implemented. In the files &lt;code&gt;pattern.ss&lt;/code&gt; and &lt;code&gt;arg.ss&lt;/code&gt; and &lt;code&gt;struct-private.ss&lt;/code&gt; contain statements which describes elements
+to build reqexp matches and encode and decode arguments between the url and scheme domain. The args and eventually custom args
+are defined in the following struct. (i removed the display routines for clarity)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;(define-struct arg
+  (id      ;; symbol to be used declaration 
+   pattern ;; regexp pattern
+   decoder ;; how to decode from captured arg to lisp domain
+   encoder ;; how to encode from lisp domain to captured arg
+  #:transparent)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;A working example is &lt;code&gt;string-arg&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;(define (string-arg)
+  (make-arg 
+   &#x27;string                      ;; id
+   &quot;[^/]+&quot;                      ;; regexp
+   (lambda (raw)                ;; decode
+     (uri-decode raw))
+   (lambda (arg)                ;; encode
+     (if (string? arg)
+         (uri-encode arg)
+         (raise-exn exn:fail:dispatch
+           (format &quot;Expected string, given: ~s&quot; arg))))))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h5&gt;Adding arguments&lt;/h5&gt;
+
+&lt;p&gt;Adding cutom arguments is made trivial by this setup since one can just build a structure with encode and decode routines and can
+use it.&lt;/p&gt;
+
+&lt;h2&gt;Snooze, ORM for Postgresql or Sqlite&lt;/h2&gt;
+
+&lt;p&gt;Will come later ..&lt;/p&gt;
+
+&lt;h2&gt;Mirrors, xhtml/xml generation or javascript. Whatever you want ..&lt;/h2&gt;
+
+&lt;p&gt;Will come later ..&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <title>Ying Yang call/cc or the call-with-current-continuation puzzle</title>
+    <link href="https://boymaas.nl/posts/2010-05-14-scheme-call-with-current-continuation.html"/>
+    <id>https://boymaas.nl/posts/2010-05-14-scheme-call-with-current-continuation.html</id>
+    <updated>2010-05-14T00:00:00Z</updated>
+    <summary>interesting scheme paradigm</summary>
+    <content type="html">&lt;p&gt;One of the more interesting paradigms arising from Scheme is the
+&lt;code&gt;call-with-current-continuation&lt;/code&gt;.  Let me try to explain this in abstract terms,
+a call/cc is passed a procedure &lt;code&gt;p&lt;/code&gt;. This procedure takes one argument &lt;code&gt;k&lt;/code&gt;
+which represents the continuation. The continuation &lt;code&gt;k&lt;/code&gt; can be applied with a
+value.  This value will become the value of the application of call/cc. Easy heh?&lt;/p&gt;
+
+&lt;h2&gt;Ok? Let&#x27;s play a little with them&lt;/h2&gt;
+
+&lt;p&gt;To give an example, this first example does &lt;code&gt;call/cc&lt;/code&gt; which does not apply the
+continuation &lt;code&gt;k&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;(call/cc
+ (lambda (k)
+  (* 5 4))) =&amp;gt;  20 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The lambda is called with our current-continuation which is ignored as it
+just returns the result of the calculation.&lt;/p&gt;
+
+&lt;p&gt;In this next example the continuation is applied with an integer argument of 4,
+the return value of the call/cc lambda becomes the value passed to the
+continuation &lt;code&gt;k&lt;/code&gt; and thus prints 4.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;(call/cc
+ (lambda (k)
+  (* 5 (k 4)))) =&amp;gt; 4 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;We could argue that the continuation acts as a return statement. This
+facilitates returning from a recursion as described below.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;(define product
+  (lambda (ls)
+    (call/cc
+      (lambda (break)
+        (let f ((ls ls))
+          (cond
+            ((null? ls) 1)
+            ((= (car ls) 0) (break 0))
+            (else (* (car ls) (f (cdr ls))))))))))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;This is simple, let&#x27;s try to find something more interesting&lt;/h2&gt;
+
+&lt;p&gt;Try this piece of code which I found in The Scheme Programming Language.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;(let ((x (call/cc (lambda (k) k))))
+  (x (lambda (ignore) &quot;hi&quot;))) =&amp;gt; &quot;hi&quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;What happens here?&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;x&lt;/code&gt; gets bound to the continuation &lt;code&gt;k&lt;/code&gt;
+
+&lt;ul&gt;
+&lt;li&gt;since call/cc calls lambda k: which returns itself&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;x&lt;/code&gt;, which is the continuation &lt;code&gt;k&lt;/code&gt;, is applied with the &lt;code&gt;(lambda (ignore) &quot;h1&quot;)&lt;/code&gt;
+
+&lt;ul&gt;
+&lt;li&gt;this has the effect of rebinding &lt;code&gt;x&lt;/code&gt; to &lt;code&gt;(lambda (ignore) &quot;hi&quot;)&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;control continues and comes again to the statement &lt;code&gt;(x (lambda (ignore) .. )&lt;/code&gt;
+
+&lt;ul&gt;
+&lt;li&gt;and thus applies the lambda to the rebond &lt;code&gt;x&lt;/code&gt; returning &quot;hi&quot;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;Now for something really interesting, the call/cc ying yang puzzle.&lt;/h2&gt;
+
+&lt;p&gt;Reading the wikipedia article I stumbled upon this interesting puzzle. I was
+immediatly fascinated as it seemed difficult to explain why the below described call/cc combinations
+deliver the output as described.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;(let* ((yin
+         ((lambda (cc) (display #\@) cc) (call-with-current-continuation (lambda (c) c))))
+       (yang
+         ((lambda (cc) (display #\*) cc) (call-with-current-continuation (lambda (c) c)))))
+    (yin yang))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Outputs an infinitive sequence, I have extracted the first output of this function below.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;@*@**@***@****@*****@******@*******@********@*********@**********@*******
+****@************@*************@**************@***************@**********
+******@*****************@******************@*******************@*********
+***********@*********************@**********************@****************
+*******@************************@*************************@**************
+************@
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Keep in mind that &lt;code&gt;(let* (b1 b2) e1 e2 ..)&lt;/code&gt; translates to &lt;code&gt;(let (b1) (let (b2) e1 e2 .. )&lt;/code&gt;.
+Try to explain this one .. good luck, heheh&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <title>Live coding OpenGl in PLT-Scheme</title>
+    <link href="https://boymaas.nl/posts/2010-05-11-opengl-plt-scheme-programming.html"/>
+    <id>https://boymaas.nl/posts/2010-05-11-opengl-plt-scheme-programming.html</id>
+    <updated>2010-05-11T00:00:00Z</updated>
+    <summary>Evolutionary coding in scheme</summary>
+    <content type="html">&lt;p&gt;Live coding &lt;a href=&quot;http://www.pawfal.org/fluxus/&quot;&gt;(fluxus)&lt;/a&gt; captured my interest.  Evolutionary
+programming a game system using scheme will be a nice pet project to experiment with.&lt;/p&gt;
+
+&lt;h2&gt;PLT-Scheme&lt;/h2&gt;
+
+&lt;p&gt;Checking out different versions of scheme i stumbled upon gambit and ypsilon and
+plt-scheme. After some deliberation i chose plt-scheme. Nicely organised, good
+documentation and standard libraries and big community. Very active irc channel
+on irc.freenode.org #scheme which answered my questions within 5 minutes.&lt;/p&gt;
+
+&lt;p&gt;Wikipedia describes PLT scheme in a nice fashion:&lt;/p&gt;
+
+&lt;blockquote&gt;&lt;p&gt;From the beginning, the PLT project was also an experiment in evaluating the
+suitability of Scheme as a programming language for large projects. In a sense,
+the language failed and yet it also proved to be an ideal platform.
+Scheme per se failed because the standard language, as defined in the reports,
+is too small for a team of 20-30 developers, distributed across three
+continents. If taken as an ideal kernel, however, Scheme succeeded beyond the
+team&#x27;s expectations.&lt;/p&gt;&lt;/blockquote&gt;
+
+&lt;h2&gt;We need a window to run our app in&lt;/h2&gt;
+
+&lt;p&gt;PLT Scheme has a gui toolkit which can be loaded with.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;(require scheme/gui/base)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This library needs primitive graphics support at runtime an cannot
+be executed with &lt;code&gt;mzscheme&lt;/code&gt;. For these programs we have &lt;code&gt;mred&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h2&gt;MzScheme, MrEd, PLT&#x27;s graphical user toolkit&lt;/h2&gt;
+
+&lt;p&gt;As I understand it, PLT-Scheme has mzscheme as an ideal lightweight scripting
+environment. And MrEd for GUI based apps.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt; mred -iz -l readline -l scheme/enter
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;We load 2 libraries not standard included in my version of &lt;code&gt;mred&lt;/code&gt;:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;readline&lt;/code&gt;, up/down, tab-completion etc&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;scheme/enter&lt;/code&gt;, to be able to reload modules and change evaluation contexts,
+provides &lt;code&gt;enter!&lt;/code&gt; procedure.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;Windowing time&lt;/h2&gt;
+
+&lt;p&gt;The gui/base consist of an
+&lt;a href=&quot;http://docs.plt-scheme.org/gui/Windowing_Classes.html&quot;&gt;hierarchy of classes&lt;/a&gt;,
+interesting for us are:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;canvas%, a general-purpose window for drawing and handling events.&lt;/li&gt;
+&lt;li&gt;frame%, a top-level container window. It has a title bar (which displays the
+frame&#x27;s label), an optional menu bar, and an optional status line.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3&gt;Every painter needs a canvas&lt;/h3&gt;
+
+&lt;p&gt;For our app to at least draw anything we need an opengl ready canvas. The window
+should also be able to recognize size changes and a method to actually draw
+something on our canvas.&lt;/p&gt;
+
+&lt;p&gt;the functions &lt;code&gt;resize&lt;/code&gt; and &lt;code&gt;paint&lt;/code&gt; will be defined later.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;(define gl-canvas%
+  (class* canvas% ()
+          (inherit with-gl-context swap-gl-buffers)
+
+          (define/override (on-paint)
+                           (with-gl-context
+                             (lambda ()
+                               (paint)
+                               (swap-gl-buffers))))
+
+          (define/override (on-size width height)
+                           (with-gl-context
+                             (lambda ()
+                               (resize width height))))
+
+          (super-instantiate () (style &#x27;(gl))))) 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3&gt;Without the frame we cannot hang the painting&lt;/h3&gt;
+
+&lt;p&gt;Our canvas needs to &lt;a href=&quot;http://docs.plt-scheme.org/gui/frame_.html&quot;&gt;framed&lt;/a&gt; for the os to display it.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;(define window 
+  (new frame% (label &quot;Minimal&quot;) (min-width 200) (min-height 200)))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3&gt;Rendering time&lt;/h3&gt;
+
+&lt;p&gt;Now we have setup a minimal frame with a canvas which is opengl ready. Now we
+can execute OpenGl calls to actually start drawing. &lt;code&gt;resize&lt;/code&gt; is called on a
+resize and since this is minimal does nothing. &lt;code&gt;paint&lt;/code&gt; is called when the
+canvas is exposed or resized so that the image in the canvas can be repainted.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;;; gl-canvas functions resise and main draw
+(define (resize w h) #t)
+
+(define (paint)
+  (glClearColor 0.0 0.0 0.0 0.0)
+  (glClear GL_COLOR_BUFFER_BIT)
+  (glColor3d 1.0 1.0 1.0)
+
+  (glMatrixMode GL_PROJECTION)
+  (glLoadIdentity)
+  (glOrtho 0.0 1.0 0.0 1.0 -1.0 1.0)
+  (glMatrixMode GL_MODELVIEW)
+  (glLoadIdentity)
+
+  (glBegin GL_QUADS)
+  (glVertex3d 0.25 0.25 0.0)
+  (glVertex3d 0.75 0.25 0.0)
+  (glVertex3d 0.75 0.75 0.0)
+  (glVertex3d 0.25 0.75 0.0)
+  (glEnd)
+  )
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3&gt;Putting it all together&lt;/h3&gt;
+
+&lt;p&gt;To actually create the frame canvas, and fire the on-paint and on-size triggers
+send the window instance the show message. This should create all.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;;; show window
+(send window show #t)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;And now for live coding!&lt;/h2&gt;
+
+&lt;p&gt;The essential element here is the live coding. This is accomplished by changing
+the paint function and sending it to your repl. First we need to change the
+evaluation context. This is done by:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;(enter! &quot;minimal.ss&quot;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;and redefining &lt;code&gt;paint&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;(define (paint)
+  (glClearColor 0.0 0.0 0.0 0.0)
+  (glClear GL_COLOR_BUFFER_BIT)
+  (glColor3d 0.0 1.0 1.0)
+
+  (glMatrixMode GL_PROJECTION)
+  (glLoadIdentity)
+  (glOrtho 0.0 1.0 0.0 1.0 -1.0 1.0)
+  (glMatrixMode GL_MODELVIEW)
+  (glLoadIdentity)
+
+  (glBegin GL_QUADS)
+  (glVertex3d 0.25 0.25 0.0)
+  (glVertex3d 0.75 0.25 0.0)
+  (glVertex3d 0.75 0.75 0.0)
+  (glVertex3d 0.25 0.75 0.0)
+  (glEnd)
+  )
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;now change size of the window to trigger a &lt;code&gt;on-paint&lt;/code&gt; and the colour of the
+square changes. The basic elements of live coding are accomplished.&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <title>Playing around with the HTML5 Canvas element</title>
+    <link href="https://boymaas.nl/posts/2010-05-04-html5-canvas-element.html"/>
+    <id>https://boymaas.nl/posts/2010-05-04-html5-canvas-element.html</id>
+    <updated>2010-05-04T00:00:00Z</updated>
+    <summary>What is the fuzz all about</summary>
+    <content type="html">&lt;p&gt;&lt;canvas id=&quot;slutmachine&quot; width=300 height=240 style=&#x27;float: right;&#x27;&gt;
+&lt;/canvas&gt;&lt;/p&gt;
+
+&lt;p&gt;After all the fuzz cause by Steve Jobs objections against Flash and indirect
+promotion of HTML5 I wanted to see whats possible using HTML5 and the canvas
+element. After searching a bit online I stumbled upon some interesting articles. One
+implementation of &lt;a href=&quot;http://kotaku.com/5507640/google-gets-quake-ii-running-in-html5-just-for-fun&quot;&gt;Quake2 using
+HTML5&lt;/a&gt;,
+and the implementation of an SWF player using HTML5. This seeded my interest a
+little more and I wanted to see how easy it is to get something on the screen.&lt;/p&gt;
+
+&lt;h2&gt;Simple outline of a tree based renderer&lt;/h2&gt;
+
+&lt;p&gt;As an example project I wanted to create a simple tree graph renderer inspired by
+the Flash MovieClip hierarchy. The final outcome should become something like
+this.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;// add root shapes
+var canvas = new Canvas(c.canvas, c.ctx);
+canvas.addShape(new Symbol(50, 25));
+canvas.addShape(new Symbol(160, 25));
+canvas.addShape(new Symbol(160, 135));
+canvas.addShape(new Symbol(50, 135));
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The Canvas element should take care of the rendering process and render the symbols. Rendering the complete
+tree at 20 frames a second will be done using the following code.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;canvas.init();
+canvas.render();
+canvas.run(20);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;Shapes&lt;/h2&gt;
+
+&lt;p&gt;At a minimum our renderer should be able to place shapes onto the screen. The
+minimal information I want to update through the Tree is the x and y position.
+They should be able to update their state and be capable of rendering themselves on
+a context.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;update(timeInMilliseconds), function to update properties of the shape.&lt;/li&gt;
+&lt;li&gt;draw(context), actual rendering on the canvas&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The Box as you can see it moving above has been defined as:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;function Box(x, y, width, height) {
+    // simple element, just renders a strokeRect
+    Shape.call(this, x, y);
+
+    this.width = width;
+    this.height = height;
+
+    this.draw = function (ctx) {
+        ctx.strokeRect(this._x, this._y, this.width, this.height);
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This setup enables composition of complex shapes using simpler shapes as can be seen below.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;function Symbol(x, y) {
+    // initialise shape
+    Shape.call(this, x, y);
+
+    // compose this shape out of 2 boxes
+    this.box = this.addChild( new Box(0,0,100,100) );
+    this.innerbox = this.box.addChild(new Box(10,10,80,80));
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;Behaviours&lt;/h2&gt;
+
+&lt;p&gt;To create animations we have multiple options. One can always supply a function
+to update x,y,width,heigh or rotation. But many behaviours are standard, and especially
+with complex behaviours we would like to compose them. So I added the possibility to add
+behaviours to specific shapes.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;function Behaviour() {
+    // Basic methods for a behaviour
+    // stores shape in shape and original coords
+    this.init = function (s) {
+        this.shape = s;
+        this.original_x = s.x;
+        this.original_y = s.y;
+    }
+
+    // apply applies the behaviour .. should
+    // be implemented ina specific behaviour
+    this.apply = function (time) {
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;To test this behaviour I implemented the Wobble as can be seen above:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;function BehWobble(duration,amplitude) {
+    // BehWobble is a behaviour
+    Behaviour.call(this);
+
+    this.wobble = 0;
+    this.duration = 1000*duration;
+    this.amplitude = amplitude;
+
+    this.apply = function (time) {
+        this.shape.x -= this.wobble;
+        this.wobble = this.amplitude * Math.sin(toRad(360*((time%this.duration)/this.duration))); 
+        this.shape.x += this.wobble;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;Putting it together&lt;/h2&gt;
+
+&lt;p&gt;I update the symbol function to add the behaviour to the boxes. And voila the result can be seen above:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;function Symbol(x, y) {
+    Shape.call(this, x, y);
+    this.box = this.addChild( new Box(0,0,100,100) );
+    this.innerbox = this.box.addChild(new Box(10,10,80,80));
+
+    // let the innerbox wobble
+    this.box.addBehaviour(new BehWobble(4,10));
+    this.innerbox.addBehaviour(new BehWobble(2,10));
+    this.innerbox.addBehaviour(new BehWobble(1,-10));
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;Just a little abstraction to rendering stuff in the HTML5 canvas element. So far
+I am pretty happy with it but started looking for some existing frameworks. Landed
+on &lt;a href=&quot;http://www.processingjs.org&quot;&gt;processing.js&lt;/a&gt; which looks promising.&lt;/p&gt;
+
+&lt;p&gt;Code can be read here, &lt;a href=&quot;https://boymaas.nl/static/2010-05-04-html5-canvas-element/2dengine.js&quot;&gt;Simple engine code&lt;/a&gt;, and the wobbling
+squares are defined &lt;a href=&quot;https://boymaas.nl/static/2010-05-04-html5-canvas-element/slutmachine.js&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <title>Procedural Generation, a way to go?</title>
+    <link href="https://boymaas.nl/posts/2010-02-17-procedural-generation.html"/>
+    <id>https://boymaas.nl/posts/2010-02-17-procedural-generation.html</id>
+    <updated>2010-02-17T00:00:00Z</updated>
+    <summary>The art of generating content procedurally</summary>
+    <content type="html">&lt;blockquote&gt;
+    The light flows,  
+    the smell of electricity;  
+    implicit order,  
+    outward manifestation ..&lt;br&gt;  
+    =&gt; Boy Maas (2005) &lt;=
+&lt;/blockquote&gt;
+
+&lt;p&gt;Working as a small development studio, often in small teams with limited
+resources, you start looking at alternative ways to do things. Large development
+studios can spend millions of dollars on top-notch designers to get state of the
+art graphics. But as we all know, on a small salary working as a freelance
+programmer I can&#x27;t just go the bank and state: I have this brilliant concept,
+please front me a few million because the graphics have to be brilliant.&lt;/p&gt;
+
+&lt;p&gt;Working a day job even time is a limited resource, designing all graphics
+yourself or even when you find artists willing to put in the time, is almost
+not feasible. But when you have the stamina and determinism you would probably
+have to rewrite your code and graphics for the next quantum computer. Since
+that will be the standard when you finish your product.&lt;/p&gt;
+
+&lt;h2&gt;There are more roads to Rome&lt;/h2&gt;
+
+&lt;p&gt;I often find myself conflicted while brainstorming on projects, on the one hand
+you have the conceptual world in which everything is possible. On the other side you
+have the real world, and with this real world comes various challenges.&lt;/p&gt;
+
+&lt;p&gt;Once you find a way to overcome, or work around the various challenges,
+you have a shot at realising your concept. One tool to overcome the practical
+challenges of content is &lt;a href=&quot;http://en.wikipedia.org/wiki/Procedural_generation&quot;&gt;procedural generation&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2&gt;Let&#x27;s dive in with .kkrieger&lt;/h2&gt;
+
+&lt;iframe style=&quot;float:right&quot; width=&quot;425&quot; height=&quot;344&quot; src=&quot;https://www.youtube.com/embed/1VqzjafwCNA&quot; frameborder=&quot;0&quot; allowfullscreen&gt;&lt;/iframe&gt;
+
+&lt;p&gt;Before studying the process of procedural generation in some more detail let&#x27;s
+look at what is done at this moment. A brilliant example of procedural
+generation arose from the demo-scene.
+&lt;a href=&quot;http://www.youtube.com/watch?v=1VqzjafwCNA&quot;&gt;.kkrieger&lt;/a&gt; A proof that almost all
+content is generated is the size of the game. All content is packed in 96Kb! The
+way the developers achieved this is is by basing all the elements on basic
+solids, such as boxes and cylinders with a function to deform them. Textures are
+stored using creation history thus only having to store the pixmap and the
+functions to manipulate them to get the end result. This way they could pack
+300Mb worth of textures and data in a sheer 97,280 bytes of disk space.&lt;/p&gt;
+
+&lt;h2&gt;Was this done before?&lt;/h2&gt;
+
+&lt;p&gt;A few of the first games ever developed on &lt;a href=&quot;http://en.wikipedia.org/wiki/BBC_Micro&quot;&gt;BBC Mirco&lt;/a&gt; (16Kb ram)
+where confronted with severe space constraints. This poses some serious real
+world challenges on what is possible. One has to be very inventive to be able
+to produce an interesting game. The earliest computers where severely limited by
+memory constraints. This made it impossible to store everything, level
+information, artwork, there was only room for a few elements.&lt;/p&gt;
+
+&lt;h3&gt;Elite, the open ended space trader game&lt;/h3&gt;
+
+&lt;p&gt;An interesting example of a game I really loved is Elite, the creators designed
+a formula to store 2&lt;sup&gt;48&lt;/sup&gt; (282 trillion) galaxies with 256 solar systems each.
+The solar systems had their own political systems, the trading prices, even the
+names of the planets where generated. They limited the final game to only 8
+universes. The are many more examples of &quot;old-school&quot; games which used this
+technique. Often based upon a seeded Pseudo Random number generator used to feed
+the generation functions.&lt;/p&gt;
+
+&lt;h3&gt;Exile, the cavern explorer game&lt;/h3&gt;
+
+&lt;p&gt;Another Magnum Opus of programming which conquered serious technical challenge is
+&lt;a href=&quot;http://en.wikipedia.org/wiki/Exile_(video_game_series&quot;&gt;Exile&lt;/a&gt;), I found &lt;a href=&quot;http://exile.acornarcade.com/devel.html&quot;&gt;an interesting read&lt;/a&gt;
+giving some interesting quotes from the developers:&lt;/p&gt;
+
+&lt;blockquote&gt;&lt;p&gt;Technical issues aside, and against all modern business rules, the Exile game
+itself was allowed to evolve from little more than having a spaceman exploring
+a cavern system. We didn&#x27;t know where it was going in the early stages and
+really just thought about new experiences for the hero and new technical
+features (like line of sight vision for inhabitants) as we went. Personally I
+believe that the best creations occur if allowed to develop at least partly in
+this evolutionary way rather than completely designed from scratch at the
+outset. It takes much longer of course to produce something this way and you
+are in danger of never finishing if you lose sight of the goal, but is worth
+it in the end.&lt;/p&gt;&lt;/blockquote&gt;
+
+&lt;p&gt;Notice the evolutionary process. Planning in detail ahead is a killer for any form of
+creativity.&lt;/p&gt;
+
+&lt;p&gt;The amount of innovating techniques and content creation used in programming
+the gameplay of Exile is stunning. Think only about the map in Exile, another
+quote from the article:&lt;/p&gt;
+
+&lt;blockquote&gt;&lt;p&gt;The huge map of Exile was generated by an algorithm which from an input of the
+xy map coordinates created tunnels, solid rock, or one of the few special
+blocks that could have manually defined objects in them, like creatures,
+doors, guns, etc. It took a long time to fiddle with this algorithm to produce
+a tunnel system that was all linked up and interesting, but the storage
+required for it was actually tiny.&lt;/p&gt;&lt;/blockquote&gt;
+
+&lt;p&gt;To see the world which they generated procedurally: &lt;a href=&quot;http://c64.tin.at/exile/exile_map.sol.htm&quot;&gt;Exile&#x27;s complete map&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2&gt;The ideal world&lt;/h2&gt;
+
+&lt;p&gt;Imagine a completely generated game world, where even the creatures you interact
+with are generated. Their intelligence adapts to the way you play the game. Keeping the difficulty
+at your level. The AI is finding your weak spots and is trying to exploit them. You have to adapt to
+a world that is adapting to you and challenging you. All you see is generated on the fly. No element of
+the game is designed by an artist. Any ideas?&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <title>Hakyll blog setup</title>
+    <link href="https://boymaas.nl/posts/2010-02-09-a-haskel-blog.html"/>
+    <id>https://boymaas.nl/posts/2010-02-09-a-haskel-blog.html</id>
+    <updated>2010-02-09T00:00:00Z</updated>
+    <summary>Setting up a maintainable blog using haskell</summary>
+    <content type="html">&lt;p&gt;Wondering for a while on how to setup a blog, one of my favourite languages is
+haskell. One of my &lt;a href=&quot;http://www.vim.org&quot;&gt;favourite editors is vim&lt;/a&gt;. And one of my favourite principles
+is to automate as much as possible. It&#x27;s nice to live life according to
+principle which could be defined as:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;A basic truth, law, or assumption: the principles of democracy.&lt;/li&gt;
+&lt;li&gt;A rule or standard, especially of good behavior: a man of principle.&lt;/li&gt;
+&lt;li&gt;The collectivity of moral or ethical standards or judgments: a decision based on principle rather than expediency.&lt;/li&gt;
+&lt;li&gt;A fixed or predetermined policy or mode of action.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Another favourite principles, next to minimalism, is doing stuff as efficient as possible.
+What is more efficient as serving static pages? Hence &lt;a href=&quot;http://jaspervdj.be/hakyll/&quot;&gt;the hakyll setup&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3&gt;Maintaining my blog&lt;/h3&gt;
+
+&lt;p&gt;I really like to write in vim in combination with other linux system tools to automate away all the routine tasks. For this end I have included &lt;a href=&quot;http://github.com/nfjinjing/nemesis&quot;&gt;nemesis&lt;/a&gt; in my toolchain. For 2 reasons:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;keep everything haskell&lt;/li&gt;
+&lt;li&gt;blog will have dependencies I do &lt;em&gt;NOT&lt;/em&gt; want to track mentally&lt;/li&gt;
+&lt;li&gt;put deploying the website including dependencies which need to be resolved inside Nemesis&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3&gt;What is hakyll?&lt;/h3&gt;
+
+&lt;p&gt;Like the homepage of hakyll states:&lt;/p&gt;
+
+&lt;blockquote&gt;&lt;p&gt;Hakyll is a Haskell library for generating static sites. It is written in a very configurable way and uses an xmonad-like DSL for configuration.&lt;/p&gt;&lt;/blockquote&gt;
+
+&lt;h3&gt;Why static site generators?&lt;/h3&gt;
+
+&lt;p&gt;Static sites are extremely fast.
+You dont have to worry about security issues.&lt;/p&gt;
+
+&lt;h2&gt;Based upon&lt;/h2&gt;
+
+&lt;p&gt;I based this site upon the blog of the creator of hakyll. But it will adapt to a more custom layout in the future.&lt;/p&gt;</content>
+  </entry>
+</feed>

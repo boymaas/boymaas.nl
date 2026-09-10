@@ -8,11 +8,9 @@ subtitle: What is the fuzz all about
 <script src='/static/2010-05-04-html5-canvas-element/slutmachine.js' type="text/javascript"></script>
 
 <script>
-    // jquery accumulates the ready functions so we can add them here
-
-    $(document).ready(function () {
+    document.addEventListener('DOMContentLoaded', function () {
         renderSlutMachine();
-    })
+    });
 </script>
 
 <p><canvas id="slutmachine" width=300 height=240 style='float: right;'>

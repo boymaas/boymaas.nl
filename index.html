@@ -1,168 +1,132 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<!--[if lt IE 7 ]> <html lang="<haml:loud> config[:meta_data][:lang] </haml:loud>" class="no-js ie ie6 lte7 lte8 lte9"> <![endif]-->
-<!--[if IE 7 ]> <html lang="<haml:loud> config[:meta_data][:lang] </haml:loud>" class="no-js ie ie7 lte7 lte8 lte9"> <![endif]-->
-<!--[if IE 8 ]> <html lang="<haml:loud> config[:meta_data][:lang] </haml:loud>" class="no-js ie ie8 lte8 lte9"> <![endif]-->
-<!--[if IE 9 ]> <html lang="<haml:loud> config[:meta_data][:lang] </haml:loud>" class="no-js ie ie9 lte9"> <![endif]-->
-<!--[if (gt IE 9)|!(IE)]> ><! <![endif]-->
-<html class='no-js' lang='en'>
-  <!-- <![endif] -->
-  <head>
-    <meta charset='utf-8' />
-    <title>
-      Some light reading for those who are interested
-      &bull; Ramblings of Boy Maas
-    </title>
-    <meta content='width=device-width, initial-scale=1.0' name='viewport' />
-    <meta content='0B2b3BMieI7ywPGWTSIwssHMzAmCiTI1SI7sCe46sdk' name='google-site-verification' />
-    <link href='/feed' rel='alternate' title='Ramblings of Boy Maas Atom feed' type='application/atom+xml' />
-    <link href='/assets/styles.css' rel='stylesheet' />
-    <script src='/assets/lib.js' type='text/javascript'></script>
-    <link href='/favicon.png' rel='shortcut icon' />
-    <body>
-      <div id='page'>
-        <div id='header' role='banner'>
-          <h1>
-            <a href='/'>
-              Boy Maas
-              <span class='nick'>(m4nic)</span>
-            </a>
-            <br />
-            <span class='subtitle'>
-            </span>
-          </h1>
-          <div id='nav'>
-            <ul>
-              <li>
-                <a href='/'>Home</a>
-              </li>
-              <li>
-                <a class='clickme' href='/work.html'>Portfolio</a>
-              </li>
-              <li>
-                <a href='/posts.html'>All posts</a>
-              </li>
-            </ul>
-          </div>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Boy Maas (m4nic)</title>
+<meta name="description" content="Boy Maas, m4nic. Entrepreneur, programmer, designer, philosopher. A small development studio in Den Haag since 1998.">
+<link rel="icon" href="/favicon.png">
+<link rel="alternate" type="application/atom+xml" title="Boy Maas, posts" href="/feed.xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&text=%E2%94%80%E2%94%82%E2%94%8C%E2%94%90%E2%94%94%E2%94%98%E2%94%9C%E2%94%A4%E2%96%88&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/tui.css">
+</head>
+<body data-page="home">
+<canvas id="sky" aria-hidden="true"></canvas>
+<header class="wrap top">
+  <a class="who" href="/">Boy Maas <span class="dim">(m4nic)</span></a>
+  <nav>
+    <a href="#posts">posts</a>
+    <a href="#work">work</a>
+    <a href="/#bio">bio</a>
+    <a href="/#mail">mail</a>
+    <button id="snd" type="button" aria-pressed="false">sound off</button>
+  </nav>
+</header>
+<main class="wrap stack">
+  <section class="pane" id="m4nic" tabindex="0" aria-label="m4nic">
+    <div class="bt"><span>┌─</span><span class="tt">m4nic</span><span>─</span><span class="meta"> nine systems, drawn at random </span><span class="ln"></span><span>┐</span></div>
+    <div class="bl"></div><div class="br"></div>
+    <div class="in">
+      <div class="box" id="box"><canvas id="hero" aria-label="m4nic, a logo made of cells that physics plays with"></canvas></div>
+    </div>
+    <div class="bb"><span>└</span><span class="bbx">─</span><span> </span><b id="sysname">bouncy balls</b><span> </span><span class="ln"></span><span> </span><span class="dim" id="sysrole">cursor pushes</span><span> </span><span class="bbx">─</span><span>┘</span></div>
+  </section>
+  <section class="pane whoami" id="whoami" tabindex="0" aria-label="whoami">
+    <div class="bt"><span>┌─</span><span class="tt">whoami</span><span class="ln"></span><span>┐</span></div>
+    <div class="bl"></div><div class="br"></div>
+    <div class="in">
+      <p class="prompt"><span class="ps">$</span> <span class="cmd">whoami</span></p>
+      <h1>Entrepreneur, programmer, designer, philosopher.</h1>
+      <p class="lede">Terminal generation. Complex dynamic systems, asynchronous agents, and a small development studio in Den Haag since March 1998.</p>
+      <p class="prompt"><span class="ps">$</span> <span class="cursor">█</span></p>
+    </div>
+    <div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div>
+  </section>
+  <section class="pane list" id="posts" tabindex="0" aria-label="posts">
+    <div class="bt"><span>┌─</span><span class="tt">posts</span><span>─</span><span class="meta"> 17 entries, 2010 to 2015, newest first </span><span class="ln"></span><span>┐</span></div>
+    <div class="bl"></div><div class="br"></div>
+    <div class="in">
+    <ol class="posts">
+      <li><time>2015-10-31</time><a href="/posts/2015-10-31-coffeescript-screencasts.html">CoffeeScript screencasts</a><small>Overflowing backend technoligies in the frontend</small></li>
+      <li><time>2015-08-05</time><a href="/posts/2015-08-05-clojure-screencasts.html">Clojure screencasts</a><small>what gets measured, gets managed</small></li>
+      <li><time>2012-07-03</time><a href="/posts/2012-07-03-adam-curtis-all-watched-over-by-machines-of-loving-grace.html">An alternative view on the foundations of our society</a><small>All watched over by machines of loving grace</small></li>
+      <li><time>2012-06-13</time><a href="/posts/2012-06-13-ruby-exceptions-benchmark.html">Ruby exception handling benchmark</a><small>Getting into the nitty gritty details</small></li>
+      <li><time>2012-02-10</time><a href="/posts/2012-02-10-ruby-org-mode-parser-development-log.html">Ruby org-mode parser development log</a><small>Development log</small></li>
+      <li><time>2012-01-29</time><a href="/posts/2012-01-29-software-architecture.html">Software architecture</a><small>Elements of software architecture</small></li>
+      <li><time>2011-09-07</time><a href="/posts/2011-09-07-kinetic-typography.html">Kinetic Typography</a><small>How movement conveys emotion</small></li>
+      <li><time>2011-02-20</time><a href="/posts/2011-02-20-rails-experiences.html">Rails experiences</a><small>Reasons why rails development seems so productive</small></li>
+      <li><time>2010-06-15</time><a href="/posts/2010-06-15-clocks-portmortem.html">Clocks webdsl postmortem</a><small>Designing a webdsl in clojure</small></li>
+      <li><time>2010-05-24</time><a href="/posts/2010-05-24-webapps-haskell-loli-hack.html">Hack, Loli, the rake/webpy for Haskell?</a><small>A minimalistic DSL to webapps in Haskell</small></li>
+      <li><time>2010-05-20</time><a href="/posts/2010-05-20-currying-in-scheme.html">Currying in scheme</a><small>define-syntax beauty</small></li>
+      <li><time>2010-05-15</time><a href="/posts/2010-05-15-web-apps-in-plt-scheme.html">Web-apps with PLT-Scheme, snoozing while dispatching?</a><small>Web apps in scheme, too good to be true?</small></li>
+      <li><time>2010-05-14</time><a href="/posts/2010-05-14-scheme-call-with-current-continuation.html">Ying Yang call/cc or the call-with-current-continuation puzzle</a><small>interesting scheme paradigm</small></li>
+      <li><time>2010-05-11</time><a href="/posts/2010-05-11-opengl-plt-scheme-programming.html">Live coding OpenGl in PLT-Scheme</a><small>Evolutionary coding in scheme</small></li>
+      <li><time>2010-05-04</time><a href="/posts/2010-05-04-html5-canvas-element.html">Playing around with the HTML5 Canvas element</a><small>What is the fuzz all about</small></li>
+      <li><time>2010-02-17</time><a href="/posts/2010-02-17-procedural-generation.html">Procedural Generation, a way to go?</a><small>The art of generating content procedurally</small></li>
+      <li><time>2010-02-09</time><a href="/posts/2010-02-09-a-haskel-blog.html">Hakyll blog setup</a><small>Setting up a maintainable blog using haskell</small></li>
+    </ol>
+    </div>
+    <div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div>
+  </section>
+  <div class="cols">
+    <div class="stack">
+      <section class="pane list" id="work" tabindex="0" aria-label="work">
+        <div class="bt"><span>┌─</span><span class="tt">work</span><span>─</span><span class="meta"> eight projects, concept, design and code </span><span class="ln"></span><span>┐</span></div>
+        <div class="bl"></div><div class="br"></div>
+        <div class="in">
+        <ol class="work">
+      <li><span class="n">01</span><a href="/portfolio/07_stockers.html">Stockers</a><small>EduConcepts</small></li>
+      <li><span class="n">02</span><a href="/portfolio/06_keygamesnetwork.html">Keygamesnetwork</a><small>Spele.nl, I-Med</small></li>
+      <li><span class="n">03</span><a href="/portfolio/05_gamebattle.html">Gamebattle</a><small>AD, Spele.nl, WNF</small></li>
+      <li><span class="n">04</span><a href="/portfolio/04_transferspel.html">Transferspel</a><small>De Telegraaf</small></li>
+      <li><span class="n">05</span><a href="/portfolio/03_nvq.html">Nationale Voetbal Quiz</a><small>Voetbal International</small></li>
+      <li><span class="n">06</span><a href="/portfolio/02_hitmasterv20.html">Hitmaster v2.0</a><small>Coca-Cola®, Radio538 and Hitkrant</small></li>
+      <li><span class="n">07</span><a href="/portfolio/01_hitmasterv10.html">Hitmaster v1.0</a><small>Coca-Cola®</small></li>
+      <li><span class="n">08</span><a href="/portfolio/00_freelance.html">Freelance projects</a><small>various employers</small></li>
+        </ol>
         </div>
-        <!-- /header -->
-        <div id='content' role='maincontent'>
-          <h2>Latest Posts</h2>
-<p>
-  Some light reading for those who are interested in technoligy / psychology / documentaries / social dynamics / philosophy / visualisation or anything not mentioned which could be interesting also ...
-</p>
-<ul>
-  <li>
-    <span>2015-10-31</span>
-    <a href='/posts/2015-10-31-coffeescript-screencasts.html'>CoffeeScript screencasts</a>
-    <a class='soft' href='/posts/2015-10-31-coffeescript-screencasts.html#disqus_thread'>Comments..</a>
-    <br />
-    Overflowing backend technoligies in the frontend
-  </li>
-  <li>
-    <span>2015-08-05</span>
-    <a href='/posts/2015-08-05-clojure-screencasts.html'>Clojure screencasts</a>
-    <a class='soft' href='/posts/2015-08-05-clojure-screencasts.html#disqus_thread'>Comments..</a>
-    <br />
-    what gets measured, gets managed
-  </li>
-  <li>
-    <span>2012-07-03</span>
-    <a href='/posts/2012-07-03-adam-curtis-all-watched-over-by-machines-of-loving-grace.html'>An alternative view on the foundations of our society</a>
-    <a class='soft' href='/posts/2012-07-03-adam-curtis-all-watched-over-by-machines-of-loving-grace.html#disqus_thread'>Comments..</a>
-    <br />
-    All watched over by machines of loving grace
-  </li>
-</ul>
-<a href='/posts.html'>Or take a look at my 14 other posts ...</a>
-<h2>Meta</h2>
-<img class='avatar' src='/images/profile-picture-small.jpg' />
-<p>
-  Welcome to my simple blog, my name is Boy (m4nic) Maas, I am an entrepeneur,
-  programmer, designer, philosopher, concept designer, AI enthousiast, vim,
-  chess, martial arts and music lover who is currently running around in the
-  Netherlands.
-  Programming languages I really digg are:
-  <strong>haskell, scheme, ruby, python, clojure, perl, lisp, C/C++, assembler.</strong>
-</p>
-<p>
-  I own a small Dutch development studio located in Den Haag, founded in March 1998 with the continuing
-  goal of creating innovative, exciting network-based concepts. Since 1999, we have completed projects for almost a dozen
-  clients such as popular brands like
-  <strong>Voetbal International</strong>,
-  <strong>Coca-Cola</strong>,
-  <strong>Sponsorloterij</strong>;
-  media groups like Dutch newspaper venture
-  <strong>
-    De
-    Telegraaf
-  </strong>;
-  and telecommunications operator
-  <strong>Telfort BV</strong>
-  (when it still belonged to British Telecom).
-</p>
-<p>
-  Take
-  <a href='work.html'>a look</a>
-  at an overview of some of the projects I have completed,
-  read (some or all of) my posts, or check (some or all of) my code at github to learn more about "moi" and what
-  keeps me busy.
-  Feel free to contact me at boy.maas (at) gmail.com in regards of this blog or
-  anything else except ofcourse spam.
-</p>
-<blockquote>
-  The most obvious common ‘personality’ characteristics of
-  hackers are high intelligence, consuming curiosity, and facility
-  with intellectual abstractions. Also, most hackers are ‘neophiles’,
-  stimulated by and appreciative of novelty (especially intellectual
-  novelty). Most are also relatively individualistic and
-  anti-conformist.
-  <br>
-    <strong>Eric S. Raymond, The Jargon File</strong>
-  </br>
-</blockquote>
-          <hr style='clear: both;width: 100%;height: 0px;' />
+        <div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div>
+      </section>
+      <section class="pane list" id="mail" tabindex="0" aria-label="mail">
+        <div class="bt"><span>┌─</span><span class="tt">mail</span><span>─</span><span class="meta"> contact </span><span class="ln"></span><span>┐</span></div>
+        <div class="bl"></div><div class="br"></div>
+        <div class="in">
+        <ol class="mail">
+          <li><span>boy.maas (at) gmail.com</span></li>
+          <li><a href="https://github.com/boymaas">github.com/boymaas</a></li>
+        </ol>
         </div>
-        <!-- /content -->
-        <div id='footer' role='contentinfo'>
-          <p class='col'>
-            © Copyright 2010-2011 Boy Maas
-            // Powered by
-            <a href='https://www.github.com/boymaas/Hobber'>boymaas/Hobber</a>
-          </p>
-        </div>
-        <!-- /footer -->
-        <!-- /page -->
+        <div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div>
+      </section>
+    </div>
+    <section class="pane" id="bio" tabindex="0" aria-label="bio">
+      <div class="bt"><span>┌─</span><span class="tt">bio</span><span>─</span><span class="meta"> Den Haag </span><span class="ln"></span><span>┐</span></div>
+      <div class="bl"></div><div class="br"></div>
+      <div class="in bio">
+        <p>Boy Maas, m4nic on the boards. Entrepreneur, programmer, designer, philosopher and AI enthusiast. Vim, chess, martial arts and music fill the hours between.</p>
+        <p>Languages, in order of affection: haskell, scheme, ruby, python, clojure, perl, lisp, C/C++, assembler.</p>
+        <p>Loves: complex dynamic systems, asynchronous agents, science, magic, mystery, colour, sculpture, rain, food, exercise, human behaviour, crypto, hermetism, meditation, hypnosis.</p>
+        <p>I run a small development studio in Den Haag, founded in March 1998. Clients include Voetbal International, Coca-Cola, Sponsorloterij, De Telegraaf and Telfort BV.</p>
       </div>
-      <a href='https://github.com/boymaas'>
-        <img alt='Fork me on GitHub' src='https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png' style='position: absolute; top: 0; right: 0; border: 0;' />
-      </a>
-      <script src='/assets/lib.js'></script>
-      <script type='text/javascript'>
-        //<![CDATA[
-          var _gaq = [['_setAccount', 'UA-561813-3'], ['_trackPageview']];
-          (function(d, t) {
-              var g = d.createElement(t),
-                  s = d.getElementsByTagName(t)[0];
-              g.async = true;
-              g.src = '//www.google-analytics.com/ga.js';
-              s.parentNode.insertBefore(g, s);
-          })(document, 'script');
-        //]]>
-      </script>
-      <script type='text/javascript'>
-        //<![CDATA[
-          (function() {
-              var links = document.getElementsByTagName('a');
-              var query = '?';
-              for(var i = 0; i < links.length; i++) {
-                  if(links[i].href.indexOf('#disqus_thread') >= 0) {
-                      query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
-                  }
-              }
-              document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/bloyg/get_num_replies.js' + query + '"></' + 'script>');
-          })();
-        //]]>
-      </script>
-    </body>
-  </head>
+      <div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div>
+    </section>
+  </div>
+  <footer class="colophon">
+    <span>Boy Maas, Den Haag. Studio est. March 1998.</span>
+    <span>The logo is a toy: nine systems, drawn at random. Break one, it heals. The sky drifts on its own.</span>
+  </footer>
+
+</main>
+<div class="hints"><div class="wrap">
+  <span class="keys"><b>j/k</b> move  <b>enter</b> open  <b>tab</b> pane  <span class="kb"><b>gg/G</b> ends  <b>esc</b> blur  </span><b>s</b> sound</span>
+  <span class="whisper" id="whisper" hidden>sandbox open: keys 1 to 9 pick a system, space restarts it, type play to close</span>
+  <span class="pos" id="pos"></span>
+</div></div>
+<script src="/assets/toy.js"></script>
+<script src="/assets/sky.js"></script>
+<script src="/assets/tui.js"></script>
+</body>
 </html>
