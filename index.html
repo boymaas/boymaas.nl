@@ -22,35 +22,31 @@
     <a href="#work">work</a>
     <a href="/#bio">bio</a>
     <a href="/#mail">mail</a>
-    <button id="snd" type="button" aria-pressed="false">sound off</button>
   </nav>
+  <button id="snd" type="button" aria-pressed="false">sound off</button>
 </header>
 <main class="wrap stack">
-  <section class="pane" id="m4nic" tabindex="0" aria-label="m4nic">
-    <div class="bt"><span>┌─</span><span class="tt">m4nic</span><span>─</span><span class="meta"> nine systems, drawn at random </span><span class="ln"></span><span>┐</span></div>
-    <div class="bl"></div><div class="br"></div>
-    <div class="in">
-      <div class="box" id="box"><canvas id="hero" aria-label="m4nic, a logo made of cells that physics plays with"></canvas></div>
-    </div>
-    <div class="bb"><span>└</span><span class="bbx">─</span><span> </span><b id="sysname">bouncy balls</b><span> </span><span class="ln"></span><span> </span><span class="dim" id="sysrole">cursor pushes</span><span> </span><span class="bbx">─</span><span>┘</span></div>
-  </section>
-  <section class="pane whoami" id="whoami" tabindex="0" aria-label="whoami">
-    <div class="bt"><span>┌─</span><span class="tt">whoami</span><span class="ln"></span><span>┐</span></div>
-    <div class="bl"></div><div class="br"></div>
-    <div class="in">
+  <div class="hero">
+    <section class="pane" id="m4nic" tabindex="0" aria-label="m4nic">
+      <div class="bt"><span>┌─</span><span class="tt">m4nic</span><span>─</span><span class="meta"> nine systems, drawn at random </span><span class="ln"></span><span>┐</span></div>
+      <div class="bl"></div><div class="br"></div>
+      <div class="in">
+        <div class="box" id="box"><canvas id="hero" aria-label="m4nic, a logo made of cells that physics plays with"></canvas></div>
+      </div>
+      <div class="bb"><span>└─ </span><span id="sysname">bouncy balls</span><span> </span><span class="ln"></span><span>┘</span></div>
+    </section>
+    <div class="whoami" id="whoami">
       <p class="prompt"><span class="ps">$</span> <span class="cmd">whoami</span></p>
       <h1>Entrepreneur, programmer, designer, philosopher.</h1>
       <p class="lede">Terminal generation. Complex dynamic systems, asynchronous agents, and a small development studio in Den Haag since March 1998.</p>
-      <p class="prompt"><span class="ps">$</span> <span class="cursor">█</span></p>
     </div>
-    <div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div>
-  </section>
+  </div>
   <section class="pane list" id="posts" tabindex="0" aria-label="posts">
-    <div class="bt"><span>┌─</span><span class="tt">posts</span><span>─</span><span class="meta"> 17 entries, 2010 to 2015, newest first </span><span class="ln"></span><span>┐</span></div>
+    <div class="bt"><span>┌─</span><span class="tt">posts</span><span>─</span><span class="meta"> 2010 to 2015, newest first </span><span class="ln"></span><span>┐</span></div>
     <div class="bl"></div><div class="br"></div>
     <div class="in">
     <ol class="posts">
-      <li><time>2015-10-31</time><a href="/posts/2015-10-31-coffeescript-screencasts.html">CoffeeScript screencasts</a><small>Overflowing backend technoligies in the frontend</small></li>
+      <li><time>2015-10-31</time><a href="/posts/2015-10-31-coffeescript-screencasts.html">CoffeeScript screencasts</a><small>Overflowing backend technologies in the frontend</small></li>
       <li><time>2015-08-05</time><a href="/posts/2015-08-05-clojure-screencasts.html">Clojure screencasts</a><small>what gets measured, gets managed</small></li>
       <li><time>2012-07-03</time><a href="/posts/2012-07-03-adam-curtis-all-watched-over-by-machines-of-loving-grace.html">An alternative view on the foundations of our society</a><small>All watched over by machines of loving grace</small></li>
       <li><time>2012-06-13</time><a href="/posts/2012-06-13-ruby-exceptions-benchmark.html">Ruby exception handling benchmark</a><small>Getting into the nitty gritty details</small></li>
@@ -72,12 +68,11 @@
     <div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div>
   </section>
   <div class="cols">
-    <div class="stack">
-      <section class="pane list" id="work" tabindex="0" aria-label="work">
-        <div class="bt"><span>┌─</span><span class="tt">work</span><span>─</span><span class="meta"> eight projects, concept, design and code </span><span class="ln"></span><span>┐</span></div>
-        <div class="bl"></div><div class="br"></div>
-        <div class="in">
-        <ol class="work">
+    <section class="pane list" id="work" tabindex="0" aria-label="work">
+      <div class="bt"><span>┌─</span><span class="tt">work</span><span>─</span><span class="meta"> concept, design and code </span><span class="ln"></span><span>┐</span></div>
+      <div class="bl"></div><div class="br"></div>
+      <div class="in">
+      <ol class="work">
       <li><span class="n">01</span><a href="/portfolio/07_stockers.html">Stockers</a><small>EduConcepts</small></li>
       <li><span class="n">02</span><a href="/portfolio/06_keygamesnetwork.html">Keygamesnetwork</a><small>Spele.nl, I-Med</small></li>
       <li><span class="n">03</span><a href="/portfolio/05_gamebattle.html">Gamebattle</a><small>AD, Spele.nl, WNF</small></li>
@@ -86,27 +81,15 @@
       <li><span class="n">06</span><a href="/portfolio/02_hitmasterv20.html">Hitmaster v2.0</a><small>Coca-Cola®, Radio538 and Hitkrant</small></li>
       <li><span class="n">07</span><a href="/portfolio/01_hitmasterv10.html">Hitmaster v1.0</a><small>Coca-Cola®</small></li>
       <li><span class="n">08</span><a href="/portfolio/00_freelance.html">Freelance projects</a><small>various employers</small></li>
-        </ol>
-        </div>
-        <div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div>
-      </section>
-      <section class="pane list" id="mail" tabindex="0" aria-label="mail">
-        <div class="bt"><span>┌─</span><span class="tt">mail</span><span>─</span><span class="meta"> contact </span><span class="ln"></span><span>┐</span></div>
-        <div class="bl"></div><div class="br"></div>
-        <div class="in">
-        <ol class="mail">
-          <li><span>boy.maas (at) gmail.com</span></li>
-          <li><a href="https://github.com/boymaas">github.com/boymaas</a></li>
-        </ol>
-        </div>
-        <div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div>
-      </section>
-    </div>
+      </ol>
+      </div>
+      <div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div>
+    </section>
     <section class="pane" id="bio" tabindex="0" aria-label="bio">
       <div class="bt"><span>┌─</span><span class="tt">bio</span><span>─</span><span class="meta"> Den Haag </span><span class="ln"></span><span>┐</span></div>
       <div class="bl"></div><div class="br"></div>
       <div class="in bio">
-        <p>Boy Maas, m4nic on the boards. Entrepreneur, programmer, designer, philosopher and AI enthusiast. Vim, chess, martial arts and music fill the hours between.</p>
+        <p>Boy Maas, m4nic on the boards. Entrepreneur, programmer, designer, philosopher. Vim, chess, martial arts and music fill the hours between.</p>
         <p>Languages, in order of affection: haskell, scheme, ruby, python, clojure, perl, lisp, C/C++, assembler.</p>
         <p>Loves: complex dynamic systems, asynchronous agents, science, magic, mystery, colour, sculpture, rain, food, exercise, human behaviour, crypto, hermetism, meditation, hypnosis.</p>
         <p>I run a small development studio in Den Haag, founded in March 1998. Clients include Voetbal International, Coca-Cola, Sponsorloterij, De Telegraaf and Telfort BV.</p>
@@ -116,7 +99,7 @@
   </div>
   <footer class="colophon">
     <span>Boy Maas, Den Haag. Studio est. March 1998.</span>
-    <span>The logo is a toy: nine systems, drawn at random. Break one, it heals. The sky drifts on its own.</span>
+    <span id="mail">boy.maas (at) gmail.com  <a href="https://github.com/boymaas">github.com/boymaas</a></span>
   </footer>
 
 </main>

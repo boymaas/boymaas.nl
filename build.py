@@ -3,7 +3,8 @@
 
 Reads content/posts/*.html and content/work/*.html (YAML-ish front matter, then an HTML body fragment),
 typesets each into the TUI shell in templates/, and writes the site to the repository root:
-index.html, posts.html, work.html, posts/<slug>.html, portfolio/<slug>.html and feed.xml.
+index.html, posts.html, work.html, posts/<slug>.html, portfolio/<slug>.html, feed.xml and feed/index.html
+(a redirect that keeps the old /feed address working).
 Then checks every href and src that points inside the site and exits non-zero if one is broken.
 Standard library only; the output is a pure function of the inputs, so running it twice changes nothing.
 """
@@ -16,18 +17,12 @@ import urllib.parse
 ROOT = os.path.dirname(os.path.abspath(__file__))
 SITE = 'https://boymaas.nl'
 NAME = 'Boy Maas (m4nic)'
-WORDS = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten',
-         'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen', 'twenty']
 
 KEYS = {
     'home': '<b>j/k</b> move  <b>enter</b> open  <b>tab</b> pane  <span class="kb"><b>gg/G</b> ends  <b>esc</b> blur  </span><b>s</b> sound',
     'list': '<b>j/k</b> move  <b>enter</b> open  <span class="kb"><b>gg/G</b> ends  <b>esc</b> blur  </span><b>s</b> sound',
     'article': '<b>j/k</b> scroll  <b>h/l</b> prev/next  <b>q</b> back  <span class="kb"><b>gg/G</b> ends  <b>s</b> sound</span>',
 }
-
-# Links the content has carried since the old site, to pages that were never in this repository.
-# They are reported as warnings, not failures, until the content is corrected.
-KNOWN_DEAD = {'../archive/hitmasterv1_0_review.html'}
 
 SUB_TOP = '<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><div class="bl"></div><div class="br"></div>'
 SUB_BOTTOM = '<div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>'
@@ -167,13 +162,13 @@ def work_row(k, w, summary=False):
 
 
 def posts_meta(posts):
+    """The pane's caption; the count is on the hint line (posts 1/17), so it is not repeated here."""
     years = sorted({p['date'][:4] for p in posts})
-    return '%d entries, %s to %s, newest first' % (len(posts), years[0], years[-1])
+    return '%s to %s, newest first' % (years[0], years[-1])
 
 
 def work_meta(works):
-    n = len(works)
-    return '%s projects, concept, design and code' % (WORDS[n] if n < len(WORDS) else n)
+    return 'concept, design and code'
 
 
 # ---------- pages ----------
@@ -193,14 +188,12 @@ def article(kind, items, k):
     back = '/posts.html' if is_post else '/work.html'
     if is_post:
         sub = '<time>%s</time>%s' % (it['date'], esc(it['subtitle']))
-        meta = 'entry %d of %d' % (k + 1, len(items))
         description = it['subtitle']
     else:
         sub = esc(it['client'])
-        meta = 'project %d of %d' % (k + 1, len(items))
         description = it['summary']
     main = render('article', id='posts' if is_post else 'work', kind='posts' if is_post else 'work', slug=it['slug'],
-                  meta=meta, title=esc(it['title']), sub=sub,
+                  title=esc(it['title']), sub=sub,
                   body=typeset(it['body'], None if is_post else it['title']),
                   prev=nav_link(prev, folder), next=nav_link(nxt, folder), back=back, back_label='posts' if is_post else 'work')
     attrs = ' data-back="%s" data-pos="%s %d/%d"' % (back, 'posts' if is_post else 'work', k + 1, len(items))
@@ -210,6 +203,21 @@ def article(kind, items, k):
         attrs += ' data-next="/%s/%s.html"' % (folder, nxt['slug'])
     return page('article', '%s - %s' % (it['title'], NAME), main, KEYS['article'], description=description,
                 page_id='posts' if is_post else 'work', body_attrs=attrs)
+
+
+# The old site served its feed at /feed; that address now redirects to feed.xml.
+FEED_REDIRECT = '\n'.join([
+    '<!doctype html>',
+    '<html lang="en">',
+    '<head>',
+    '<meta charset="utf-8">',
+    '<meta http-equiv="refresh" content="0; url=/feed.xml">',
+    '<link rel="canonical" href="%s/feed.xml">' % SITE,
+    '<title>feed - %s</title>' % html.escape(NAME),
+    '</head>',
+    '<body><p>The feed has moved to <a href="/feed.xml">/feed.xml</a>.</p></body>',
+    '</html>',
+    ''])
 
 
 def feed(posts):
@@ -268,6 +276,7 @@ def build():
     for k in range(len(works)):
         out['portfolio/%s.html' % works[k]['slug']] = article('work', works, k)
     out['feed.xml'] = feed(posts)
+    out['feed/index.html'] = FEED_REDIRECT
 
     for rel, text in out.items():
         write(os.path.join(ROOT, rel), text)
@@ -277,7 +286,7 @@ def build():
 # ---------- the link check ----------
 
 def check(files):
-    broken, warned = [], []
+    broken = []
     ids = {}
     for rel in files:
         ids[rel] = set(re.findall(r'\bid=["\']([^"\']+)["\']', read(os.path.join(ROOT, rel))))
@@ -297,18 +306,16 @@ def check(files):
                 target = os.path.join(target, 'index.html')
                 full = os.path.join(ROOT, target)
             if not os.path.isfile(full):
-                (warned if url in KNOWN_DEAD else broken).append('%s: %s (no file %s)' % (rel, url, target))
+                broken.append('%s: %s (no file %s)' % (rel, url, target))
             elif frag and target in ids and frag not in ids[target]:
                 broken.append('%s: %s (no id "%s" in %s)' % (rel, url, frag, target))
-    return broken, warned
+    return broken
 
 
 if __name__ == '__main__':
     files = build()
     print('wrote %d files' % len(files))
-    problems, warnings = check(files)
-    for line in warnings:
-        print('known dead link in content: ' + line)
+    problems = check(files)
     for line in problems:
         print('broken link: ' + line)
     sys.exit(1 if problems else 0)

@@ -1,5 +1,8 @@
-/* boymaas.nl: the logo toy, nine systems drawn at random. Behaviour identical to atelier variant 18.
-   Loaded on the home page only, before sky.js: the sky calls Toy(api) once and steps and paints it on its clock. */
+/* boymaas.nl: the logo toy, nine systems drawn at random. Physics that of atelier variant 18.
+   Loaded on the home page only, before sky.js: the sky calls Toy(api) once and steps and paints it on its clock.
+   Every cell is a square on the sky's pixel grid (one or two sky cells wide), and its colour comes from what it
+   is doing: speed warms it from white through amber to coral, distance from home cools it through violet to cobalt,
+   and at rest every cell is white, so the wordmark reads as one thing. */
 window.Toy = function (Sky) {
 'use strict';
 var P = Sky.P, mix = Sky.mix, mixQ = Sky.mixQ, DT = Sky.DT;
@@ -23,15 +26,30 @@ var LOGO = [];
   }
 })();
 var LW = 58, LH = 14;
-var ROWCOL = [P.coral, P.coral, P.star, P.star, P.coral, mix(P.coral, P.amber, 0.5), P.amber,
-              P.cobalt, P.cobalt, mix(P.cobalt, P.teal, 0.5), P.teal, P.star, P.amber, mix(P.amber, P.star, 0.35)];
+/* ---------- colour from behaviour: two ramps out of white, quantised to the palette ---------- */
+var WARM = [P.star, mix(P.star, P.amber, 0.5), P.amber, mix(P.amber, P.coral, 0.5), P.coral, P.magenta];
+var COOL = [P.star, mix(P.star, P.violet, 0.5), P.violet, mix(P.violet, P.cobalt, 0.5), P.cobalt, P.teal];
+function ramp(R, v){ return R[Math.min(R.length - 1, Math.round(v * (R.length - 1)))]; }
+function tint(c){ return c.h > 0.12 ? ramp(WARM, c.h) : c.cl > 0.12 ? ramp(COOL, c.cl) : P.star; }
+/* after every step: heat follows speed (and a system's own excitement, c.k) at once and cools slowly;
+   chill follows distance from home */
+function temper(dt){
+  for (var i = 0; i < cells.length; i++){ var c = cells[i];
+    var sp = Math.sqrt(c.vx*c.vx + c.vy*c.vy), warm = Math.max(Math.min(1, sp / 30), c.k);
+    c.h = warm > c.h ? c.h + (warm - c.h) * 0.35 : Math.max(0, c.h - dt * 0.8);
+    var dx = c.x - c.hx, dy = c.y - c.hy, cool = Math.min(1, Math.sqrt(dx*dx + dy*dy) / 10);
+    c.cl += (cool - c.cl) * 0.2;
+  }
+}
 /* ---------- world ---------- */
 var box = document.getElementById('box'), cvs = document.getElementById('hero'), ctx = cvs.getContext('2d');
 var cellPx = 12, W = 0, H = 0, OX = 0, OY = 0, S = 1, dpr = 1;
 var cells = [], logoAt = null;
+/* a toy cell is one or two sky cells, never anything else: the wordmark, the stars and the dither share a grid */
+function cellFor(bw){ var ch = Sky.cell(window.innerWidth); return ch * Math.max(1, Math.min(2, Math.floor(bw / (62 * ch)))); }
 function layout(){
   var bw = box.clientWidth, bh = box.clientHeight;
-  cellPx = Math.max(5, Math.min(12, Math.floor(bw / 62)));
+  cellPx = cellFor(bw);
   W = Math.floor(bw / cellPx); H = Math.floor(bh / cellPx);
   OX = Math.floor((W - LW) / 2); OY = Math.floor((H - LH) / 2);
   dpr = Math.min(2, window.devicePixelRatio || 1);
@@ -39,7 +57,7 @@ function layout(){
   cvs.width = Math.round(W * cellPx * dpr); cvs.height = Math.round(H * cellPx * dpr);
   S = cellPx * dpr;
   cells = LOGO.map(function(l, i){
-    return { i:i, hx:OX + l.gx, hy:OY + l.gy, x:OX + l.gx, y:OY + l.gy, vx:0, vy:0, col:ROWCOL[l.gy], letter:l.letter, r:0, a:1, k:0 };
+    return { i:i, hx:OX + l.gx, hy:OY + l.gy, x:OX + l.gx, y:OY + l.gy, vx:0, vy:0, letter:l.letter, a:1, k:0, h:0, cl:0 };
   });
   logoAt = new Int16Array(W * H).fill(-1);
   cells.forEach(function(c){ logoAt[c.hy * W + c.hx] = c.i; });
@@ -109,27 +127,28 @@ function sound(kind, idx){
   else if (kind === 'pop') tone('sine', 700, 250, 0.07, 0.04);
   else if (kind === 'pluck') tone('triangle', 330, 300, 0.14, 0.06);
 }
-/* ---------- drawing helpers (world units; 1 = one cell) ---------- */
-function drawCell(c, col){
-  ctx.fillStyle = col;
-  if (c.r > 0.02){
-    var r = Math.min(0.5, c.r);
-    ctx.beginPath();
-    if (r >= 0.48) ctx.arc(c.x + 0.5, c.y + 0.5, 0.5, 0, 6.2832);
-    else ctx.roundRect(c.x, c.y, 1, 1, r);
-    ctx.fill();
-  } else ctx.fillRect(c.x, c.y, 1, 1);
+/* ---------- drawing helpers (world units; 1 = one cell; every mark is a square on the grid) ---------- */
+function square(x, y, col){ ctx.fillStyle = col; ctx.fillRect(x, y, 1, 1); }
+function hollow(x, y, size, col){
+  /* a hollow square: a square with its middle cleared, walls a quarter cell thick */
+  ctx.fillStyle = col; ctx.fillRect(x, y, size, size);
+  ctx.clearRect(x + 0.25, y + 0.25, size - 0.5, size - 0.5);
 }
-function drawCells(hot){
-  for (var i = 0; i < cells.length; i++){ var c = cells[i]; if (c.a <= 0) continue; drawCell(c, c.k > 0 ? mixQ(c.col, hot, c.k) : c.col); }
+function drawCell(c){ square(c.x, c.y, tint(c)); }
+function drawCells(){ for (var i = 0; i < cells.length; i++){ if (cells[i].a > 0) drawCell(cells[i]); } }
+/* a moving cell leaves squares behind it, one per cell of speed, fading */
+function trail(c, col, n){
+  var sp = Math.sqrt(c.vx*c.vx + c.vy*c.vy); if (sp < 2) return;
+  var ux = c.vx / sp, uy = c.vy / sp, L = Math.min(n, Math.floor(sp * 0.1));
+  for (var k = 1; k <= L; k++) square(c.x - ux * k, c.y - uy * k, mixQ(col, P.ground, 0.35 + 0.2 * k));
 }
 /* ================= the system library ================= */
 var systems = [];
 /* 1. bouncy balls: gravity, restitution, ball-ball collisions, then springs. cursor pushes */
-systems.push({ name:'bouncy balls', role:'cursor pushes', hot:P.star, max:13,
+systems.push({ name:'bouncy balls', role:'cursor pushes', max:13,
   init:function(){
     this.t = 0; this.T1 = 4.2 + rng() * 1.6;
-    cells.forEach(function(c){ c.rel = rng() * 0.9; c.e = 0.5 + rng() * 0.3; c.vx = 0; c.vy = 0; c.r = 0.5; c.free = false; });
+    cells.forEach(function(c){ c.rel = rng() * 0.9; c.e = 0.5 + rng() * 0.3; c.vx = 0; c.vy = 0; c.free = false; });
     this.order = cells.slice();
   },
   step:function(dt){
@@ -159,20 +178,20 @@ systems.push({ name:'bouncy balls', role:'cursor pushes', hot:P.star, max:13,
     } else {
       for (i = 0; i < cells.length; i++){ c = cells[i];
         homeSpring(c, 28, 0.9, dt); repel(c, 6, 260, dt);
-        c.r = Math.max(0, c.r - dt * 0.35); c.k = Math.max(0, c.k - dt);
+        c.k = Math.max(0, c.k - dt);
       }
     }
   },
   done:function(){ return this.t > this.T1 + 1 && allHome(0.03); }
 });
 /* 2. magnet: a ghost magnet on a Lissajous path attracts, flips, repels. cursor is the magnet, press to repel */
-systems.push({ name:'magnet', role:'cursor attracts, press repels', hot:P.star, max:14,
+systems.push({ name:'magnet', role:'cursor attracts, press repels', max:14,
   init:function(){
     this.t = 0; this.T1 = 6 + rng() * 2;
     this.a = 0.9 + rng() * 1.6; this.b = 0.9 + rng() * 1.6; this.ph = rng() * 6.28;
     this.pol = 1; this.flipT = 1.1 + rng() * 0.9; this.nextFlip = this.flipT; this.flips = 0;
     this.mx = 0; this.my = 0; this.on = 0;
-    cells.forEach(function(c){ c.vx = 0; c.vy = 0; c.r = 0.25; });
+    cells.forEach(function(c){ c.vx = 0; c.vy = 0; });
   },
   step:function(dt){
     this.t += dt; var t = this.t, pol = this.pol;
@@ -197,21 +216,19 @@ systems.push({ name:'magnet', role:'cursor attracts, press repels', hot:P.star, 
     }
   },
   draw:function(){
-    drawCells(this.hot);
-    if (this.on && this.ghost){
-      ctx.strokeStyle = P.star; ctx.lineWidth = 1.5 / cellPx; ctx.beginPath();
-      ctx.arc(this.mx, this.my, this.pol > 0 ? 0.9 : 1.4, 0, 6.2832); ctx.stroke();
-    }
+    drawCells();
+    /* the ghost magnet: a hollow square, two cells when it pulls, three when it pushes */
+    if (this.on && this.ghost){ var s = this.pol > 0 ? 2 : 3; hollow(Math.round(this.mx - s / 2), Math.round(this.my - s / 2), s, P.star); }
   },
   done:function(){ return this.t > this.T1 + 0.5 && !cursor.inside && allHome(0.03); }
 });
 /* 3. sand: falling-sand automaton drains the letters, then they refill bottom-up. cursor digs */
-systems.push({ name:'sand', role:'cursor digs', hot:P.star, max:17,
+systems.push({ name:'sand', role:'cursor digs', max:17,
   init:function(){
     snapHome();
     this.t = 0; this.acc = 0; this.T1 = 5.2 + rng() * 1.2;
     var g = this.grid = new Int16Array(W * H).fill(-1);
-    cells.forEach(function(c){ c.gx = c.hx; c.gy = c.hy; g[c.gy * W + c.gx] = c.i; c.mode = 0; c.rel = rng() * 3.2; c.r = 0; c.vx = 0; c.vy = 0; });
+    cells.forEach(function(c){ c.gx = c.hx; c.gy = c.hy; g[c.gy * W + c.gx] = c.i; c.mode = 0; c.rel = rng() * 3.2; c.vx = 0; c.vy = 0; });
     var order = cells.slice().sort(function(a, b){ return (b.hy - a.hy) + (rng() - 0.5) * 1.5; });
     var T1 = this.T1, n = order.length;
     order.forEach(function(c, k){ c.ret = T1 + k * (2.4 / n); });
@@ -274,24 +291,28 @@ systems.push({ name:'sand', role:'cursor digs', hot:P.star, max:17,
   },
   done:function(){ return this.t > this.T1 + 3 && allHome(0.03); }
 });
-/* 4. life: Conway on the whole box seeded by the logo, then error-corrected back. cursor paints */
-systems.push({ name:'life', role:'cursor paints', hot:P.teal, max:16,
+/* 4. life: Conway on the whole box seeded by the logo, then error-corrected back. cursor paints.
+   colour is age: a cell is born amber and cools through coral, violet and cobalt to white as it survives */
+var AGE = [P.amber, P.coral, P.magenta, P.violet, P.cobalt, P.teal, P.star], OLD = AGE.length - 1;
+systems.push({ name:'life', role:'cursor paints', max:16,
   init:function(){
     snapHome();
     var g = this.g = new Uint8Array(W * H); this.g2 = new Uint8Array(W * H);
-    this.born = new Uint8Array(W * H); this.flash = new Float32Array(W * H);
+    this.age = new Uint8Array(W * H); this.flash = new Float32Array(W * H);
     cells.forEach(function(c){ g[c.hy * W + c.hx] = 1; });
+    this.age.fill(OLD);
     this.gens = 0; this.G = 8 + Math.floor(rng() * 10); this.t = 0; this.acc = 0; this.phase = 0; this.list = []; this.rescan = 0;
     cells.forEach(function(c){ c.a = 0; });
   },
   gen:function(){
-    var g = this.g, n = this.g2, born = this.born;
+    var g = this.g, n = this.g2, age = this.age;
     for (var y = 0; y < H; y++) for (var x = 0; x < W; x++){
       var s = 0;
       for (var dy = -1; dy <= 1; dy++){ var yy = y + dy; if (yy < 0 || yy >= H) continue;
         for (var dx = -1; dx <= 1; dx++){ if (!dx && !dy) continue; var xx = x + dx; if (xx < 0 || xx >= W) continue; s += g[yy * W + xx]; } }
       var i = y * W + x, alive = g[i] ? (s === 2 || s === 3) : s === 3;
-      n[i] = alive ? 1 : 0; born[i] = (alive && !g[i]) ? 1 : 0;
+      n[i] = alive ? 1 : 0;
+      age[i] = alive ? (g[i] ? Math.min(OLD, age[i] + 1) : 0) : 0;
     }
     this.g = n; this.g2 = g;
   },
@@ -302,12 +323,12 @@ systems.push({ name:'life', role:'cursor paints', hot:P.teal, max:16,
     return out;
   },
   step:function(dt){
-    this.t += dt; this.acc += dt; var g = this.g, i;
+    this.t += dt; this.acc += dt; var g = this.g, age = this.age, i;
     if (cursor.inside && cursor.moved){
       var cx = Math.round(cursor.x), cy = Math.round(cursor.y);
       for (var dy = -1; dy <= 1; dy++) for (var dx = -1; dx <= 1; dx++){
         var x = cx + dx, y = cy + dy; if (x < 0 || y < 0 || x >= W || y >= H) continue;
-        if ((!dx && !dy) || rng() < 0.4){ i = y * W + x; if (!g[i]){ g[i] = 1; this.born[i] = 1; } }
+        if ((!dx && !dy) || rng() < 0.4){ i = y * W + x; if (!g[i]){ g[i] = 1; age[i] = 0; } }
       }
     }
     for (i = 0; i < W * H; i++) if (this.flash[i] > 0) this.flash[i] -= dt * 4;
@@ -316,46 +337,45 @@ systems.push({ name:'life', role:'cursor paints', hot:P.teal, max:16,
     } else {
       g = this.g;
       for (var k = 0; k < this.per && this.list.length; k++){
-        i = this.list.pop(); g[i] = logoAt[i] >= 0 ? 1 : 0; this.flash[i] = 1; this.born[i] = 0;
+        i = this.list.pop(); g[i] = logoAt[i] >= 0 ? 1 : 0; this.flash[i] = 1; age[i] = 0;
       }
+      /* the corrected picture keeps ageing, so the mended letters settle to white */
+      if (this.acc > 0.11){ this.acc -= 0.11; for (i = 0; i < W * H; i++) if (g[i] && age[i] < OLD) age[i]++; }
       this.rescan += dt;
       if (!this.list.length && this.rescan > 0.25){ this.rescan = 0; this.list = this.diffs(); }
     }
   },
   draw:function(){
-    var g = this.g, born = this.born, fl = this.flash;
+    var g = this.g, age = this.age, fl = this.flash;
     for (var y = 0; y < H; y++) for (var x = 0; x < W; x++){ var i = y * W + x;
-      if (!g[i]){ if (fl[i] > 0){ ctx.fillStyle = mixQ(P.ground, P.coral, fl[i] * 0.6); ctx.fillRect(x, y, 1, 1); } continue; }
-      var li = logoAt[i], col;
-      if (li >= 0) col = fl[i] > 0 ? mixQ(cells[li].col, P.coral, fl[i]) : cells[li].col;
-      else col = born[i] ? P.amber : P.teal;
-      ctx.fillStyle = col; ctx.fillRect(x, y, 1, 1);
+      if (!g[i]){ if (fl[i] > 0) square(x, y, mixQ(P.ground, P.coral, fl[i] * 0.6)); continue; }
+      square(x, y, fl[i] > 0 ? mixQ(AGE[age[i]], P.star, fl[i]) : AGE[age[i]]);
     }
   },
   done:function(){
     if (this.phase !== 1 || this.list.length) return false;
-    var g = this.g; for (var i = 0; i < W * H; i++) if ((g[i] === 1) !== (logoAt[i] >= 0)) return false;
+    var g = this.g; for (var i = 0; i < W * H; i++) if ((g[i] === 1) !== (logoAt[i] >= 0) || (g[i] && this.age[i] < OLD)) return false;
     for (var k = 0; k < W * H; k++) if (this.flash[k] > 0) return false;
     cells.forEach(function(c){ c.a = 1; }); return true;
   }
 });
 /* 5. bubbles: cells sink, rise back as bubbles, pop into place. cursor pops */
-systems.push({ name:'bubbles', role:'cursor pops', hot:P.star, max:16,
+systems.push({ name:'bubbles', role:'cursor pops', max:16,
   init:function(){
     this.t = 0;
-    cells.forEach(function(c){ c.rel = rng() * 1.6; c.mode = 0; c.wob = rng() * 6.28; c.spd = 7 + rng() * 8; c.r = 0; c.ring = 0; c.vx = 0; c.vy = 0; });
+    cells.forEach(function(c){ c.rel = rng() * 1.6; c.mode = 0; c.wob = rng() * 6.28; c.spd = 7 + rng() * 8; c.ring = 0; c.vx = 0; c.vy = 0; });
   },
-  respawn:function(c){ c.mode = 2; c.y = H + 1 + rng() * 6; c.x = c.hx + (rng() - 0.5) * 12; c.vy = -c.spd; c.r = 0.5; },
+  respawn:function(c){ c.mode = 2; c.y = H + 1 + rng() * 6; c.x = c.hx + (rng() - 0.5) * 12; c.vy = -c.spd; },
   step:function(dt){
     this.t += dt; var t = this.t;
     for (var i = 0; i < cells.length; i++){ var c = cells[i];
       if (c.mode === 0){ if (t > c.rel){ c.mode = 1; c.vy = 0; } }
       else if (c.mode === 1){
-        c.vy += 30 * dt; c.vy *= 0.985; c.y += c.vy * dt; c.x += Math.sin(t * 3 + c.wob) * 0.6 * dt; c.r = Math.min(0.5, c.r + dt * 2);
+        c.vy += 30 * dt; c.vy *= 0.985; c.y += c.vy * dt; c.x += Math.sin(t * 3 + c.wob) * 0.6 * dt;
         if (c.y > H + 1) this.respawn(c);
       } else if (c.mode === 2){
         c.y += c.vy * dt; c.x += (c.hx - c.x) * 1.6 * dt + Math.sin(t * 4 + c.wob) * 1.4 * dt;
-        if (c.y <= c.hy){ c.y = c.hy; c.x = c.hx; c.mode = 3; c.ring = 1; c.r = 0; sound('pop'); }
+        if (c.y <= c.hy){ c.y = c.hy; c.x = c.hx; c.mode = 3; c.ring = 1; sound('pop'); }
         if (cursor.inside){ var dx = c.x - cursor.x, dy = c.y - cursor.y; if (dx*dx + dy*dy < 5 && c.y < H - 1) this.respawn(c); }
       } else {
         c.ring = Math.max(0, c.ring - dt * 2.5);
@@ -365,24 +385,22 @@ systems.push({ name:'bubbles', role:'cursor pops', hot:P.star, max:16,
     }
   },
   draw:function(){
-    var lw = 1.5 / cellPx;
     for (var i = 0; i < cells.length; i++){ var c = cells[i];
-      if (c.mode === 2){
-        ctx.strokeStyle = c.col; ctx.lineWidth = lw; ctx.beginPath(); ctx.arc(c.x + 0.5, c.y + 0.5, 0.42, 0, 6.2832); ctx.stroke();
-        ctx.fillStyle = mixQ(c.col, P.star, 0.6); ctx.fillRect(c.x + 0.6, c.y + 0.22, 0.16, 0.16);
-      } else {
-        drawCell(c, c.mode === 1 ? mixQ(c.col, this.hot, 0.35) : c.col);
-        if (c.ring > 0){ ctx.strokeStyle = mixQ(c.col, P.star, 1 - c.ring); ctx.lineWidth = lw; ctx.beginPath(); ctx.arc(c.x + 0.5, c.y + 0.5, 0.5 + (1 - c.ring) * 1.6, 0, 6.2832); ctx.stroke(); }
+      if (c.mode === 2) hollow(c.x, c.y, 1, tint(c));                       /* a bubble is a hollow cell */
+      else {
+        drawCell(c);
+        /* the pop: a hollow square growing out of the cell and fading, on whole cells */
+        if (c.ring > 0){ var s = 1 + 2 * Math.round((1 - c.ring) * 1.5); hollow(c.x - (s - 1) / 2, c.y - (s - 1) / 2, s, mixQ(P.star, P.ground, 1 - c.ring)); }
       }
     }
   },
   done:function(){ if (this.t < 3) return false; for (var i = 0; i < cells.length; i++){ var c = cells[i]; if (c.mode !== 3 || c.ring > 0) return false; } return true; }
 });
 /* 6. swarm: boids at radius nine, walls, then a home pull. cursor is a predator */
-systems.push({ name:'swarm', role:'cursor scatters', hot:P.violet, max:16,
+systems.push({ name:'swarm', role:'cursor scatters', max:16,
   init:function(){
     this.t = 0; this.T1 = 5 + rng() * 3;
-    cells.forEach(function(c){ var a = rng() * 6.28, s = 8 + rng() * 4; c.vx = Math.cos(a) * s; c.vy = Math.sin(a) * s; c.rel = rng() * 0.7; c.r = 0.2; });
+    cells.forEach(function(c){ var a = rng() * 6.28, s = 8 + rng() * 4; c.vx = Math.cos(a) * s; c.vy = Math.sin(a) * s; c.rel = rng() * 0.7; });
     this.B = 5; this.bw = Math.ceil(W / this.B) + 1; this.bh = Math.ceil(H / this.B) + 1;
     this.buckets = []; for (var i = 0; i < this.bw * this.bh; i++) this.buckets.push([]);
   },
@@ -420,24 +438,19 @@ systems.push({ name:'swarm', role:'cursor scatters', hot:P.violet, max:16,
     }
   },
   draw:function(){
-    for (var i = 0; i < cells.length; i++){ var c = cells[i]; var col = c.k > 0 ? mixQ(c.col, this.hot, c.k) : c.col;
-      if (c.k > 0.2){ var sp = Math.sqrt(c.vx*c.vx + c.vy*c.vy) || 1, ux = c.vx / sp, uy = c.vy / sp;
-        ctx.fillStyle = col; ctx.beginPath(); ctx.moveTo(c.x + 0.5 + ux * 0.7, c.y + 0.5 + uy * 0.7);
-        ctx.lineTo(c.x + 0.5 - ux * 0.5 - uy * 0.45, c.y + 0.5 - uy * 0.5 + ux * 0.45);
-        ctx.lineTo(c.x + 0.5 - ux * 0.5 + uy * 0.45, c.y + 0.5 - uy * 0.5 - ux * 0.45); ctx.fill();
-      } else drawCell(c, col);
-    }
+    /* a flocking cell shows its heading as one dim square behind it */
+    for (var i = 0; i < cells.length; i++){ var c = cells[i], col = tint(c); if (c.k > 0.2) trail(c, col, 1); square(c.x, c.y, col); }
   },
   done:function(){ return this.t > this.T1 + 1.5 && allHome(0.04); }
 });
 /* 7. spring mesh: nodes linked to letter neighbours; plucks ring through. cursor grabs and releases */
-systems.push({ name:'spring mesh', role:'cursor plucks', hot:P.star, max:14,
+systems.push({ name:'spring mesh', role:'cursor plucks', max:14,
   init:function(){
     this.t = 0; var links = this.links = [];
     var at = {}; cells.forEach(function(c){ at[c.hx + ',' + c.hy] = c; });
     cells.forEach(function(c){
       [[1,0],[0,1],[1,1],[-1,1]].forEach(function(d){ var o = at[(c.hx + d[0]) + ',' + (c.hy + d[1])]; if (o) links.push([c, o, Math.sqrt(d[0]*d[0] + d[1]*d[1])]); });
-      c.vx = 0; c.vy = 0; c.r = 0.5;
+      c.vx = 0; c.vy = 0;
     });
     var n = 2 + Math.floor(rng() * 2), tt = 0.3; this.plucks = [];
     for (var k = 0; k < n; k++){ var a = rng() * 6.28; this.plucks.push({ at:tt, c:cells[Math.floor(rng() * cells.length)], dx:Math.cos(a) * (3 + rng() * 3), dy:Math.sin(a) * (3 + rng() * 3), dur:0.35 }); tt += 2.2 + rng() * 1.2; }
@@ -477,12 +490,12 @@ systems.push({ name:'spring mesh', role:'cursor plucks', hot:P.star, max:14,
     var links = this.links;
     for (var i = 0; i < links.length; i++){ var a = links[i][0], b = links[i][1]; ctx.moveTo(a.x + 0.5, a.y + 0.5); ctx.lineTo(b.x + 0.5, b.y + 0.5); }
     ctx.stroke();
-    drawCells(this.hot);
+    drawCells();
   },
   done:function(){ return this.t > this.last + 1 && !this.grab && allHome(0.04); }
 });
 /* 8. fluid: a stable-fluids velocity field stirs the cells as markers; it damps and they drift home. cursor stirs */
-systems.push({ name:'fluid', role:'cursor stirs', hot:P.star, max:14,
+systems.push({ name:'fluid', role:'cursor stirs', max:14,
   init:function(){
     this.t = 0;
     var fw = this.fw = Math.ceil(W / 2), fh = this.fh = Math.ceil(H / 2), n = (fw + 2) * (fh + 2);
@@ -492,7 +505,7 @@ systems.push({ name:'fluid', role:'cursor stirs', hot:P.star, max:14,
       this.stirs.push({ at:tt, x:(OX + 4 + rng() * (LW - 8)) / 2, y:(OY - 2 + rng() * (LH + 4)) / 2, dx:Math.cos(a), dy:Math.sin(a), s:14 + rng() * 12, r:3 + rng() * 2 });
       tt += 0.9 + rng() * 0.8; }
     this.T1 = tt + 3.2;
-    cells.forEach(function(c){ c.vx = 0; c.vy = 0; c.r = 0.5; c.px = c.x; c.py = c.y; });
+    cells.forEach(function(c){ c.vx = 0; c.vy = 0; });
   },
   IX:function(i, j){ return i + (this.fw + 2) * j; },
   bnd:function(b, x){
@@ -551,7 +564,6 @@ systems.push({ name:'fluid', role:'cursor stirs', hot:P.star, max:14,
     for (i = 0; i < n; i++){ u[i] *= damp; v[i] *= damp; }
     var homeK = t < this.T1 ? 1.2 : 40;
     for (i = 0; i < cells.length; i++){ var c = cells[i];
-      c.px = c.x; c.py = c.y;
       var fx = this.sample(u, (c.x + 0.5) / 2, (c.y + 0.5) / 2) * 2, fy = this.sample(v, (c.x + 0.5) / 2, (c.y + 0.5) / 2) * 2;
       c.vx += (fx - c.vx) * 0.5; c.vy += (fy - c.vy) * 0.5;
       c.vx += (c.hx - c.x) * homeK * dt; c.vy += (c.hy - c.y) * homeK * dt;
@@ -561,22 +573,18 @@ systems.push({ name:'fluid', role:'cursor stirs', hot:P.star, max:14,
     }
   },
   draw:function(){
-    ctx.lineWidth = 0.6; ctx.lineCap = 'round';
-    for (var i = 0; i < cells.length; i++){ var c = cells[i]; var col = c.k > 0 ? mixQ(c.col, this.hot, c.k) : c.col;
-      var sp = Math.sqrt(c.vx*c.vx + c.vy*c.vy);
-      if (sp > 2){ var L = Math.min(3, sp * 0.1); ctx.strokeStyle = mixQ(col, P.star, 0.5); ctx.beginPath(); ctx.moveTo(c.x + 0.5, c.y + 0.5); ctx.lineTo(c.x + 0.5 - c.vx / sp * L, c.y + 0.5 - c.vy / sp * L); ctx.stroke(); }
-      drawCell(c, col);
-    }
+    /* a marker in a current trails squares, up to three cells long */
+    for (var i = 0; i < cells.length; i++){ var c = cells[i], col = tint(c); trail(c, col, 3); square(c.x, c.y, col); }
   },
   done:function(){ return this.t > this.T1 + 1 && allHome(0.04); }
 });
 /* 9. crystal: diffusion-limited aggregation from one seed per letter. cursor melts */
-systems.push({ name:'crystal', role:'cursor melts', hot:P.teal, max:18,
+systems.push({ name:'crystal', role:'cursor melts', max:18,
   init:function(){
     snapHome();
     this.t = 0; this.acc = 0; this.stuckAt = new Uint8Array(W * H);
     var byLetter = [[], [], [], [], []];
-    cells.forEach(function(c){ byLetter[c.letter].push(c); c.stuck = 0; c.seed = 0; c.gx = c.hx; c.gy = c.hy; c.rel = rng() * 1.2; c.flash = 0; c.r = 0; c.vx = 0; c.vy = 0; });
+    cells.forEach(function(c){ byLetter[c.letter].push(c); c.stuck = 0; c.seed = 0; c.gx = c.hx; c.gy = c.hy; c.rel = rng() * 1.2; c.flash = 0; c.vx = 0; c.vy = 0; });
     var sa = this.stuckAt;
     byLetter.forEach(function(list){ var c = list[Math.floor(rng() * list.length)]; c.stuck = 1; c.seed = 1; sa[c.hy * W + c.hx] = 1; });
   },
@@ -611,21 +619,26 @@ systems.push({ name:'crystal', role:'cursor melts', hot:P.teal, max:18,
     }
   },
   draw:function(){
+    /* a walker wears its distance from home; a cell that has just stuck flashes teal and settles to white */
     for (var i = 0; i < cells.length; i++){ var c = cells[i];
-      if (c.stuck){ ctx.fillStyle = c.flash > 0 ? mixQ(c.col, P.star, c.flash * 0.7) : c.col; ctx.fillRect(c.x, c.y, 1, 1); }
-      else { ctx.fillStyle = mixQ(P.teal, P.star, 0.25); ctx.fillRect(c.x + 0.25, c.y + 0.25, 0.5, 0.5); }
+      square(c.x, c.y, c.stuck ? (c.flash > 0 ? ramp(COOL, c.flash) : P.star) : tint(c));
     }
   },
   done:function(){ if (this.t < 2) return false; for (var i = 0; i < cells.length; i++) if (!cells[i].stuck || cells[i].flash > 0) return false; return true; }
 });
 /* ================= scheduler ================= */
 var cur = null, curIdx = -1, state = 'run', sysT = 0, holdT = 0, sandbox = false;
-var nameEl = document.getElementById('sysname'), roleEl = document.getElementById('sysrole');
+var pane = document.getElementById('m4nic'), nameEl = document.getElementById('sysname');
+/* the system's name sits faint in the pane's bottom border; its role goes to the hint line while the cursor is in */
+function tell(){
+  pane.setAttribute('data-status', cur.name + ': ' + cur.role);
+  window.dispatchEvent(new Event('tui:status'));
+}
 function start(i){
   curIdx = i; cur = systems[i]; sysT = 0; state = 'run';
-  cells.forEach(function(c){ c.a = 1; c.k = 0; });
+  cells.forEach(function(c){ c.a = 1; c.k = 0; c.h = 0; c.cl = 0; });
   cur.init();
-  nameEl.textContent = cur.name; roleEl.textContent = cur.role;
+  nameEl.textContent = cur.name; tell();
   sound('switch', i);
 }
 function pick(){ var i; do { i = Math.floor(rng() * systems.length); } while (i === curIdx); start(i); }
@@ -637,18 +650,21 @@ function step(){
     else if (sysT > cur.max){ state = 'heal'; holdT = 0; cells.forEach(function(c){ c.a = 1; }); }
   } else if (state === 'heal'){
     holdT += dt;
-    for (i = 0; i < cells.length; i++){ var c = cells[i]; homeSpring(c, 40, 0.86, dt); c.r = Math.max(0, c.r - dt); c.k = Math.max(0, c.k - dt); }
+    for (i = 0; i < cells.length; i++){ var c = cells[i]; homeSpring(c, 40, 0.86, dt); c.k = Math.max(0, c.k - dt); }
     if (allHome(0.03) || holdT > 2.5){ snapHome(); state = 'hold'; holdT = 0; }
   } else {
     holdT += dt;
-    for (i = 0; i < cells.length; i++){ var h = cells[i]; repel(h, 5, 220, dt); homeSpring(h, 40, 0.86, dt); h.r = Math.max(0, h.r - dt); }
+    for (i = 0; i < cells.length; i++){ var h = cells[i]; repel(h, 5, 220, dt); homeSpring(h, 40, 0.86, dt); }
     if (holdT > HOLD) pick();
   }
+  temper(dt);
+  var hot = cursor.inside;
+  if (hot !== pane.classList.contains('hot')){ pane.classList.toggle('hot', hot); window.dispatchEvent(new Event('tui:status')); }
 }
 function paint(){
   ctx.setTransform(S, 0, 0, S, 0, 0);
   ctx.clearRect(0, 0, W, H);
-  if (state === 'run' && cur.draw) cur.draw(); else drawCells(cur.hot);
+  if (state === 'run' && cur.draw) cur.draw(); else drawCells();
 }
 /* ---------- the secret: type play ---------- */
 var typed = '', whisper = document.getElementById('whisper');
@@ -660,7 +676,7 @@ window.addEventListener('keydown', function(e){
 /* ---------- on the sky's clock ---------- */
 var lastW = 0, lastH = 0;
 function relayout(){
-  var bw = box.clientWidth, bh = box.clientHeight, cp = Math.max(5, Math.min(12, Math.floor(bw / 62)));
+  var bw = box.clientWidth, bh = box.clientHeight, cp = cellFor(bw);
   if (Math.floor(bw / cp) === lastW && Math.floor(bh / cp) === lastH) return;
   layout(); lastW = W; lastH = H; start(curIdx); paint();
 }

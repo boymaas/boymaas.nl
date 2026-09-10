@@ -1,22 +1,18 @@
-  <section class="pane" id="m4nic" tabindex="0" aria-label="m4nic">
-    <div class="bt"><span>┌─</span><span class="tt">m4nic</span><span>─</span><span class="meta"> nine systems, drawn at random </span><span class="ln"></span><span>┐</span></div>
-    <div class="bl"></div><div class="br"></div>
-    <div class="in">
-      <div class="box" id="box"><canvas id="hero" aria-label="m4nic, a logo made of cells that physics plays with"></canvas></div>
-    </div>
-    <div class="bb"><span>└</span><span class="bbx">─</span><span> </span><b id="sysname">bouncy balls</b><span> </span><span class="ln"></span><span> </span><span class="dim" id="sysrole">cursor pushes</span><span> </span><span class="bbx">─</span><span>┘</span></div>
-  </section>
-  <section class="pane whoami" id="whoami" tabindex="0" aria-label="whoami">
-    <div class="bt"><span>┌─</span><span class="tt">whoami</span><span class="ln"></span><span>┐</span></div>
-    <div class="bl"></div><div class="br"></div>
-    <div class="in">
+  <div class="hero">
+    <section class="pane" id="m4nic" tabindex="0" aria-label="m4nic">
+      <div class="bt"><span>┌─</span><span class="tt">m4nic</span><span>─</span><span class="meta"> nine systems, drawn at random </span><span class="ln"></span><span>┐</span></div>
+      <div class="bl"></div><div class="br"></div>
+      <div class="in">
+        <div class="box" id="box"><canvas id="hero" aria-label="m4nic, a logo made of cells that physics plays with"></canvas></div>
+      </div>
+      <div class="bb"><span>└─ </span><span id="sysname">bouncy balls</span><span> </span><span class="ln"></span><span>┘</span></div>
+    </section>
+    <div class="whoami" id="whoami">
       <p class="prompt"><span class="ps">$</span> <span class="cmd">whoami</span></p>
       <h1>Entrepreneur, programmer, designer, philosopher.</h1>
       <p class="lede">Terminal generation. Complex dynamic systems, asynchronous agents, and a small development studio in Den Haag since March 1998.</p>
-      <p class="prompt"><span class="ps">$</span> <span class="cursor">█</span></p>
     </div>
-    <div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div>
-  </section>
+  </div>
   <section class="pane list" id="posts" tabindex="0" aria-label="posts">
     <div class="bt"><span>┌─</span><span class="tt">posts</span><span>─</span><span class="meta"> {{posts_meta}} </span><span class="ln"></span><span>┐</span></div>
     <div class="bl"></div><div class="br"></div>
@@ -28,34 +24,21 @@
     <div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div>
   </section>
   <div class="cols">
-    <div class="stack">
-      <section class="pane list" id="work" tabindex="0" aria-label="work">
-        <div class="bt"><span>┌─</span><span class="tt">work</span><span>─</span><span class="meta"> {{work_meta}} </span><span class="ln"></span><span>┐</span></div>
-        <div class="bl"></div><div class="br"></div>
-        <div class="in">
-        <ol class="work">
+    <section class="pane list" id="work" tabindex="0" aria-label="work">
+      <div class="bt"><span>┌─</span><span class="tt">work</span><span>─</span><span class="meta"> {{work_meta}} </span><span class="ln"></span><span>┐</span></div>
+      <div class="bl"></div><div class="br"></div>
+      <div class="in">
+      <ol class="work">
 {{work_rows}}
-        </ol>
-        </div>
-        <div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div>
-      </section>
-      <section class="pane list" id="mail" tabindex="0" aria-label="mail">
-        <div class="bt"><span>┌─</span><span class="tt">mail</span><span>─</span><span class="meta"> contact </span><span class="ln"></span><span>┐</span></div>
-        <div class="bl"></div><div class="br"></div>
-        <div class="in">
-        <ol class="mail">
-          <li><span>boy.maas (at) gmail.com</span></li>
-          <li><a href="https://github.com/boymaas">github.com/boymaas</a></li>
-        </ol>
-        </div>
-        <div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div>
-      </section>
-    </div>
+      </ol>
+      </div>
+      <div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div>
+    </section>
     <section class="pane" id="bio" tabindex="0" aria-label="bio">
       <div class="bt"><span>┌─</span><span class="tt">bio</span><span>─</span><span class="meta"> Den Haag </span><span class="ln"></span><span>┐</span></div>
       <div class="bl"></div><div class="br"></div>
       <div class="in bio">
-        <p>Boy Maas, m4nic on the boards. Entrepreneur, programmer, designer, philosopher and AI enthusiast. Vim, chess, martial arts and music fill the hours between.</p>
+        <p>Boy Maas, m4nic on the boards. Entrepreneur, programmer, designer, philosopher. Vim, chess, martial arts and music fill the hours between.</p>
         <p>Languages, in order of affection: haskell, scheme, ruby, python, clojure, perl, lisp, C/C++, assembler.</p>
         <p>Loves: complex dynamic systems, asynchronous agents, science, magic, mystery, colour, sculpture, rain, food, exercise, human behaviour, crypto, hermetism, meditation, hypnosis.</p>
         <p>I run a small development studio in Den Haag, founded in March 1998. Clients include Voetbal International, Coca-Cola, Sponsorloterij, De Telegraaf and Telfort BV.</p>
@@ -65,5 +48,5 @@
   </div>
   <footer class="colophon">
     <span>Boy Maas, Den Haag. Studio est. March 1998.</span>
-    <span>The logo is a toy: nine systems, drawn at random. Break one, it heals. The sky drifts on its own.</span>
+    <span id="mail">boy.maas (at) gmail.com  <a href="https://github.com/boymaas">github.com/boymaas</a></span>
   </footer>

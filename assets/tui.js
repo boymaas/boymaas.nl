@@ -77,11 +77,15 @@ function setCur(p, k, quiet){
   if (!quiet) rows[k].scrollIntoView({ block:'nearest' });
   status();
 }
+/* the status slot: a pane the mouse is in (the toy, while the cursor plays) speaks first, then the focused pane */
 function status(){
+  var hot = document.querySelector('.pane.hot[data-status]');
+  if (hot){ pos.textContent = hot.getAttribute('data-status'); return; }
   if (focused < 0){ pos.textContent = ''; return; }
   var p = panes[focused], rows = rowsOf(p), k = curOf(p);
-  pos.textContent = rows.length ? p.id + ' ' + (k + 1) + '/' + rows.length : p.id;
+  pos.textContent = rows.length ? p.id + ' ' + (k + 1) + '/' + rows.length : (p.getAttribute('data-status') || p.id);
 }
+window.addEventListener('tui:status', status);
 function focusPane(k, scroll){
   panes.forEach(function(p, j){ p.classList.toggle('focus', j === k); });
   focused = k;

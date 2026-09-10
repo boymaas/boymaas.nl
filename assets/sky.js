@@ -1,6 +1,7 @@
-/* boymaas.nl: the Nebula sky. Behaviour identical to atelier variant 18; the sky owns the fixed 60Hz clock,
-   and the logo toy (toy.js, loaded first on the home page) runs on it, so both replay under ?seed= and ?t=
-   exactly as before. */
+/* boymaas.nl: the Nebula sky. Behaviour that of atelier variant 18; the sky owns the fixed 60Hz clock,
+   and the logo toy (toy.js, loaded first on the home page) runs on it, so both replay under ?seed= and ?t=.
+   Everything is painted into one low-resolution buffer of CH-pixel cells (the dither, the stars, the rete,
+   the sigils) and scaled up without smoothing: one pixel grid, hard edges, no blur. */
 (function () {
 'use strict';
 /* ---------- palette ---------- */
@@ -33,18 +34,23 @@ var DT = 1 / 60;
 /* ---------- the sky: nebula, rete, stars, sigils ---------- */
 var sky = document.getElementById('sky'), sctx = sky.getContext('2d');
 var SW = 0, SH = 0, SD = 1, CH = 6, GW = 0, GH = 0, FW = 0, NEB_V = 2.5;
+function cellSize(w){ return w < 720 ? 5 : 6; }
 var brng = mulberry32((SEED ^ 0x5EB01A) >>> 0);   /* the sky's own stream: the toy's run stays that of variant 12 */
 var bt = 0;
 var DEST = { x:0.76, y:0.26 };
-var RAMP = [P.ground, mix(P.ground, P.violet, 0.10), mix(P.ground, P.violet, 0.20), mix(P.ground, P.cobalt, 0.26),
-            mix(P.ground, P.teal, 0.24), mix(P.ground, P.magenta, 0.26), mix(P.ground, P.amber, 0.24), mix(P.ground, P.star, 0.30)];
+/* the nebula ramp sits well under the text: each colour is greyed towards ash, then mixed faintly into the ground */
+function soft(c, k){ return mix(P.ground, mix(c, P.ash, 0.35), k); }
+var RAMP = [P.ground, soft(P.violet, 0.07), soft(P.violet, 0.13), soft(P.cobalt, 0.17),
+            soft(P.teal, 0.15), soft(P.magenta, 0.16), soft(P.amber, 0.15), soft(P.star, 0.19)];
+function u32(h){ var c = rgb(h); return (255 << 24 | c[2] << 16 | c[1] << 8 | c[0]) >>> 0; }
 var BAYER = [0,32,8,40,2,34,10,42, 48,16,56,24,50,18,58,26, 12,44,4,36,14,46,6,38, 60,28,52,20,62,30,54,22,
              3,35,11,43,1,33,9,41, 51,19,59,27,49,17,57,25, 15,47,7,39,13,45,5,37, 63,31,55,23,61,29,53,21].map(function(v){ return v / 64; });
-function u32(h){ var c = rgb(h); return (255 << 24 | c[2] << 16 | c[1] << 8 | c[0]) >>> 0; }
-var field = null, gain = null, bump = null, neb = null, nctx = null, nimg = null, nbuf = null, nebFrame = -1;
+var field = null, gain = null, neb = null, lo = null, nimg = null, nbuf = null, nebBuf = null, nebFrame = -1, ov = null, ovc = null;
 var layers = [], rete = null;
 var STAR_V = [5, 11, 22];
-var STAR_COL = [mixQ(P.ground, P.star, 0.5), mixQ(P.ground, P.star, 0.75), P.star];
+/* a star is a whole cell now, so there are fewer and they are fainter: three depths, the nearest still well under the text */
+var STAR_COL = [mixQ(P.ground, P.star, 0.25), mixQ(P.ground, P.star, 0.375), mixQ(P.ground, P.star, 0.625)].map(u32);
+var TINT_COL = [0, u32(mixQ(P.ground, P.teal, 0.625)), u32(mixQ(P.ground, P.amber, 0.625))];
 /* periodic value noise, three octaves, one seeded lattice per octave */
 function noiseField(srng){
   var f = new Float32Array(FW * GH), L = 48, o, x, y;
@@ -67,27 +73,26 @@ function noiseField(srng){
 function skyLayout(){
   SW = window.innerWidth; SH = window.innerHeight; SD = Math.min(2, window.devicePixelRatio || 1);
   sky.width = Math.round(SW * SD); sky.height = Math.round(SH * SD);
-  CH = SW < 720 ? 4 : 6;
+  CH = cellSize(SW);
   GW = Math.ceil(SW / CH); GH = Math.ceil(SH / CH); FW = Math.ceil(GW / 48) * 48;
   var srng = mulberry32((SEED ^ 0x0B1230) >>> 0);   /* layout stream: stars and lattice, re-rolled per viewport only */
   field = noiseField(srng);
-  gain = new Float32Array(GW * GH); bump = new Float32Array(GW * GH);
+  gain = new Float32Array(GW * GH);
   var dx = DEST.x * GW, dy = DEST.y * GH, ax = 0, ay = 0.85 * GH, len = Math.sqrt((dx - ax) * (dx - ax) + (dy - ay) * (dy - ay));
-  var nx = -(dy - ay) / len, ny = (dx - ax) / len, rad = 0.26 * GW;
+  var nx = -(dy - ay) / len, ny = (dx - ax) / len;
   for (var y = 0; y < GH; y++) for (var x = 0; x < GW; x++){
     var i = y * GW + x, dist = Math.abs((x - ax) * nx + (y - ay) * ny) / (GH * 0.45);
     gain[i] = 0.35 + 0.65 * Math.max(0, 1 - dist);
-    var qx = (x - dx) / rad, qy = (y - dy) / rad * 1.4, q = qx * qx + qy * qy;
-    bump[i] = Math.exp(-q * 1.6);
   }
-  neb = document.createElement('canvas'); neb.width = GW; neb.height = GH; nctx = neb.getContext('2d');
-  nimg = nctx.createImageData(GW, GH); nbuf = new Uint32Array(nimg.data.buffer); nebFrame = -1;
-  var n = Math.max(24, Math.round(98 * SW * SH / (1440 * 900)));
+  neb = document.createElement('canvas'); neb.width = GW; neb.height = GH; lo = neb.getContext('2d');
+  nimg = lo.createImageData(GW, GH); nbuf = new Uint32Array(nimg.data.buffer); nebBuf = new Uint32Array(GW * GH); nebFrame = -1;
+  ov = document.createElement('canvas'); ov.width = GW; ov.height = GH; ovc = ov.getContext('2d', { willReadFrequently:true });
+  var n = Math.max(12, Math.round(36 * SW * SH / (1440 * 900)));
   layers = [];
   for (var L = 0; L < 3; L++){
     var st = new Float32Array(n * 2), tint = new Uint8Array(n);
     for (var k = 0; k < n; k++){ st[k * 2] = srng() * SW; st[k * 2 + 1] = srng() * SH; tint[k] = L === 2 && srng() < 0.125 ? (srng() < 0.5 ? 1 : 2) : 0; }
-    layers.push({ n:n, p:st, tint:tint, v:STAR_V[L], size:L === 2 ? 2 : 1 });
+    layers.push({ n:n, p:st, tint:tint, v:STAR_V[L] });
   }
   var ptr = []; for (var j = 0; j < 7; j++) ptr.push({ a:srng() * 6.2832, r:0.2 + srng() * 0.5, s:srng() < 0.5 ? -1 : 1 });
   rete = { cx:DEST.x * SW, cy:DEST.y * SH, R:0.36 * Math.min(SW, SH) + 0.12 * Math.max(SW, SH) * 0.3, tilt:0.42, base:srng() * 6.2832, ptr:ptr };
@@ -139,44 +144,43 @@ function skyStep(){
 /* ---------- drawing ---------- */
 function nebula(){
   var st = bg.st, el = bt - bg.t0, prog = Math.min(1, el / bg.dur);
-  var amp = 0.42 + (st === 4 ? 0.4 * Math.sin(3.1416 * prog) : 0);
-  amp = Math.round(amp * 16) / 16;
-  var br = Math.round(0.06 * Math.sin(bt * 6.2832 / 21) * 64) / 64;
+  /* shore lifts the whole field a little; the old soft hotspot is gone, the field is the only shape */
+  var lift = st === 4 ? Math.round(0.12 * Math.sin(3.1416 * prog) * 16) / 16 : 0;
+  var br = Math.round(0.06 * Math.sin(bt * 6.2832 / 21) * 64) / 64 + lift;
   var off = Math.floor(bt * NEB_V / CH) % FW, ph = bg.phase;
   var pal = new Uint32Array(8);
   for (var k = 0; k < 8; k++) pal[k] = u32(k >= 3 && k <= 6 ? RAMP[3 + ((k - 3 + bg.rot) % 4)] : RAMP[k]);
-  var f = field, g = gain, b = bump, out = nbuf, i = 0;
+  var f = field, g = gain, out = nebBuf, i = 0;
   for (var y = 0; y < GH; y++){
     var row = y * FW, by = (y & 7) << 3;
     for (var x = 0; x < GW; x++, i++){
-      var v = f[row + ((x + off) % FW)] * g[i] + b[i] * amp + br;
+      var v = f[row + ((x + off) % FW)] * g[i] + br;
       if (v < 0) v = 0; else if (v > 0.999) v = 0.999;
       out[i] = pal[(v * 7 + BAYER[by | ((x + ph) & 7)]) | 0];
     }
   }
-  nctx.putImageData(nimg, 0, 0);
 }
 function rp(a, r){ var c = Math.cos(a + rete.ang), s = Math.sin(a + rete.ang); return [rete.cx + r * c * rete.R, rete.cy + r * s * rete.R * rete.tilt]; }
 function ring(r, ox, oy){
   ox = ox || 0; oy = oy || 0;
   for (var k = 0; k <= 48; k++){ var a = k / 48 * 6.2832, c = Math.cos(a) * r + ox, s = Math.sin(a) * r + oy;
-    var p = rp(Math.atan2(s, c), Math.sqrt(c * c + s * s)); if (k) sctx.lineTo(p[0], p[1]); else sctx.moveTo(p[0], p[1]); }
+    var p = rp(Math.atan2(s, c), Math.sqrt(c * c + s * s)); if (k) ovc.lineTo(p[0], p[1]); else ovc.moveTo(p[0], p[1]); }
 }
 function drawRete(){
-  var st = bg.st, el = bt - bg.t0, lvl = st === 2 ? Math.min(0.55, 0.28 + Math.floor(el / 0.75) * 0.07) : 0.28;
+  var st = bg.st, el = bt - bg.t0, lvl = st === 2 ? Math.min(0.3, 0.12 + Math.floor(el / 0.75) * 0.04) : 0.12;
   rete.ang = rete.base + bt * 6.2832 / 360;
-  sctx.strokeStyle = mixQ(P.ground, P.ash, lvl); sctx.lineWidth = 1; sctx.beginPath();
+  ovc.strokeStyle = mixQ(P.ground, P.ash, lvl); ovc.lineWidth = CH; ovc.beginPath();
   ring(1); ring(0.92); ring(0.72); ring(0.42); ring(0.62, 0, 0.22);
   var k, p, q;
-  for (k = 0; k < 36; k++){ var a = k / 36 * 6.2832, r0 = k % 3 ? 0.965 : 0.92; p = rp(a, r0); q = rp(a, 1); sctx.moveTo(p[0], p[1]); sctx.lineTo(q[0], q[1]); }
+  for (k = 0; k < 36; k++){ var a = k / 36 * 6.2832, r0 = k % 3 ? 0.965 : 0.92; p = rp(a, r0); q = rp(a, 1); ovc.moveTo(p[0], p[1]); ovc.lineTo(q[0], q[1]); }
   for (k = 0; k < 7; k++){ var pt = rete.ptr[k], e = rp(pt.a, 0.62 + 0.22 * Math.sin(pt.a)), m = rp(pt.a + 0.25 * pt.s, (pt.r + 0.62) / 2), t = rp(pt.a + 0.4 * pt.s, pt.r);
-    sctx.moveTo(e[0], e[1]); sctx.lineTo(m[0], m[1]); sctx.lineTo(t[0], t[1]); sctx.moveTo(t[0] - 2, t[1] - 2); sctx.lineTo(t[0] + 2, t[1] + 2); }
-  var ia = bt * 6.2832 / 120; p = rp(ia, 1); q = rp(ia + 3.1416, 1); sctx.moveTo(p[0], p[1]); sctx.lineTo(q[0], q[1]);
-  sctx.stroke();
+    ovc.moveTo(e[0], e[1]); ovc.lineTo(m[0], m[1]); ovc.lineTo(t[0], t[1]); ovc.moveTo(t[0] - 2, t[1] - 2); ovc.lineTo(t[0] + 2, t[1] + 2); }
+  var ia = bt * 6.2832 / 120; p = rp(ia, 1); q = rp(ia + 3.1416, 1); ovc.moveTo(p[0], p[1]); ovc.lineTo(q[0], q[1]);
+  ovc.stroke();
 }
 /* the glyph library: fire, water, air, earth, sun, moon, mercury, sulfur; unit box, one-pixel lines */
 function glyph(g, x, y, s){
-  var c = sctx; c.beginPath();
+  var c = ovc; c.beginPath();
   function M(a, b){ c.moveTo(x + a * s, y + b * s); } function L(a, b){ c.lineTo(x + a * s, y + b * s); }
   if (g === 0 || g === 2){ M(-0.9, 0.8); L(0, -0.9); L(0.9, 0.8); L(-0.9, 0.8); if (g === 2){ M(-0.95, 0.25); L(0.95, 0.25); } }
   else if (g === 1 || g === 3){ M(-0.9, -0.8); L(0, 0.9); L(0.9, -0.8); L(-0.9, -0.8); if (g === 3){ M(-0.95, -0.25); L(0.95, -0.25); } }
@@ -187,40 +191,53 @@ function glyph(g, x, y, s){
   c.stroke();
 }
 function drawCons(){
-  var l = layers[1], spd = speedMul(), gs = SW < 720 ? 8 : 11;
+  var l = layers[1], spd = speedMul(), gs = CH * 3;
   for (var i = 0; i < bg.cons.length; i++){ var c = bg.cons[i], el = bt - c.t0, n = c.nodes.length, p;
     if (el < c.form) p = el / c.form; else if (el < c.form + c.hold) p = 1; else p = Math.max(0, 1 - (el - c.form - c.hold) / c.diss);
     var pts = c.nodes.map(function(nd){ return [starX(l, nd.k, spd), starY(l, nd.k, spd)]; });
     var seg = p * (n - 1), full = Math.floor(seg), part = seg - full;
-    sctx.strokeStyle = mixQ(P.ground, P.ash, 0.5); sctx.lineWidth = 1; sctx.beginPath();
-    for (var k = 0; k < full; k++){ sctx.moveTo(pts[k][0], pts[k][1]); sctx.lineTo(pts[k + 1][0], pts[k + 1][1]); }
-    if (full < n - 1 && part > 0){ var a = pts[full], b = pts[full + 1]; sctx.moveTo(a[0], a[1]); sctx.lineTo(a[0] + (b[0] - a[0]) * part, a[1] + (b[1] - a[1]) * part); }
-    sctx.stroke();
-    for (k = 0; k < n; k++){ if (p < k / n + 0.001) break; sctx.strokeStyle = c.nodes[k].col; glyph(c.nodes[k].g, Math.round(pts[k][0]) + 0.5, Math.round(pts[k][1]) + 0.5, gs); }
+    ovc.strokeStyle = mixQ(P.ground, P.ash, 0.375); ovc.lineWidth = CH; ovc.beginPath();
+    for (var k = 0; k < full; k++){ ovc.moveTo(pts[k][0], pts[k][1]); ovc.lineTo(pts[k + 1][0], pts[k + 1][1]); }
+    if (full < n - 1 && part > 0){ var a = pts[full], b = pts[full + 1]; ovc.moveTo(a[0], a[1]); ovc.lineTo(a[0] + (b[0] - a[0]) * part, a[1] + (b[1] - a[1]) * part); }
+    ovc.stroke();
+    for (k = 0; k < n; k++){ if (p < k / n + 0.001) break; ovc.strokeStyle = c.nodes[k].col; glyph(c.nodes[k].g, Math.round(pts[k][0]), Math.round(pts[k][1]), gs); }
   }
 }
 function speedMul(){ return bg.st === 4 ? 1 + 0.8 * Math.sin(3.1416 * Math.min(1, (bt - bg.t0) / bg.dur)) : 1; }
+/* a star is one cell of the grid, plotted straight into the buffer */
+function star(x, y, col){
+  var cx = Math.floor(x / CH), cy = Math.floor(y / CH);
+  if (cx >= 0 && cy >= 0 && cx < GW && cy < GH) nbuf[cy * GW + cx] = col;
+}
 function drawStars(){
   var spd = speedMul();
-  for (var L = 0; L < 3; L++){ var l = layers[L], sz = l.size;
-    sctx.fillStyle = STAR_COL[L];
-    for (var k = 0; k < l.n; k++){
-      if (l.tint[k]){ sctx.fillStyle = l.tint[k] === 1 ? P.teal : P.amber; sctx.fillRect(Math.round(starX(l, k, spd)), Math.round(starY(l, k, spd)), sz, sz); sctx.fillStyle = STAR_COL[L]; }
-      else sctx.fillRect(Math.round(starX(l, k, spd)), Math.round(starY(l, k, spd)), sz, sz);
-    }
-    if (L === 1) drawCons();
+  for (var L = 0; L < 3; L++){ var l = layers[L];
+    for (var k = 0; k < l.n; k++) star(starX(l, k, spd), starY(l, k, spd), l.tint[k] ? TINT_COL[l.tint[k]] : STAR_COL[L]);
   }
+}
+/* the rete, the sigils and the passer are drawn as lines into an overlay of the same size, then each cell the line
+   covers by half or more is copied into the buffer whole: a line becomes a run of cells, never a soft edge */
+function overlay(){
+  ovc.setTransform(1, 0, 0, 1, 0, 0); ovc.clearRect(0, 0, GW, GH);
+  ovc.setTransform(1 / CH, 0, 0, 1 / CH, 0, 0);
+  drawRete();
+  drawCons();
+  if (bg.passer){ var ps = bg.passer; ovc.strokeStyle = mixQ(P.ground, P.ash, 0.25); ovc.lineWidth = CH;
+    glyph(ps.g, Math.round(SW + 200 - ps.v * (bt - ps.t0)), Math.round(ps.y), ps.size); }
+  var od = new Uint32Array(ovc.getImageData(0, 0, GW, GH).data.buffer);
+  for (var i = 0; i < od.length; i++) if ((od[i] >>> 24) >= 128) nbuf[i] = od[i] | 0xFF000000;
 }
 function skyPaint(){
   var fno = Math.floor(bt / DT + 0.5);
   if (nebFrame < 0 || fno - nebFrame >= 4){ nebFrame = fno; nebula(); }
+  /* the buffer is one pixel per cell: the dither, then the lines, then the stars, scaled up without smoothing */
+  nbuf.set(nebBuf);
+  overlay();
+  drawStars();
+  lo.putImageData(nimg, 0, 0);
   sctx.setTransform(SD, 0, 0, SD, 0, 0);
   sctx.imageSmoothingEnabled = false;
   sctx.drawImage(neb, 0, 0, GW, GH, 0, 0, GW * CH, GH * CH);
-  drawRete();
-  drawStars();
-  if (bg.passer){ var ps = bg.passer; sctx.strokeStyle = mixQ(P.ground, P.ash, 0.4); sctx.lineWidth = 1;
-    glyph(ps.g, Math.round(SW + 200 - ps.v * (bt - ps.t0)) + 0.5, Math.round(ps.y) + 0.5, ps.size); }
 }
 /* ================= clock ================= */
 var hooks = [];
@@ -245,6 +262,6 @@ function boot(){
 window.addEventListener('resize', function(){
   if (window.innerWidth !== SW || window.innerHeight !== SH){ skyLayout(); skyPaint(); }
 });
-if (window.Toy) hooks.push(window.Toy({ P:P, rgb:rgb, hex:hex, mix:mix, mixQ:mixQ, mulberry32:mulberry32, SEED:SEED, T0:T0, DT:DT }));
+if (window.Toy) hooks.push(window.Toy({ P:P, rgb:rgb, hex:hex, mix:mix, mixQ:mixQ, mulberry32:mulberry32, SEED:SEED, T0:T0, DT:DT, cell:cellSize }));
 boot();
 })();
