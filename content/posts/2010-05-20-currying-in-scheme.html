@@ -1,0 +1,36 @@
+---
+title: Currying in scheme
+date: 2010-05-20
+subtitle: define-syntax beauty
+---
+<p>Coming from haskell i was looking around for a way to apply currying inside scheme. I came
+on the following macro via: <a href="http://paste.lisp.org/display/36324">this paste</a>.</p>
+
+<pre><code>(define-syntax curried
+(syntax-rules ()
+    ((curried () body ...) (lambda () body ...))
+    ((curried (arg) body ...) (lambda (arg) body ...))
+    ((curried (arg args ...) body ...)
+     (lambda (arg . rest)
+         (let ((next (curried (args ...) body ...)))
+             (if (null? rest)
+                     next
+                     (apply next rest)))))))
+
+(define-syntax define-curried
+    (syntax-rules ()
+        ((define-curried (name args ...) body ...)
+         (define name (curried (args ...) body ...)))))
+</code></pre>
+
+<p>Notice how <code>define-curried</code> uses the pattern match on <code>name</code> recursively to recursivly apply the curried macro to every
+argument.</p>
+
+<pre><code>(define-curried (mad a b c)
+    (+ (* a b) c))
+
+    (mad 2 3 4)
+    ((mad 2) 3 4)
+    ((mad 2 3) 4)
+    (((mad 2) 3) 4)
+</code></pre>

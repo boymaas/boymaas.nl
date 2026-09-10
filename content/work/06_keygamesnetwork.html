@@ -1,0 +1,83 @@
+---
+title: Keygamesnetwork
+client: Spele.nl, I-Med
+order: 6
+summary: I-Med, the publisher of Spele.nl reaching out to more than 500K unique people every day proposed to build a self-serving advertiser platform. This started a 4 month project to build Keygamesnetwork.com
+---
+<h3>Keygamesnetwork</h3>
+<p>
+  I-Med, the publisher of Spele.nl reaching out to more than 500K unique people every day proposed to build
+  a self-serving advertiser platform. This started a 4 month project to build
+  <a href='http://www.keygamesnetwork.com'>Keygamesnetwork.com</a>
+</p>
+<p>
+  <a href='/static/portfolio/screenshots/keygamesnetwork/advertisers-home-big.jpg' rel='lightbox' title='Landing page of keygamesnetwork'>
+    <img alt='click to enlarge image' border='0' height='147' src='/static/portfolio/screenshots/keygamesnetwork/advertisers-home-small.jpg' width='200' />
+  </a>
+  <a href='/static/portfolio/screenshots/keygamesnetwork/gamedeveloper-base-big.jpg' rel='lightbox' title='Gamedeveloper overview page'>
+    <img alt='click to enlarge image' border='0' height='147' src='/static/portfolio/screenshots/keygamesnetwork/gamedeveloper-base-small.jpg' width='200' />
+  </a>
+</p>
+<p>Keygamesnetwork intermediates between gamedevelopers, publishers and advertisers. It enables <em>gamedevelopers</em> to
+speedup the game-development process, <em>publishers</em> to find interesting content for their domains. A great platform
+to advertise emerges through all the games published through the publishers domain.</p>
+
+<p>I will describe below the different roles I performed in helping realising this platform.</p>
+<h4>Design challenges</h4>
+<p>
+  Setting up the structural design, architecting the key-components, and selection of various open-source components
+  to form the basis of implementation:
+  <ul>
+  <li>Rails</li>
+  <li>Rspec</li>
+  <li>HAML</li>
+  <li>Sasl</li>
+  <li>Rail-metal using Sinatra</li>
+  <li>Postgresql</li>
+  <li>Nginx</li>
+  <li>Varnish</li>
+  </ul>
+  Whenever I select an opensource component, I actually dive into the code to assess the quality. I only select quality components
+  to base a system on.
+</p>
+<h4>Technical challenges</h4>
+<h5>Capistrano 0 downtime deployment</h5>
+<p>
+  Using capistrano to setup a 3 server production environment and a 1 server staging environment. Running Unicorn, nginx and varnish. Unicorn configured in such a way server restarts can be done without any downtime. Even taking into account database migrations. Since certain development machines should be able to deploy from outside the firewall, a secure access was setup. Capistrano was customized for this process.
+</p>
+<h5>Adobe Flash wrapper</h5>
+<p>
+  Flex pipeline enabling gamedevelopers to secure and enhance their games. In the technical specification I defined a secure method of communicating with the keygamesnetwork backend. Described different UI enhancing components, such as login/highscore widgets and described a distributed loading of different reusable/themable components on demand (speedup loadtimes, and live updates). The implementation process was started in parallel with a hand picked Flash development team.
+</p>
+<h5>Generic adaptable statistics modules</h5>
+<p>
+  Setup of generic components to enable tracking, maintenance and aggregation of database logfiles. The analytics is presented in a professional way to each of keygamesnetwork's end-users. The games and ad-components log a lot information, in many games, with many players. These generic components handle the aggregation and maintenance of these database driven logfiles gracefully.
+</p>
+<h5>Rails configuration and setup</h5>
+<p>
+  Coding the controllers and views of the rails application. Using Haml / Sasl / jQuery / CoffeeScript and ofcourse pure clean ruby code. Adapted Haml core to enable custom tags. Since all was well-thought out before, we ended up with a clean model. All recurring patterns nicely included.
+</p>
+<h5>BDD / TDD</h5>
+<p>
+  A combination of BDD and TDD is being used to test the keygamesnetwork.
+</p>
+<h5>DRY to the bone</h5>
+<p>
+  All mundanities/complexities and repetition was scripted away.
+</p>
+<h4>More screenshots</h4>
+<p>
+  <a href='/static/portfolio/screenshots/keygamesnetwork/gamedevelopers-home-big.jpg' rel='lightbox' title='Landing page of keygamesnetwork'>
+    <img alt='click to enlarge image' border='0' height='147' src='/static/portfolio/screenshots/keygamesnetwork/gamedevelopers-home-small.jpg' width='200' />
+  </a>
+  <a href='/static/portfolio/screenshots/keygamesnetwork/publishers-home-big.jpg' rel='lightbox' title='Landing page of keygamesnetwork'>
+    <img alt='click to enlarge image' border='0' height='147' src='/static/portfolio/screenshots/keygamesnetwork/publishers-home-small.jpg' width='200' />
+  </a>
+</p>
+<h4>Team challenges</h4>
+<p>Thinking through the specifications and coming to a detailed technical specification. Selecting appropiate freelancers
+to form a team. And after delivery, transfer knowledge to an offshore maintenance team.</p>
+<h4></h4>
+<p>
+  After 6 months of hard work the system was ready and performed excellent under medium to high load. Apdex score of 1 using New Relic for tracking.
+</p>

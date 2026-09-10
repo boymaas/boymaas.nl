@@ -1,0 +1,103 @@
+---
+title: Ying Yang call/cc or the call-with-current-continuation puzzle
+date: 2010-05-14
+subtitle: interesting scheme paradigm
+---
+<p>One of the more interesting paradigms arising from Scheme is the
+<code>call-with-current-continuation</code>.  Let me try to explain this in abstract terms,
+a call/cc is passed a procedure <code>p</code>. This procedure takes one argument <code>k</code>
+which represents the continuation. The continuation <code>k</code> can be applied with a
+value.  This value will become the value of the application of call/cc. Easy heh?</p>
+
+<h2>Ok? Let's play a little with them</h2>
+
+<p>To give an example, this first example does <code>call/cc</code> which does not apply the
+continuation <code>k</code>:</p>
+
+<pre><code>(call/cc
+ (lambda (k)
+  (* 5 4))) =&gt;  20 
+</code></pre>
+
+<p>The lambda is called with our current-continuation which is ignored as it
+just returns the result of the calculation.</p>
+
+<p>In this next example the continuation is applied with an integer argument of 4,
+the return value of the call/cc lambda becomes the value passed to the
+continuation <code>k</code> and thus prints 4.</p>
+
+<pre><code>(call/cc
+ (lambda (k)
+  (* 5 (k 4)))) =&gt; 4 
+</code></pre>
+
+<p>We could argue that the continuation acts as a return statement. This
+facilitates returning from a recursion as described below.</p>
+
+<pre><code>(define product
+  (lambda (ls)
+    (call/cc
+      (lambda (break)
+        (let f ((ls ls))
+          (cond
+            ((null? ls) 1)
+            ((= (car ls) 0) (break 0))
+            (else (* (car ls) (f (cdr ls))))))))))
+</code></pre>
+
+<h2>This is simple, let's try to find something more interesting</h2>
+
+<p>Try this piece of code which I found in The Scheme Programming Language.</p>
+
+<pre><code>(let ((x (call/cc (lambda (k) k))))
+  (x (lambda (ignore) "hi"))) =&gt; "hi"
+</code></pre>
+
+<p>What happens here?</p>
+
+<ul>
+<li><code>x</code> gets bound to the continuation <code>k</code>
+
+<ul>
+<li>since call/cc calls lambda k: which returns itself</li>
+</ul>
+</li>
+<li><code>x</code>, which is the continuation <code>k</code>, is applied with the <code>(lambda (ignore) "h1")</code>
+
+<ul>
+<li>this has the effect of rebinding <code>x</code> to <code>(lambda (ignore) "hi")</code></li>
+</ul>
+</li>
+<li>control continues and comes again to the statement <code>(x (lambda (ignore) .. )</code>
+
+<ul>
+<li>and thus applies the lambda to the rebond <code>x</code> returning "hi"</li>
+</ul>
+</li>
+</ul>
+
+<h2>Now for something really interesting, the call/cc ying yang puzzle.</h2>
+
+<p>Reading the wikipedia article I stumbled upon this interesting puzzle. I was
+immediatly fascinated as it seemed difficult to explain why the below described call/cc combinations
+deliver the output as described.</p>
+
+<pre><code>(let* ((yin
+         ((lambda (cc) (display #\@) cc) (call-with-current-continuation (lambda (c) c))))
+       (yang
+         ((lambda (cc) (display #\*) cc) (call-with-current-continuation (lambda (c) c)))))
+    (yin yang))
+</code></pre>
+
+<p>Outputs an infinitive sequence, I have extracted the first output of this function below.</p>
+
+<pre><code>@*@**@***@****@*****@******@*******@********@*********@**********@*******
+****@************@*************@**************@***************@**********
+******@*****************@******************@*******************@*********
+***********@*********************@**********************@****************
+*******@************************@*************************@**************
+************@
+</code></pre>
+
+<p>Keep in mind that <code>(let* (b1 b2) e1 e2 ..)</code> translates to <code>(let (b1) (let (b2) e1 e2 .. )</code>.
+Try to explain this one .. good luck, heheh</p>
