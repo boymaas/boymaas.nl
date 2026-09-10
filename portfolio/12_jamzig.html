@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JamZig⚡ - Boy Maas (m4nic)</title>
+<meta name="description" content="A JAM client written in Zig, as sole developer. First to pass Milestone 1 conformance in the systems-language category of the Web3 Foundation&#x27;s JAM Prize, and the only Zig implementation among the competing teams. JAM Prize M1 candidate after passing the M1 interview.">
+<link rel="icon" href="/favicon.png">
+<link rel="alternate" type="application/atom+xml" title="Boy Maas, posts" href="/feed.xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&text=%E2%94%80%E2%94%82%E2%94%8C%E2%94%90%E2%94%94%E2%94%98%E2%94%9C%E2%94%A4%E2%96%88&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/tui.css">
+</head>
+<body data-page="article" data-back="/work.html" data-pos="work 1/13" data-next="/portfolio/11_terraform-labs.html">
+<canvas id="sky" aria-hidden="true"></canvas>
+<header class="wrap top">
+  <a class="who" href="/">Boy Maas<span class="m4"> <span class="dim">(m4nic)</span></span></a>
+  <nav>
+    <a href="/posts.html">posts</a>
+    <a href="/work.html" class="here">work</a>
+    <a href="/#bio">bio</a>
+    <a href="/#mail">mail</a>
+  </nav>
+  <button id="snd" type="button" aria-pressed="false" aria-label="sound off"><span class="full">sound off</span><span class="short" aria-hidden="true">s</span></button>
+</header>
+<main class="wrap stack">
+  <article class="pane focus" id="work" aria-label="work/12_jamzig">
+    <div class="bt"><span>┌─</span><span class="tt"><span>work<span class="s">/12_jamzig</span></span></span><span class="ln"></span><span>┐</span></div>
+    <div class="in">
+      <header class="head">
+        <h1>JamZig⚡</h1>
+        <p class="sub">W3F JAM Prize, 2024 to now</p>
+        <nav class="navrow" aria-label="nav">
+          <span class="nv"><span class="k"><b>h</b> prev</span><span class="none">none</span></span>
+          <span class="nv"><span class="k"><b>l</b> next</span><a href="/portfolio/11_terraform-labs.html">Terraform Labs R&amp;D</a></span>
+          <span class="nv"><span class="k"><b>q</b> back</span><a href="/work.html">work</a></span>
+        </nav>
+      </header>
+      <div class="article">
+<p>
+  JAM, the Join-Accumulate Machine, is the protocol Gavin Wood designed as the successor to the Polkadot relay chain.
+  The Web3 Foundation runs a prize for independent implementations, in tiers by language category.
+  JamZig⚡ is the Zig entry: one developer, one codebase, competing against twenty-two teams worldwide.
+</p>
+<h2>What is in it</h2>
+<ul>
+  <li>A RISC-V virtual machine, the PVM, executing services and their accumulate and refine logic.</li>
+  <li>The cryptography JAM asks for: Bandersnatch ring VRFs, Ed25519, BLS12-381, Blake2b, Keccak-256.</li>
+  <li>Reed-Solomon erasure coding and the Merkle structures for availability and state.</li>
+  <li>Block authoring, validation, and the state transition function, checked against the official test vectors.</li>
+</ul>
+<h2>Milestone 1</h2>
+<p>
+  Conformance for Milestone 1 means the state transition function matches the reference under fuzzing: ten runs of one hundred thousand steps each.
+  JamZig⚡ was the first to pass in the systems-language category, and after the M1 interview I am the JAM Prize M1 candidate for it.
+</p>
+<p>
+  The project lives at <a href="https://jamzig.dev/">jamzig.dev</a>, the code under <a href="https://github.com/jamzig">github.com/jamzig</a>, and the running commentary on X at <a href="https://x.com/jamzig_dev">@jamzig_dev</a>.
+  Conformance releases and test exports for other teams are published in the org.
+</p>
+      </div>
+    </div>
+    <div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div>
+  </article>
+
+</main>
+<div class="hints"><div class="wrap">
+  <span class="keys"><b>j/k</b> scroll  <b>h/l</b> prev/next  <b>q</b> back  <span class="kb"><b>gg/G</b> ends  <b>s</b> sound</span></span>
+  <span class="whisper" id="whisper" hidden>sandbox open: keys 1 to 9 pick a system, space restarts it, type play to close</span>
+  <span class="pos" id="pos"></span>
+</div></div>
+<script src="/assets/sky.js"></script>
+<script src="/assets/tui.js"></script>
+</body>
+</html>
