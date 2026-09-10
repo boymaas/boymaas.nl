@@ -6,73 +6,93 @@
 <title>Boy Maas (m4nic)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Silkscreen&family=VT323&display=swap" rel="stylesheet">
 <style>
+/* m4box: box-drawing glyphs drawn in code on VT323's 10x25 cell (one pixel = 1px at 25px), so tree branches,
+   dividers and the block cursor sit on the same grid as the letters. Only the tilde and U+2500-25A0 come from it. */
+@font-face{font-family:"m4box";src:url(data:font/ttf;base64,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KKAoKKAoKKAoKP0wKCigKCigKCigKCigKCigKCj8kCgooCgooCgooCgooCgooCgo/TAoKKAoKKAoKKAoKKAoKKAoKAAAfQAA/zgBkAMgAAMABwALAA8AEwAXABsAHwAjACcAKwAvADMANwA7AD8AQwBHAEsATwBTAFcAWwBfAGMAZwBrAG8AcwB3AHsAfwCDAIcAiwCPAJMAlwCbAJ8AowCnAKsArwCzALcAuwC/AMMAxwDLAM8A0wDXANsA3wDjAOcA6wDvAPMA9wD7AP8BAwEHAQsBDwETARcBGwEfASMBJwErAS8BMwE3ATsBPwFDAUcBSwFPAVMBVwFbAV8BYwFnAWsBbwFzAXcBewF/AYMBhwGLAY8BkwGXAZsBnwGjAacBqwGvAbMBtwG7Ab8BwwHHAcsBzwHTAdcB2wHfAeMB5wHrAe8B8wAAFTUzFSc1MxUnNTMVJzUzFSc1MxUnNTMVJzUzFSc1MxUnNTMVJzUzFSc1MxUnNTMVETUzFSc1MxUnNTMVJzUzFSc1MxUnNTMVJzUzFSc1MxUnNTMVJzUzFSc1MxUnNTMVJzUzFRE1MxUnNTMVJzUzFSc1MxUnNTMVJzUzFSc1MxUnNTMVJzUzFSc1MxUnNTMVJzUzFRE1MxUnNTMVJzUzFSc1MxUnNTMVJzUzFSc1MxUnNTMVJzUzFSc1MxUnNTMVJzUzFSc1MxURNTMVJzUzFSc1MxUnNTMVJzUzFSc1MxUnNTMVJzUzFSc1MxUnNTMVJzUzFSc1MxURNTMVJzUzFSc1MxUnNTMVJzUzFSc1MxUnNTMVJzUzFSc1MxUnNTMVJzUzFSc1MxUnNTMVETUzFSc1MxUnNTMVJzUzFSc1MxUnNTMVJzUzFSc1MxUnNTMVJzUzFSc1MxUnNTMVETUzFSc1MxUnNTMVJzUzFSc1MxUnNTMVJzUzFSc1MxUnNTMVJzUzFSc1MxUnNTMVJzUzFRE1MxUnNTMVJzUzFSc1MxUnNTMVJzUzFSc1MxUnNTMVJzUzFSc1MxUnNTMVJzUzFRE1MxUnNTMVJzUzFSc1MxUnNTMVJzUzFSc1MxUnNTMVJzUzFSc1MxUnNTMVJzUzFSc1MxUoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCigKChQKChQKChQKChQKChQKChQKChQKChQKChQKChQKChQKCj8aCgoUCgoUCgoUCgoUCgoUCgoUCgoUCgoUCgoUCgoUCgoUCgoUCgo/GgoKFAoKFAoKFAoKFAoKFAoKFAoKFAoKFAoKFAoKFAoKFAoKPxoKChQKChQKChQKChQKChQKChQKChQKChQKChQKChQKChQKChQKCj8aCgoUCgoUCgoUCgoUCgoUCgoUCgoUCgoUCgoUCgoUCgoUCgo/GgoKFAoKFAoKFAoKFAoKFAoKFAoKFAoKFAoKFAoKFAoKFAoKFAoKPxoKChQKChQKChQKChQKChQKChQKChQKChQKChQKChQKChQKCj8aCgoUCgoUCgoUCgoUCgoUCgoUCgoUCgoUCgoUCgoUCgoUCgoUCgo/GgoKFAoKFAoKFAoKFAoKFAoKFAoKFAoKFAoKFAoKFAoKFAoKPxoKChQKChQKChQKChQKChQKChQKChQKChQKChQKChQKChQKChQKCgAvgAA/zgBkAMgAAMABwALAA8AEwAXABsAHwAjACcAKwAvADMANwA7AD8AQwBHAEsATwBTAFcAWwBfAGMAZwBrAG8AcwB3AHsAfwCDAIcAiwCPAJMAlwCbAJ8AowCnAKsArwCzALcAuwC/AMMAxwDLAM8A0wDXANsA3wDjAOcA6wDvAPMA9wD7AP8BAwEHAQsBDwETARcBGwEfASMBJwErAS8BMwE3ATsBPwFDAUcBSwFPAVMBVwFbAV8BYwFnAWsBbwFzAXcBewF/AYMBhwGLAY8BkwGXAZsBnwGjAacBqwGvAbMBtwG7Ab8BwwHHAcsBzwHTAdcB2wHfAeMB5wHrAe8B8wH3AfsB/wIDAgcCCwIPAhMCFwIbAh8CIwInAisCLwIzAjcCOwI/AkMCRwJLAk8CUwJXAlsCXwJjAmcCawJvAnMCdwJ7An8CgwKHAosCjwKTApcCmwKfAqMCpwKrAq8CswK3ArsCvwLDAscCywLPAtMC1wLbAt8C4wLnAusC7wLzAvcAABU1MxUnNTMVJzUzFSc1MxUnNTMVJzUzFSc1MxUnNTMVJzUzFSc1MxUnNTMVJzUzFSc1MxUnNTMVJzUzFSc1MxUnNTMVJzUzFSc1MxURNTMVJzUzFSc1MxUnNTMVJzUzFSc1MxUnNTMVJzUzFSc1MxUnNTMVJzUzFSc1MxUnNTMVJzUzFSc1MxUnNTMVJzUzFSc1MxUnNTMVETUzFSc1MxUnNTMVJzUzFSc1MxUnNTMVJzUzFSc1MxUnNTMVJzUzFSc1MxUnNTMVJzUzFSc1MxUnNTMVJzUzFSc1MxUnNTMVJzUzFRE1MxUnNTMVJzUzFSc1MxUnNTMVJzUzFSc1MxUnNTMVJzUzFSc1MxUnNTMVJzUzFSc1MxUnNTMVJzUzFSc1MxUnNTMVJzUzFSc1MxURNTMVJzUzFSc1MxUnNTMVJzUzFSc1MxUnNTMVJzUzFSc1MxUnNTMVJzUzFSc1MxUnNTMVJzUzFSc1MxUnNTMVJzUzFSc1MxUnNTMVETUzFSc1MxUnNTMVJzUzFSc1MxUnNTMVJzUzFSc1MxUnNTMVJzUzFSc1MxUnNTMVJzUzFSc1MxUnNTMVJzUzFSc1MxUnNTMVJzUzFRE1MxUnNTMVJzUzFSc1MxUnNTMVJzUzFSc1MxUnNTMVJzUzFSc1MxUnNTMVJzUzFSc1MxUnNTMVJzUzFSc1MxUnNTMVJzUzFSc1MxURNTMVJzUzFSc1MxUnNTMVJzUzFSc1MxUnNTMVJzUzFSc1MxUnNTMVJzUzFSc1MxUnNTMVJzUzFSc1MxUnNTMVJzUzFSc1MxUnNTMVETUzFSc1MxUnNTMVJzUzFSc1MxUnNTMVJzUzFSc1MxUnNTMVJzUzFSc1MxUnNTMVJzUzFSc1MxUnNTMVJzUzFSc1MxUnNTMVJzUzFRE1MxUnNTMVJzUzFSc1MxUnNTMVJzUzFSc1MxUnNTMVJzUzFSc1MxUnNTMVJzUzFSc1MxUnNTMVJzUzFSc1MxUnNTMVJzUzFSc1MxUoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoyCgoUCgoKCgoKCgoUCgoKCgoKCgoUCgoKCgoKCgoUCgoKCgoKCgoUCgoKCgoKCgoUCgoKCgoKCgo/EAoKCgoKCgoKFAoKCgoKCgoKFAoKCgoKCgoKFAoKCgoKCgoKFAoKCgoKCgoKFAoKCgoKCgoKFAoKPxAKChQKCgoKCgoKChQKCgoKCgoKChQKCgoKCgoKChQKCgoKCgoKChQKCgoKCgoKChQKCgoKCgoKCj8QCgoKCgoKCgoUCgoKCgoKCgoUCgoKCgoKCgoUCgoKCgoKCgoUCgoKCgoKCgoUCgoKCgoKCgoUCgo/EAoKFAoKCgoKCgoKFAoKCgoKCgoKFAoKCgoKCgoKFAoKCgoKCgoKFAoKCgoKCgoKFAoKCgoKCgoKPxAKCgoKCgoKChQKCgoKCgoKChQKCgoKCgoKChQKCgoKCgoKChQKCgoKCgoKChQKCgoKCgoKChQKCj8QCgoUCgoKCgoKCgoUCgoKCgoKCgoUCgoKCgoKCgoUCgoKCgoKCgoUCgoKCgoKCgoUCgoKCgoKCgo/EAoKCgoKCgoKFAoKCgoKCgoKFAoKCgoKCgoKFAoKCgoKCgoKFAoKCgoKCgoKFAoKCgoKCgoKFAoKPxAKChQKCgoKCgoKChQKCgoKCgoKChQKCgoKCgoKChQKCgoKCgoKChQKCgoKCgoKChQKCgoKCgoKCj8QCgoKCgoKCgoUCgoKCgoKCgoUCgoKCgoKCgoUCgoKCgoKCgoUCgoKCgoKCgoUCgoKCgoKCgoUCgoAAABAFAAUAFAAUAAAwAANzUzFVDwUPDwAAAGAAABGAFAAZAAAwAHAAsADwATABcAABE1MxU1NTMVFTUzFRU1MxU1NTMVNTUzFShQKFAoKAFAKCgoKCgoKCgoKCgoKCgoKCgAAAAAAAAKAH4AAQAAAAAAAQAFAAAAAQAAAAAAAgAHAAUAAQAAAAAABAAFAAAAAQAAAAAABQALAAwAAQAAAAAABgANABcAAwABBAkAAQAKACQAAwABBAkAAgAOAC4AAwABBAkABAAKACQAAwABBAkABQAWADwAAwABBAkABgAaAFJtNGJveFJlZ3VsYXJWZXJzaW9uIDEuMG00Ym94LVJlZ3VsYXIAbQA0AGIAbwB4AFIAZQBnAHUAbABhAHIAVgBlAHIAcwBpAG8AbgAgADEALgAwAG0ANABiAG8AeAAtAFIAZQBnAHUAbABhAHIAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABYAAAECAQMBBAEFAQYBBwEIAQkBCgELAQwBDQEOAQ8BEAERARIBEwEUARUAYQd1bmkyNTAwB3VuaTI1MDIHdW5pMjUwQwd1bmkyNTEwB3VuaTI1MTQHdW5pMjUxOAd1bmkyNTFDB3VuaTI1MjQHdW5pMjUyQwd1bmkyNTM0B3VuaTI1M0MHdW5pMjU4OAd1bmkyNTgwB3VuaTI1ODQHdW5pMjU4Qwd1bmkyNTkwB3VuaTI1OTEHdW5pMjU5Mgd1bmkyNTkzB3VuaTI1QTAAAA==) format("truetype");unicode-range:U+007E,U+2500-25A0}
 :root{
   --ground:#0B1230; --star:#ECE7F5; --ash:#9C98B4; --rule:#393C59;
   --cobalt:#4E8CFF; --teal:#3ED3C6; --violet:#9A7CFF; --magenta:#E866B2; --amber:#F6B44A; --coral:#FF6E57;
-  --col:min(1168px, 100% - 48px);
+  /* terminal roles: bright = star, normal = star and ash 4/8, dim = ash, faint = ground and ash 6/8 */
+  --bright:#ECE7F5; --normal:#C4C0D5; --dim:#9C98B4; --faint:#787793;
+  --col:min(112ch, 100% - 40px);
+  --row:30px;
 }
 *{box-sizing:border-box}
 html{background:var(--ground)}
-body{margin:0;background:var(--ground);color:var(--star);font:400 16px/1.6 "IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;-webkit-font-smoothing:antialiased}
-a{color:inherit;text-decoration:none}
+body{margin:0;background:var(--ground);color:var(--normal);
+  font:400 25px/var(--row) "m4box","VT323",ui-monospace,Menlo,Consolas,monospace;
+  -webkit-font-smoothing:none;font-kerning:none;font-variant-ligatures:none;text-rendering:optimizeSpeed}
+a{color:var(--bright);text-decoration:none}
 a:hover{color:var(--teal)}
 canvas{display:block}
 #sky{position:fixed;inset:0;width:100vw;height:100vh;z-index:0;pointer-events:none}
 header,main{position:relative;z-index:1}
 .wrap{width:var(--col);margin:0 auto}
-.dim{color:var(--ash)}
-/* header */
-.top{display:flex;justify-content:space-between;align-items:baseline;padding:24px 0;font-size:13px;line-height:1.6}
-.top nav{display:flex;gap:24px;align-items:baseline}
-.top button{font:inherit;color:var(--ash);background:none;border:0;padding:0;cursor:pointer}
+.dim{color:var(--dim)}
+.path{color:var(--cobalt)}
+.sig{color:var(--dim)}
+.cmt{color:var(--dim)}
+.cmt::before{content:"# "}
+.hr{color:var(--faint);white-space:nowrap;overflow:hidden;user-select:none}
+/* header: a one-line status of where you are */
+.top{display:flex;justify-content:space-between;align-items:baseline;padding:var(--row) 0;color:var(--bright)}
+.top nav{display:flex;gap:0 2ch;align-items:baseline}
+.top button{font:inherit;color:var(--dim);background:none;border:0;padding:0;cursor:pointer;-webkit-font-smoothing:inherit}
+.top button::before{content:"["}
+.top button::after{content:"]"}
 .top button:hover{color:var(--teal)}
 .top button.on{color:var(--amber)}
-/* hero: the toy box, a faint boundary in the field */
-.hero{padding:40px 0 0}
-.box{height:520px;border:1px solid var(--rule);display:flex;align-items:center;justify-content:center;cursor:crosshair;touch-action:pan-y;overflow:hidden}
-.cap{display:flex;justify-content:space-between;gap:16px;font-size:13px;line-height:1.6;margin:8px 0 0}
+/* hero: the toy box, a faint boundary in the field; under it a prompt line with a block cursor */
+.hero{padding:0}
+.box{height:540px;border:1px solid var(--rule);display:flex;align-items:center;justify-content:center;cursor:crosshair;touch-action:pan-y;overflow:hidden}
+.cap{margin:15px 0 0;color:var(--bright);white-space:pre-wrap}
 .cap b{font-weight:400}
-.hero h1{font-size:26px;line-height:1.3;font-weight:400;text-align:center;margin:56px auto 16px;max-width:36ch}
-.hero .lede{font-size:16px;color:var(--ash);text-align:center;margin:0 auto;max-width:56ch}
-.hero .whisper{font-size:13px;color:var(--teal);text-align:center;margin:24px 0 0;min-height:21px}
+.cap .cmt{white-space:nowrap}
+.cur{color:var(--bright);animation:blink 1s step-end 2s infinite}
+@keyframes blink{50%{opacity:0}}
+.hero h1{font:400 32px/40px "Silkscreen","m4box","VT323",monospace;color:var(--bright);margin:calc(var(--row) * 2) 0 0;max-width:112ch}
+.hero .lede{margin:var(--row) 0 0;max-width:80ch}
+.hero .whisper{color:var(--teal);margin:var(--row) 0 0;min-height:var(--row)}
+.hero .whisper::before{content:"# "}
 .hero .whisper[hidden]{display:block;visibility:hidden}
-.hero .pad{height:72px;border-bottom:1px solid var(--rule)}
-/* sections */
-.grid{display:grid;grid-template-columns:3fr 9fr;gap:32px;padding:96px 0 0}
-.label{font-size:13px;line-height:1.6;color:var(--ash)}
-.label b{font-weight:400;color:var(--star);display:block;font-size:20px;line-height:1.3;margin-bottom:8px}
+.hero .hr{margin-top:calc(var(--row) * 2)}
+/* sections: a prompt, a comment, then output */
+.sec{padding:calc(var(--row) * 3) 0 0}
+.prompt{font-size:50px;line-height:60px;font-weight:400;color:var(--bright);margin:0;white-space:nowrap}
+.sec .cmt{margin:0}
+.out{margin:var(--row) 0 0}
 ol{list-style:none;margin:0;padding:0}
-.posts li{display:grid;grid-template-columns:11ch 1fr;gap:24px;padding:12px 0;border-top:1px solid var(--rule)}
-.posts li:last-child{border-bottom:1px solid var(--rule)}
-.posts time{font-size:13px;line-height:1.6;color:var(--ash);padding-top:2px}
-.posts a{display:block}
-.posts small{display:block;font-size:13px;line-height:1.6;color:var(--ash)}
-.work{display:grid;grid-template-columns:1fr 1fr;gap:0 32px}
-.work li{display:grid;grid-template-columns:3ch 1fr;gap:16px;padding:12px 0;border-top:1px solid var(--rule)}
-.work li:nth-last-child(-n+2){border-bottom:1px solid var(--rule)}
-.work .n{font-size:13px;line-height:1.6;color:var(--ash);padding-top:2px}
-.work small{display:block;font-size:13px;line-height:1.6;color:var(--ash)}
-.bio p{margin:0 0 24px;max-width:64ch}
+.posts{max-width:96ch}
+.posts li{display:grid;grid-template-columns:10ch 40ch 1fr;gap:0 2ch}
+.posts time{color:var(--dim)}
+.posts small{font-size:inherit;color:var(--dim)}
+.work li{display:grid;grid-template-columns:4ch 2ch 26ch 1fr;gap:0 2ch}
+.work li::before{content:"├──";color:var(--faint)}
+.work li:last-child::before{content:"└──"}
+.work .n{color:var(--dim)}
+.work small{font-size:inherit;color:var(--dim)}
+.tree-root{color:var(--faint)}
+.bio p{margin:0 0 var(--row);max-width:72ch}
 .bio p:last-child{margin-bottom:0}
-.contact p{margin:0 0 8px}
-footer{margin-top:96px;border-top:1px solid var(--rule);padding:32px 0 64px;font-size:13px;line-height:1.6;color:var(--ash);display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.contact p{margin:0}
+footer{margin-top:calc(var(--row) * 3);padding:0 0 calc(var(--row) * 2);color:var(--dim)}
+footer .hr{margin-bottom:var(--row)}
+footer p{margin:0}
 @media (max-width:720px){
-  :root{--col:calc(100% - 40px)}
-  .top{padding:20px 0;flex-direction:column;align-items:flex-start;gap:8px}
-  .top nav{gap:16px;flex-wrap:wrap}
-  .hero{padding-top:16px}
-  .box{height:400px}
-  .cap{flex-direction:column;gap:0}
-  .hero h1{font-size:20px;margin-top:40px}
-  .hero .pad{height:56px}
-  .grid{grid-template-columns:1fr;gap:20px;padding-top:56px}
-  .posts li{grid-template-columns:1fr;gap:0}
-  .work{grid-template-columns:1fr}
-  .work li:nth-last-child(-n+2){border-bottom:0}
-  .work li:last-child{border-bottom:1px solid var(--rule)}
-  footer{margin-top:56px}
+  .top{flex-direction:column;align-items:flex-start;gap:0}
+  .top nav{flex-wrap:wrap}
+  .box{height:390px}
+  .cap .cmt{display:block;white-space:normal}
+  .hero h1{font-size:24px;line-height:30px}
+  .prompt{white-space:normal}
+  .posts li{grid-template-columns:1fr;margin-bottom:var(--row)}
+  .posts li:last-child{margin-bottom:0}
+  .work li{grid-template-columns:4ch 2ch 1fr}
+  .work small{grid-column:1 / -1;position:relative;padding-left:8ch}
+  .work small::before{content:"│";position:absolute;left:0;color:var(--faint)}
+  .work li:last-child small::before{content:""}
 }
 </style>
 </head>
@@ -81,76 +101,83 @@ footer{margin-top:96px;border-top:1px solid var(--rule);padding:32px 0 64px;font
 <header class="wrap top">
   <a href="/">Boy Maas <span class="dim">(m4nic)</span></a>
   <nav>
-    <a href="#posts">Posts</a>
-    <a href="#work">Work</a>
-    <a href="#bio">Bio</a>
-    <a href="#contact">Contact</a>
+    <a href="#posts">posts<span class="dim">/</span></a>
+    <a href="#work">work<span class="dim">/</span></a>
+    <a href="#bio">bio</a>
+    <a href="#contact">contact</a>
     <button id="snd" type="button" aria-pressed="false">sound off</button>
   </nav>
 </header>
 <main>
   <section class="hero wrap">
     <div class="box" id="box"><canvas id="hero" aria-label="m4nic, a logo made of cells that physics plays with"></canvas></div>
-    <p class="cap"><b id="sysname">bouncy balls</b><span class="dim" id="sysrole">cursor pushes</span></p>
+    <p class="cap"><span class="path">~</span> <span class="sig">$</span> m4nic <b id="sysname">bouncy-balls</b>  <span class="cmt"><span id="sysrole">cursor pushes</span> <span class="cur" aria-hidden="true">█</span></span></p>
     <h1>Entrepreneur, programmer, designer, philosopher.</h1>
     <p class="lede">Terminal generation. Complex dynamic systems, asynchronous agents, and a small development studio in Den Haag since March 1998.</p>
     <p class="whisper" id="whisper" hidden>sandbox open: keys 1 to 9 pick a system, space restarts it, type play to close</p>
-    <div class="pad"></div>
+    <div class="hr" aria-hidden="true">────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────</div>
   </section>
-  <section id="posts" class="wrap grid">
-    <div class="label"><b>Posts</b>17 entries<br>2010 to 2015, newest first</div>
-    <ol class="posts">
-      <li><time>2015-10-31</time><a href="/posts/2015-10-31-coffeescript-screencasts.html">CoffeeScript screencasts<small>Overflowing backend technologies in the frontend</small></a></li>
-      <li><time>2015-08-05</time><a href="/posts/2015-08-05-clojure-screencasts.html">Clojure screencasts<small>what gets measured, gets managed</small></a></li>
-      <li><time>2012-07-03</time><a href="/posts/2012-07-03-adam-curtis-all-watched-over-by-machines-of-loving-grace.html">An alternative view on the foundations of our society<small>All watched over by machines of loving grace</small></a></li>
-      <li><time>2012-06-13</time><a href="/posts/2012-06-13-ruby-exceptions-benchmark.html">Ruby exception handling benchmark<small>Getting into the nitty gritty details</small></a></li>
-      <li><time>2012-02-10</time><a href="/posts/2012-02-10-ruby-org-mode-parser-development-log.html">Ruby org-mode parser development log<small>Development log</small></a></li>
-      <li><time>2012-01-29</time><a href="/posts/2012-01-29-software-architecture.html">Software architecture<small>Elements of software architecture</small></a></li>
-      <li><time>2011-09-07</time><a href="/posts/2011-09-07-kinetic-typography.html">Kinetic Typography<small>How movement conveys emotion</small></a></li>
-      <li><time>2011-02-20</time><a href="/posts/2011-02-20-rails-experiences.html">Rails experiences<small>Reasons why rails development seems so productive</small></a></li>
-      <li><time>2010-06-15</time><a href="/posts/2010-06-15-clocks-portmortem.html">Clocks webdsl postmortem<small>Designing a webdsl in clojure</small></a></li>
-      <li><time>2010-05-24</time><a href="/posts/2010-05-24-webapps-haskell-loli-hack.html">Hack, Loli, the rake/webpy for Haskell?<small>A minimalistic DSL to webapps in Haskell</small></a></li>
-      <li><time>2010-05-20</time><a href="/posts/2010-05-20-currying-in-scheme.html">Currying in scheme<small>define-syntax beauty</small></a></li>
-      <li><time>2010-05-15</time><a href="/posts/2010-05-15-web-apps-in-plt-scheme.html">Web-apps with PLT-Scheme, snoozing while dispatching?<small>Web apps in scheme, too good to be true?</small></a></li>
-      <li><time>2010-05-14</time><a href="/posts/2010-05-14-scheme-call-with-current-continuation.html">Ying Yang call/cc or the call-with-current-continuation puzzle<small>interesting scheme paradigm</small></a></li>
-      <li><time>2010-05-11</time><a href="/posts/2010-05-11-opengl-plt-scheme-programming.html">Live coding OpenGl in PLT-Scheme<small>Evolutionary coding in scheme</small></a></li>
-      <li><time>2010-05-04</time><a href="/posts/2010-05-04-html5-canvas-element.html">Playing around with the HTML5 Canvas element<small>What is the fuzz all about</small></a></li>
-      <li><time>2010-02-17</time><a href="/posts/2010-02-17-procedural-generation.html">Procedural Generation, a way to go?<small>The art of generating content procedurally</small></a></li>
-      <li><time>2010-02-09</time><a href="/posts/2010-02-09-a-haskel-blog.html">Hakyll blog setup<small>Setting up a maintainable blog using haskell</small></a></li>
+  <section id="posts" class="wrap sec">
+    <h2 class="prompt"><span class="path">~/posts</span> <span class="sig">$</span> ls -lt</h2>
+    <p class="cmt">17 entries, 2010 to 2015, newest first</p>
+    <ol class="posts out">
+      <li><time>2015-10-31</time><a href="/posts/2015-10-31-coffeescript-screencasts.html">CoffeeScript screencasts</a><small>Overflowing backend technologies in the frontend</small></li>
+      <li><time>2015-08-05</time><a href="/posts/2015-08-05-clojure-screencasts.html">Clojure screencasts</a><small>what gets measured, gets managed</small></li>
+      <li><time>2012-07-03</time><a href="/posts/2012-07-03-adam-curtis-all-watched-over-by-machines-of-loving-grace.html">An alternative view on the foundations of our society</a><small>All watched over by machines of loving grace</small></li>
+      <li><time>2012-06-13</time><a href="/posts/2012-06-13-ruby-exceptions-benchmark.html">Ruby exception handling benchmark</a><small>Getting into the nitty gritty details</small></li>
+      <li><time>2012-02-10</time><a href="/posts/2012-02-10-ruby-org-mode-parser-development-log.html">Ruby org-mode parser development log</a><small>Development log</small></li>
+      <li><time>2012-01-29</time><a href="/posts/2012-01-29-software-architecture.html">Software architecture</a><small>Elements of software architecture</small></li>
+      <li><time>2011-09-07</time><a href="/posts/2011-09-07-kinetic-typography.html">Kinetic Typography</a><small>How movement conveys emotion</small></li>
+      <li><time>2011-02-20</time><a href="/posts/2011-02-20-rails-experiences.html">Rails experiences</a><small>Reasons why rails development seems so productive</small></li>
+      <li><time>2010-06-15</time><a href="/posts/2010-06-15-clocks-portmortem.html">Clocks webdsl postmortem</a><small>Designing a webdsl in clojure</small></li>
+      <li><time>2010-05-24</time><a href="/posts/2010-05-24-webapps-haskell-loli-hack.html">Hack, Loli, the rake/webpy for Haskell?</a><small>A minimalistic DSL to webapps in Haskell</small></li>
+      <li><time>2010-05-20</time><a href="/posts/2010-05-20-currying-in-scheme.html">Currying in scheme</a><small>define-syntax beauty</small></li>
+      <li><time>2010-05-15</time><a href="/posts/2010-05-15-web-apps-in-plt-scheme.html">Web-apps with PLT-Scheme, snoozing while dispatching?</a><small>Web apps in scheme, too good to be true?</small></li>
+      <li><time>2010-05-14</time><a href="/posts/2010-05-14-scheme-call-with-current-continuation.html">Ying Yang call/cc or the call-with-current-continuation puzzle</a><small>interesting scheme paradigm</small></li>
+      <li><time>2010-05-11</time><a href="/posts/2010-05-11-opengl-plt-scheme-programming.html">Live coding OpenGl in PLT-Scheme</a><small>Evolutionary coding in scheme</small></li>
+      <li><time>2010-05-04</time><a href="/posts/2010-05-04-html5-canvas-element.html">Playing around with the HTML5 Canvas element</a><small>What is the fuzz all about</small></li>
+      <li><time>2010-02-17</time><a href="/posts/2010-02-17-procedural-generation.html">Procedural Generation, a way to go?</a><small>The art of generating content procedurally</small></li>
+      <li><time>2010-02-09</time><a href="/posts/2010-02-09-a-haskel-blog.html">Hakyll blog setup</a><small>Setting up a maintainable blog using haskell</small></li>
     </ol>
   </section>
-  <section id="work" class="wrap grid">
-    <div class="label"><b>Work</b>Eight projects<br>concept, design and code</div>
-    <ol class="work">
-      <li><span class="n">01</span><a href="/portfolio/07_stockers.html">Stockers<small>EduConcepts</small></a></li>
-      <li><span class="n">02</span><a href="/portfolio/06_keygamesnetwork.html">Keygamesnetwork<small>Spele.nl, I-Med</small></a></li>
-      <li><span class="n">03</span><a href="/portfolio/05_gamebattle.html">Gamebattle<small>AD, Spele.nl, WNF</small></a></li>
-      <li><span class="n">04</span><a href="/portfolio/04_transferspel.html">Transferspel<small>De Telegraaf</small></a></li>
-      <li><span class="n">05</span><a href="/portfolio/03_nvq.html">Nationale Voetbal Quiz<small>Voetbal International</small></a></li>
-      <li><span class="n">06</span><a href="/portfolio/02_hitmasterv20.html">Hitmaster 2.0<small>Coca-Cola, Radio538 and Hitkrant</small></a></li>
-      <li><span class="n">07</span><a href="/portfolio/01_hitmasterv10.html">Hitmaster 1.0<small>Coca-Cola</small></a></li>
-      <li><span class="n">08</span><a href="/portfolio/00_freelance.html">Freelance projects<small>Highlights</small></a></li>
-    </ol>
+  <section id="work" class="wrap sec">
+    <h2 class="prompt"><span class="path">~/work</span> <span class="sig">$</span> tree</h2>
+    <p class="cmt">eight projects, concept, design and code</p>
+    <div class="out">
+      <div class="tree-root" aria-hidden="true">.</div>
+      <ol class="work">
+        <li><span class="n">01</span><a href="/portfolio/07_stockers.html">Stockers</a><small>EduConcepts</small></li>
+        <li><span class="n">02</span><a href="/portfolio/06_keygamesnetwork.html">Keygamesnetwork</a><small>Spele.nl, I-Med</small></li>
+        <li><span class="n">03</span><a href="/portfolio/05_gamebattle.html">Gamebattle</a><small>AD, Spele.nl, WNF</small></li>
+        <li><span class="n">04</span><a href="/portfolio/04_transferspel.html">Transferspel</a><small>De Telegraaf</small></li>
+        <li><span class="n">05</span><a href="/portfolio/03_nvq.html">Nationale Voetbal Quiz</a><small>Voetbal International</small></li>
+        <li><span class="n">06</span><a href="/portfolio/02_hitmasterv20.html">Hitmaster 2.0</a><small>Coca-Cola, Radio538 and Hitkrant</small></li>
+        <li><span class="n">07</span><a href="/portfolio/01_hitmasterv10.html">Hitmaster 1.0</a><small>Coca-Cola</small></li>
+        <li><span class="n">08</span><a href="/portfolio/00_freelance.html">Freelance projects</a><small>Highlights</small></li>
+      </ol>
+    </div>
   </section>
-  <section id="bio" class="wrap grid">
-    <div class="label"><b>Bio</b>Den Haag</div>
-    <div class="bio">
+  <section id="bio" class="wrap sec">
+    <h2 class="prompt"><span class="path">~</span> <span class="sig">$</span> cat bio</h2>
+    <p class="cmt">Den Haag</p>
+    <div class="bio out">
       <p>Boy Maas, m4nic on the boards. Entrepreneur, programmer, designer, philosopher and AI enthusiast. Vim, chess, martial arts and music fill the hours between.</p>
       <p>Languages, in order of affection: haskell, scheme, ruby, python, clojure, perl, lisp, C/C++, assembler.</p>
       <p>Loves: complex dynamic systems, asynchronous agents, science, magic, mystery, colour, sculpture, rain, food, exercise, human behaviour, crypto, hermetism, meditation, hypnosis.</p>
       <p>I run a small development studio in Den Haag, founded in March 1998. Clients include Voetbal International, Coca-Cola, Sponsorloterij, De Telegraaf and Telfort BV.</p>
     </div>
   </section>
-  <section id="contact" class="wrap grid">
-    <div class="label"><b>Contact</b></div>
-    <div class="contact">
+  <section id="contact" class="wrap sec">
+    <h2 class="prompt"><span class="path">~</span> <span class="sig">$</span> cat contact</h2>
+    <div class="contact out">
       <p>boy.maas (at) gmail.com</p>
       <p><a href="https://github.com/boymaas">github.com/boymaas</a></p>
     </div>
   </section>
   <footer class="wrap">
-    <span>Boy Maas, Den Haag. Studio est. March 1998.</span>
-    <span>The logo is a toy: nine systems, drawn at random. Break one, it heals. The sky drifts on its own.</span>
+    <div class="hr" aria-hidden="true">────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────</div>
+    <p>Boy Maas, Den Haag. Studio est. March 1998.</p>
+    <p>The logo is a toy: nine systems, drawn at random. Break one, it heals. The sky drifts on its own.</p>
   </footer>
 </main>
 <script>
@@ -999,7 +1026,7 @@ function start(i){
   curIdx = i; cur = systems[i]; sysT = 0; state = 'run';
   cells.forEach(function(c){ c.a = 1; c.k = 0; });
   cur.init();
-  nameEl.textContent = cur.name; roleEl.textContent = cur.role;
+  nameEl.textContent = cur.name.replace(/ /g, '-'); roleEl.textContent = cur.role;
   sound('switch', i);
 }
 function pick(){ var i; do { i = Math.floor(rng() * systems.length); } while (i === curIdx); start(i); }
