@@ -6,153 +6,231 @@
 <title>Boy Maas (m4nic)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&text=%E2%94%80%E2%94%82%E2%94%8C%E2%94%90%E2%94%94%E2%94%98%E2%94%9C%E2%94%A4%E2%96%88&display=swap" rel="stylesheet">
 <style>
 :root{
   --ground:#0B1230; --star:#ECE7F5; --ash:#9C98B4; --rule:#393C59;
   --cobalt:#4E8CFF; --teal:#3ED3C6; --violet:#9A7CFF; --magenta:#E866B2; --amber:#F6B44A; --coral:#FF6E57;
-  --col:min(1168px, 100% - 48px);
+  /* terminal roles */
+  --dim:var(--ash); --normal:#C4C0D5; --bright:var(--star);
+  --frame:#535572; --bar:#24407E;
+  --fs:15px; --lh:24px; --cols:134; --lcols:72; --rcols:60;
 }
 *{box-sizing:border-box}
 html{background:var(--ground)}
-body{margin:0;background:var(--ground);color:var(--star);font:400 16px/1.6 "IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;-webkit-font-smoothing:antialiased}
+body{margin:0;background:var(--ground);color:var(--normal);font:400 var(--fs)/var(--lh) "JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;-webkit-font-smoothing:antialiased;padding-bottom:calc(var(--lh) * 3)}
 a{color:inherit;text-decoration:none}
 a:hover{color:var(--teal)}
 canvas{display:block}
 #sky{position:fixed;inset:0;width:100vw;height:100vh;z-index:0;pointer-events:none}
-header,main{position:relative;z-index:1}
-.wrap{width:var(--col);margin:0 auto}
-.dim{color:var(--ash)}
-/* header */
-.top{display:flex;justify-content:space-between;align-items:baseline;padding:24px 0;font-size:13px;line-height:1.6}
-.top nav{display:flex;gap:24px;align-items:baseline}
-.top button{font:inherit;color:var(--ash);background:none;border:0;padding:0;cursor:pointer}
+header,main,.hints{position:relative;z-index:1}
+.wrap{width:calc(var(--cols) * 1ch);margin:0 auto}
+.dim{color:var(--dim)}
+.bright{color:var(--bright)}
+b{font-weight:400}
+/* top line */
+.top{display:flex;justify-content:space-between;align-items:baseline;padding:var(--lh) 0;white-space:pre}
+.top .who{color:var(--bright)}
+.top nav{display:flex;gap:3ch;align-items:baseline}
+.top nav a{color:var(--normal)}
+.top button{font:inherit;color:var(--dim);background:none;border:0;padding:0;cursor:pointer}
 .top button:hover{color:var(--teal)}
 .top button.on{color:var(--amber)}
-/* hero: the toy box, a faint boundary in the field */
-.hero{padding:40px 0 0}
-.box{height:520px;border:1px solid var(--rule);display:flex;align-items:center;justify-content:center;cursor:crosshair;touch-action:pan-y;overflow:hidden}
-.cap{display:flex;justify-content:space-between;gap:16px;font-size:13px;line-height:1.6;margin:8px 0 0}
-.cap b{font-weight:400}
-.hero h1{font-size:26px;line-height:1.3;font-weight:400;text-align:center;margin:56px auto 16px;max-width:36ch}
-.hero .lede{font-size:16px;color:var(--ash);text-align:center;margin:0 auto;max-width:56ch}
-.hero .whisper{font-size:13px;color:var(--teal);text-align:center;margin:24px 0 0;min-height:21px}
-.hero .whisper[hidden]{display:block;visibility:hidden}
-.hero .pad{height:72px;border-bottom:1px solid var(--rule)}
-/* sections */
-.grid{display:grid;grid-template-columns:3fr 9fr;gap:32px;padding:96px 0 0}
-.label{font-size:13px;line-height:1.6;color:var(--ash)}
-.label b{font-weight:400;color:var(--star);display:block;font-size:20px;line-height:1.3;margin-bottom:8px}
+/* panes: borders are characters on the grid */
+.pane{position:relative;min-width:0;outline:none;scroll-margin-top:var(--lh);scroll-margin-bottom:calc(var(--lh) * 3)}
+.pane .bt,.pane .bb{display:flex;white-space:pre;color:var(--frame);height:var(--lh);overflow:hidden}
+.pane .ln{flex:1 1 0;min-width:1ch;overflow:hidden}
+.pane .bl,.pane .br{position:absolute;top:calc(var(--lh) / 2);bottom:calc(var(--lh) / 2);width:1ch;overflow:hidden;white-space:pre;line-height:1.2;color:var(--frame)}
+.pane .bl{left:0}
+.pane .br{right:0}
+.pane .tt{color:var(--bright)}
+.pane .tt::before{content:"[ ";color:var(--dim)}
+.pane .tt::after{content:" ]";color:var(--dim)}
+.pane .meta{color:var(--dim);min-width:0;overflow:hidden;text-overflow:ellipsis}
+.pane .in{padding:var(--lh) 2ch}
+.pane.focus .bt,.pane.focus .bb,.pane.focus .bl,.pane.focus .br{color:var(--ash)}
+.pane.focus .tt{color:var(--teal);font-weight:700}
+.stack{display:flex;flex-direction:column;gap:calc(var(--lh) * 2)}
+.cols{display:grid;grid-template-columns:calc(var(--lcols) * 1ch) calc(var(--rcols) * 1ch);gap:calc(var(--lh) * 2) 2ch;align-items:start}
+.cols .stack{min-width:0}
+/* [ m4nic ]: the toy, the caption in the bottom border */
+.box{height:520px;display:flex;align-items:center;justify-content:center;cursor:crosshair;touch-action:pan-y;overflow:hidden}
+#m4nic .in{padding:0 1ch}
+#m4nic .bb #sysname{color:var(--bright)}
+#m4nic .bb #sysrole{color:var(--dim);min-width:0;overflow:hidden;text-overflow:ellipsis}
+/* [ whoami ]: prompts, answers, the cursor */
+.prompt{color:var(--dim)}
+.prompt .ps{color:var(--magenta)}
+.prompt .cmd{color:var(--normal)}
+.whoami h1{font-size:20px;line-height:32px;font-weight:700;color:var(--bright);margin:0;max-width:60ch}
+.whoami .lede{margin:0 0 var(--lh);max-width:64ch}
+.cursor{color:var(--bright);animation:blink 1.08s steps(1,end) infinite}
+@keyframes blink{50%{opacity:0}}
+/* listings */
 ol{list-style:none;margin:0;padding:0}
-.posts li{display:grid;grid-template-columns:11ch 1fr;gap:24px;padding:12px 0;border-top:1px solid var(--rule)}
-.posts li:last-child{border-bottom:1px solid var(--rule)}
-.posts time{font-size:13px;line-height:1.6;color:var(--ash);padding-top:2px}
-.posts a{display:block}
-.posts small{display:block;font-size:13px;line-height:1.6;color:var(--ash)}
-.work{display:grid;grid-template-columns:1fr 1fr;gap:0 32px}
-.work li{display:grid;grid-template-columns:3ch 1fr;gap:16px;padding:12px 0;border-top:1px solid var(--rule)}
-.work li:nth-last-child(-n+2){border-bottom:1px solid var(--rule)}
-.work .n{font-size:13px;line-height:1.6;color:var(--ash);padding-top:2px}
-.work small{display:block;font-size:13px;line-height:1.6;color:var(--ash)}
-.bio p{margin:0 0 24px;max-width:64ch}
+.list li{position:relative;display:grid;column-gap:2ch;align-items:baseline;white-space:nowrap}
+.list li::before{content:" ";grid-column:1;color:var(--frame)}
+.list li.cur::before{content:">";color:var(--amber)}
+.list.focus li.cur{background:var(--bar)}
+.list.focus li.cur a{color:var(--bright)}
+.list.focus li.cur small,.list.focus li.cur time,.list.focus li.cur .n{color:var(--normal)}
+.list a,.list small,.list time,.list .n{overflow:hidden;text-overflow:ellipsis;min-width:0}
+.list time,.list small,.list .n{color:var(--dim);font-size:inherit}
+.list a{color:var(--normal)}
+.list a:hover{color:var(--teal)}
+.posts li{grid-template-columns:1ch 10ch minmax(0,62ch) minmax(0,1fr)}
+.work li{grid-template-columns:1ch 2ch 24ch minmax(0,1fr)}
+.mail li{grid-template-columns:1ch minmax(0,1fr)}
+.bio p{margin:0 0 var(--lh);max-width:64ch}
 .bio p:last-child{margin-bottom:0}
-.contact p{margin:0 0 8px}
-footer{margin-top:96px;border-top:1px solid var(--rule);padding:32px 0 64px;font-size:13px;line-height:1.6;color:var(--ash);display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
+/* colophon */
+.colophon{margin-top:calc(var(--lh) * 2);color:var(--dim);display:flex;justify-content:space-between;gap:4ch;flex-wrap:wrap;font-size:13px}
+/* keyboard hints, fixed like a status line */
+.hints{position:fixed;left:0;right:0;bottom:0;font-size:13px;line-height:var(--lh);color:var(--dim);white-space:pre;background:rgba(11,18,48,.9)}
+.hints .wrap{display:flex;justify-content:space-between;gap:2ch;padding:calc(var(--lh) / 4) 0}
+.hints .keys{overflow:hidden;text-overflow:ellipsis}
+.hints .keys b{color:var(--bright)}
+.hints .pos{white-space:pre}
+.hints #whisper{color:var(--teal)}
+.hints:has(#whisper:not([hidden])) .keys{display:none}
 @media (max-width:720px){
-  :root{--col:calc(100% - 40px)}
-  .top{padding:20px 0;flex-direction:column;align-items:flex-start;gap:8px}
-  .top nav{gap:16px;flex-wrap:wrap}
-  .hero{padding-top:16px}
+  :root{--fs:14px;--lh:22px}
+  body{padding-bottom:calc(var(--lh) * 3)}
+  .top{flex-direction:column;align-items:flex-start;gap:0;padding:calc(var(--lh) / 2) 0 var(--lh)}
+  .top nav{gap:2ch;flex-wrap:wrap}
   .box{height:400px}
-  .cap{flex-direction:column;gap:0}
-  .hero h1{font-size:20px;margin-top:40px}
-  .hero .pad{height:56px}
-  .grid{grid-template-columns:1fr;gap:20px;padding-top:56px}
-  .posts li{grid-template-columns:1fr;gap:0}
-  .work{grid-template-columns:1fr}
-  .work li:nth-last-child(-n+2){border-bottom:0}
-  .work li:last-child{border-bottom:1px solid var(--rule)}
-  footer{margin-top:56px}
+  #m4nic .bb .ln{min-width:0}
+  #m4nic .bb #sysrole{flex-shrink:0}
+  #m4nic .bb .bbx{display:none}
+  .pane .meta{display:none}
+  .stack{gap:var(--lh)}
+  .cols{grid-template-columns:1fr;gap:var(--lh)}
+  .whoami h1{font-size:18px;line-height:28px}
+  .posts li{grid-template-columns:1ch auto minmax(0,1fr);row-gap:0}
+  .posts li a{grid-column:2 / 4;grid-row:1;white-space:normal}
+  .posts li time{grid-column:2;grid-row:2}
+  .posts li small{grid-column:3;grid-row:2;white-space:normal}
+  .posts li + li{margin-top:calc(var(--lh) / 2)}
+  .work li{grid-template-columns:1ch 2ch minmax(0,1fr)}
+  .work li small{grid-column:3;grid-row:2;white-space:normal}
+  .work li + li{margin-top:calc(var(--lh) / 2)}
+  .hints .pos,.hints .kb{display:none}
+  .colophon{flex-direction:column;gap:0}
 }
 </style>
 </head>
 <body>
 <canvas id="sky" aria-hidden="true"></canvas>
 <header class="wrap top">
-  <a href="/">Boy Maas <span class="dim">(m4nic)</span></a>
+  <a class="who" href="/">Boy Maas <span class="dim">(m4nic)</span></a>
   <nav>
-    <a href="#posts">Posts</a>
-    <a href="#work">Work</a>
-    <a href="#bio">Bio</a>
-    <a href="#contact">Contact</a>
+    <a href="#posts">posts</a>
+    <a href="#work">work</a>
+    <a href="#bio">bio</a>
+    <a href="#mail">mail</a>
     <button id="snd" type="button" aria-pressed="false">sound off</button>
   </nav>
 </header>
-<main>
-  <section class="hero wrap">
-    <div class="box" id="box"><canvas id="hero" aria-label="m4nic, a logo made of cells that physics plays with"></canvas></div>
-    <p class="cap"><b id="sysname">bouncy balls</b><span class="dim" id="sysrole">cursor pushes</span></p>
-    <h1>Entrepreneur, programmer, designer, philosopher.</h1>
-    <p class="lede">Terminal generation. Complex dynamic systems, asynchronous agents, and a small development studio in Den Haag since March 1998.</p>
-    <p class="whisper" id="whisper" hidden>sandbox open: keys 1 to 9 pick a system, space restarts it, type play to close</p>
-    <div class="pad"></div>
+<main class="wrap stack">
+  <section class="pane" id="m4nic" tabindex="0" aria-label="m4nic">
+    <div class="bt"><span>┌─</span><span class="tt">m4nic</span><span>─</span><span class="meta"> nine systems, drawn at random </span><span class="ln"></span><span>┐</span></div>
+    <div class="bl"></div><div class="br"></div>
+    <div class="in">
+      <div class="box" id="box"><canvas id="hero" aria-label="m4nic, a logo made of cells that physics plays with"></canvas></div>
+    </div>
+    <div class="bb"><span>└</span><span class="bbx">─</span><span> </span><b id="sysname">bouncy balls</b><span> </span><span class="ln"></span><span> </span><span class="dim" id="sysrole">cursor pushes</span><span> </span><span class="bbx">─</span><span>┘</span></div>
   </section>
-  <section id="posts" class="wrap grid">
-    <div class="label"><b>Posts</b>17 entries<br>2010 to 2015, newest first</div>
+  <section class="pane whoami" id="whoami" tabindex="0" aria-label="whoami">
+    <div class="bt"><span>┌─</span><span class="tt">whoami</span><span class="ln"></span><span>┐</span></div>
+    <div class="bl"></div><div class="br"></div>
+    <div class="in">
+      <p class="prompt" style="margin:0"><span class="ps">$</span> <span class="cmd">whoami</span></p>
+      <h1>Entrepreneur, programmer, designer, philosopher.</h1>
+      <p class="lede">Terminal generation. Complex dynamic systems, asynchronous agents, and a small development studio in Den Haag since March 1998.</p>
+      <p class="prompt" style="margin:0"><span class="ps">$</span> <span class="cursor">█</span></p>
+    </div>
+    <div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div>
+  </section>
+  <section class="pane list" id="posts" tabindex="0" aria-label="posts">
+    <div class="bt"><span>┌─</span><span class="tt">posts</span><span>─</span><span class="meta"> 17 entries, 2010 to 2015, newest first </span><span class="ln"></span><span>┐</span></div>
+    <div class="bl"></div><div class="br"></div>
+    <div class="in">
     <ol class="posts">
-      <li><time>2015-10-31</time><a href="/posts/2015-10-31-coffeescript-screencasts.html">CoffeeScript screencasts<small>Overflowing backend technologies in the frontend</small></a></li>
-      <li><time>2015-08-05</time><a href="/posts/2015-08-05-clojure-screencasts.html">Clojure screencasts<small>what gets measured, gets managed</small></a></li>
-      <li><time>2012-07-03</time><a href="/posts/2012-07-03-adam-curtis-all-watched-over-by-machines-of-loving-grace.html">An alternative view on the foundations of our society<small>All watched over by machines of loving grace</small></a></li>
-      <li><time>2012-06-13</time><a href="/posts/2012-06-13-ruby-exceptions-benchmark.html">Ruby exception handling benchmark<small>Getting into the nitty gritty details</small></a></li>
-      <li><time>2012-02-10</time><a href="/posts/2012-02-10-ruby-org-mode-parser-development-log.html">Ruby org-mode parser development log<small>Development log</small></a></li>
-      <li><time>2012-01-29</time><a href="/posts/2012-01-29-software-architecture.html">Software architecture<small>Elements of software architecture</small></a></li>
-      <li><time>2011-09-07</time><a href="/posts/2011-09-07-kinetic-typography.html">Kinetic Typography<small>How movement conveys emotion</small></a></li>
-      <li><time>2011-02-20</time><a href="/posts/2011-02-20-rails-experiences.html">Rails experiences<small>Reasons why rails development seems so productive</small></a></li>
-      <li><time>2010-06-15</time><a href="/posts/2010-06-15-clocks-portmortem.html">Clocks webdsl postmortem<small>Designing a webdsl in clojure</small></a></li>
-      <li><time>2010-05-24</time><a href="/posts/2010-05-24-webapps-haskell-loli-hack.html">Hack, Loli, the rake/webpy for Haskell?<small>A minimalistic DSL to webapps in Haskell</small></a></li>
-      <li><time>2010-05-20</time><a href="/posts/2010-05-20-currying-in-scheme.html">Currying in scheme<small>define-syntax beauty</small></a></li>
-      <li><time>2010-05-15</time><a href="/posts/2010-05-15-web-apps-in-plt-scheme.html">Web-apps with PLT-Scheme, snoozing while dispatching?<small>Web apps in scheme, too good to be true?</small></a></li>
-      <li><time>2010-05-14</time><a href="/posts/2010-05-14-scheme-call-with-current-continuation.html">Ying Yang call/cc or the call-with-current-continuation puzzle<small>interesting scheme paradigm</small></a></li>
-      <li><time>2010-05-11</time><a href="/posts/2010-05-11-opengl-plt-scheme-programming.html">Live coding OpenGl in PLT-Scheme<small>Evolutionary coding in scheme</small></a></li>
-      <li><time>2010-05-04</time><a href="/posts/2010-05-04-html5-canvas-element.html">Playing around with the HTML5 Canvas element<small>What is the fuzz all about</small></a></li>
-      <li><time>2010-02-17</time><a href="/posts/2010-02-17-procedural-generation.html">Procedural Generation, a way to go?<small>The art of generating content procedurally</small></a></li>
-      <li><time>2010-02-09</time><a href="/posts/2010-02-09-a-haskel-blog.html">Hakyll blog setup<small>Setting up a maintainable blog using haskell</small></a></li>
+      <li><time>2015-10-31</time><a href="/posts/2015-10-31-coffeescript-screencasts.html">CoffeeScript screencasts</a><small>Overflowing backend technologies in the frontend</small></li>
+      <li><time>2015-08-05</time><a href="/posts/2015-08-05-clojure-screencasts.html">Clojure screencasts</a><small>what gets measured, gets managed</small></li>
+      <li><time>2012-07-03</time><a href="/posts/2012-07-03-adam-curtis-all-watched-over-by-machines-of-loving-grace.html">An alternative view on the foundations of our society</a><small>All watched over by machines of loving grace</small></li>
+      <li><time>2012-06-13</time><a href="/posts/2012-06-13-ruby-exceptions-benchmark.html">Ruby exception handling benchmark</a><small>Getting into the nitty gritty details</small></li>
+      <li><time>2012-02-10</time><a href="/posts/2012-02-10-ruby-org-mode-parser-development-log.html">Ruby org-mode parser development log</a><small>Development log</small></li>
+      <li><time>2012-01-29</time><a href="/posts/2012-01-29-software-architecture.html">Software architecture</a><small>Elements of software architecture</small></li>
+      <li><time>2011-09-07</time><a href="/posts/2011-09-07-kinetic-typography.html">Kinetic Typography</a><small>How movement conveys emotion</small></li>
+      <li><time>2011-02-20</time><a href="/posts/2011-02-20-rails-experiences.html">Rails experiences</a><small>Reasons why rails development seems so productive</small></li>
+      <li><time>2010-06-15</time><a href="/posts/2010-06-15-clocks-portmortem.html">Clocks webdsl postmortem</a><small>Designing a webdsl in clojure</small></li>
+      <li><time>2010-05-24</time><a href="/posts/2010-05-24-webapps-haskell-loli-hack.html">Hack, Loli, the rake/webpy for Haskell?</a><small>A minimalistic DSL to webapps in Haskell</small></li>
+      <li><time>2010-05-20</time><a href="/posts/2010-05-20-currying-in-scheme.html">Currying in scheme</a><small>define-syntax beauty</small></li>
+      <li><time>2010-05-15</time><a href="/posts/2010-05-15-web-apps-in-plt-scheme.html">Web-apps with PLT-Scheme, snoozing while dispatching?</a><small>Web apps in scheme, too good to be true?</small></li>
+      <li><time>2010-05-14</time><a href="/posts/2010-05-14-scheme-call-with-current-continuation.html">Ying Yang call/cc or the call-with-current-continuation puzzle</a><small>interesting scheme paradigm</small></li>
+      <li><time>2010-05-11</time><a href="/posts/2010-05-11-opengl-plt-scheme-programming.html">Live coding OpenGl in PLT-Scheme</a><small>Evolutionary coding in scheme</small></li>
+      <li><time>2010-05-04</time><a href="/posts/2010-05-04-html5-canvas-element.html">Playing around with the HTML5 Canvas element</a><small>What is the fuzz all about</small></li>
+      <li><time>2010-02-17</time><a href="/posts/2010-02-17-procedural-generation.html">Procedural Generation, a way to go?</a><small>The art of generating content procedurally</small></li>
+      <li><time>2010-02-09</time><a href="/posts/2010-02-09-a-haskel-blog.html">Hakyll blog setup</a><small>Setting up a maintainable blog using haskell</small></li>
     </ol>
-  </section>
-  <section id="work" class="wrap grid">
-    <div class="label"><b>Work</b>Eight projects<br>concept, design and code</div>
-    <ol class="work">
-      <li><span class="n">01</span><a href="/portfolio/07_stockers.html">Stockers<small>EduConcepts</small></a></li>
-      <li><span class="n">02</span><a href="/portfolio/06_keygamesnetwork.html">Keygamesnetwork<small>Spele.nl, I-Med</small></a></li>
-      <li><span class="n">03</span><a href="/portfolio/05_gamebattle.html">Gamebattle<small>AD, Spele.nl, WNF</small></a></li>
-      <li><span class="n">04</span><a href="/portfolio/04_transferspel.html">Transferspel<small>De Telegraaf</small></a></li>
-      <li><span class="n">05</span><a href="/portfolio/03_nvq.html">Nationale Voetbal Quiz<small>Voetbal International</small></a></li>
-      <li><span class="n">06</span><a href="/portfolio/02_hitmasterv20.html">Hitmaster 2.0<small>Coca-Cola, Radio538 and Hitkrant</small></a></li>
-      <li><span class="n">07</span><a href="/portfolio/01_hitmasterv10.html">Hitmaster 1.0<small>Coca-Cola</small></a></li>
-      <li><span class="n">08</span><a href="/portfolio/00_freelance.html">Freelance projects<small>Highlights</small></a></li>
-    </ol>
-  </section>
-  <section id="bio" class="wrap grid">
-    <div class="label"><b>Bio</b>Den Haag</div>
-    <div class="bio">
-      <p>Boy Maas, m4nic on the boards. Entrepreneur, programmer, designer, philosopher and AI enthusiast. Vim, chess, martial arts and music fill the hours between.</p>
-      <p>Languages, in order of affection: haskell, scheme, ruby, python, clojure, perl, lisp, C/C++, assembler.</p>
-      <p>Loves: complex dynamic systems, asynchronous agents, science, magic, mystery, colour, sculpture, rain, food, exercise, human behaviour, crypto, hermetism, meditation, hypnosis.</p>
-      <p>I run a small development studio in Den Haag, founded in March 1998. Clients include Voetbal International, Coca-Cola, Sponsorloterij, De Telegraaf and Telfort BV.</p>
     </div>
+    <div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div>
   </section>
-  <section id="contact" class="wrap grid">
-    <div class="label"><b>Contact</b></div>
-    <div class="contact">
-      <p>boy.maas (at) gmail.com</p>
-      <p><a href="https://github.com/boymaas">github.com/boymaas</a></p>
+  <div class="cols">
+    <div class="stack">
+      <section class="pane list" id="work" tabindex="0" aria-label="work">
+        <div class="bt"><span>┌─</span><span class="tt">work</span><span>─</span><span class="meta"> eight projects, concept, design and code </span><span class="ln"></span><span>┐</span></div>
+        <div class="bl"></div><div class="br"></div>
+        <div class="in">
+        <ol class="work">
+          <li><span class="n">01</span><a href="/portfolio/07_stockers.html">Stockers</a><small>EduConcepts</small></li>
+          <li><span class="n">02</span><a href="/portfolio/06_keygamesnetwork.html">Keygamesnetwork</a><small>Spele.nl, I-Med</small></li>
+          <li><span class="n">03</span><a href="/portfolio/05_gamebattle.html">Gamebattle</a><small>AD, Spele.nl, WNF</small></li>
+          <li><span class="n">04</span><a href="/portfolio/04_transferspel.html">Transferspel</a><small>De Telegraaf</small></li>
+          <li><span class="n">05</span><a href="/portfolio/03_nvq.html">Nationale Voetbal Quiz</a><small>Voetbal International</small></li>
+          <li><span class="n">06</span><a href="/portfolio/02_hitmasterv20.html">Hitmaster 2.0</a><small>Coca-Cola, Radio538 and Hitkrant</small></li>
+          <li><span class="n">07</span><a href="/portfolio/01_hitmasterv10.html">Hitmaster 1.0</a><small>Coca-Cola</small></li>
+          <li><span class="n">08</span><a href="/portfolio/00_freelance.html">Freelance projects</a><small>Highlights</small></li>
+        </ol>
+        </div>
+        <div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div>
+      </section>
+      <section class="pane list" id="mail" tabindex="0" aria-label="mail">
+        <div class="bt"><span>┌─</span><span class="tt">mail</span><span>─</span><span class="meta"> contact </span><span class="ln"></span><span>┐</span></div>
+        <div class="bl"></div><div class="br"></div>
+        <div class="in">
+        <ol class="mail">
+          <li><span>boy.maas (at) gmail.com</span></li>
+          <li><a href="https://github.com/boymaas">github.com/boymaas</a></li>
+        </ol>
+        </div>
+        <div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div>
+      </section>
     </div>
-  </section>
-  <footer class="wrap">
+    <section class="pane" id="bio" tabindex="0" aria-label="bio">
+      <div class="bt"><span>┌─</span><span class="tt">bio</span><span>─</span><span class="meta"> Den Haag </span><span class="ln"></span><span>┐</span></div>
+      <div class="bl"></div><div class="br"></div>
+      <div class="in bio">
+        <p>Boy Maas, m4nic on the boards. Entrepreneur, programmer, designer, philosopher and AI enthusiast. Vim, chess, martial arts and music fill the hours between.</p>
+        <p>Languages, in order of affection: haskell, scheme, ruby, python, clojure, perl, lisp, C/C++, assembler.</p>
+        <p>Loves: complex dynamic systems, asynchronous agents, science, magic, mystery, colour, sculpture, rain, food, exercise, human behaviour, crypto, hermetism, meditation, hypnosis.</p>
+        <p>I run a small development studio in Den Haag, founded in March 1998. Clients include Voetbal International, Coca-Cola, Sponsorloterij, De Telegraaf and Telfort BV.</p>
+      </div>
+      <div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div>
+    </section>
+  </div>
+  <footer class="colophon">
     <span>Boy Maas, Den Haag. Studio est. March 1998.</span>
     <span>The logo is a toy: nine systems, drawn at random. Break one, it heals. The sky drifts on its own.</span>
   </footer>
 </main>
+<div class="hints"><div class="wrap">
+  <span class="keys"><b>j/k</b> move  <b>enter</b> open  <b>tab</b> pane  <span class="kb"><b>gg/G</b> ends  <b>esc</b> blur  </span><b>s</b> sound</span>
+  <span class="whisper" id="whisper" hidden>sandbox open: keys 1 to 9 pick a system, space restarts it, type play to close</span>
+  <span class="pos" id="pos"></span>
+</div></div>
 <script>
 (function () {
 'use strict';
@@ -1053,6 +1131,85 @@ window.addEventListener('resize', function(){
   if (Math.floor(bw / cp) === lastW && Math.floor(bh / cp) === lastH) return;
   layout(); lastW = W; lastH = H; start(curIdx); paint();
 });
+})();
+</script>
+<script>
+(function () {
+'use strict';
+/* ---------- the character grid ---------- */
+var root = document.documentElement;
+function grid(){
+  var probe = document.createElement('span');
+  probe.textContent = '0000000000';
+  probe.style.cssText = 'position:absolute;visibility:hidden;white-space:pre;font:inherit';
+  document.body.appendChild(probe);
+  var chw = probe.getBoundingClientRect().width / 10;
+  probe.remove();
+  var narrow = window.innerWidth <= 720;
+  var cols = Math.min(134, Math.floor((window.innerWidth - (narrow ? 32 : 48)) / chw));
+  var lcols = Math.min(72, Math.floor((cols - 2) * 0.54));
+  root.style.setProperty('--cols', cols);
+  root.style.setProperty('--lcols', lcols);
+  root.style.setProperty('--rcols', cols - 2 - lcols);
+}
+var lines = document.querySelectorAll('.pane .ln'), i;
+for (i = 0; i < lines.length; i++) lines[i].textContent = new Array(241).join('─');
+var sides = document.querySelectorAll('.pane .bl, .pane .br');
+for (i = 0; i < sides.length; i++) sides[i].textContent = new Array(401).join('│\n');
+grid();
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(grid);
+window.addEventListener('resize', grid);
+/* ---------- panes, focus, the highlight ---------- */
+var panes = Array.prototype.slice.call(document.querySelectorAll('.pane'));
+var pos = document.getElementById('pos');
+var focused = -1;
+function rowsOf(p){ return Array.prototype.slice.call(p.querySelectorAll('ol li')); }
+function curOf(p){ var rows = rowsOf(p), k = -1; rows.forEach(function(r, j){ if (r.classList.contains('cur')) k = j; }); return k; }
+function setCur(p, k, quiet){
+  var rows = rowsOf(p); if (!rows.length) return;
+  k = Math.max(0, Math.min(rows.length - 1, k));
+  rows.forEach(function(r, j){ r.classList.toggle('cur', j === k); });
+  if (!quiet) rows[k].scrollIntoView({ block:'nearest' });
+  status();
+}
+function status(){
+  if (focused < 0){ pos.textContent = ''; return; }
+  var p = panes[focused], rows = rowsOf(p), k = curOf(p);
+  pos.textContent = rows.length ? p.id + ' ' + (k + 1) + '/' + rows.length : p.id;
+}
+function focusPane(k, scroll){
+  panes.forEach(function(p, j){ p.classList.toggle('focus', j === k); });
+  focused = k;
+  if (k >= 0){
+    var p = panes[k];
+    if (document.activeElement !== p && !p.contains(document.activeElement)) p.focus({ preventScroll:true });
+    if (rowsOf(p).length && curOf(p) < 0) setCur(p, 0, !scroll);
+    if (scroll) p.scrollIntoView({ block:'nearest', behavior:'smooth' });
+  } else if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
+  status();
+}
+panes.forEach(function(p, j){
+  p.addEventListener('focusin', function(){ if (focused !== j) focusPane(j, false); });
+  p.querySelectorAll('a').forEach(function(a){ a.tabIndex = -1; });
+  rowsOf(p).forEach(function(r, k){ r.addEventListener('mouseenter', function(){ if (focused === j) setCur(p, k); }); });
+});
+var snd = document.getElementById('snd'), lastKey = '';
+window.addEventListener('keydown', function(e){
+  if (e.metaKey || e.ctrlKey || e.altKey) return;
+  var key = e.key, p = focused >= 0 ? panes[focused] : null, rows = p ? rowsOf(p) : [];
+  if (key === 'Tab'){ e.preventDefault(); focusPane(((focused < 0 ? (e.shiftKey ? 0 : -1) : focused) + (e.shiftKey ? -1 : 1) + panes.length) % panes.length, true); }
+  else if (key === 'Escape'){ focusPane(-1, false); }
+  else if (key === 's'){ snd.click(); }
+  else if (!p){ if (key === 'j' || key === 'k' || key === 'ArrowDown' || key === 'ArrowUp'){ e.preventDefault(); focusPane(panes.indexOf(document.getElementById('posts')), true); } }
+  else if (key === 'j' || key === 'ArrowDown'){ if (rows.length){ e.preventDefault(); setCur(p, curOf(p) + 1); } }
+  else if (key === 'k' || key === 'ArrowUp'){ if (rows.length){ e.preventDefault(); setCur(p, curOf(p) - 1); } }
+  else if (key === 'G'){ if (rows.length) setCur(p, rows.length - 1); }
+  else if (key === 'g' && lastKey === 'g'){ if (rows.length) setCur(p, 0); key = ''; }
+  else if (key === 'Enter'){ var k = curOf(p), a = k >= 0 && rows[k].querySelector('a'); if (a) a.click(); }
+  lastKey = key;
+});
+/* posts starts highlighted, as a list does when a screen opens */
+focusPane(panes.indexOf(document.getElementById('posts')), false);
 })();
 </script>
 </body>
