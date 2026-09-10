@@ -145,6 +145,15 @@ ol{list-style:none;margin:0;padding:0}
 .article img{max-width:100%;height:auto;vertical-align:top;border:1px solid var(--rule)}
 .article a:has(> img){display:inline-block;margin:0 2ch var(--lh) 0;border-bottom:0}
 .article a:has(> img):hover img{border-color:var(--accent)}
+/* a screenshot gallery: thumbnails at their own size in rows, 1ch apart, each framed like a pane and linking to the
+   full image; a caption sits under its thumbnail, dim, and wraps at the thumbnail's width (or its longest word) */
+.article ul.shots{display:flex;flex-wrap:wrap;align-items:flex-start;gap:var(--lh) 1ch}
+.article .shots li{padding:0;width:min-content}
+.article .shots li::before{content:none}
+.article .shots a{display:block;margin:0;text-decoration:none}
+.article .shots img{display:block;max-width:none;border-color:var(--frame)}
+.article .shots .cap{display:block;color:var(--dim)}
+.article .shots a:hover .cap{color:var(--accent)}
 .article iframe{display:block;max-width:100%;height:auto;border:0;margin:0 0 var(--lh);background:rgba(11,18,48,.6)}
 .article canvas{display:block;max-width:100%;margin:0 0 var(--lh);background:var(--star);border:1px solid var(--rule)}
 .article sup{line-height:0}

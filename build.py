@@ -94,6 +94,7 @@ def page(kind, title, main, keys, description='', page_id='', body_attrs='', scr
                   nav_work='#work' if kind == 'home' else '/work.html',
                   here_posts=' class="here"' if page_id == 'posts' else '',
                   here_work=' class="here"' if page_id == 'work' else '',
+                  here_socials=' class="here"' if page_id == 'socials' else '',
                   main_class=main_class, main=main, keys=keys, scripts=scripts)
 
 
@@ -285,6 +286,23 @@ def build():
         'list', id='work', meta=work_meta(works), rows_class='works',
         rows='\n'.join(work_row(k + 1, w, summary=True) for k, w in enumerate(works)), foot=''),
         KEYS['list'], description='Projects by Boy Maas: concept, design and code.', page_id='work')
+
+    socials = [
+        ('https://x.com/bitgnosys', '@bitgnosys', 'X', 'Me. Pixels, protocols, the terminal.'),
+        ('https://x.com/jamzig_dev', '@jamzig_dev', 'X', 'JamZig⚡, the JAM client in Zig: conformance runs, milestones, releases.'),
+        ('https://github.com/boymaas', 'boymaas', 'GitHub', 'Code, going back to 2010.'),
+        ('https://github.com/jamzig', 'jamzig', 'GitHub', 'The JamZig⚡ organisation: conformance releases, test exports, Zig packages.'),
+        ('https://www.linkedin.com/in/boy-maas-2b86594/', 'boy-maas', 'LinkedIn', 'The CV, in the format recruiters like.'),
+        ('https://matrix.to/#/#jamzig:matrix.org', '#jamzig:matrix.org', 'Matrix', 'The JamZig⚡ room.'),
+        ('https://cd8.dev/', 'cd8.dev', 'Code 8', 'Protocol development and advisory. Mail: contact@cd8.dev.'),
+        ('mailto:boy.maas@gmail.com', 'boy.maas (at) gmail.com', 'mail', 'For everything else.'),
+    ]
+    rows = '\n'.join(
+        '      <li><span class="n">%02d</span><a href="%s">%s</a><small>%s</small><p>%s</p></li>' % (k + 1, href, esc(label), esc(where), esc(blurb))
+        for k, (href, label, where, blurb) in enumerate(socials))
+    out['socials.html'] = page('list', 'socials - ' + NAME, render(
+        'list', id='socials', meta='where to find me', rows_class='works', rows=rows, foot=''),
+        KEYS['list'], description='Where to find Boy Maas: X, GitHub, LinkedIn, Matrix, mail.', page_id='socials')
 
     for k in range(len(posts)):
         out['posts/%s.html' % posts[k]['slug']] = article('posts', posts, k)
