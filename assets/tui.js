@@ -12,26 +12,37 @@ function grid(){
   probe.textContent = '0000000000';
   probe.style.cssText = 'position:absolute;visibility:hidden;white-space:pre;font:inherit';
   body.appendChild(probe);
-  var chw = probe.getBoundingClientRect().width / 10;
+  chw = probe.getBoundingClientRect().width / 10;
   probe.remove();
+  lh = parseFloat(getComputedStyle(root).getPropertyValue('--lh')) || 24;
   var narrow = window.innerWidth <= 720;
   var cols = Math.min(134, Math.floor((window.innerWidth - (narrow ? 32 : 48)) / chw));
   var lcols = Math.min(72, Math.floor((cols - 2) * 0.54));
   root.style.setProperty('--cols', cols);
   root.style.setProperty('--lcols', lcols);
   root.style.setProperty('--rcols', cols - 2 - lcols);
-  /* an article gets up to 86 columns (an 80-column measure inside its border and padding); the side column takes
-     the rest, and folds under the article when fewer than 24 columns would remain */
-  var acols = cols >= 112 ? Math.min(86, cols - 26) : cols;
-  root.style.setProperty('--acols', acols);
-  root.style.setProperty('--ncols', Math.max(0, cols - 2 - acols));
-  var a = document.querySelector('.acols');
-  if (a) a.classList.toggle('stacked', acols === cols);
+  /* the status line is one row of text on a strip whose top edge lands on a row of the grid at the foot of the viewport */
+  root.style.setProperty('--barh', (lh + window.innerHeight % lh) + 'px');
+  frameAll();
 }
-var lines = document.querySelectorAll('.pane .ln'), i;
-for (i = 0; i < lines.length; i++) lines[i].textContent = new Array(241).join('─');
-var sides = document.querySelectorAll('.pane .bl, .pane .br, .gut');
-for (i = 0; i < sides.length; i++) sides[i].textContent = new Array(2001).join('│\n');
+var chw = 9, lh = 24;
+/* ---------- rules: exactly as many ─ as the pane measures, so the corners land on the sides and nothing is clipped ---------- */
+function frame(el){
+  var runs = el.querySelectorAll(':scope > .bt > .ln, :scope > .bb > .ln'), k;
+  for (k = 0; k < runs.length; k++){
+    var ln = runs[k], row = ln.parentNode, used = 0, c;
+    ln.textContent = '';
+    for (c = row.firstElementChild; c; c = c.nextElementSibling) if (c !== ln) used += c.getBoundingClientRect().width;
+    var n = Math.max(0, Math.floor((row.getBoundingClientRect().width - used) / chw + 0.02));   /* not clientWidth: that is an integer, and a row is a fraction wide */
+    ln.textContent = new Array(n + 1).join('─');
+  }
+}
+var framed = Array.prototype.slice.call(document.querySelectorAll('.pane'));
+function frameAll(){ framed.forEach(frame); }
+if (window.ResizeObserver){
+  var ro = new ResizeObserver(function(entries){ for (var k = 0; k < entries.length; k++) frame(entries[k].target); });
+  framed.forEach(function(el){ ro.observe(el); });
+}
 grid();
 if (document.fonts && document.fonts.ready) document.fonts.ready.then(grid);
 window.addEventListener('resize', grid);
@@ -39,7 +50,8 @@ window.addEventListener('resize', grid);
 var snd = document.getElementById('snd');
 snd.addEventListener('click', function(){
   var on = !snd.classList.contains('on');
-  snd.textContent = on ? 'sound on' : 'sound off';
+  snd.querySelector('.full').textContent = on ? 'sound on' : 'sound off';
+  snd.setAttribute('aria-label', on ? 'sound on' : 'sound off');
   snd.classList.toggle('on', on); snd.setAttribute('aria-pressed', on);
 });
 var pos = document.getElementById('pos');
@@ -47,7 +59,6 @@ var lastKey = '';
 function plain(e){ return !(e.metaKey || e.ctrlKey || e.altKey); }
 /* ---------- an article: read with j/k, step with h/l, q goes back ---------- */
 if (mode === 'article'){
-  var lh = parseFloat(getComputedStyle(root).getPropertyValue('--lh')) || 24;
   var go = function(attr){ var href = body.getAttribute(attr); if (href) location.href = href; };
   pos.textContent = body.getAttribute('data-pos') || '';
   window.addEventListener('keydown', function(e){

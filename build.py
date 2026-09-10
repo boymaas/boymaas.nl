@@ -5,7 +5,8 @@ Reads content/posts/*.html and content/work/*.html (YAML-ish front matter, then 
 typesets each into the TUI shell in templates/, and writes the site to the repository root:
 index.html, posts.html, work.html, posts/<slug>.html, portfolio/<slug>.html, feed.xml and feed/index.html
 (a redirect that keeps the old /feed address working).
-Then checks every href and src that points inside the site and exits non-zero if one is broken.
+Then checks every href and src that points inside the site, and that no page skips a heading level, and exits
+non-zero if one is broken.
 Standard library only; the output is a pure function of the inputs, so running it twice changes nothing.
 """
 import html
@@ -24,7 +25,7 @@ KEYS = {
     'article': '<b>j/k</b> scroll  <b>h/l</b> prev/next  <b>q</b> back  <span class="kb"><b>gg/G</b> ends  <b>s</b> sound</span>',
 }
 
-SUB_TOP = '<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><div class="bl"></div><div class="br"></div>'
+SUB_TOP = '<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div>'
 SUB_BOTTOM = '<div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>'
 
 
@@ -134,15 +135,29 @@ def fit_iframe(m):
     return tag
 
 
+def level_headings(body):
+    """Renumber the headings so the page's outline has no gaps: the page title is the h1, the body's shallowest
+    heading becomes an h2, and no heading is more than one level deeper than the one before it."""
+    body = re.sub(r'<(/?)h1\b', r'<\1h2', body)                       # stray h1s are sections too: the page has one h1
+    levels = sorted({int(l) for l in re.findall(r'<h([1-6])\b', body)})
+    rank = {l: k + 2 for k, l in enumerate(levels)}
+    prev = [1]
+
+    def fix(m):
+        if not m.group(1):
+            prev[0] = min(rank[int(m.group(2))], prev[0] + 1)
+        return '<%sh%d' % (m.group(1), prev[0])
+    return re.sub(r'<(/?)h([1-6])\b', fix, body)
+
+
 def typeset(body, title=None):
     """Turn a content body into the article markup the stylesheet expects."""
-    body = re.sub(r'<(/?)h1\b', r'<\1h2', body)                       # stray h1s become h2s: the page has one h1
     if title:                                                        # a project body that opens by repeating its title
         body = re.sub(r'^\s*<h3>\s*' + re.escape(title) + r'\b[^<]*</h3>\s*', '', body, count=1)
+    body = level_headings(body)
     body = re.sub(r'<iframe\b[^>]*>', fit_iframe, body)
     body = re.sub(r'<(canvas|img)\b[^>]*>', lambda m: re.sub(r'\s+style=(["\']).*?\1', '', m.group(0)), body)
     body = re.sub(r'<pre\b[^>]*>.*?</pre>', tidy_pre, body, flags=re.S)
-    body = re.sub(r'<blockquote\b[^>]*>', lambda m: m.group(0) + '<span class="gut" aria-hidden="true"></span>', body)
     return body.strip()
 
 
@@ -292,6 +307,11 @@ def check(files):
         ids[rel] = set(re.findall(r'\bid=["\']([^"\']+)["\']', read(os.path.join(ROOT, rel))))
     for rel in files:
         text = read(os.path.join(ROOT, rel))
+        prev = 0
+        for level in (int(l) for l in re.findall(r'<h([1-6])\b', text)):
+            if level > prev + 1:
+                broken.append('%s: heading skips from h%d to h%d' % (rel, prev, level))
+            prev = level
         for url in re.findall(r'(?:href|src)=["\']([^"\']+)["\']', text):
             url = html.unescape(url)
             if url.startswith(SITE + '/'):
@@ -317,5 +337,5 @@ if __name__ == '__main__':
     print('wrote %d files' % len(files))
     problems = check(files)
     for line in problems:
-        print('broken link: ' + line)
+        print('problem: ' + line)
     sys.exit(1 if problems else 0)

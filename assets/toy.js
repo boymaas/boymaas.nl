@@ -7,7 +7,7 @@ window.Toy = function (Sky) {
 'use strict';
 var P = Sky.P, mix = Sky.mix, mixQ = Sky.mixQ, DT = Sky.DT;
 var rng = Sky.mulberry32(Sky.SEED);   /* the toy's own stream, as in variant 12 */
-var HOLD = 1.4;
+var HOLD = 1.4, REST = 2.0;   /* seconds between systems; seconds the wordmark stands whole before the first one */
 /* ---------- the logo: 5x7 glyphs, each cell quartered ---------- */
 var FONT = {
   M:['#...#','##.##','#.#.#','#.#.#','#...#','#...#','#...#'],
@@ -629,7 +629,7 @@ systems.push({ name:'crystal', role:'cursor melts', max:18,
 /* ================= scheduler ================= */
 var cur = null, curIdx = -1, state = 'run', sysT = 0, holdT = 0, sandbox = false;
 var pane = document.getElementById('m4nic'), nameEl = document.getElementById('sysname');
-/* the system's name sits faint in the pane's bottom border; its role goes to the hint line while the cursor is in */
+/* the system's name sits in the pane's bottom rule, in the rule's colour; its role goes to the hint line while the cursor is in */
 function tell(){
   pane.setAttribute('data-status', cur.name + ': ' + cur.role);
   window.dispatchEvent(new Event('tui:status'));
@@ -669,7 +669,7 @@ function paint(){
 /* ---------- the secret: type play ---------- */
 var typed = '', whisper = document.getElementById('whisper');
 window.addEventListener('keydown', function(e){
-  if (e.key === ' ' && sandbox){ start(curIdx); e.preventDefault(); return; }
+  if (e.key === ' ' && sandbox){ if (curIdx >= 0) start(curIdx); else pick(); e.preventDefault(); return; }
   if (sandbox && e.key >= '1' && e.key <= '9'){ start(parseInt(e.key, 10) - 1); return; }
   if (e.key && e.key.length === 1){ typed = (typed + e.key.toLowerCase()).slice(-4); if (typed === 'play'){ sandbox = !sandbox; whisper.hidden = !sandbox; typed = ''; } }
 });
@@ -678,12 +678,15 @@ var lastW = 0, lastH = 0;
 function relayout(){
   var bw = box.clientWidth, bh = box.clientHeight, cp = cellFor(bw);
   if (Math.floor(bw / cp) === lastW && Math.floor(bh / cp) === lastH) return;
-  layout(); lastW = W; lastH = H; start(curIdx); paint();
+  layout(); lastW = W; lastH = H;
+  if (curIdx >= 0) start(curIdx);   /* during the opening rest there is no system to restart: the wordmark is redrawn */
+  paint();
 }
 window.addEventListener('resize', relayout);
 return {
   init:function(){
-    layout(); lastW = W; lastH = H; pick();
+    /* open at rest: the wordmark stands whole for REST seconds, on the clock, so ?t= replays it, then the first system starts */
+    layout(); lastW = W; lastH = H; state = 'hold'; holdT = HOLD - REST;
     /* the box is sized by the character grid, which settles when the web font arrives */
     if (window.ResizeObserver) new ResizeObserver(relayout).observe(box);
   },

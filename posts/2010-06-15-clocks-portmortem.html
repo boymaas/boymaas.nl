@@ -16,26 +16,29 @@
 <body data-page="article" data-back="/posts.html" data-pos="posts 9/17" data-prev="/posts/2011-02-20-rails-experiences.html" data-next="/posts/2010-05-24-webapps-haskell-loli-hack.html">
 <canvas id="sky" aria-hidden="true"></canvas>
 <header class="wrap top">
-  <a class="who" href="/">Boy Maas <span class="dim">(m4nic)</span></a>
+  <a class="who" href="/">Boy Maas<span class="m4"> <span class="dim">(m4nic)</span></span></a>
   <nav>
     <a href="/posts.html" class="here">posts</a>
     <a href="/work.html">work</a>
     <a href="/#bio">bio</a>
     <a href="/#mail">mail</a>
   </nav>
-  <button id="snd" type="button" aria-pressed="false">sound off</button>
+  <button id="snd" type="button" aria-pressed="false" aria-label="sound off"><span class="full">sound off</span><span class="short" aria-hidden="true">s</span></button>
 </header>
 <main class="wrap stack">
-  <div class="acols">
-    <article class="pane focus" id="posts" aria-label="posts/2010-06-15-clocks-portmortem">
-      <div class="bt"><span>┌─</span><span class="tt"><span>posts/2010-06-15-clocks-portmortem</span></span><span class="ln"></span><span>┐</span></div>
-      <div class="bl"></div><div class="br"></div>
-      <div class="in">
-        <header class="head">
-          <h1>Clocks webdsl postmortem</h1>
-          <p class="sub"><time>2010-06-15</time>Designing a webdsl in clojure</p>
-        </header>
-        <div class="article">
+  <article class="pane focus" id="posts" aria-label="posts/2010-06-15-clocks-portmortem">
+    <div class="bt"><span>┌─</span><span class="tt"><span>posts<span class="s">/2010-06-15-clocks-portmortem</span></span></span><span class="ln"></span><span>┐</span></div>
+    <div class="in">
+      <header class="head">
+        <h1>Clocks webdsl postmortem</h1>
+        <p class="sub"><time>2010-06-15</time>Designing a webdsl in clojure</p>
+        <nav class="navrow" aria-label="nav">
+          <span class="nv"><span class="k"><b>h</b> prev</span><a href="/posts/2011-02-20-rails-experiences.html">Rails experiences</a></span>
+          <span class="nv"><span class="k"><b>l</b> next</span><a href="/posts/2010-05-24-webapps-haskell-loli-hack.html">Hack, Loli, the rake/webpy for Haskell?</a></span>
+          <span class="nv"><span class="k"><b>q</b> back</span><a href="/posts.html">posts</a></span>
+        </nav>
+      </header>
+      <div class="article">
 <p>In this post I will summarize the lessons learned while implementing clocks.
 An opensourced test project to learn the in an outs of macros in clojure.</p>
 
@@ -43,7 +46,7 @@ An opensourced test project to learn the in an outs of macros in clojure.</p>
 
 <h2>On macros</h2>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><div class="bl"></div><div class="br"></div><pre><code>if you don't like something in the language, just adapt it.</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>if you don't like something in the language, just adapt it.</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
 <p>This is a core design choice of lisps. It is called
 <a href="http://en.wikipedia.org/wiki/Homoiconicity">homoiconic</a>.
@@ -72,7 +75,7 @@ are not yet evaluated.</p>
 <p>Scheme has hygienic macros, which work well for me, Clojure resolves
 all symbols first in the namespace the macro is defined. (when quasiquote is used)</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><div class="bl"></div><div class="br"></div><pre><code>outermacro defined in ns outerns
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>outermacro defined in ns outerns
    body resolved in ns outns
    innermacro defined in ns innerns
      body gets resolved in innerns</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
@@ -86,15 +89,15 @@ can be annoying when you just want to work with symbols.</p>
 a problem since quasiquote will try to resolve every symbol. There is a way
 to unresolve symbols. The <code>name</code> function:</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><div class="bl"></div><div class="br"></div><pre><code>(name resolved-symbol) </code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>(name resolved-symbol) </code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
 <p>will give back the original symbol name as a string</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><div class="bl"></div><div class="br"></div><pre><code>(symbol (name resolved-symbol))</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>(symbol (name resolved-symbol))</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
 <p>will convert the returned string  back to the original symbol</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><div class="bl"></div><div class="br"></div><pre><code>(prewalk (fn [exp] (if (symbol? exp) (symbol (name exp)))) sexp)</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>(prewalk (fn [exp] (if (symbol? exp) (symbol (name exp)))) sexp)</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
 <p>We can combine this with a walker to unresolve all resolved symbols in a form.
 Combine this with a lookup on a symbol map and you will leave
@@ -114,7 +117,7 @@ These have to be converted back.</p>
 
 <p>As can be seen in the code the walk function as defined in clojure.walk does this for you.</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><div class="bl"></div><div class="br"></div><pre><code>(defn walk
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>(defn walk
   "Traverses form, an arbitrary data structure.  inner and outer are
   functions.  Applies inner to each element of form, building up a
   data structure of the same type, then applies outer to the result.
@@ -136,7 +139,7 @@ These have to be converted back.</p>
 
 <p>What exactly happens when calling a macro with the namespaces and the variables.</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><div class="bl"></div><div class="br"></div><pre><code>(ns nsdefined)
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>(ns nsdefined)
 (def rv 100)
 (defmacro nstest [name]
          (let [ns *ns* 
@@ -151,7 +154,7 @@ These have to be converted back.</p>
 <p>Conclusion: macro gets executed inside namespace its defined in. The <em>ns</em> is set to the calling ns, so resolve
 which uses <em>ns</em> to resolve will resolve to nscalling/rv.</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><div class="bl"></div><div class="br"></div><pre><code>(defmacro nstest [name]
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>(defmacro nstest [name]
          (let [ns *ns* 
               rv rv
               rvr (resolve rv)]
@@ -169,25 +172,10 @@ which uses <em>ns</em> to resolve will resolve to nscalling/rv.</p>
 approach to the hygienic macro's in scheme. Who are more template based. Resolving the symbols
 is a very good feature for the simpler macro's but have to be compensated when designing
 a symbol dsl, It would be nice to have a special quasiquote which does not resolve.</p>
-        </div>
       </div>
-      <div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div>
-    </article>
-    <div class="side">
-      <section class="pane" id="nav" aria-label="nav">
-        <div class="bt"><span>┌─</span><span class="tt">nav</span><span class="ln"></span><span>┐</span></div>
-        <div class="bl"></div><div class="br"></div>
-        <div class="in">
-        <ol class="navrows">
-          <li><b>h</b><span>prev</span><a href="/posts/2011-02-20-rails-experiences.html">Rails experiences</a></li>
-          <li><b>l</b><span>next</span><a href="/posts/2010-05-24-webapps-haskell-loli-hack.html">Hack, Loli, the rake/webpy for Haskell?</a></li>
-          <li><b>q</b><span>back</span><a href="/posts.html">posts</a></li>
-        </ol>
-        </div>
-        <div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div>
-      </section>
     </div>
-  </div>
+    <div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div>
+  </article>
 
 </main>
 <div class="hints"><div class="wrap">

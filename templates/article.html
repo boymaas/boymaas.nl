@@ -1,30 +1,18 @@
-  <div class="acols">
-    <article class="pane focus" id="{{id}}" aria-label="{{kind}}/{{slug}}">
-      <div class="bt"><span>┌─</span><span class="tt"><span>{{kind}}/{{slug}}</span></span><span class="ln"></span><span>┐</span></div>
-      <div class="bl"></div><div class="br"></div>
-      <div class="in">
-        <header class="head">
-          <h1>{{title}}</h1>
-          <p class="sub">{{sub}}</p>
-        </header>
-        <div class="article">
+  <article class="pane focus" id="{{id}}" aria-label="{{kind}}/{{slug}}">
+    <div class="bt"><span>┌─</span><span class="tt"><span>{{kind}}<span class="s">/{{slug}}</span></span></span><span class="ln"></span><span>┐</span></div>
+    <div class="in">
+      <header class="head">
+        <h1>{{title}}</h1>
+        <p class="sub">{{sub}}</p>
+        <nav class="navrow" aria-label="nav">
+          <span class="nv"><span class="k"><b>h</b> prev</span>{{prev}}</span>
+          <span class="nv"><span class="k"><b>l</b> next</span>{{next}}</span>
+          <span class="nv"><span class="k"><b>q</b> back</span><a href="{{back}}">{{back_label}}</a></span>
+        </nav>
+      </header>
+      <div class="article">
 {{body}}
-        </div>
       </div>
-      <div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div>
-    </article>
-    <div class="side">
-      <section class="pane" id="nav" aria-label="nav">
-        <div class="bt"><span>┌─</span><span class="tt">nav</span><span class="ln"></span><span>┐</span></div>
-        <div class="bl"></div><div class="br"></div>
-        <div class="in">
-        <ol class="navrows">
-          <li><b>h</b><span>prev</span>{{prev}}</li>
-          <li><b>l</b><span>next</span>{{next}}</li>
-          <li><b>q</b><span>back</span><a href="{{back}}">{{back_label}}</a></li>
-        </ol>
-        </div>
-        <div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div>
-      </section>
     </div>
-  </div>
+    <div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div>
+  </article>

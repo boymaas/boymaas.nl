@@ -16,26 +16,29 @@
 <body data-page="article" data-back="/posts.html" data-pos="posts 5/17" data-prev="/posts/2012-06-13-ruby-exceptions-benchmark.html" data-next="/posts/2012-01-29-software-architecture.html">
 <canvas id="sky" aria-hidden="true"></canvas>
 <header class="wrap top">
-  <a class="who" href="/">Boy Maas <span class="dim">(m4nic)</span></a>
+  <a class="who" href="/">Boy Maas<span class="m4"> <span class="dim">(m4nic)</span></span></a>
   <nav>
     <a href="/posts.html" class="here">posts</a>
     <a href="/work.html">work</a>
     <a href="/#bio">bio</a>
     <a href="/#mail">mail</a>
   </nav>
-  <button id="snd" type="button" aria-pressed="false">sound off</button>
+  <button id="snd" type="button" aria-pressed="false" aria-label="sound off"><span class="full">sound off</span><span class="short" aria-hidden="true">s</span></button>
 </header>
 <main class="wrap stack">
-  <div class="acols">
-    <article class="pane focus" id="posts" aria-label="posts/2012-02-10-ruby-org-mode-parser-development-log">
-      <div class="bt"><span>┌─</span><span class="tt"><span>posts/2012-02-10-ruby-org-mode-parser-development-log</span></span><span class="ln"></span><span>┐</span></div>
-      <div class="bl"></div><div class="br"></div>
-      <div class="in">
-        <header class="head">
-          <h1>Ruby org-mode parser development log</h1>
-          <p class="sub"><time>2012-02-10</time>Development log</p>
-        </header>
-        <div class="article">
+  <article class="pane focus" id="posts" aria-label="posts/2012-02-10-ruby-org-mode-parser-development-log">
+    <div class="bt"><span>┌─</span><span class="tt"><span>posts<span class="s">/2012-02-10-ruby-org-mode-parser-development-log</span></span></span><span class="ln"></span><span>┐</span></div>
+    <div class="in">
+      <header class="head">
+        <h1>Ruby org-mode parser development log</h1>
+        <p class="sub"><time>2012-02-10</time>Development log</p>
+        <nav class="navrow" aria-label="nav">
+          <span class="nv"><span class="k"><b>h</b> prev</span><a href="/posts/2012-06-13-ruby-exceptions-benchmark.html">Ruby exception handling benchmark</a></span>
+          <span class="nv"><span class="k"><b>l</b> next</span><a href="/posts/2012-01-29-software-architecture.html">Software architecture</a></span>
+          <span class="nv"><span class="k"><b>q</b> back</span><a href="/posts.html">posts</a></span>
+        </nav>
+      </header>
+      <div class="article">
 <p>Usin Vim for a long time, and having used e-macs for a while I got hooked on
 org-mode.  The flexible plain-tekst planning mode.</p>
 
@@ -80,7 +83,7 @@ making a seperate process for it.</p>
 
 <p>An org-mode script does the following:</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><div class="bl"></div><div class="br"></div><pre><code>org-file(s) =&gt; parse =&gt; perform action =&gt; present/write result</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>org-file(s) =&gt; parse =&gt; perform action =&gt; present/write result</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
 <h2>Design</h2>
 
@@ -91,7 +94,7 @@ this commandline utility.</p>
 
 <p>The domain objects of an org-mode file is pretty simple</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><div class="bl"></div><div class="br"></div><pre><code>OrgMode
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>OrgMode
   FileCollection
   File
   Node</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
@@ -102,7 +105,7 @@ to generate a nicely formatted org-mode file.</p>
 <p>Node is an item in an org-mode file, always starting with a title following
 some content.</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><div class="bl"></div><div class="br"></div><pre><code>* TODO I am a OrgMode node
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>* TODO I am a OrgMode node
 Content of orgmode node</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
 <p>You can see the source here:
@@ -113,7 +116,7 @@ Content of orgmode node</code></pre><div class="bb"><span>└</span><span class=
 <p>A parser is responsible for building up the domain objects
 out of a org-mode formatted file.</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><div class="bl"></div><div class="br"></div><pre><code># parser -&gt; returning domain objects
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code># parser -&gt; returning domain objects
 OrgMode::FileParser -&gt; OrgMode::File
 OrgMode::NodeParser -&gt; OrgMode::Node</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
@@ -127,7 +130,7 @@ OrgMode::NodeParser -&gt; OrgMode::Node</code></pre><div class="bb"><span>└</s
 domain model. It essentially constructs datastructures which can be easily
 presented by the presenters.</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><div class="bl"></div><div class="br"></div><pre><code>OrgMode::Reporters
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>OrgMode::Reporters
   Agenda</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
 <h3>Presenters</h3>
@@ -136,7 +139,7 @@ presented by the presenters.</p>
 This can be anything. I will start with simple commandline interaction so they
 will be strings.</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><div class="bl"></div><div class="br"></div><pre><code>OrgMode::Presenters::String
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>OrgMode::Presenters::String
   Agenda
 
 OrgMode::Presenters::Html</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
@@ -147,27 +150,12 @@ OrgMode::Presenters::Html</code></pre><div class="bb"><span>└</span><span clas
 parses the supplied org-mode files or recursively scanned directory and displays
 the information use one of the available presenters</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><div class="bl"></div><div class="br"></div><pre><code>OrgMode::Commands
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>OrgMode::Commands
   Agenda</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
-        </div>
       </div>
-      <div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div>
-    </article>
-    <div class="side">
-      <section class="pane" id="nav" aria-label="nav">
-        <div class="bt"><span>┌─</span><span class="tt">nav</span><span class="ln"></span><span>┐</span></div>
-        <div class="bl"></div><div class="br"></div>
-        <div class="in">
-        <ol class="navrows">
-          <li><b>h</b><span>prev</span><a href="/posts/2012-06-13-ruby-exceptions-benchmark.html">Ruby exception handling benchmark</a></li>
-          <li><b>l</b><span>next</span><a href="/posts/2012-01-29-software-architecture.html">Software architecture</a></li>
-          <li><b>q</b><span>back</span><a href="/posts.html">posts</a></li>
-        </ol>
-        </div>
-        <div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div>
-      </section>
     </div>
-  </div>
+    <div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div>
+  </article>
 
 </main>
 <div class="hints"><div class="wrap">

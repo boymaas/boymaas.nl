@@ -1,16 +1,21 @@
-/* boymaas.nl: the TUI. One character grid, panes that are only their borders, the sky behind. */
+/* boymaas.nl: the TUI. One character grid, panes that are only their borders, the sky behind.
+   Every x is a whole number of cells (1ch) from the left edge of the page column, every y a whole number of rows
+   (--lh), so rules, titles, columns and copy all sit on the same grid. A pane's top and bottom rules are rows of
+   box-drawing glyphs; its sides are 1px borders on the corner cells' centre line, which at this size look the same
+   as a column of │ and can neither break nor sit on text. The sky and the toy keep their own palettes; the interface
+   has navy, off-white, grey and one amber. */
 :root{
-  --ground:#0B1230; --star:#ECE7F5; --ash:#9C98B4; --rule:#393C59;
-  --cobalt:#4E8CFF; --teal:#3ED3C6; --violet:#9A7CFF; --magenta:#E866B2; --amber:#F6B44A; --coral:#FF6E57;
+  --ground:#0B1230; --star:#ECE7F5; --ash:#9C98B4; --rule:#393C59; --amber:#F6B44A;
   /* terminal roles: dim for dates, subtitles and captions; normal for body; bright for titles; one accent for
-     section names and everything interactive (hover, the cursor row, the sound toggle when on) */
-  --dim:var(--ash); --normal:#C4C0D5; --bright:var(--star); --accent:var(--teal);
-  --frame:#535572; --bar:#24407E;
-  --fs:15px; --lh:24px; --cols:134; --lcols:72; --rcols:60; --acols:86; --ncols:46;
+     section names, the prompt and everything interactive (hover, the sound toggle when on, the selected row) */
+  --dim:var(--ash); --normal:#C4C0D5; --bright:var(--star); --accent:var(--amber);
+  --frame:#535572;
+  --fs:15px; --lh:24px; --cols:134; --lcols:72; --rcols:60;
+  --barh:calc(var(--lh) * 2);   /* the status line; tui.js sets it so its top edge lands on a row of the grid */
 }
 *{box-sizing:border-box}
 html{background:var(--ground)}
-body{margin:0;background:var(--ground);color:var(--normal);font:400 var(--fs)/var(--lh) "JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;-webkit-font-smoothing:antialiased;padding-bottom:calc(var(--lh) * 3)}
+body{margin:0;background:var(--ground);color:var(--normal);font:400 var(--fs)/var(--lh) "JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;-webkit-font-smoothing:antialiased;padding-bottom:var(--barh)}
 a{color:inherit;text-decoration:none}
 a:hover{color:var(--accent)}
 canvas{display:block}
@@ -20,101 +25,98 @@ header,main,.hints{position:relative;z-index:1}
 .dim{color:var(--dim)}
 .bright{color:var(--bright)}
 b{font-weight:400}
-/* top line: the name, the nav, the sound toggle as a dim switch at the end */
+/* top row: the name, the nav, the sound toggle as a dim switch at the end */
 .top{display:flex;align-items:baseline;gap:3ch;padding:var(--lh) 0;white-space:pre}
 .top .who{color:var(--bright)}
 .top nav{display:flex;gap:3ch;align-items:baseline;margin-left:auto}
 .top nav a{color:var(--normal)}
 .top nav a.here{color:var(--bright)}
 .top button{font:inherit;color:var(--dim);background:none;border:0;padding:0;cursor:pointer}
+.top button .short{display:none}
 .top button:hover{color:var(--accent)}
 .top button.on{color:var(--accent)}
-/* panes: borders are characters on the grid */
-.pane{position:relative;min-width:0;outline:none;display:flex;flex-direction:column;scroll-margin-top:var(--lh);scroll-margin-bottom:calc(var(--lh) * 3)}
-.pane .bt,.pane .bb{display:flex;white-space:pre;color:var(--frame);height:var(--lh);overflow:hidden;flex:none}
-.pane .ln{flex:1 1 0;min-width:1ch;overflow:hidden}
-.pane .bl,.pane .br{position:absolute;top:calc(var(--lh) / 2);bottom:calc(var(--lh) / 2);width:1ch;overflow:hidden;white-space:pre;line-height:1.2;color:var(--frame)}
-.pane .bl{left:0}
-.pane .br{right:0}
-.pane .tt{color:var(--accent);display:flex;min-width:0;flex-shrink:1}
+/* panes: the top and bottom rules are rows of glyphs on the grid (tui.js writes exactly as many ─ as the pane
+   measures); the sides run from the middle of the top rule to the middle of the bottom one, where the corners' strokes are */
+.pane{position:relative;min-width:0;outline:none;display:flex;flex-direction:column;scroll-margin-top:var(--lh);scroll-margin-bottom:calc(var(--barh) + var(--lh))}
+.pane .bt,.pane .bb{display:flex;white-space:pre;color:var(--frame);height:var(--lh);flex:none}
+/* the run of ─ is the one part of a rule that may give: at a fractional cell size a browser's ch is not quite its
+   glyph advance, and the fraction of a pixel by which n glyphs then outgrow n cells is clipped off the last ─,
+   where it cannot be seen, rather than shrinking the title into an ellipsis */
+.pane .ln{flex:0 1 auto;min-width:0;overflow:hidden}
+.pane::before,.pane::after{content:"";position:absolute;top:calc(var(--lh) / 2);bottom:calc(var(--lh) / 2);width:0;border-left:1px solid var(--frame);pointer-events:none}
+.pane::before{left:calc(0.5ch - 0.5px)}
+.pane::after{right:calc(0.5ch - 0.5px)}
+.pane .tt{color:var(--accent);display:flex;flex:none}
 .pane .tt > span{overflow:hidden;text-overflow:ellipsis;min-width:0}
 .pane .tt::before{content:"[ ";color:var(--dim)}
 .pane .tt::after{content:" ]";color:var(--dim)}
 .pane .meta{color:var(--dim);min-width:0;overflow:hidden;text-overflow:ellipsis}
 .pane .meta a{color:var(--dim)}
 .pane .meta a:hover{color:var(--accent)}
-.pane .in{padding:var(--lh) 2ch;flex:1 1 auto}
-.pane.focus .bt,.pane.focus .bb,.pane.focus .bl,.pane.focus .br{color:var(--ash)}
+/* the inside starts on the first row under the rule, one cell in from the border */
+.pane .in{padding:0 2ch;flex:1 1 auto}
+.pane.focus .bt,.pane.focus .bb{color:var(--ash)}
+.pane.focus::before,.pane.focus::after{border-color:var(--ash)}
 .pane.focus .tt{font-weight:700}
 .stack{display:flex;flex-direction:column;gap:calc(var(--lh) * 2)}
 .cols{display:grid;grid-template-columns:calc(var(--lcols) * 1ch) calc(var(--rcols) * 1ch);gap:calc(var(--lh) * 2) 2ch;align-items:stretch}
 /* the hero: the toy pane with the whoami answer as running text right under it */
 .hero{display:flex;flex-direction:column;gap:var(--lh)}
-.box{height:360px;display:flex;align-items:center;justify-content:center;cursor:crosshair;touch-action:pan-y;overflow:hidden}
-#m4nic .in{padding:0 1ch}
-#m4nic .bb #sysname{color:var(--frame)}
-#m4nic.focus .bb #sysname,#m4nic.hot .bb #sysname{color:var(--dim)}
+.box{height:calc(var(--lh) * 15);display:flex;align-items:center;justify-content:center;cursor:crosshair;touch-action:pan-y;overflow:hidden}
 .whoami{padding:0 2ch}
 .prompt{color:var(--dim);margin:0}
 .prompt .ps{color:var(--accent)}
 .prompt .cmd{color:var(--normal)}
-.whoami h1{font-size:28px;line-height:40px;font-weight:700;color:var(--bright);margin:0 0 calc(var(--lh) / 3);max-width:60ch}
-.whoami .lede{margin:0;max-width:64ch}
-/* listings */
+/* the one display size on the site: two rows tall, then the lede at the 70-column measure */
+.whoami h1{font-size:32px;line-height:calc(var(--lh) * 2);font-weight:700;color:var(--bright);margin:0}
+.whoami .lede{margin:0;max-width:70ch}
+/* listings: one row per item, columns fixed in cells; the selected row is reverse video: a bar that reaches a cell
+   past the text at the sides and four pixels above and below its line, so two pixels into the rows of its neighbours,
+   which show nothing there. The rows are a flex column so those two pixels are not collapsed away */
 ol{list-style:none;margin:0;padding:0}
-.list li{position:relative;display:grid;column-gap:2ch;align-items:baseline;white-space:nowrap}
+.list ol{display:flex;flex-direction:column}
+.list li{display:grid;column-gap:2ch;align-items:baseline;white-space:nowrap;margin:-2px -1ch;padding:4px 1ch;line-height:calc(var(--lh) - 4px)}
 .list li::before{content:" ";grid-column:1;color:var(--frame)}
 .list li.cur::before{content:">";color:var(--accent)}
-.list.focus li.cur{background:var(--bar)}
-.list.focus li.cur a{color:var(--bright)}
-.list.focus li.cur small,.list.focus li.cur time,.list.focus li.cur .n{color:var(--normal)}
+.list.focus li.cur{background:var(--accent);color:var(--ground)}
+.list.focus li.cur::before,.list.focus li.cur a,.list.focus li.cur a:hover,.list.focus li.cur small,.list.focus li.cur time,.list.focus li.cur .n,.list.focus li.cur p{color:var(--ground)}
 .list a,.list small,.list time,.list .n{overflow:hidden;text-overflow:ellipsis;min-width:0}
 .list time,.list small,.list .n{color:var(--dim);font-size:inherit}
 .list a{color:var(--bright)}
 .list a:hover{color:var(--accent)}
-.posts li{grid-template-columns:1ch 10ch minmax(0,62ch) minmax(0,1fr)}
-/* the work index on the home page: the project on one line, its client under it */
-.work li{grid-template-columns:1ch 2ch minmax(0,1fr);row-gap:0}
-.work li .n{grid-column:2;grid-row:1}
-.work li a{grid-column:3;grid-row:1}
-.work li small{grid-column:3;grid-row:2}
-.bio p{margin:0 0 var(--lh);max-width:64ch}
+/* posts: cursor, date, title, subtitle; the subtitle column starts where the whoami measure ends */
+.posts li{grid-template-columns:1ch 10ch 63ch minmax(0,1fr)}
+/* work: cursor, number, title, client; the work page adds the summary under them at the 70-column measure */
+.work li,.works li{grid-template-columns:1ch 2ch 24ch minmax(0,1fr);row-gap:0}
+.works li p{grid-column:3 / 5;grid-row:2;margin:2px 0 -2px;white-space:normal;line-height:var(--lh);color:var(--dim);max-width:70ch}
+.works li + li{margin-top:calc(var(--lh) - 2px)}
+.bio p{margin:0 0 var(--lh);max-width:70ch}
 .bio p:last-child{margin-bottom:0}
-/* the work page: name and client on one row, the summary wrapped under them */
-.works li{grid-template-columns:1ch 2ch 24ch minmax(0,1fr);row-gap:0}
-.works li .n{grid-column:2;grid-row:1}
-.works li a{grid-column:3;grid-row:1}
-.works li small{grid-column:4;grid-row:1}
-.works li p{grid-column:3 / 5;grid-row:2;margin:0;white-space:normal;color:var(--dim);max-width:80ch}
-.works li + li{margin-top:var(--lh)}
-.list.focus .works li.cur p{color:var(--normal)}
-/* colophon: the studio line and the mail line */
-.colophon{margin-top:calc(var(--lh) * 2);color:var(--dim);display:flex;justify-content:space-between;gap:4ch;flex-wrap:wrap;font-size:13px;white-space:pre;scroll-margin-bottom:calc(var(--lh) * 3)}
+/* colophon: the mail line */
+.colophon{margin-top:calc(var(--lh) * 2);padding:0 2ch;color:var(--dim);font-size:13px;white-space:pre;scroll-margin-bottom:calc(var(--barh) + var(--lh))}
 .colophon a{text-decoration:underline;text-decoration-color:var(--frame);text-underline-offset:3px}
-/* keyboard hints, fixed like a status line */
-.hints{position:fixed;left:0;right:0;bottom:0;font-size:13px;line-height:var(--lh);color:var(--dim);white-space:pre;background:rgba(11,18,48,.9)}
-.hints .wrap{display:flex;justify-content:space-between;gap:2ch;padding:calc(var(--lh) / 4) 0}
+/* the status line: an opaque strip of its own height at the foot of the viewport; the page ends above it */
+.hints{position:fixed;left:0;right:0;bottom:0;height:var(--barh);font-size:13px;line-height:var(--lh);color:var(--dim);white-space:pre;background:var(--ground);border-top:1px solid var(--rule)}
+.hints .wrap{display:flex;justify-content:space-between;gap:2ch;padding-top:calc(var(--barh) - var(--lh) - 1px)}
 .hints .keys{overflow:hidden;text-overflow:ellipsis}
 .hints .keys b{color:var(--bright)}
 .hints .pos{white-space:pre}
 .hints #whisper{color:var(--accent)}
 .hints:has(#whisper:not([hidden])) .keys{display:none}
-/* an article: one wide pane for reading, a narrow side column that stays put */
-.acols{display:grid;grid-template-columns:calc(var(--acols) * 1ch) calc(var(--ncols) * 1ch);gap:calc(var(--lh) * 2) 2ch;align-items:start}
-.acols.stacked{grid-template-columns:1fr}
-.acols .side{position:sticky;top:var(--lh);min-width:0}
-.acols.stacked .side{position:static}
-.head h1{font-size:20px;line-height:32px;font-weight:700;color:var(--bright);margin:0}
-.head .sub{color:var(--dim);margin:0 0 var(--lh);white-space:normal}
+/* an article: one pane; under the title and its subtitle, one row of the keys that leave it, each with where it goes */
+.head h1{font-size:20px;line-height:calc(var(--lh) * 2);font-weight:700;color:var(--bright);margin:0}
+.head .sub{color:var(--dim);margin:0;white-space:normal}
 .head .sub time{margin-right:2ch}
-.navrows li{display:grid;grid-template-columns:1ch 4ch minmax(0,1fr);column-gap:2ch;align-items:baseline;white-space:nowrap}
-.navrows li b{color:var(--bright)}
-.navrows li span{color:var(--dim)}
-.navrows li a{color:var(--normal);overflow:hidden;text-overflow:ellipsis;min-width:0}
-.navrows li a:hover{color:var(--accent)}
-.navrows li .none{color:var(--frame)}
-/* the body of an article, typeset for reading at an 80-column measure */
-.article{max-width:80ch;overflow-wrap:break-word}
+/* the row wraps rather than cuts a title: on a wide page only the longest pairs take a second line */
+.navrow{display:flex;flex-wrap:wrap;gap:0 3ch;margin:0 0 var(--lh);white-space:nowrap}
+.navrow .nv{display:flex;gap:2ch;flex:none;max-width:100%}
+.navrow .k{color:var(--dim);white-space:pre;flex:none}
+.navrow .k b{color:var(--bright)}
+.navrow a{color:var(--normal)}
+.navrow a:hover{color:var(--accent)}
+.navrow .none{color:var(--frame)}
+/* the body of an article, typeset for reading at a 70-column measure */
+.article{max-width:70ch;overflow-wrap:break-word}
 .article > :first-child{margin-top:0}
 .article p{margin:0 0 var(--lh)}
 .article h2,.article h3,.article h4,.article h5,.article h6{font-size:inherit;line-height:inherit;margin:calc(var(--lh) * 2) 0 var(--lh);color:var(--bright);font-weight:700}
@@ -129,9 +131,9 @@ ol{list-style:none;margin:0;padding:0}
 .article pre{margin:0;padding:0 2ch;overflow-x:auto;white-space:pre;color:var(--normal);font:inherit;tab-size:4}
 .article pre code{color:inherit}
 .article .sub{margin:0 0 var(--lh)}
-.article .sub.pane .bt,.article .sub.pane .bb,.article .sub.pane .bl,.article .sub.pane .br{color:var(--frame)}
+.article .sub.pane .bt,.article .sub.pane .bb{color:var(--frame)}
 .article blockquote{position:relative;margin:0 0 var(--lh);padding:0 0 0 3ch}
-.article blockquote .gut{position:absolute;left:0;top:0;bottom:0;width:1ch;overflow:hidden;white-space:pre;line-height:1.2;color:var(--frame)}
+.article blockquote::before{content:"";position:absolute;left:calc(0.5ch - 0.5px);top:0;bottom:0;width:0;border-left:1px solid var(--frame)}
 .article blockquote > :last-child{margin-bottom:0}
 .article ul{list-style:none;margin:0 0 var(--lh);padding:0}
 .article ul li{padding-left:2ch;position:relative}
@@ -148,33 +150,43 @@ ol{list-style:none;margin:0;padding:0}
 .article sup{line-height:0}
 @media (max-width:720px){
   :root{--fs:14px;--lh:22px}
-  body{padding-bottom:calc(var(--lh) * 3)}
-  /* two rows: the name with the sound toggle at its right, the nav under it */
-  .top{display:grid;grid-template-columns:1fr auto;gap:0 2ch;padding:calc(var(--lh) / 2) 0 var(--lh)}
-  .top .who{grid-column:1;grid-row:1}
-  .top button{grid-column:2;grid-row:1;text-align:right}
-  .top nav{grid-column:1 / 3;grid-row:2;gap:2ch;margin-left:0}
-  .box{height:210px}
-  #m4nic .bb .ln{min-width:0}
+  /* one row: the name, the four links, s for sound at the right */
+  .top{gap:2ch}
+  .top .who .m4{display:none}
+  .top nav{gap:2ch;margin-left:0}
+  .top button{margin-left:auto}
+  .top button .full{display:none}
+  .top button .short{display:inline}
+  .box{height:calc(var(--lh) * 10)}
+  /* the wordmark is in the pane, so the pane does not say the name again */
+  #m4nic .tt{display:none}
   .pane .meta{display:none}
   .stack{gap:var(--lh)}
   .cols{grid-template-columns:1fr;gap:var(--lh)}
-  .whoami h1{font-size:22px;line-height:30px}
-  .head h1{font-size:18px;line-height:28px}
-  .posts li{grid-template-columns:1ch auto minmax(0,1fr);row-gap:0}
-  .posts li a{grid-column:2 / 4;grid-row:1;white-space:normal}
-  .posts li time{grid-column:2;grid-row:2}
-  .posts li small{grid-column:3;grid-row:2;white-space:normal}
-  .posts li + li{margin-top:calc(var(--lh) / 2)}
-  .work li a,.work li small{white-space:normal}
-  .work li + li{margin-top:calc(var(--lh) / 2)}
-  .works li{grid-template-columns:1ch 2ch minmax(0,1fr)}
-  .works li a{grid-column:3;grid-row:1;white-space:normal}
-  .works li small{grid-column:3;grid-row:2;white-space:normal}
-  .works li p{grid-column:3;grid-row:3}
-  .acols{grid-template-columns:1fr;gap:var(--lh)}
-  .acols .side{position:static}
-  .navrows li a{white-space:normal}
+  .whoami h1{font-size:24px}
+  /* an article title may wrap here: each line is one row, then a row of air before the subtitle */
+  .head h1{font-size:18px;line-height:var(--lh);margin-bottom:var(--lh)}
+  /* an article pane says only what it is; the title is under the rule */
+  .pane .tt .s{display:none}
+  /* rows may wrap, and without a keyboard the selected row is only its cursor mark, not a bar */
+  .list li{margin:0 -1ch;padding:0 1ch;line-height:inherit}
+  .list.focus li.cur{background:none;color:inherit}
+  .list.focus li.cur::before{color:var(--accent)}
+  .list.focus li.cur a{color:var(--bright)}
+  .list.focus li.cur small,.list.focus li.cur time,.list.focus li.cur .n,.list.focus li.cur p{color:var(--dim)}
+  /* post rows: date and title only */
+  .posts li{grid-template-columns:1ch 10ch minmax(0,1fr)}
+  .posts li a{white-space:normal}
+  .posts li small{display:none}
+  /* work rows: the client under the title */
+  .work li,.works li{grid-template-columns:1ch 2ch minmax(0,1fr)}
+  .work li a,.works li a{grid-column:3;grid-row:1;white-space:normal}
+  .work li small,.works li small{grid-column:3;grid-row:2;white-space:normal}
+  .work li + li,.works li + li{margin-top:var(--lh)}
+  .works li p{grid-column:3;grid-row:3;margin:0}
+  /* the nav row becomes three rows, a title wrapping under its key */
+  .navrow{white-space:normal}
+  .navrow .nv{flex:1 0 100%}
   .hints .pos,.hints .kb{display:none}
-  .colophon{flex-direction:column;gap:0;white-space:normal}
+  .colophon{white-space:normal}
 }

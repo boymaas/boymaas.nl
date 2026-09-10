@@ -16,26 +16,29 @@
 <body data-page="article" data-back="/posts.html" data-pos="posts 14/17" data-prev="/posts/2010-05-14-scheme-call-with-current-continuation.html" data-next="/posts/2010-05-04-html5-canvas-element.html">
 <canvas id="sky" aria-hidden="true"></canvas>
 <header class="wrap top">
-  <a class="who" href="/">Boy Maas <span class="dim">(m4nic)</span></a>
+  <a class="who" href="/">Boy Maas<span class="m4"> <span class="dim">(m4nic)</span></span></a>
   <nav>
     <a href="/posts.html" class="here">posts</a>
     <a href="/work.html">work</a>
     <a href="/#bio">bio</a>
     <a href="/#mail">mail</a>
   </nav>
-  <button id="snd" type="button" aria-pressed="false">sound off</button>
+  <button id="snd" type="button" aria-pressed="false" aria-label="sound off"><span class="full">sound off</span><span class="short" aria-hidden="true">s</span></button>
 </header>
 <main class="wrap stack">
-  <div class="acols">
-    <article class="pane focus" id="posts" aria-label="posts/2010-05-11-opengl-plt-scheme-programming">
-      <div class="bt"><span>┌─</span><span class="tt"><span>posts/2010-05-11-opengl-plt-scheme-programming</span></span><span class="ln"></span><span>┐</span></div>
-      <div class="bl"></div><div class="br"></div>
-      <div class="in">
-        <header class="head">
-          <h1>Live coding OpenGl in PLT-Scheme</h1>
-          <p class="sub"><time>2010-05-11</time>Evolutionary coding in scheme</p>
-        </header>
-        <div class="article">
+  <article class="pane focus" id="posts" aria-label="posts/2010-05-11-opengl-plt-scheme-programming">
+    <div class="bt"><span>┌─</span><span class="tt"><span>posts<span class="s">/2010-05-11-opengl-plt-scheme-programming</span></span></span><span class="ln"></span><span>┐</span></div>
+    <div class="in">
+      <header class="head">
+        <h1>Live coding OpenGl in PLT-Scheme</h1>
+        <p class="sub"><time>2010-05-11</time>Evolutionary coding in scheme</p>
+        <nav class="navrow" aria-label="nav">
+          <span class="nv"><span class="k"><b>h</b> prev</span><a href="/posts/2010-05-14-scheme-call-with-current-continuation.html">Ying Yang call/cc or the call-with-current-continuation puzzle</a></span>
+          <span class="nv"><span class="k"><b>l</b> next</span><a href="/posts/2010-05-04-html5-canvas-element.html">Playing around with the HTML5 Canvas element</a></span>
+          <span class="nv"><span class="k"><b>q</b> back</span><a href="/posts.html">posts</a></span>
+        </nav>
+      </header>
+      <div class="article">
 <p>Live coding <a href="http://www.pawfal.org/fluxus/">(fluxus)</a> captured my interest.  Evolutionary
 programming a game system using scheme will be a nice pet project to experiment with.</p>
 
@@ -48,7 +51,7 @@ on irc.freenode.org #scheme which answered my questions within 5 minutes.</p>
 
 <p>Wikipedia describes PLT scheme in a nice fashion:</p>
 
-<blockquote><span class="gut" aria-hidden="true"></span><p>From the beginning, the PLT project was also an experiment in evaluating the
+<blockquote><p>From the beginning, the PLT project was also an experiment in evaluating the
 suitability of Scheme as a programming language for large projects. In a sense,
 the language failed and yet it also proved to be an ideal platform.
 Scheme per se failed because the standard language, as defined in the reports,
@@ -60,7 +63,7 @@ team's expectations.</p></blockquote>
 
 <p>PLT Scheme has a gui toolkit which can be loaded with.</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><div class="bl"></div><div class="br"></div><pre><code>(require scheme/gui/base)</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>(require scheme/gui/base)</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
 <p>This library needs primitive graphics support at runtime an cannot
 be executed with <code>mzscheme</code>. For these programs we have <code>mred</code>.</p>
@@ -70,7 +73,7 @@ be executed with <code>mzscheme</code>. For these programs we have <code>mred</c
 <p>As I understand it, PLT-Scheme has mzscheme as an ideal lightweight scripting
 environment. And MrEd for GUI based apps.</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><div class="bl"></div><div class="br"></div><pre><code>mred -iz -l readline -l scheme/enter</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>mred -iz -l readline -l scheme/enter</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
 <p>We load 2 libraries not standard included in my version of <code>mred</code>:</p>
 
@@ -100,7 +103,7 @@ something on our canvas.</p>
 
 <p>the functions <code>resize</code> and <code>paint</code> will be defined later.</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><div class="bl"></div><div class="br"></div><pre><code>(define gl-canvas%
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>(define gl-canvas%
   (class* canvas% ()
           (inherit with-gl-context swap-gl-buffers)
 
@@ -121,7 +124,7 @@ something on our canvas.</p>
 
 <p>Our canvas needs to <a href="http://docs.plt-scheme.org/gui/frame_.html">framed</a> for the os to display it.</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><div class="bl"></div><div class="br"></div><pre><code>(define window 
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>(define window 
   (new frame% (label "Minimal") (min-width 200) (min-height 200)))</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
 <h3>Rendering time</h3>
@@ -131,7 +134,7 @@ can execute OpenGl calls to actually start drawing. <code>resize</code> is calle
 resize and since this is minimal does nothing. <code>paint</code> is called when the
 canvas is exposed or resized so that the image in the canvas can be repainted.</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><div class="bl"></div><div class="br"></div><pre><code>;; gl-canvas functions resise and main draw
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>;; gl-canvas functions resise and main draw
 (define (resize w h) #t)
 
 (define (paint)
@@ -158,7 +161,7 @@ canvas is exposed or resized so that the image in the canvas can be repainted.</
 <p>To actually create the frame canvas, and fire the on-paint and on-size triggers
 send the window instance the show message. This should create all.</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><div class="bl"></div><div class="br"></div><pre><code>;; show window
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>;; show window
 (send window show #t)</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
 <h2>And now for live coding!</h2>
@@ -167,11 +170,11 @@ send the window instance the show message. This should create all.</p>
 the paint function and sending it to your repl. First we need to change the
 evaluation context. This is done by:</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><div class="bl"></div><div class="br"></div><pre><code>(enter! "minimal.ss")</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>(enter! "minimal.ss")</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
 <p>and redefining <code>paint</code>:</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><div class="bl"></div><div class="br"></div><pre><code>(define (paint)
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>(define (paint)
   (glClearColor 0.0 0.0 0.0 0.0)
   (glClear GL_COLOR_BUFFER_BIT)
   (glColor3d 0.0 1.0 1.0)
@@ -192,25 +195,10 @@ evaluation context. This is done by:</p>
 
 <p>now change size of the window to trigger a <code>on-paint</code> and the colour of the
 square changes. The basic elements of live coding are accomplished.</p>
-        </div>
       </div>
-      <div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div>
-    </article>
-    <div class="side">
-      <section class="pane" id="nav" aria-label="nav">
-        <div class="bt"><span>┌─</span><span class="tt">nav</span><span class="ln"></span><span>┐</span></div>
-        <div class="bl"></div><div class="br"></div>
-        <div class="in">
-        <ol class="navrows">
-          <li><b>h</b><span>prev</span><a href="/posts/2010-05-14-scheme-call-with-current-continuation.html">Ying Yang call/cc or the call-with-current-continuation puzzle</a></li>
-          <li><b>l</b><span>next</span><a href="/posts/2010-05-04-html5-canvas-element.html">Playing around with the HTML5 Canvas element</a></li>
-          <li><b>q</b><span>back</span><a href="/posts.html">posts</a></li>
-        </ol>
-        </div>
-        <div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div>
-      </section>
     </div>
-  </div>
+    <div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div>
+  </article>
 
 </main>
 <div class="hints"><div class="wrap">

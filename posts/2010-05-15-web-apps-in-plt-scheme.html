@@ -16,26 +16,29 @@
 <body data-page="article" data-back="/posts.html" data-pos="posts 12/17" data-prev="/posts/2010-05-20-currying-in-scheme.html" data-next="/posts/2010-05-14-scheme-call-with-current-continuation.html">
 <canvas id="sky" aria-hidden="true"></canvas>
 <header class="wrap top">
-  <a class="who" href="/">Boy Maas <span class="dim">(m4nic)</span></a>
+  <a class="who" href="/">Boy Maas<span class="m4"> <span class="dim">(m4nic)</span></span></a>
   <nav>
     <a href="/posts.html" class="here">posts</a>
     <a href="/work.html">work</a>
     <a href="/#bio">bio</a>
     <a href="/#mail">mail</a>
   </nav>
-  <button id="snd" type="button" aria-pressed="false">sound off</button>
+  <button id="snd" type="button" aria-pressed="false" aria-label="sound off"><span class="full">sound off</span><span class="short" aria-hidden="true">s</span></button>
 </header>
 <main class="wrap stack">
-  <div class="acols">
-    <article class="pane focus" id="posts" aria-label="posts/2010-05-15-web-apps-in-plt-scheme">
-      <div class="bt"><span>┌─</span><span class="tt"><span>posts/2010-05-15-web-apps-in-plt-scheme</span></span><span class="ln"></span><span>┐</span></div>
-      <div class="bl"></div><div class="br"></div>
-      <div class="in">
-        <header class="head">
-          <h1>Web-apps with PLT-Scheme, snoozing while dispatching?</h1>
-          <p class="sub"><time>2010-05-15</time>Web apps in scheme, too good to be true?</p>
-        </header>
-        <div class="article">
+  <article class="pane focus" id="posts" aria-label="posts/2010-05-15-web-apps-in-plt-scheme">
+    <div class="bt"><span>┌─</span><span class="tt"><span>posts<span class="s">/2010-05-15-web-apps-in-plt-scheme</span></span></span><span class="ln"></span><span>┐</span></div>
+    <div class="in">
+      <header class="head">
+        <h1>Web-apps with PLT-Scheme, snoozing while dispatching?</h1>
+        <p class="sub"><time>2010-05-15</time>Web apps in scheme, too good to be true?</p>
+        <nav class="navrow" aria-label="nav">
+          <span class="nv"><span class="k"><b>h</b> prev</span><a href="/posts/2010-05-20-currying-in-scheme.html">Currying in scheme</a></span>
+          <span class="nv"><span class="k"><b>l</b> next</span><a href="/posts/2010-05-14-scheme-call-with-current-continuation.html">Ying Yang call/cc or the call-with-current-continuation puzzle</a></span>
+          <span class="nv"><span class="k"><b>q</b> back</span><a href="/posts.html">posts</a></span>
+        </nav>
+      </header>
+      <div class="article">
 <p>Doing the tutorial on writing a blog using PLT-Scheme opened my eyes to some of
 the possibilities. Working lately primary on webapps using web.py, sqlalchemy I
 wanted to see what could be done using scheme. In this case browsing PLT's
@@ -59,7 +62,7 @@ more so I analysed an example given by the documentation.</p>
 
 <h2>Define your site</h2>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><div class="bl"></div><div class="br"></div><pre><code>#lang scheme/base
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>#lang scheme/base
 
 ;; automaticly grab packages from PLaneT
 (require (planet untyped/dispatch))
@@ -76,12 +79,12 @@ more so I analysed an example given by the documentation.</p>
 
 <p>Controllers for the rules above may be defined with:</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><div class="bl"></div><div class="br"></div><pre><code>(define-controller (controller request args ...)
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>(define-controller (controller request args ...)
     exp ... )</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
 <p>An example being:</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><div class="bl"></div><div class="br"></div><pre><code>; request string -&gt; html-response
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>; request string -&gt; html-response
 (define-controller (review-post request slug)
   `(html (head (title ,slug))
          (body (h1 "You are viewing " ,(format "~s" slug))
@@ -91,7 +94,7 @@ more so I analysed an example given by the documentation.</p>
 
 <p>To find out what happens behind the syntax it helps to expand the syntax (or macro). The declarative statements above expand to:</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><div class="bl"></div><div class="br"></div><pre><code>(require (planet untyped/dispatch))
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>(require (planet untyped/dispatch))
 (begin
   (define-values (blog index review-post review-archive)
     (let-values (((blog controllers)
@@ -132,7 +135,7 @@ used to translate back from controller to path.</p>
 to build reqexp matches and encode and decode arguments between the url and scheme domain. The args and eventually custom args
 are defined in the following struct. (i removed the display routines for clarity)</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><div class="bl"></div><div class="br"></div><pre><code>(define-struct arg
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>(define-struct arg
   (id      ;; symbol to be used declaration 
    pattern ;; regexp pattern
    decoder ;; how to decode from captured arg to lisp domain
@@ -141,7 +144,7 @@ are defined in the following struct. (i removed the display routines for clarity
 
 <p>A working example is <code>string-arg</code>:</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><div class="bl"></div><div class="br"></div><pre><code>(define (string-arg)
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>(define (string-arg)
   (make-arg 
    'string                      ;; id
    "[^/]+"                      ;; regexp
@@ -165,25 +168,10 @@ use it.</p>
 <h2>Mirrors, xhtml/xml generation or javascript. Whatever you want ..</h2>
 
 <p>Will come later ..</p>
-        </div>
       </div>
-      <div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div>
-    </article>
-    <div class="side">
-      <section class="pane" id="nav" aria-label="nav">
-        <div class="bt"><span>┌─</span><span class="tt">nav</span><span class="ln"></span><span>┐</span></div>
-        <div class="bl"></div><div class="br"></div>
-        <div class="in">
-        <ol class="navrows">
-          <li><b>h</b><span>prev</span><a href="/posts/2010-05-20-currying-in-scheme.html">Currying in scheme</a></li>
-          <li><b>l</b><span>next</span><a href="/posts/2010-05-14-scheme-call-with-current-continuation.html">Ying Yang call/cc or the call-with-current-continuation puzzle</a></li>
-          <li><b>q</b><span>back</span><a href="/posts.html">posts</a></li>
-        </ol>
-        </div>
-        <div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div>
-      </section>
     </div>
-  </div>
+    <div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div>
+  </article>
 
 </main>
 <div class="hints"><div class="wrap">

@@ -16,26 +16,29 @@
 <body data-page="article" data-back="/posts.html" data-pos="posts 4/17" data-prev="/posts/2012-07-03-adam-curtis-all-watched-over-by-machines-of-loving-grace.html" data-next="/posts/2012-02-10-ruby-org-mode-parser-development-log.html">
 <canvas id="sky" aria-hidden="true"></canvas>
 <header class="wrap top">
-  <a class="who" href="/">Boy Maas <span class="dim">(m4nic)</span></a>
+  <a class="who" href="/">Boy Maas<span class="m4"> <span class="dim">(m4nic)</span></span></a>
   <nav>
     <a href="/posts.html" class="here">posts</a>
     <a href="/work.html">work</a>
     <a href="/#bio">bio</a>
     <a href="/#mail">mail</a>
   </nav>
-  <button id="snd" type="button" aria-pressed="false">sound off</button>
+  <button id="snd" type="button" aria-pressed="false" aria-label="sound off"><span class="full">sound off</span><span class="short" aria-hidden="true">s</span></button>
 </header>
 <main class="wrap stack">
-  <div class="acols">
-    <article class="pane focus" id="posts" aria-label="posts/2012-06-13-ruby-exceptions-benchmark">
-      <div class="bt"><span>┌─</span><span class="tt"><span>posts/2012-06-13-ruby-exceptions-benchmark</span></span><span class="ln"></span><span>┐</span></div>
-      <div class="bl"></div><div class="br"></div>
-      <div class="in">
-        <header class="head">
-          <h1>Ruby exception handling benchmark</h1>
-          <p class="sub"><time>2012-06-13</time>Getting into the nitty gritty details</p>
-        </header>
-        <div class="article">
+  <article class="pane focus" id="posts" aria-label="posts/2012-06-13-ruby-exceptions-benchmark">
+    <div class="bt"><span>┌─</span><span class="tt"><span>posts<span class="s">/2012-06-13-ruby-exceptions-benchmark</span></span></span><span class="ln"></span><span>┐</span></div>
+    <div class="in">
+      <header class="head">
+        <h1>Ruby exception handling benchmark</h1>
+        <p class="sub"><time>2012-06-13</time>Getting into the nitty gritty details</p>
+        <nav class="navrow" aria-label="nav">
+          <span class="nv"><span class="k"><b>h</b> prev</span><a href="/posts/2012-07-03-adam-curtis-all-watched-over-by-machines-of-loving-grace.html">An alternative view on the foundations of our society</a></span>
+          <span class="nv"><span class="k"><b>l</b> next</span><a href="/posts/2012-02-10-ruby-org-mode-parser-development-log.html">Ruby org-mode parser development log</a></span>
+          <span class="nv"><span class="k"><b>q</b> back</span><a href="/posts.html">posts</a></span>
+        </nav>
+      </header>
+      <div class="article">
 <p>At work a discussion arised on how fast a ruby exception is. And if it is
 usable in Rails projects. The discussion started after the conclusion that
 performance dramatically degraded in a project using the Rails framework.</p>
@@ -48,7 +51,7 @@ one myself.</p>
 
 <h2>ruby 1.8.7 (2012-02-08 patchlevel 358) [i686-darwin11.2.0]</h2>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><div class="bl"></div><div class="br"></div><pre><code>Rehearsal ----------------------------------------------------
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>Rehearsal ----------------------------------------------------
 exception          0.770000   0.030000   0.800000 (  0.809420)
 exception with e   0.780000   0.040000   0.820000 (  0.814608)
 multi exception    0.850000   0.040000   0.890000 (  0.885843)
@@ -63,7 +66,7 @@ symbol             0.040000   0.000000   0.040000 (  0.036175)</code></pre><div 
 
 <h2>ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-darwin11.2.0]</h2>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><div class="bl"></div><div class="br"></div><pre><code>Rehearsal ----------------------------------------------------
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>Rehearsal ----------------------------------------------------
 exception          0.890000   0.040000   0.930000 (  0.929162)
 exception with e   0.890000   0.030000   0.920000 (  0.934193)
 multi exception    0.970000   0.040000   1.010000 (  0.999004)
@@ -78,7 +81,7 @@ symbol             0.020000   0.000000   0.020000 (  0.017294)</code></pre><div 
 
 <h2>jruby 1.6.7.2 (ruby-1.8.7-p357) (2012-05-01 26e08ba) (Java HotSpot(TM) 64-Bit Server VM 1.6.0_29) [darwin-x86_64-java]</h2>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><div class="bl"></div><div class="br"></div><pre><code>Rehearsal ----------------------------------------------------
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>Rehearsal ----------------------------------------------------
 exception          8.044000   0.000000   8.044000 (  8.006000)
 exception with e   7.704000   0.000000   7.704000 (  7.704000)
 multi exception    7.791000   0.000000   7.791000 (  7.791000)
@@ -93,7 +96,7 @@ symbol             0.009000   0.000000   0.009000 (  0.009000)</code></pre><div 
 
 <h2>The benchmark code</h2>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><div class="bl"></div><div class="br"></div><pre><code lang='ruby' class='highlight'>require 'benchmark'
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code lang='ruby' class='highlight'>require 'benchmark'
 
 class E1 < StandardError; end
 class E2 < StandardError; end
@@ -155,25 +158,10 @@ Benchmark.bmbm { |x|
     COUNT.times { outer_conditional } 
   end
 }</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
-        </div>
       </div>
-      <div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div>
-    </article>
-    <div class="side">
-      <section class="pane" id="nav" aria-label="nav">
-        <div class="bt"><span>┌─</span><span class="tt">nav</span><span class="ln"></span><span>┐</span></div>
-        <div class="bl"></div><div class="br"></div>
-        <div class="in">
-        <ol class="navrows">
-          <li><b>h</b><span>prev</span><a href="/posts/2012-07-03-adam-curtis-all-watched-over-by-machines-of-loving-grace.html">An alternative view on the foundations of our society</a></li>
-          <li><b>l</b><span>next</span><a href="/posts/2012-02-10-ruby-org-mode-parser-development-log.html">Ruby org-mode parser development log</a></li>
-          <li><b>q</b><span>back</span><a href="/posts.html">posts</a></li>
-        </ol>
-        </div>
-        <div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div>
-      </section>
     </div>
-  </div>
+    <div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div>
+  </article>
 
 </main>
 <div class="hints"><div class="wrap">

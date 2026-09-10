@@ -16,26 +16,29 @@
 <body data-page="article" data-back="/posts.html" data-pos="posts 8/17" data-prev="/posts/2011-09-07-kinetic-typography.html" data-next="/posts/2010-06-15-clocks-portmortem.html">
 <canvas id="sky" aria-hidden="true"></canvas>
 <header class="wrap top">
-  <a class="who" href="/">Boy Maas <span class="dim">(m4nic)</span></a>
+  <a class="who" href="/">Boy Maas<span class="m4"> <span class="dim">(m4nic)</span></span></a>
   <nav>
     <a href="/posts.html" class="here">posts</a>
     <a href="/work.html">work</a>
     <a href="/#bio">bio</a>
     <a href="/#mail">mail</a>
   </nav>
-  <button id="snd" type="button" aria-pressed="false">sound off</button>
+  <button id="snd" type="button" aria-pressed="false" aria-label="sound off"><span class="full">sound off</span><span class="short" aria-hidden="true">s</span></button>
 </header>
 <main class="wrap stack">
-  <div class="acols">
-    <article class="pane focus" id="posts" aria-label="posts/2011-02-20-rails-experiences">
-      <div class="bt"><span>┌─</span><span class="tt"><span>posts/2011-02-20-rails-experiences</span></span><span class="ln"></span><span>┐</span></div>
-      <div class="bl"></div><div class="br"></div>
-      <div class="in">
-        <header class="head">
-          <h1>Rails experiences</h1>
-          <p class="sub"><time>2011-02-20</time>Reasons why rails development seems so productive</p>
-        </header>
-        <div class="article">
+  <article class="pane focus" id="posts" aria-label="posts/2011-02-20-rails-experiences">
+    <div class="bt"><span>┌─</span><span class="tt"><span>posts<span class="s">/2011-02-20-rails-experiences</span></span></span><span class="ln"></span><span>┐</span></div>
+    <div class="in">
+      <header class="head">
+        <h1>Rails experiences</h1>
+        <p class="sub"><time>2011-02-20</time>Reasons why rails development seems so productive</p>
+        <nav class="navrow" aria-label="nav">
+          <span class="nv"><span class="k"><b>h</b> prev</span><a href="/posts/2011-09-07-kinetic-typography.html">Kinetic Typography</a></span>
+          <span class="nv"><span class="k"><b>l</b> next</span><a href="/posts/2010-06-15-clocks-portmortem.html">Clocks webdsl postmortem</a></span>
+          <span class="nv"><span class="k"><b>q</b> back</span><a href="/posts.html">posts</a></span>
+        </nav>
+      </header>
+      <div class="article">
 <p>Revisited rails and the ruby after a few years to implement <a href="http://www.keygamesnetwork.com">Keygames Network</a>, and found it extremely productive. Why?</p>
 
 <h2>High level view of a software project</h2>
@@ -130,7 +133,7 @@ specific combination of the model names.</p>
 
 <p>A very simple model example:</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><div class="bl"></div><div class="br"></div><pre><code lang='ruby' class='highlight'>class Shop < ActiveRecord::Base
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code lang='ruby' class='highlight'>class Shop < ActiveRecord::Base
   has_many :orders
 end
 
@@ -140,13 +143,13 @@ end</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>�
 
 <p>A simple resource_full route definition:</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><div class="bl"></div><div class="br"></div><pre><code>resources :shops do
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>resources :shops do
   resources :orders
 end</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
 <p>Will generate:</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><div class="bl"></div><div class="br"></div><pre><code>    shop_orders GET    /shops/:shop_id/orders(.:format)          {:action=&gt;"index", :controller=&gt;"orders"}
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>    shop_orders GET    /shops/:shop_id/orders(.:format)          {:action=&gt;"index", :controller=&gt;"orders"}
                 POST   /shops/:shop_id/orders(.:format)          {:action=&gt;"create", :controller=&gt;"orders"}
  new_shop_order GET    /shops/:shop_id/orders/new(.:format)      {:action=&gt;"new", :controller=&gt;"orders"}
 edit_shop_order GET    /shops/:shop_id/orders/:id/edit(.:format) {:action=&gt;"edit", :controller=&gt;"orders"}
@@ -169,7 +172,7 @@ technique invented by Rails.</p>
 <p>As you can see above every resource route generates routes to 4 standardised actions inside the targeted controller. Conforming CRUD. Which
 one could split up in 2 categories. Actions manipulating the collection of the resource, and actions which manipulate a member of the collection.</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><div class="bl"></div><div class="br"></div><pre><code>* collection -&gt;      shop\_orders
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>* collection -&gt;      shop\_orders
   * index
   * create
   * new     -&gt; new\_shop\_order
@@ -185,25 +188,10 @@ relations as defined in the data-model is reflected in the routes.</p>
 <h2>More to come</h2>
 
 <p>I will specify more functionality in the future. Models and relations, and more on controllers.</p>
-        </div>
       </div>
-      <div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div>
-    </article>
-    <div class="side">
-      <section class="pane" id="nav" aria-label="nav">
-        <div class="bt"><span>┌─</span><span class="tt">nav</span><span class="ln"></span><span>┐</span></div>
-        <div class="bl"></div><div class="br"></div>
-        <div class="in">
-        <ol class="navrows">
-          <li><b>h</b><span>prev</span><a href="/posts/2011-09-07-kinetic-typography.html">Kinetic Typography</a></li>
-          <li><b>l</b><span>next</span><a href="/posts/2010-06-15-clocks-portmortem.html">Clocks webdsl postmortem</a></li>
-          <li><b>q</b><span>back</span><a href="/posts.html">posts</a></li>
-        </ol>
-        </div>
-        <div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div>
-      </section>
     </div>
-  </div>
+    <div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div>
+  </article>
 
 </main>
 <div class="hints"><div class="wrap">

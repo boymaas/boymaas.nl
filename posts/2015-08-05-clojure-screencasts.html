@@ -16,26 +16,29 @@
 <body data-page="article" data-back="/posts.html" data-pos="posts 2/17" data-prev="/posts/2015-10-31-coffeescript-screencasts.html" data-next="/posts/2012-07-03-adam-curtis-all-watched-over-by-machines-of-loving-grace.html">
 <canvas id="sky" aria-hidden="true"></canvas>
 <header class="wrap top">
-  <a class="who" href="/">Boy Maas <span class="dim">(m4nic)</span></a>
+  <a class="who" href="/">Boy Maas<span class="m4"> <span class="dim">(m4nic)</span></span></a>
   <nav>
     <a href="/posts.html" class="here">posts</a>
     <a href="/work.html">work</a>
     <a href="/#bio">bio</a>
     <a href="/#mail">mail</a>
   </nav>
-  <button id="snd" type="button" aria-pressed="false">sound off</button>
+  <button id="snd" type="button" aria-pressed="false" aria-label="sound off"><span class="full">sound off</span><span class="short" aria-hidden="true">s</span></button>
 </header>
 <main class="wrap stack">
-  <div class="acols">
-    <article class="pane focus" id="posts" aria-label="posts/2015-08-05-clojure-screencasts">
-      <div class="bt"><span>┌─</span><span class="tt"><span>posts/2015-08-05-clojure-screencasts</span></span><span class="ln"></span><span>┐</span></div>
-      <div class="bl"></div><div class="br"></div>
-      <div class="in">
-        <header class="head">
-          <h1>Clojure screencasts</h1>
-          <p class="sub"><time>2015-08-05</time>what gets measured, gets managed</p>
-        </header>
-        <div class="article">
+  <article class="pane focus" id="posts" aria-label="posts/2015-08-05-clojure-screencasts">
+    <div class="bt"><span>┌─</span><span class="tt"><span>posts<span class="s">/2015-08-05-clojure-screencasts</span></span></span><span class="ln"></span><span>┐</span></div>
+    <div class="in">
+      <header class="head">
+        <h1>Clojure screencasts</h1>
+        <p class="sub"><time>2015-08-05</time>what gets measured, gets managed</p>
+        <nav class="navrow" aria-label="nav">
+          <span class="nv"><span class="k"><b>h</b> prev</span><a href="/posts/2015-10-31-coffeescript-screencasts.html">CoffeeScript screencasts</a></span>
+          <span class="nv"><span class="k"><b>l</b> next</span><a href="/posts/2012-07-03-adam-curtis-all-watched-over-by-machines-of-loving-grace.html">An alternative view on the foundations of our society</a></span>
+          <span class="nv"><span class="k"><b>q</b> back</span><a href="/posts.html">posts</a></span>
+        </nav>
+      </header>
+      <div class="article">
 <p>A while ago, I started the habit of recording hacking sessions, and
 replaying them with a factor of 10. This way I can review my own actions
 and learn from the way I work, how I refactor, and the way I solve problems.</p>
@@ -54,25 +57,10 @@ based on actual orderbooks configurations gathered while running the bot on bitf
 <h3>Part II</h3>
 
 <iframe width="640" height="480" src="https://www.youtube.com/embed/9BoORe94ZqM" frameborder="0" allowfullscreen style="width:640px;aspect-ratio:640/480"></iframe>
-        </div>
       </div>
-      <div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div>
-    </article>
-    <div class="side">
-      <section class="pane" id="nav" aria-label="nav">
-        <div class="bt"><span>┌─</span><span class="tt">nav</span><span class="ln"></span><span>┐</span></div>
-        <div class="bl"></div><div class="br"></div>
-        <div class="in">
-        <ol class="navrows">
-          <li><b>h</b><span>prev</span><a href="/posts/2015-10-31-coffeescript-screencasts.html">CoffeeScript screencasts</a></li>
-          <li><b>l</b><span>next</span><a href="/posts/2012-07-03-adam-curtis-all-watched-over-by-machines-of-loving-grace.html">An alternative view on the foundations of our society</a></li>
-          <li><b>q</b><span>back</span><a href="/posts.html">posts</a></li>
-        </ol>
-        </div>
-        <div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div>
-      </section>
     </div>
-  </div>
+    <div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div>
+  </article>
 
 </main>
 <div class="hints"><div class="wrap">

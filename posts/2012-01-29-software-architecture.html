@@ -16,26 +16,29 @@
 <body data-page="article" data-back="/posts.html" data-pos="posts 6/17" data-prev="/posts/2012-02-10-ruby-org-mode-parser-development-log.html" data-next="/posts/2011-09-07-kinetic-typography.html">
 <canvas id="sky" aria-hidden="true"></canvas>
 <header class="wrap top">
-  <a class="who" href="/">Boy Maas <span class="dim">(m4nic)</span></a>
+  <a class="who" href="/">Boy Maas<span class="m4"> <span class="dim">(m4nic)</span></span></a>
   <nav>
     <a href="/posts.html" class="here">posts</a>
     <a href="/work.html">work</a>
     <a href="/#bio">bio</a>
     <a href="/#mail">mail</a>
   </nav>
-  <button id="snd" type="button" aria-pressed="false">sound off</button>
+  <button id="snd" type="button" aria-pressed="false" aria-label="sound off"><span class="full">sound off</span><span class="short" aria-hidden="true">s</span></button>
 </header>
 <main class="wrap stack">
-  <div class="acols">
-    <article class="pane focus" id="posts" aria-label="posts/2012-01-29-software-architecture">
-      <div class="bt"><span>┌─</span><span class="tt"><span>posts/2012-01-29-software-architecture</span></span><span class="ln"></span><span>┐</span></div>
-      <div class="bl"></div><div class="br"></div>
-      <div class="in">
-        <header class="head">
-          <h1>Software architecture</h1>
-          <p class="sub"><time>2012-01-29</time>Elements of software architecture</p>
-        </header>
-        <div class="article">
+  <article class="pane focus" id="posts" aria-label="posts/2012-01-29-software-architecture">
+    <div class="bt"><span>┌─</span><span class="tt"><span>posts<span class="s">/2012-01-29-software-architecture</span></span></span><span class="ln"></span><span>┐</span></div>
+    <div class="in">
+      <header class="head">
+        <h1>Software architecture</h1>
+        <p class="sub"><time>2012-01-29</time>Elements of software architecture</p>
+        <nav class="navrow" aria-label="nav">
+          <span class="nv"><span class="k"><b>h</b> prev</span><a href="/posts/2012-02-10-ruby-org-mode-parser-development-log.html">Ruby org-mode parser development log</a></span>
+          <span class="nv"><span class="k"><b>l</b> next</span><a href="/posts/2011-09-07-kinetic-typography.html">Kinetic Typography</a></span>
+          <span class="nv"><span class="k"><b>q</b> back</span><a href="/posts.html">posts</a></span>
+        </nav>
+      </header>
+      <div class="article">
 <p>I was working with some legacy code lately  where commercial goals where given
 precedence over technical quality.  All rules on writing solid, maintainable
 software where broken. The situation was terrible, and with no future sign of
@@ -48,7 +51,7 @@ with it.</p>
 continue with a cycle of bugfixes and "hoping" everything would keep on running
 <em>without</em> me. The quote below adequately describes the state of their software.</p>
 
-<blockquote><span class="gut" aria-hidden="true"></span>
+<blockquote>
   A Big Ball of Mud is a haphazardly structured, sprawling, sloppy,
   duct-tape-and-baling-wire, spaghetti-code jungle. These systems show
   unmistakable signs of unregulated growth, and repeated, expedient repair.
@@ -79,7 +82,7 @@ attacks of your opponent increases.</p>
 would like to address <em>cohesion</em> and <em>coupling</em>, and show you they (should) underly many
 architectural choices.</p>
 
-<blockquote><span class="gut" aria-hidden="true"></span>
+<blockquote>
   Cohesion is often contrasted with coupling, a different concept. Nonetheless
   high cohesion often correlates with loose coupling, and vice versa. The
   software quality metrics of coupling and cohesion were invented by Larry
@@ -95,7 +98,7 @@ the human (cognitive) point of view. Good programs tend to have their naming
 down. Reading this software is easy, the whole structure adapts naturally to the
 domain and to the vectors of change.</p>
 
-<blockquote><span class="gut" aria-hidden="true"></span>
+<blockquote>
   There are only two hard things in Computer Science: cache invalidation and
   naming things.
   <author>Phil Karlton</author>
@@ -150,7 +153,7 @@ a MVC structure.</p>
 
 <h2>Data, Context and Interaction to supplement MVC</h2>
 
-<blockquote><span class="gut" aria-hidden="true"></span>
+<blockquote>
   The paradigm separates the domain model (data) from use cases (context) and
   roles that objects play (interaction). DCI is complementary to
   model–view–controller (MVC). MVC as a pattern language is still used to
@@ -184,7 +187,7 @@ and directs the interaction between them.</p>
 <p>Data are kept slim, and no behaviour is specified on them. Since behaviour
 is specified in Roles it is <em>decoupled</em> from the Context.</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><div class="bl"></div><div class="br"></div><pre><code>Context
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>Context
 initialize
    # instantizes all dataobjects and makes sure they can perform
    # the requested roles
@@ -195,7 +198,7 @@ call/execute
 <p>So by this we could say a Context is <em>coupled</em> to (one or more) Roles. And a Role
 is <em>coupled</em> to a DataObject.</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><div class="bl"></div><div class="br"></div><pre><code>Context --&gt; *Roles --&gt; *DataObject</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>Context --&gt; *Roles --&gt; *DataObject</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
 <p>For more information read: <a href="http://en.wikipedia.org/wiki/Data,_context_and_interaction">Data context and interaction</a></p>
 
@@ -331,25 +334,10 @@ This may lead to changing the way a module reads a record because a field that t
 <h4>Temporal coupling</h4>
 
 <p>When two actions are bundled together into one module just because they happen to occur at the same time.</p>
-        </div>
       </div>
-      <div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div>
-    </article>
-    <div class="side">
-      <section class="pane" id="nav" aria-label="nav">
-        <div class="bt"><span>┌─</span><span class="tt">nav</span><span class="ln"></span><span>┐</span></div>
-        <div class="bl"></div><div class="br"></div>
-        <div class="in">
-        <ol class="navrows">
-          <li><b>h</b><span>prev</span><a href="/posts/2012-02-10-ruby-org-mode-parser-development-log.html">Ruby org-mode parser development log</a></li>
-          <li><b>l</b><span>next</span><a href="/posts/2011-09-07-kinetic-typography.html">Kinetic Typography</a></li>
-          <li><b>q</b><span>back</span><a href="/posts.html">posts</a></li>
-        </ol>
-        </div>
-        <div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div>
-      </section>
     </div>
-  </div>
+    <div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div>
+  </article>
 
 </main>
 <div class="hints"><div class="wrap">

@@ -110,7 +110,9 @@ function bgEnter(i){
   if (i === 5){ bg.passer = { g:Math.floor(brng() * 8), y:SH * (0.15 + brng() * 0.7), t0:bt, size:Math.round(0.16 * Math.min(SW, SH)) + 40, v:(SW + 300) / (52 + brng() * 16) }; }
 }
 function bgPick(){ var i; do { i = Math.floor(brng() * STATES.length); } while (i === bg.st); bgEnter(i); }
-function spawnCon(){
+/* a constellation: three to six stars of the middle plane joined left to right. A segment that runs nearly vertical
+   or horizontal, or long, reads as a rule of the interface rather than a line of the sky, so such a pick is thrown away */
+function pickCon(){
   var l = layers[1], spd = 1, n = 4 + Math.floor(brng() * 3), picked = [], tries = 0;
   while (picked.length < n && tries++ < 200){
     var k = Math.floor(brng() * l.n), x = starX(l, k, spd), y = starY(l, k, spd);
@@ -119,11 +121,22 @@ function spawnCon(){
     for (var j = 0; j < picked.length; j++){ var ox = starX(l, picked[j].k, spd) - x, oy = starY(l, picked[j].k, spd) - y; if (ox * ox + oy * oy < 60 * 60) ok = false; }
     if (!ok) continue;
     var cols = [P.teal, P.amber, P.violet, P.magenta, P.cobalt, P.coral];
-    picked.push({ k:k, g:Math.floor(brng() * 8), col:mixQ(P.ground, cols[Math.floor(brng() * cols.length)], 0.75) });
+    picked.push({ k:k, g:Math.floor(brng() * 8), col:mixQ(P.ground, cols[Math.floor(brng() * cols.length)], 0.5) });
   }
-  if (picked.length < 3) return;
+  if (picked.length < 3) return null;
   picked.sort(function(a, b){ return starX(l, a.k, spd) - starX(l, b.k, spd); });
-  bg.cons.push({ nodes:picked, t0:bt, form:3, hold:10 + brng() * 16, diss:3 });
+  var lim = 0.35 * (SW + SH) / 2;
+  for (var i = 1; i < picked.length; i++){
+    var dx = starX(l, picked[i].k, spd) - starX(l, picked[i - 1].k, spd), dy = Math.abs(starY(l, picked[i].k, spd) - starY(l, picked[i - 1].k, spd));
+    if (dx < 0.36 * dy || dy < 0.36 * dx || dx * dx + dy * dy > lim * lim) return null;
+  }
+  return picked;
+}
+function spawnCon(){
+  for (var t = 0; t < 12; t++){
+    var picked = pickCon();
+    if (picked){ bg.cons.push({ nodes:picked, t0:bt, form:3, hold:10 + brng() * 16, diss:3 }); return; }
+  }
 }
 function skyStep(){
   bt += DT;
@@ -196,7 +209,7 @@ function drawCons(){
     if (el < c.form) p = el / c.form; else if (el < c.form + c.hold) p = 1; else p = Math.max(0, 1 - (el - c.form - c.hold) / c.diss);
     var pts = c.nodes.map(function(nd){ return [starX(l, nd.k, spd), starY(l, nd.k, spd)]; });
     var seg = p * (n - 1), full = Math.floor(seg), part = seg - full;
-    ovc.strokeStyle = mixQ(P.ground, P.ash, 0.375); ovc.lineWidth = CH; ovc.beginPath();
+    ovc.strokeStyle = mixQ(P.ground, P.ash, 0.25); ovc.lineWidth = CH; ovc.beginPath();
     for (var k = 0; k < full; k++){ ovc.moveTo(pts[k][0], pts[k][1]); ovc.lineTo(pts[k + 1][0], pts[k + 1][1]); }
     if (full < n - 1 && part > 0){ var a = pts[full], b = pts[full + 1]; ovc.moveTo(a[0], a[1]); ovc.lineTo(a[0] + (b[0] - a[0]) * part, a[1] + (b[1] - a[1]) * part); }
     ovc.stroke();

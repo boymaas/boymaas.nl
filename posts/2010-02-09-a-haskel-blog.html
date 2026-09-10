@@ -16,26 +16,29 @@
 <body data-page="article" data-back="/posts.html" data-pos="posts 17/17" data-prev="/posts/2010-02-17-procedural-generation.html">
 <canvas id="sky" aria-hidden="true"></canvas>
 <header class="wrap top">
-  <a class="who" href="/">Boy Maas <span class="dim">(m4nic)</span></a>
+  <a class="who" href="/">Boy Maas<span class="m4"> <span class="dim">(m4nic)</span></span></a>
   <nav>
     <a href="/posts.html" class="here">posts</a>
     <a href="/work.html">work</a>
     <a href="/#bio">bio</a>
     <a href="/#mail">mail</a>
   </nav>
-  <button id="snd" type="button" aria-pressed="false">sound off</button>
+  <button id="snd" type="button" aria-pressed="false" aria-label="sound off"><span class="full">sound off</span><span class="short" aria-hidden="true">s</span></button>
 </header>
 <main class="wrap stack">
-  <div class="acols">
-    <article class="pane focus" id="posts" aria-label="posts/2010-02-09-a-haskel-blog">
-      <div class="bt"><span>┌─</span><span class="tt"><span>posts/2010-02-09-a-haskel-blog</span></span><span class="ln"></span><span>┐</span></div>
-      <div class="bl"></div><div class="br"></div>
-      <div class="in">
-        <header class="head">
-          <h1>Hakyll blog setup</h1>
-          <p class="sub"><time>2010-02-09</time>Setting up a maintainable blog using haskell</p>
-        </header>
-        <div class="article">
+  <article class="pane focus" id="posts" aria-label="posts/2010-02-09-a-haskel-blog">
+    <div class="bt"><span>┌─</span><span class="tt"><span>posts<span class="s">/2010-02-09-a-haskel-blog</span></span></span><span class="ln"></span><span>┐</span></div>
+    <div class="in">
+      <header class="head">
+        <h1>Hakyll blog setup</h1>
+        <p class="sub"><time>2010-02-09</time>Setting up a maintainable blog using haskell</p>
+        <nav class="navrow" aria-label="nav">
+          <span class="nv"><span class="k"><b>h</b> prev</span><a href="/posts/2010-02-17-procedural-generation.html">Procedural Generation, a way to go?</a></span>
+          <span class="nv"><span class="k"><b>l</b> next</span><span class="none">none</span></span>
+          <span class="nv"><span class="k"><b>q</b> back</span><a href="/posts.html">posts</a></span>
+        </nav>
+      </header>
+      <div class="article">
 <p>Wondering for a while on how to setup a blog, one of my favourite languages is
 haskell. One of my <a href="http://www.vim.org">favourite editors is vim</a>. And one of my favourite principles
 is to automate as much as possible. It's nice to live life according to
@@ -51,7 +54,7 @@ principle which could be defined as:</p>
 <p>Another favourite principles, next to minimalism, is doing stuff as efficient as possible.
 What is more efficient as serving static pages? Hence <a href="http://jaspervdj.be/hakyll/">the hakyll setup</a>.</p>
 
-<h3>Maintaining my blog</h3>
+<h2>Maintaining my blog</h2>
 
 <p>I really like to write in vim in combination with other linux system tools to automate away all the routine tasks. For this end I have included <a href="http://github.com/nfjinjing/nemesis">nemesis</a> in my toolchain. For 2 reasons:</p>
 
@@ -65,7 +68,7 @@ What is more efficient as serving static pages? Hence <a href="http://jaspervdj.
 
 <p>Like the homepage of hakyll states:</p>
 
-<blockquote><span class="gut" aria-hidden="true"></span><p>Hakyll is a Haskell library for generating static sites. It is written in a very configurable way and uses an xmonad-like DSL for configuration.</p></blockquote>
+<blockquote><p>Hakyll is a Haskell library for generating static sites. It is written in a very configurable way and uses an xmonad-like DSL for configuration.</p></blockquote>
 
 <h3>Why static site generators?</h3>
 
@@ -75,25 +78,10 @@ You dont have to worry about security issues.</p>
 <h2>Based upon</h2>
 
 <p>I based this site upon the blog of the creator of hakyll. But it will adapt to a more custom layout in the future.</p>
-        </div>
       </div>
-      <div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div>
-    </article>
-    <div class="side">
-      <section class="pane" id="nav" aria-label="nav">
-        <div class="bt"><span>┌─</span><span class="tt">nav</span><span class="ln"></span><span>┐</span></div>
-        <div class="bl"></div><div class="br"></div>
-        <div class="in">
-        <ol class="navrows">
-          <li><b>h</b><span>prev</span><a href="/posts/2010-02-17-procedural-generation.html">Procedural Generation, a way to go?</a></li>
-          <li><b>l</b><span>next</span><span class="none">none</span></li>
-          <li><b>q</b><span>back</span><a href="/posts.html">posts</a></li>
-        </ol>
-        </div>
-        <div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div>
-      </section>
     </div>
-  </div>
+    <div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div>
+  </article>
 
 </main>
 <div class="hints"><div class="wrap">

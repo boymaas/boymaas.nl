@@ -16,26 +16,29 @@
 <body data-page="article" data-back="/posts.html" data-pos="posts 10/17" data-prev="/posts/2010-06-15-clocks-portmortem.html" data-next="/posts/2010-05-20-currying-in-scheme.html">
 <canvas id="sky" aria-hidden="true"></canvas>
 <header class="wrap top">
-  <a class="who" href="/">Boy Maas <span class="dim">(m4nic)</span></a>
+  <a class="who" href="/">Boy Maas<span class="m4"> <span class="dim">(m4nic)</span></span></a>
   <nav>
     <a href="/posts.html" class="here">posts</a>
     <a href="/work.html">work</a>
     <a href="/#bio">bio</a>
     <a href="/#mail">mail</a>
   </nav>
-  <button id="snd" type="button" aria-pressed="false">sound off</button>
+  <button id="snd" type="button" aria-pressed="false" aria-label="sound off"><span class="full">sound off</span><span class="short" aria-hidden="true">s</span></button>
 </header>
 <main class="wrap stack">
-  <div class="acols">
-    <article class="pane focus" id="posts" aria-label="posts/2010-05-24-webapps-haskell-loli-hack">
-      <div class="bt"><span>┌─</span><span class="tt"><span>posts/2010-05-24-webapps-haskell-loli-hack</span></span><span class="ln"></span><span>┐</span></div>
-      <div class="bl"></div><div class="br"></div>
-      <div class="in">
-        <header class="head">
-          <h1>Hack, Loli, the rake/webpy for Haskell?</h1>
-          <p class="sub"><time>2010-05-24</time>A minimalistic DSL to webapps in Haskell</p>
-        </header>
-        <div class="article">
+  <article class="pane focus" id="posts" aria-label="posts/2010-05-24-webapps-haskell-loli-hack">
+    <div class="bt"><span>┌─</span><span class="tt"><span>posts<span class="s">/2010-05-24-webapps-haskell-loli-hack</span></span></span><span class="ln"></span><span>┐</span></div>
+    <div class="in">
+      <header class="head">
+        <h1>Hack, Loli, the rake/webpy for Haskell?</h1>
+        <p class="sub"><time>2010-05-24</time>A minimalistic DSL to webapps in Haskell</p>
+        <nav class="navrow" aria-label="nav">
+          <span class="nv"><span class="k"><b>h</b> prev</span><a href="/posts/2010-06-15-clocks-portmortem.html">Clocks webdsl postmortem</a></span>
+          <span class="nv"><span class="k"><b>l</b> next</span><a href="/posts/2010-05-20-currying-in-scheme.html">Currying in scheme</a></span>
+          <span class="nv"><span class="k"><b>q</b> back</span><a href="/posts.html">posts</a></span>
+        </nav>
+      </header>
+      <div class="article">
 <p>I am investing alternative ways of developing web apps. I've looked at
 PLT-Scheme which was a nice framework to develop in, but missing a nice
 database abstraction layer like fe. SQLAlchemy in python. And in retrospect my
@@ -44,7 +47,7 @@ Haskell.  I like succintness, it gives a lot of power as descibed by Paul
 Graham in
 <a href="http://www.paulgraham.com/power.html">Succintness is Power</a>.</p>
 
-<blockquote><span class="gut" aria-hidden="true"></span>
+<blockquote>
   The quantity of meaning compressed into a small space by algebraic signs, is another circumstance that facilitates the reasonings we are accustomed to carry on by their aid.
   <br>
   <strong>
@@ -69,7 +72,7 @@ look like a OO language (to relieve his already punished OO brain).</p>
 <p>See <a href="http://github.com/nfjinjing/mps/blob/master/src/MPS/Light.hs">MPS</a> for the
 syntax implmeneted. I have collected the important code snippets from MPS:</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><div class="bl"></div><div class="br"></div><pre><code>{-# INLINE (.) #-}
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>{-# INLINE (.) #-}
 (.) :: a -&gt; (a -&gt; b) -&gt; b
 a . f = f a
 infixl 9 .
@@ -90,7 +93,7 @@ infixl 8 ^</code></pre><div class="bb"><span>└</span><span class="ln"></span><
 
 <h2>How does hack work?</h2>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><div class="bl"></div><div class="br"></div><pre><code>type Application = Env -&gt; IO Response
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>type Application = Env -&gt; IO Response
 
 type Middleware = Application -&gt; Application</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
@@ -127,7 +130,7 @@ enables composition of components in a very flexible decoupled way.</p>
 
 <p>Take as example the regexp router, which is an example of a middleware compononent:</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><div class="bl"></div><div class="br"></div><pre><code>type RoutePath = (String, Application)
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>type RoutePath = (String, Application)
 
 type Middleware = Application -&gt; Application
 
@@ -146,7 +149,7 @@ runs the found_app if a route matches or dispatches to then next in middleware p
 
 <p>Below another example of a middleware, this is static file serving.</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><div class="bl"></div><div class="br"></div><pre><code>file :: Maybe String -&gt; Middleware
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>file :: Maybe String -&gt; Middleware
 file root _ = \env -&gt; do
   let path = env.path_info .unescape_uri
   if ".." `isInfixOf` path
@@ -189,7 +192,7 @@ web apps. As 'webpy' in python.</p>
 
 <h2>Example app</h2>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><div class="bl"></div><div class="br"></div><pre><code>main ::  IO ()
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>main ::  IO ()
 main = run 3000 . loli - do
      get "/bench" - do
         name &lt;- ask ^ params ^ lookup "name" ^ fromMaybe "nobody"
@@ -202,7 +205,7 @@ main = run 3000 . loli - do
 <p>Looks pretty efficient, what exactly happens here? To understand let's
 look at the used types.</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><div class="bl"></div><div class="br"></div><pre><code>run ::  Hack.Handler.SimpleServer.Port -&gt; Hack.Application -&gt; IO ()
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>run ::  Hack.Handler.SimpleServer.Port -&gt; Hack.Application -&gt; IO ()
 
 loli ::  Network.Loli.Type.Unit -&gt; Hack.Application
 
@@ -220,11 +223,11 @@ data Loli = Loli
 
 <p>So in abstracto Loli dsl functions like get. Define an Appunit.</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><div class="bl"></div><div class="br"></div><pre><code>get :: String -&gt; Network.Loli.Type.AppUnit -&gt; Network.Loli.Type.Unit</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>get :: String -&gt; Network.Loli.Type.AppUnit -&gt; Network.Loli.Type.Unit</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
 <p>Appunit is defined as:</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><div class="bl"></div><div class="br"></div><pre><code>type AppReader    = Env
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>type AppReader    = Env
 type AppState     = Response
 type AppUnitT     = ReaderT AppReader (StateT AppState IO)
 type AppUnit      = AppUnitT ()</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
@@ -240,7 +243,7 @@ type AppUnit      = AppUnitT ()</code></pre><div class="bb"><span>└</span><spa
 
 <p>Env and Response are defined inside the Hack libraries and defined below.</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><div class="bl"></div><div class="br"></div><pre><code>data Env = Env 
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>data Env = Env 
   {  requestMethod :: RequestMethod            -- ^ HTTP request method ....
   ,  scriptName :: String                      -- ^ The initial portion o....
   ,  pathInfo :: String                        -- ^ The remainder of the ....
@@ -260,18 +263,18 @@ type AppUnit      = AppUnitT ()</code></pre><div class="bb"><span>└</span><spa
 
 <p>Response defined by</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><div class="bl"></div><div class="br"></div><pre><code>data Response = Response
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>data Response = Response
   {  status :: Int                              -- ^ must be greater than ....
   ,  headers :: [(String, String)]              -- ^ The header must not c....
   ,  body :: B.ByteString                       -- ^ body of the response
   }
   deriving (Show)</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
-<h4>Let's dive in some more</h4>
+<h3>Let's dive in some more</h3>
 
 <p>Let's take for example the first line of code in our example:</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><div class="bl"></div><div class="br"></div><pre><code>name &lt;- ask ^ params ^ lookup "name" ^ fromMaybe "nobody"</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>name &lt;- ask ^ params ^ lookup "name" ^ fromMaybe "nobody"</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
 <p>What happens here:</p>
 
@@ -294,7 +297,7 @@ returns a <code>Maybe</code>.</p></li>
 <p>Uses <code>StateMonad</code>s update function to update <code>Response</code> setting <code>content-type</code>
 and <code>body</code>.</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><div class="bl"></div><div class="br"></div><pre><code>html :: String -&gt; AppUnit
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>html :: String -&gt; AppUnit
 html x = do
   update - set_content_type _TextHtml
   update - set_body (x.fromString)
@@ -304,20 +307,20 @@ html x = do
 
 <p>Network.Loli.Engine</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><div class="bl"></div><div class="br"></div><pre><code>add_middleware :: Middleware -&gt; Loli -&gt; Loli
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>add_middleware :: Middleware -&gt; Loli -&gt; Loli
 add_middleware x s = 
   let xs = s.middlewares in s {middlewares = xs.insert_last x}</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
 <p>And ofcourse defined in Network.Loli.DSL on unit level.</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><div class="bl"></div><div class="br"></div><pre><code>middleware :: Middleware -&gt; Unit
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>middleware :: Middleware -&gt; Unit
 middleware = add_middleware &gt; update</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
 <h3>Loli Engine</h3>
 
 <p>Contains code</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><div class="bl"></div><div class="br"></div><pre><code>loli :: Unit -&gt; Application
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>loli :: Unit -&gt; Application
 loli unit = run unit not_found_app
   where
     not_found_app = not_found dummy_app
@@ -336,7 +339,7 @@ loli unit = run unit not_found_app
 
 <p>Where <code>use</code> is defined as:</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><div class="bl"></div><div class="br"></div><pre><code>-- | usage: app.use [content_type, cache]
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>-- | usage: app.use [content_type, cache]
 use :: [Middleware] -&gt; Middleware
 use = reduce (&lt;&lt;&lt;)</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
@@ -352,7 +355,7 @@ another:</p>
 
 <h3>Routing</h3>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><div class="bl"></div><div class="br"></div><pre><code>data RouteConfig = RouteConfig
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>data RouteConfig = RouteConfig
   {
     route_path :: RoutePath
   , router     :: Router
@@ -373,25 +376,10 @@ data Loli = Loli
 
 <p>This is just a quick glance at how Hack and Loli where implemented. Shedding some light on
 the structure of this approach to web apps inside haskell.</p>
-        </div>
       </div>
-      <div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div>
-    </article>
-    <div class="side">
-      <section class="pane" id="nav" aria-label="nav">
-        <div class="bt"><span>┌─</span><span class="tt">nav</span><span class="ln"></span><span>┐</span></div>
-        <div class="bl"></div><div class="br"></div>
-        <div class="in">
-        <ol class="navrows">
-          <li><b>h</b><span>prev</span><a href="/posts/2010-06-15-clocks-portmortem.html">Clocks webdsl postmortem</a></li>
-          <li><b>l</b><span>next</span><a href="/posts/2010-05-20-currying-in-scheme.html">Currying in scheme</a></li>
-          <li><b>q</b><span>back</span><a href="/posts.html">posts</a></li>
-        </ol>
-        </div>
-        <div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div>
-      </section>
     </div>
-  </div>
+    <div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div>
+  </article>
 
 </main>
 <div class="hints"><div class="wrap">
