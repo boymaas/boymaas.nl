@@ -17,12 +17,7 @@ function grid(){
   lh = parseFloat(getComputedStyle(root).getPropertyValue('--lh')) || 24;
   var narrow = window.innerWidth <= 720;
   var cols = Math.min(134, Math.floor((window.innerWidth - (narrow ? 32 : 48)) / chw));
-  var lcols = Math.min(72, Math.floor((cols - 2) * 0.54));
   root.style.setProperty('--cols', cols);
-  root.style.setProperty('--lcols', lcols);
-  root.style.setProperty('--rcols', cols - 2 - lcols);
-  /* the status line is one row of text on a strip whose top edge lands on a row of the grid at the foot of the viewport */
-  root.style.setProperty('--barh', (lh + window.innerHeight % lh) + 'px');
   frameAll();
 }
 var chw = 9, lh = 24;
@@ -46,14 +41,16 @@ if (window.ResizeObserver){
 grid();
 if (document.fonts && document.fonts.ready) document.fonts.ready.then(grid);
 window.addEventListener('resize', grid);
-/* ---------- sound: the button's label; the toy, when present, listens to the same click ---------- */
+/* ---------- sound: the toggle on the hint line; the toy, when present, listens to the same click ---------- */
 var snd = document.getElementById('snd');
 snd.addEventListener('click', function(){
   var on = !snd.classList.contains('on');
-  snd.querySelector('.full').textContent = on ? 'sound on' : 'sound off';
-  snd.setAttribute('aria-label', on ? 'sound on' : 'sound off');
+  snd.querySelector('.lbl').textContent = on ? 'sound on' : 'sound off';
   snd.classList.toggle('on', on); snd.setAttribute('aria-pressed', on);
+  snd.blur();   /* the key s presses it too; focus would leave the pane otherwise */
 });
+/* open a row's link as a click would: another site in a new window, this one here */
+function follow(a){ if (a.target === '_blank') window.open(a.href, '_blank', 'noopener'); else a.click(); }
 var pos = document.getElementById('pos');
 var lastKey = '';
 function plain(e){ return !(e.metaKey || e.ctrlKey || e.altKey); }
@@ -125,7 +122,7 @@ window.addEventListener('keydown', function(e){
   else if (key === 'k' || key === 'ArrowUp'){ if (rows.length){ e.preventDefault(); setCur(p, curOf(p) - 1); } }
   else if (key === 'G'){ if (rows.length) setCur(p, rows.length - 1); }
   else if (key === 'g' && lastKey === 'g'){ if (rows.length) setCur(p, 0); key = ''; }
-  else if (key === 'Enter'){ var k = curOf(p), a = k >= 0 && rows[k].querySelector('a'); if (a) a.click(); }
+  else if (key === 'Enter'){ var k = curOf(p), a = k >= 0 && rows[k].querySelector('a'); if (a) follow(a); }
   lastKey = key;
 });
 /* the list starts highlighted, as a list does when a screen opens */

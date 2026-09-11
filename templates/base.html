@@ -4,7 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{{title}}</title>
-{{description}}<link rel="icon" href="/favicon.png">
+{{description}}<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="alternate" type="application/atom+xml" title="Boy Maas, posts" href="/feed.xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,20 +17,19 @@
 <body data-page="{{page}}"{{body_attrs}}>
 <canvas id="sky" aria-hidden="true"></canvas>
 <header class="wrap top">
-  <a class="who" href="/">Boy Maas<span class="m4"> <span class="dim">(m4nic)</span></span></a>
+  <a class="who" href="/">Boy Maas<span class="handle"> <span class="dim">(bitgnosys)</span></span></a>
   <nav>
     <a href="{{nav_posts}}"{{here_posts}}>posts</a>
     <a href="{{nav_work}}"{{here_work}}>work</a>
     <a href="/#bio">bio</a>
     <a href="/socials.html"{{here_socials}}>socials</a>
   </nav>
-  <button id="snd" type="button" aria-pressed="false" aria-label="sound off"><span class="full">sound off</span><span class="short" aria-hidden="true">s</span></button>
 </header>
 <main class="wrap {{main_class}}">
 {{main}}
 </main>
 <div class="hints"><div class="wrap">
-  <span class="keys">{{keys}}</span>
+  <span class="keys">{{keys}}<button id="snd" type="button" aria-pressed="false"><b>s</b> <span class="lbl">sound off</span></button></span>
   <span class="whisper" id="whisper" hidden>sandbox open: keys 1 to 9 pick a system, space restarts it, type play to close</span>
   <span class="pos" id="pos"></span>
 </div></div>

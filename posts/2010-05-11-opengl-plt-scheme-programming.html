@@ -3,9 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Live coding OpenGl in PLT-Scheme - Boy Maas (m4nic)</title>
+<title>Live coding OpenGl in PLT-Scheme - Boy Maas (bitgnosys)</title>
 <meta name="description" content="Evolutionary coding in scheme">
-<link rel="icon" href="/favicon.png">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="alternate" type="application/atom+xml" title="Boy Maas, posts" href="/feed.xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,17 +15,16 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&text=%E2%94%80%E2%94%82%E2%94%8C%E2%94%90%E2%94%94%E2%94%98%E2%94%9C%E2%94%A4%E2%96%88&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/tui.css">
 </head>
-<body data-page="article" data-back="/posts.html" data-pos="posts 14/17" data-prev="/posts/2010-05-14-scheme-call-with-current-continuation.html" data-next="/posts/2010-05-04-html5-canvas-element.html">
+<body data-page="article" data-back="/posts.html" data-pos="posts 18/21" data-prev="/posts/2010-05-14-scheme-call-with-current-continuation.html" data-next="/posts/2010-05-04-html5-canvas-element.html">
 <canvas id="sky" aria-hidden="true"></canvas>
 <header class="wrap top">
-  <a class="who" href="/">Boy Maas<span class="m4"> <span class="dim">(m4nic)</span></span></a>
+  <a class="who" href="/">Boy Maas<span class="handle"> <span class="dim">(bitgnosys)</span></span></a>
   <nav>
     <a href="/posts.html" class="here">posts</a>
     <a href="/work.html">work</a>
     <a href="/#bio">bio</a>
     <a href="/socials.html">socials</a>
   </nav>
-  <button id="snd" type="button" aria-pressed="false" aria-label="sound off"><span class="full">sound off</span><span class="short" aria-hidden="true">s</span></button>
 </header>
 <main class="wrap stack">
   <article class="pane focus" id="posts" aria-label="posts/2010-05-11-opengl-plt-scheme-programming">
@@ -39,7 +40,7 @@
         </nav>
       </header>
       <div class="article">
-<p>Live coding <a href="http://www.pawfal.org/fluxus/">(fluxus)</a> captured my interest.  Evolutionary
+<p>Live coding <a href="http://www.pawfal.org/fluxus/" target="_blank" rel="noopener">(fluxus)</a> captured my interest.  Evolutionary
 programming a game system using scheme will be a nice pet project to experiment with.</p>
 
 <h2>PLT-Scheme</h2>
@@ -63,7 +64,7 @@ team's expectations.</p></blockquote>
 
 <p>PLT Scheme has a gui toolkit which can be loaded with.</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>(require scheme/gui/base)</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-scheme">(require scheme/gui/base)</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
 <p>This library needs primitive graphics support at runtime an cannot
 be executed with <code>mzscheme</code>. For these programs we have <code>mred</code>.</p>
@@ -73,7 +74,7 @@ be executed with <code>mzscheme</code>. For these programs we have <code>mred</c
 <p>As I understand it, PLT-Scheme has mzscheme as an ideal lightweight scripting
 environment. And MrEd for GUI based apps.</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>mred -iz -l readline -l scheme/enter</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-scheme">mred -iz -l readline -l scheme/enter</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
 <p>We load 2 libraries not standard included in my version of <code>mred</code>:</p>
 
@@ -86,7 +87,7 @@ provides <code>enter!</code> procedure.</li>
 <h2>Windowing time</h2>
 
 <p>The gui/base consist of an
-<a href="http://docs.plt-scheme.org/gui/Windowing_Classes.html">hierarchy of classes</a>,
+<a href="http://docs.plt-scheme.org/gui/Windowing_Classes.html" target="_blank" rel="noopener">hierarchy of classes</a>,
 interesting for us are:</p>
 
 <ul>
@@ -103,7 +104,7 @@ something on our canvas.</p>
 
 <p>the functions <code>resize</code> and <code>paint</code> will be defined later.</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>(define gl-canvas%
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-scheme">(define gl-canvas%
   (class* canvas% ()
           (inherit with-gl-context swap-gl-buffers)
 
@@ -122,9 +123,9 @@ something on our canvas.</p>
 
 <h3>Without the frame we cannot hang the painting</h3>
 
-<p>Our canvas needs to <a href="http://docs.plt-scheme.org/gui/frame_.html">framed</a> for the os to display it.</p>
+<p>Our canvas needs to <a href="http://docs.plt-scheme.org/gui/frame_.html" target="_blank" rel="noopener">framed</a> for the os to display it.</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>(define window 
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-scheme">(define window 
   (new frame% (label "Minimal") (min-width 200) (min-height 200)))</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
 <h3>Rendering time</h3>
@@ -134,7 +135,7 @@ can execute OpenGl calls to actually start drawing. <code>resize</code> is calle
 resize and since this is minimal does nothing. <code>paint</code> is called when the
 canvas is exposed or resized so that the image in the canvas can be repainted.</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>;; gl-canvas functions resise and main draw
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-scheme">;; gl-canvas functions resise and main draw
 (define (resize w h) #t)
 
 (define (paint)
@@ -161,7 +162,7 @@ canvas is exposed or resized so that the image in the canvas can be repainted.</
 <p>To actually create the frame canvas, and fire the on-paint and on-size triggers
 send the window instance the show message. This should create all.</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>;; show window
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-scheme">;; show window
 (send window show #t)</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
 <h2>And now for live coding!</h2>
@@ -170,11 +171,11 @@ send the window instance the show message. This should create all.</p>
 the paint function and sending it to your repl. First we need to change the
 evaluation context. This is done by:</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>(enter! "minimal.ss")</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-scheme">(enter! "minimal.ss")</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
 <p>and redefining <code>paint</code>:</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>(define (paint)
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-scheme">(define (paint)
   (glClearColor 0.0 0.0 0.0 0.0)
   (glClear GL_COLOR_BUFFER_BIT)
   (glColor3d 0.0 1.0 1.0)
@@ -202,10 +203,16 @@ square changes. The basic elements of live coding are accomplished.</p>
 
 </main>
 <div class="hints"><div class="wrap">
-  <span class="keys"><b>j/k</b> scroll  <b>h/l</b> prev/next  <b>q</b> back  <span class="kb"><b>gg/G</b> ends  <b>s</b> sound</span></span>
+  <span class="keys"><span class="k"><b>j/k</b> scroll</span><span class="k"><b>h/l</b> prev/next</span><span class="k"><b>q</b> back</span><span class="k kb"><b>gg/G</b> ends</span><button id="snd" type="button" aria-pressed="false"><b>s</b> <span class="lbl">sound off</span></button></span>
   <span class="whisper" id="whisper" hidden>sandbox open: keys 1 to 9 pick a system, space restarts it, type play to close</span>
   <span class="pos" id="pos"></span>
 </div></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.2/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.2/languages/clojure.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.2/languages/scheme.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.2/languages/haskell.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.2/languages/coffeescript.min.js"></script>
+<script>hljs.configure({ languages:["ruby","clojure","scheme","haskell","coffeescript","javascript","bash","xml","css","plaintext"], ignoreUnescapedHTML:true }); hljs.highlightAll();</script>
 <script src="/assets/sky.js"></script>
 <script src="/assets/tui.js"></script>
 </body>

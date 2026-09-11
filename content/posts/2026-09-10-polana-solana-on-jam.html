@@ -1,0 +1,37 @@
+---
+title: Polana Network: Solana on JAM
+date: 2026-09-10
+subtitle: Running the Solana virtual machine on the Polkadot successor
+---
+<p>Besides JamZig⚡ I am a co-founder of <a href="https://polana.network/">Polana Network</a>.
+The site says one line: Solana on JAM Protocol. That line is accurate, and this post is a slightly longer version of it.</p>
+
+<h2>The idea</h2>
+
+<p>JAM is the protocol that succeeds the Polkadot relay chain.
+It runs services on a RISC-V virtual machine, the PVM, and distributes their work over many cores before accumulating the results into one state.
+Solana has a large body of programs, a mature toolchain, and a lot of developers who know how to write for its account model and its bytecode.</p>
+
+<p>Polana puts the two together.
+The goal is to bring the Solana toolchain and the Solana Virtual Machine over to JAM, so that existing Solana code can execute there without being rewritten.
+Not a competitor to Solana, but a second place for the same programs to run, with JAM doing the execution underneath.</p>
+
+<h2>Where it stands</h2>
+
+<p>In an interview last November I could say that the proof of concept was done.
+The SVM has been ported to the PVM, which means Solana bytecode runs directly on JAM, cross-contract calls included.</p>
+
+<p>The rest of the timeline follows JAM itself.
+Polana launches when the JAM testnet goes live, not before.
+There is no date, and I am not going to put a number on throughput here.
+When there are measurements from a real network, they will be published with the setup that produced them.</p>
+
+<h2>Why me</h2>
+
+<p>The two halves of this are things I have already spent years in.
+On the Solana side I built a native runtime harness for fuzzing Hubble Protocol's contracts in 2021, so I know that virtual machine from below.
+On the JAM side, JamZig⚡ is a full client with its own PVM.
+Porting one VM onto the other is the obvious next move from where I was standing.</p>
+
+<p>Follow along on X at <a href="https://x.com/polana_network">@polana_network</a> or on <a href="https://discord.com/invite/polana">Discord</a>.
+I will write more when there is something running that you can try yourself.</p>

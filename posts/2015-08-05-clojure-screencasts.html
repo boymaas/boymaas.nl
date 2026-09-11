@@ -3,9 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Clojure screencasts - Boy Maas (m4nic)</title>
+<title>Clojure screencasts - Boy Maas (bitgnosys)</title>
 <meta name="description" content="what gets measured, gets managed">
-<link rel="icon" href="/favicon.png">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="alternate" type="application/atom+xml" title="Boy Maas, posts" href="/feed.xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,17 +15,16 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&text=%E2%94%80%E2%94%82%E2%94%8C%E2%94%90%E2%94%94%E2%94%98%E2%94%9C%E2%94%A4%E2%96%88&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/tui.css">
 </head>
-<body data-page="article" data-back="/posts.html" data-pos="posts 2/17" data-prev="/posts/2015-10-31-coffeescript-screencasts.html" data-next="/posts/2012-07-03-adam-curtis-all-watched-over-by-machines-of-loving-grace.html">
+<body data-page="article" data-back="/posts.html" data-pos="posts 6/21" data-prev="/posts/2015-10-31-coffeescript-screencasts.html" data-next="/posts/2012-07-03-adam-curtis-all-watched-over-by-machines-of-loving-grace.html">
 <canvas id="sky" aria-hidden="true"></canvas>
 <header class="wrap top">
-  <a class="who" href="/">Boy Maas<span class="m4"> <span class="dim">(m4nic)</span></span></a>
+  <a class="who" href="/">Boy Maas<span class="handle"> <span class="dim">(bitgnosys)</span></span></a>
   <nav>
     <a href="/posts.html" class="here">posts</a>
     <a href="/work.html">work</a>
     <a href="/#bio">bio</a>
     <a href="/socials.html">socials</a>
   </nav>
-  <button id="snd" type="button" aria-pressed="false" aria-label="sound off"><span class="full">sound off</span><span class="short" aria-hidden="true">s</span></button>
 </header>
 <main class="wrap stack">
   <article class="pane focus" id="posts" aria-label="posts/2015-08-05-clojure-screencasts">
@@ -46,8 +47,8 @@ and learn from the way I work, how I refactor, and the way I solve problems.</p>
 <h2>Monadic bitfinex trading bot</h2>
 
 <p>Part of me developing a trading bot, on top of
-<a href="http://www.datomic.com">datomic</a> to allow
-<a href="https://en.wikipedia.org/wiki/Multivariate_statistics">multi-variable regression testing</a>
+<a href="http://www.datomic.com" target="_blank" rel="noopener">datomic</a> to allow
+<a href="https://en.wikipedia.org/wiki/Multivariate_statistics" target="_blank" rel="noopener">multi-variable regression testing</a>
 based on actual orderbooks configurations gathered while running the bot on bitfinex.</p>
 
 <h3>Part I</h3>
@@ -64,10 +65,16 @@ based on actual orderbooks configurations gathered while running the bot on bitf
 
 </main>
 <div class="hints"><div class="wrap">
-  <span class="keys"><b>j/k</b> scroll  <b>h/l</b> prev/next  <b>q</b> back  <span class="kb"><b>gg/G</b> ends  <b>s</b> sound</span></span>
+  <span class="keys"><span class="k"><b>j/k</b> scroll</span><span class="k"><b>h/l</b> prev/next</span><span class="k"><b>q</b> back</span><span class="k kb"><b>gg/G</b> ends</span><button id="snd" type="button" aria-pressed="false"><b>s</b> <span class="lbl">sound off</span></button></span>
   <span class="whisper" id="whisper" hidden>sandbox open: keys 1 to 9 pick a system, space restarts it, type play to close</span>
   <span class="pos" id="pos"></span>
 </div></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.2/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.2/languages/clojure.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.2/languages/scheme.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.2/languages/haskell.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.2/languages/coffeescript.min.js"></script>
+<script>hljs.configure({ languages:["ruby","clojure","scheme","haskell","coffeescript","javascript","bash","xml","css","plaintext"], ignoreUnescapedHTML:true }); hljs.highlightAll();</script>
 <script src="/assets/sky.js"></script>
 <script src="/assets/tui.js"></script>
 </body>

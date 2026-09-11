@@ -3,9 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Currying in scheme - Boy Maas (m4nic)</title>
+<title>Currying in scheme - Boy Maas (bitgnosys)</title>
 <meta name="description" content="define-syntax beauty">
-<link rel="icon" href="/favicon.png">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="alternate" type="application/atom+xml" title="Boy Maas, posts" href="/feed.xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,17 +15,16 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&text=%E2%94%80%E2%94%82%E2%94%8C%E2%94%90%E2%94%94%E2%94%98%E2%94%9C%E2%94%A4%E2%96%88&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/tui.css">
 </head>
-<body data-page="article" data-back="/posts.html" data-pos="posts 11/17" data-prev="/posts/2010-05-24-webapps-haskell-loli-hack.html" data-next="/posts/2010-05-15-web-apps-in-plt-scheme.html">
+<body data-page="article" data-back="/posts.html" data-pos="posts 15/21" data-prev="/posts/2010-05-24-webapps-haskell-loli-hack.html" data-next="/posts/2010-05-15-web-apps-in-plt-scheme.html">
 <canvas id="sky" aria-hidden="true"></canvas>
 <header class="wrap top">
-  <a class="who" href="/">Boy Maas<span class="m4"> <span class="dim">(m4nic)</span></span></a>
+  <a class="who" href="/">Boy Maas<span class="handle"> <span class="dim">(bitgnosys)</span></span></a>
   <nav>
     <a href="/posts.html" class="here">posts</a>
     <a href="/work.html">work</a>
     <a href="/#bio">bio</a>
     <a href="/socials.html">socials</a>
   </nav>
-  <button id="snd" type="button" aria-pressed="false" aria-label="sound off"><span class="full">sound off</span><span class="short" aria-hidden="true">s</span></button>
 </header>
 <main class="wrap stack">
   <article class="pane focus" id="posts" aria-label="posts/2010-05-20-currying-in-scheme">
@@ -40,9 +41,9 @@
       </header>
       <div class="article">
 <p>Coming from haskell i was looking around for a way to apply currying inside scheme. I came
-on the following macro via: <a href="http://paste.lisp.org/display/36324">this paste</a>.</p>
+on the following macro via: <a href="http://paste.lisp.org/display/36324" target="_blank" rel="noopener">this paste</a>.</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>(define-syntax curried
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-scheme">(define-syntax curried
 (syntax-rules ()
     ((curried () body ...) (lambda () body ...))
     ((curried (arg) body ...) (lambda (arg) body ...))
@@ -61,7 +62,7 @@ on the following macro via: <a href="http://paste.lisp.org/display/36324">this p
 <p>Notice how <code>define-curried</code> uses the pattern match on <code>name</code> recursively to recursivly apply the curried macro to every
 argument.</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>(define-curried (mad a b c)
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-scheme">(define-curried (mad a b c)
     (+ (* a b) c))
 
     (mad 2 3 4)
@@ -75,10 +76,16 @@ argument.</p>
 
 </main>
 <div class="hints"><div class="wrap">
-  <span class="keys"><b>j/k</b> scroll  <b>h/l</b> prev/next  <b>q</b> back  <span class="kb"><b>gg/G</b> ends  <b>s</b> sound</span></span>
+  <span class="keys"><span class="k"><b>j/k</b> scroll</span><span class="k"><b>h/l</b> prev/next</span><span class="k"><b>q</b> back</span><span class="k kb"><b>gg/G</b> ends</span><button id="snd" type="button" aria-pressed="false"><b>s</b> <span class="lbl">sound off</span></button></span>
   <span class="whisper" id="whisper" hidden>sandbox open: keys 1 to 9 pick a system, space restarts it, type play to close</span>
   <span class="pos" id="pos"></span>
 </div></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.2/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.2/languages/clojure.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.2/languages/scheme.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.2/languages/haskell.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.2/languages/coffeescript.min.js"></script>
+<script>hljs.configure({ languages:["ruby","clojure","scheme","haskell","coffeescript","javascript","bash","xml","css","plaintext"], ignoreUnescapedHTML:true }); hljs.highlightAll();</script>
 <script src="/assets/sky.js"></script>
 <script src="/assets/tui.js"></script>
 </body>

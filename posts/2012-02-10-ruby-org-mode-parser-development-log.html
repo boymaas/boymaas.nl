@@ -3,9 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Ruby org-mode parser development log - Boy Maas (m4nic)</title>
+<title>Ruby org-mode parser development log - Boy Maas (bitgnosys)</title>
 <meta name="description" content="Development log">
-<link rel="icon" href="/favicon.png">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="alternate" type="application/atom+xml" title="Boy Maas, posts" href="/feed.xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,17 +15,16 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&text=%E2%94%80%E2%94%82%E2%94%8C%E2%94%90%E2%94%94%E2%94%98%E2%94%9C%E2%94%A4%E2%96%88&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/tui.css">
 </head>
-<body data-page="article" data-back="/posts.html" data-pos="posts 5/17" data-prev="/posts/2012-06-13-ruby-exceptions-benchmark.html" data-next="/posts/2012-01-29-software-architecture.html">
+<body data-page="article" data-back="/posts.html" data-pos="posts 9/21" data-prev="/posts/2012-06-13-ruby-exceptions-benchmark.html" data-next="/posts/2012-01-29-software-architecture.html">
 <canvas id="sky" aria-hidden="true"></canvas>
 <header class="wrap top">
-  <a class="who" href="/">Boy Maas<span class="m4"> <span class="dim">(m4nic)</span></span></a>
+  <a class="who" href="/">Boy Maas<span class="handle"> <span class="dim">(bitgnosys)</span></span></a>
   <nav>
     <a href="/posts.html" class="here">posts</a>
     <a href="/work.html">work</a>
     <a href="/#bio">bio</a>
     <a href="/socials.html">socials</a>
   </nav>
-  <button id="snd" type="button" aria-pressed="false" aria-label="sound off"><span class="full">sound off</span><span class="short" aria-hidden="true">s</span></button>
 </header>
 <main class="wrap stack">
   <article class="pane focus" id="posts" aria-label="posts/2012-02-10-ruby-org-mode-parser-development-log">
@@ -47,7 +48,7 @@ stick to emacs in combination with evil=mode. But it turns out I am more of a VI
 person.</p>
 
 <p>Looking on the web I found the
-<a href="https://github.com/jceb/vim-orgmode">vim-orgmode</a> bundle. Which provides
+<a href="https://github.com/jceb/vim-orgmode" target="_blank" rel="noopener">vim-orgmode</a> bundle. Which provides
 highlighting and other basic functionality. But I need more. An agenda view, A
 quick overview of open tasks per project, anything I would like to extract in
 the future.</p>
@@ -77,13 +78,13 @@ making a seperate process for it.</p>
 
 <h2>Code</h2>
 
-<p>Follow my progress at: <a href="https://github.com/boymaas/orgy">github</a></p>
+<p>Follow my progress at: <a href="https://github.com/boymaas/orgy" target="_blank" rel="noopener">github</a></p>
 
 <h2>Main cmdline pipeline</h2>
 
 <p>An org-mode script does the following:</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>org-file(s) =&gt; parse =&gt; perform action =&gt; present/write result</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-ruby">org-file(s) =&gt; parse =&gt; perform action =&gt; present/write result</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
 <h2>Design</h2>
 
@@ -94,7 +95,7 @@ this commandline utility.</p>
 
 <p>The domain objects of an org-mode file is pretty simple</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>OrgMode
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-ruby">OrgMode
   FileCollection
   File
   Node</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
@@ -105,24 +106,24 @@ to generate a nicely formatted org-mode file.</p>
 <p>Node is an item in an org-mode file, always starting with a title following
 some content.</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>* TODO I am a OrgMode node
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-ruby">* TODO I am a OrgMode node
 Content of orgmode node</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
 <p>You can see the source here:
-<a href="https://github.com/boymaas/orgy/blob/master/lib/org_mode.rb">org_mode.rb</a></p>
+<a href="https://github.com/boymaas/orgy/blob/master/lib/org_mode.rb" target="_blank" rel="noopener">org_mode.rb</a></p>
 
 <h3>Parsers</h3>
 
 <p>A parser is responsible for building up the domain objects
 out of a org-mode formatted file.</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code># parser -&gt; returning domain objects
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-ruby"># parser -&gt; returning domain objects
 OrgMode::FileParser -&gt; OrgMode::File
 OrgMode::NodeParser -&gt; OrgMode::Node</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
 <p>I start with a simple regexp based parser. Which ofcourse is well tested.
-<a href="https://github.com/boymaas/orgy/blob/master/lib/org_mode/parser.rb">parser</a>
-<a href="https://github.com/boymaas/orgy/blob/master/spec/lib/org_mode/parser_spec.rb">spec</a></p>
+<a href="https://github.com/boymaas/orgy/blob/master/lib/org_mode/parser.rb" target="_blank" rel="noopener">parser</a>
+<a href="https://github.com/boymaas/orgy/blob/master/spec/lib/org_mode/parser_spec.rb" target="_blank" rel="noopener">spec</a></p>
 
 <h3>Reporters</h3>
 
@@ -130,7 +131,7 @@ OrgMode::NodeParser -&gt; OrgMode::Node</code></pre><div class="bb"><span>└</s
 domain model. It essentially constructs datastructures which can be easily
 presented by the presenters.</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>OrgMode::Reporters
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-ruby">OrgMode::Reporters
   Agenda</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
 <h3>Presenters</h3>
@@ -139,7 +140,7 @@ presented by the presenters.</p>
 This can be anything. I will start with simple commandline interaction so they
 will be strings.</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>OrgMode::Presenters::String
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-ruby">OrgMode::Presenters::String
   Agenda
 
 OrgMode::Presenters::Html</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
@@ -150,7 +151,7 @@ OrgMode::Presenters::Html</code></pre><div class="bb"><span>└</span><span clas
 parses the supplied org-mode files or recursively scanned directory and displays
 the information use one of the available presenters</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>OrgMode::Commands
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-ruby">OrgMode::Commands
   Agenda</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
       </div>
     </div>
@@ -159,10 +160,16 @@ the information use one of the available presenters</p>
 
 </main>
 <div class="hints"><div class="wrap">
-  <span class="keys"><b>j/k</b> scroll  <b>h/l</b> prev/next  <b>q</b> back  <span class="kb"><b>gg/G</b> ends  <b>s</b> sound</span></span>
+  <span class="keys"><span class="k"><b>j/k</b> scroll</span><span class="k"><b>h/l</b> prev/next</span><span class="k"><b>q</b> back</span><span class="k kb"><b>gg/G</b> ends</span><button id="snd" type="button" aria-pressed="false"><b>s</b> <span class="lbl">sound off</span></button></span>
   <span class="whisper" id="whisper" hidden>sandbox open: keys 1 to 9 pick a system, space restarts it, type play to close</span>
   <span class="pos" id="pos"></span>
 </div></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.2/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.2/languages/clojure.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.2/languages/scheme.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.2/languages/haskell.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.2/languages/coffeescript.min.js"></script>
+<script>hljs.configure({ languages:["ruby","clojure","scheme","haskell","coffeescript","javascript","bash","xml","css","plaintext"], ignoreUnescapedHTML:true }); hljs.highlightAll();</script>
 <script src="/assets/sky.js"></script>
 <script src="/assets/tui.js"></script>
 </body>

@@ -1,6 +1,6 @@
 /* boymaas.nl: the logo toy, nine systems drawn at random. Physics that of atelier variant 18.
    Loaded on the home page only, before sky.js: the sky calls Toy(api) once and steps and paints it on its clock.
-   Every cell is a square on the sky's pixel grid (one or two sky cells wide), and its colour comes from what it
+   Every cell is a square of whole pixels, sized so the wordmark fills its pane, and its colour comes from what it
    is doing: speed warms it from white through amber to coral, distance from home cools it through violet to cobalt,
    and at rest every cell is white, so the wordmark reads as one thing. */
 window.Toy = function (Sky) {
@@ -8,24 +8,27 @@ window.Toy = function (Sky) {
 var P = Sky.P, mix = Sky.mix, mixQ = Sky.mixQ, DT = Sky.DT;
 var rng = Sky.mulberry32(Sky.SEED);   /* the toy's own stream, as in variant 12 */
 var HOLD = 1.4, REST = 2.0;   /* seconds between systems; seconds the wordmark stands whole before the first one */
-/* ---------- the logo: 5x7 glyphs, each cell quartered ---------- */
+/* ---------- the logo: 5x7 glyphs (favicon.svg is the B of this set), each glyph cell SUB x SUB toy cells ---------- */
 var FONT = {
-  M:['#...#','##.##','#.#.#','#.#.#','#...#','#...#','#...#'],
-  '4':['...#.','..##.','.#.#.','#..#.','#####','...#.','...#.'],
-  N:['#...#','##..#','#.#.#','#..##','#...#','#...#','#...#'],
+  B:['####.','#...#','#...#','####.','#...#','#...#','####.'],
   I:['#####','..#..','..#..','..#..','..#..','..#..','#####'],
-  C:['.####','#....','#....','#....','#....','#....','.####']
+  T:['#####','..#..','..#..','..#..','..#..','..#..','..#..'],
+  G:['.####','#....','#....','#.###','#...#','#...#','.####'],
+  N:['#...#','##..#','#.#.#','#..##','#...#','#...#','#...#'],
+  O:['.###.','#...#','#...#','#...#','#...#','#...#','.###.'],
+  S:['.####','#....','#....','.###.','....#','....#','####.'],
+  Y:['#...#','#...#','.#.#.','..#..','..#..','..#..','..#..']
 };
-var LOGO = [];
-(function(){
-  var word = 'M4NIC';
-  for (var i = 0; i < word.length; i++){
-    var g = FONT[word[i]];
+var WORD = 'BITGNOSYS', GW0 = WORD.length * 6 - 1, GH0 = 7;
+var LOGO = [], LW = 0, LH = 0, SUB = 2;
+function buildLogo(sub){
+  SUB = sub; LW = GW0 * sub; LH = GH0 * sub; LOGO = [];
+  for (var i = 0; i < WORD.length; i++){
+    var g = FONT[WORD[i]];
     for (var y = 0; y < 7; y++) for (var x = 0; x < 5; x++) if (g[y][x] === '#')
-      for (var sy = 0; sy < 2; sy++) for (var sx = 0; sx < 2; sx++) LOGO.push({ gx:(i*6 + x)*2 + sx, gy:y*2 + sy, letter:i });
+      for (var sy = 0; sy < sub; sy++) for (var sx = 0; sx < sub; sx++) LOGO.push({ gx:(i*6 + x)*sub + sx, gy:y*sub + sy, letter:i });
   }
-})();
-var LW = 58, LH = 14;
+}
 /* ---------- colour from behaviour: two ramps out of white, quantised to the palette ---------- */
 var WARM = [P.star, mix(P.star, P.amber, 0.5), P.amber, mix(P.amber, P.coral, 0.5), P.coral, P.magenta];
 var COOL = [P.star, mix(P.star, P.violet, 0.5), P.violet, mix(P.violet, P.cobalt, 0.5), P.cobalt, P.teal];
@@ -45,11 +48,17 @@ function temper(dt){
 var box = document.getElementById('box'), cvs = document.getElementById('hero'), ctx = cvs.getContext('2d');
 var cellPx = 12, W = 0, H = 0, OX = 0, OY = 0, S = 1, dpr = 1;
 var cells = [], logoAt = null;
-/* a toy cell is one or two sky cells, never anything else: the wordmark, the stars and the dither share a grid */
-function cellFor(bw){ var ch = Sky.cell(window.innerWidth); return ch * Math.max(1, Math.min(2, Math.floor(bw / (62 * ch)))); }
+/* the cell: the most whole pixels at which the quartered wordmark fills the box with a cell to spare at each side
+   (ten at 1440 wide). Where a quarter would be under four pixels, on a phone, the quarters go and a glyph cell is
+   one toy cell, which there is the sky's own cell of five */
+function fit(bw, bh){
+  var c = Math.floor(Math.min(bw / (GW0 * 2 + 2), bh / (GH0 * 2 + 6)));
+  if (c >= 4) return { sub:2, cell:c };
+  return { sub:1, cell:Math.max(2, Math.floor(Math.min(bw / (GW0 + 2), bh / (GH0 + 4)))) };
+}
 function layout(){
-  var bw = box.clientWidth, bh = box.clientHeight;
-  cellPx = cellFor(bw);
+  var bw = box.clientWidth, bh = box.clientHeight, f = fit(bw, bh);
+  buildLogo(f.sub); cellPx = f.cell;
   W = Math.floor(bw / cellPx); H = Math.floor(bh / cellPx);
   OX = Math.floor((W - LW) / 2); OY = Math.floor((H - LH) / 2);
   dpr = Math.min(2, window.devicePixelRatio || 1);
@@ -583,7 +592,7 @@ systems.push({ name:'crystal', role:'cursor melts', max:18,
   init:function(){
     snapHome();
     this.t = 0; this.acc = 0; this.stuckAt = new Uint8Array(W * H);
-    var byLetter = [[], [], [], [], []];
+    var byLetter = WORD.split('').map(function(){ return []; });
     cells.forEach(function(c){ byLetter[c.letter].push(c); c.stuck = 0; c.seed = 0; c.gx = c.hx; c.gy = c.hy; c.rel = rng() * 1.2; c.flash = 0; c.vx = 0; c.vy = 0; });
     var sa = this.stuckAt;
     byLetter.forEach(function(list){ var c = list[Math.floor(rng() * list.length)]; c.stuck = 1; c.seed = 1; sa[c.hy * W + c.hx] = 1; });
@@ -628,7 +637,7 @@ systems.push({ name:'crystal', role:'cursor melts', max:18,
 });
 /* ================= scheduler ================= */
 var cur = null, curIdx = -1, state = 'run', sysT = 0, holdT = 0, sandbox = false;
-var pane = document.getElementById('m4nic'), nameEl = document.getElementById('sysname');
+var pane = document.getElementById('bitgnosys'), nameEl = document.getElementById('sysname');
 /* the system's name sits in the pane's bottom rule, in the rule's colour; its role goes to the hint line while the cursor is in */
 function tell(){
   pane.setAttribute('data-status', cur.name + ': ' + cur.role);
@@ -676,8 +685,8 @@ window.addEventListener('keydown', function(e){
 /* ---------- on the sky's clock ---------- */
 var lastW = 0, lastH = 0;
 function relayout(){
-  var bw = box.clientWidth, bh = box.clientHeight, cp = cellFor(bw);
-  if (Math.floor(bw / cp) === lastW && Math.floor(bh / cp) === lastH) return;
+  var bw = box.clientWidth, bh = box.clientHeight, f = fit(bw, bh);
+  if (f.sub === SUB && Math.floor(bw / f.cell) === lastW && Math.floor(bh / f.cell) === lastH) return;
   layout(); lastW = W; lastH = H;
   if (curIdx >= 0) start(curIdx);   /* during the opening rest there is no system to restart: the wordmark is redrawn */
   paint();

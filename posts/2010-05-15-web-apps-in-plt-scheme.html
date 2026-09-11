@@ -3,9 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Web-apps with PLT-Scheme, snoozing while dispatching? - Boy Maas (m4nic)</title>
+<title>Web-apps with PLT-Scheme, snoozing while dispatching? - Boy Maas (bitgnosys)</title>
 <meta name="description" content="Web apps in scheme, too good to be true?">
-<link rel="icon" href="/favicon.png">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="alternate" type="application/atom+xml" title="Boy Maas, posts" href="/feed.xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,17 +15,16 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&text=%E2%94%80%E2%94%82%E2%94%8C%E2%94%90%E2%94%94%E2%94%98%E2%94%9C%E2%94%A4%E2%96%88&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/tui.css">
 </head>
-<body data-page="article" data-back="/posts.html" data-pos="posts 12/17" data-prev="/posts/2010-05-20-currying-in-scheme.html" data-next="/posts/2010-05-14-scheme-call-with-current-continuation.html">
+<body data-page="article" data-back="/posts.html" data-pos="posts 16/21" data-prev="/posts/2010-05-20-currying-in-scheme.html" data-next="/posts/2010-05-14-scheme-call-with-current-continuation.html">
 <canvas id="sky" aria-hidden="true"></canvas>
 <header class="wrap top">
-  <a class="who" href="/">Boy Maas<span class="m4"> <span class="dim">(m4nic)</span></span></a>
+  <a class="who" href="/">Boy Maas<span class="handle"> <span class="dim">(bitgnosys)</span></span></a>
   <nav>
     <a href="/posts.html" class="here">posts</a>
     <a href="/work.html">work</a>
     <a href="/#bio">bio</a>
     <a href="/socials.html">socials</a>
   </nav>
-  <button id="snd" type="button" aria-pressed="false" aria-label="sound off"><span class="full">sound off</span><span class="short" aria-hidden="true">s</span></button>
 </header>
 <main class="wrap stack">
   <article class="pane focus" id="posts" aria-label="posts/2010-05-15-web-apps-in-plt-scheme">
@@ -43,7 +44,7 @@
 the possibilities. Working lately primary on webapps using web.py, sqlalchemy I
 wanted to see what could be done using scheme. In this case browsing PLT's
 available libraries. After scanning PLT's PLaneT I have found some interesting
-libs opensourced by a company called <a href="http://www.untyped.com/">untyped</a>.</p>
+libs opensourced by a company called <a href="http://www.untyped.com/" target="_blank" rel="noopener">untyped</a>.</p>
 
 <p>The libs I found interesting where:</p>
 
@@ -62,7 +63,7 @@ more so I analysed an example given by the documentation.</p>
 
 <h2>Define your site</h2>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>#lang scheme/base
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-scheme">#lang scheme/base
 
 ;; automaticly grab packages from PLaneT
 (require (planet untyped/dispatch))
@@ -79,12 +80,12 @@ more so I analysed an example given by the documentation.</p>
 
 <p>Controllers for the rules above may be defined with:</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>(define-controller (controller request args ...)
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-scheme">(define-controller (controller request args ...)
     exp ... )</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
 <p>An example being:</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>; request string -&gt; html-response
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-scheme">; request string -&gt; html-response
 (define-controller (review-post request slug)
   `(html (head (title ,slug))
          (body (h1 "You are viewing " ,(format "~s" slug))
@@ -94,7 +95,7 @@ more so I analysed an example given by the documentation.</p>
 
 <p>To find out what happens behind the syntax it helps to expand the syntax (or macro). The declarative statements above expand to:</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>(require (planet untyped/dispatch))
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-scheme">(require (planet untyped/dispatch))
 (begin
   (define-values (blog index review-post review-archive)
     (let-values (((blog controllers)
@@ -135,7 +136,7 @@ used to translate back from controller to path.</p>
 to build reqexp matches and encode and decode arguments between the url and scheme domain. The args and eventually custom args
 are defined in the following struct. (i removed the display routines for clarity)</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>(define-struct arg
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-scheme">(define-struct arg
   (id      ;; symbol to be used declaration 
    pattern ;; regexp pattern
    decoder ;; how to decode from captured arg to lisp domain
@@ -144,7 +145,7 @@ are defined in the following struct. (i removed the display routines for clarity
 
 <p>A working example is <code>string-arg</code>:</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>(define (string-arg)
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-scheme">(define (string-arg)
   (make-arg 
    'string                      ;; id
    "[^/]+"                      ;; regexp
@@ -175,10 +176,16 @@ use it.</p>
 
 </main>
 <div class="hints"><div class="wrap">
-  <span class="keys"><b>j/k</b> scroll  <b>h/l</b> prev/next  <b>q</b> back  <span class="kb"><b>gg/G</b> ends  <b>s</b> sound</span></span>
+  <span class="keys"><span class="k"><b>j/k</b> scroll</span><span class="k"><b>h/l</b> prev/next</span><span class="k"><b>q</b> back</span><span class="k kb"><b>gg/G</b> ends</span><button id="snd" type="button" aria-pressed="false"><b>s</b> <span class="lbl">sound off</span></button></span>
   <span class="whisper" id="whisper" hidden>sandbox open: keys 1 to 9 pick a system, space restarts it, type play to close</span>
   <span class="pos" id="pos"></span>
 </div></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.2/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.2/languages/clojure.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.2/languages/scheme.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.2/languages/haskell.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.2/languages/coffeescript.min.js"></script>
+<script>hljs.configure({ languages:["ruby","clojure","scheme","haskell","coffeescript","javascript","bash","xml","css","plaintext"], ignoreUnescapedHTML:true }); hljs.highlightAll();</script>
 <script src="/assets/sky.js"></script>
 <script src="/assets/tui.js"></script>
 </body>

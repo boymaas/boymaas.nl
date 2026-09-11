@@ -3,9 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Playing around with the HTML5 Canvas element - Boy Maas (m4nic)</title>
+<title>Playing around with the HTML5 Canvas element - Boy Maas (bitgnosys)</title>
 <meta name="description" content="What is the fuzz all about">
-<link rel="icon" href="/favicon.png">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="alternate" type="application/atom+xml" title="Boy Maas, posts" href="/feed.xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,17 +15,16 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&text=%E2%94%80%E2%94%82%E2%94%8C%E2%94%90%E2%94%94%E2%94%98%E2%94%9C%E2%94%A4%E2%96%88&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/tui.css">
 </head>
-<body data-page="article" data-back="/posts.html" data-pos="posts 15/17" data-prev="/posts/2010-05-11-opengl-plt-scheme-programming.html" data-next="/posts/2010-02-17-procedural-generation.html">
+<body data-page="article" data-back="/posts.html" data-pos="posts 19/21" data-prev="/posts/2010-05-11-opengl-plt-scheme-programming.html" data-next="/posts/2010-02-17-procedural-generation.html">
 <canvas id="sky" aria-hidden="true"></canvas>
 <header class="wrap top">
-  <a class="who" href="/">Boy Maas<span class="m4"> <span class="dim">(m4nic)</span></span></a>
+  <a class="who" href="/">Boy Maas<span class="handle"> <span class="dim">(bitgnosys)</span></span></a>
   <nav>
     <a href="/posts.html" class="here">posts</a>
     <a href="/work.html">work</a>
     <a href="/#bio">bio</a>
     <a href="/socials.html">socials</a>
   </nav>
-  <button id="snd" type="button" aria-pressed="false" aria-label="sound off"><span class="full">sound off</span><span class="short" aria-hidden="true">s</span></button>
 </header>
 <main class="wrap stack">
   <article class="pane focus" id="posts" aria-label="posts/2010-05-04-html5-canvas-element">
@@ -55,7 +56,7 @@
 <p>After all the fuzz cause by Steve Jobs objections against Flash and indirect
 promotion of HTML5 I wanted to see whats possible using HTML5 and the canvas
 element. After searching a bit online I stumbled upon some interesting articles. One
-implementation of <a href="http://kotaku.com/5507640/google-gets-quake-ii-running-in-html5-just-for-fun">Quake2 using
+implementation of <a href="http://kotaku.com/5507640/google-gets-quake-ii-running-in-html5-just-for-fun" target="_blank" rel="noopener">Quake2 using
 HTML5</a>,
 and the implementation of an SWF player using HTML5. This seeded my interest a
 little more and I wanted to see how easy it is to get something on the screen.</p>
@@ -66,7 +67,7 @@ little more and I wanted to see how easy it is to get something on the screen.</
 the Flash MovieClip hierarchy. The final outcome should become something like
 this.</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>// add root shapes
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-javascript">// add root shapes
 var canvas = new Canvas(c.canvas, c.ctx);
 canvas.addShape(new Symbol(50, 25));
 canvas.addShape(new Symbol(160, 25));
@@ -76,7 +77,7 @@ canvas.addShape(new Symbol(50, 135));</code></pre><div class="bb"><span>└</spa
 <p>The Canvas element should take care of the rendering process and render the symbols. Rendering the complete
 tree at 20 frames a second will be done using the following code.</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>canvas.init();
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-javascript">canvas.init();
 canvas.render();
 canvas.run(20);</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
@@ -94,7 +95,7 @@ a context.</p>
 
 <p>The Box as you can see it moving above has been defined as:</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>function Box(x, y, width, height) {
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-javascript">function Box(x, y, width, height) {
     // simple element, just renders a strokeRect
     Shape.call(this, x, y);
 
@@ -108,7 +109,7 @@ a context.</p>
 
 <p>This setup enables composition of complex shapes using simpler shapes as can be seen below.</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>function Symbol(x, y) {
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-javascript">function Symbol(x, y) {
     // initialise shape
     Shape.call(this, x, y);
 
@@ -124,7 +125,7 @@ to update x,y,width,heigh or rotation. But many behaviours are standard, and esp
 with complex behaviours we would like to compose them. So I added the possibility to add
 behaviours to specific shapes.</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>function Behaviour() {
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-javascript">function Behaviour() {
     // Basic methods for a behaviour
     // stores shape in shape and original coords
     this.init = function (s) {
@@ -141,7 +142,7 @@ behaviours to specific shapes.</p>
 
 <p>To test this behaviour I implemented the Wobble as can be seen above:</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>function BehWobble(duration,amplitude) {
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-javascript">function BehWobble(duration,amplitude) {
     // BehWobble is a behaviour
     Behaviour.call(this);
 
@@ -160,7 +161,7 @@ behaviours to specific shapes.</p>
 
 <p>I update the symbol function to add the behaviour to the boxes. And voila the result can be seen above:</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>function Symbol(x, y) {
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-javascript">function Symbol(x, y) {
     Shape.call(this, x, y);
     this.box = this.addChild( new Box(0,0,100,100) );
     this.innerbox = this.box.addChild(new Box(10,10,80,80));
@@ -175,7 +176,7 @@ behaviours to specific shapes.</p>
 
 <p>Just a little abstraction to rendering stuff in the HTML5 canvas element. So far
 I am pretty happy with it but started looking for some existing frameworks. Landed
-on <a href="http://www.processingjs.org">processing.js</a> which looks promising.</p>
+on <a href="http://www.processingjs.org" target="_blank" rel="noopener">processing.js</a> which looks promising.</p>
 
 <p>Code can be read here, <a href="/static/2010-05-04-html5-canvas-element/2dengine.js">Simple engine code</a>, and the wobbling
 squares are defined <a href="/static/2010-05-04-html5-canvas-element/slutmachine.js">here</a>.</p>
@@ -186,10 +187,16 @@ squares are defined <a href="/static/2010-05-04-html5-canvas-element/slutmachine
 
 </main>
 <div class="hints"><div class="wrap">
-  <span class="keys"><b>j/k</b> scroll  <b>h/l</b> prev/next  <b>q</b> back  <span class="kb"><b>gg/G</b> ends  <b>s</b> sound</span></span>
+  <span class="keys"><span class="k"><b>j/k</b> scroll</span><span class="k"><b>h/l</b> prev/next</span><span class="k"><b>q</b> back</span><span class="k kb"><b>gg/G</b> ends</span><button id="snd" type="button" aria-pressed="false"><b>s</b> <span class="lbl">sound off</span></button></span>
   <span class="whisper" id="whisper" hidden>sandbox open: keys 1 to 9 pick a system, space restarts it, type play to close</span>
   <span class="pos" id="pos"></span>
 </div></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.2/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.2/languages/clojure.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.2/languages/scheme.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.2/languages/haskell.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.2/languages/coffeescript.min.js"></script>
+<script>hljs.configure({ languages:["ruby","clojure","scheme","haskell","coffeescript","javascript","bash","xml","css","plaintext"], ignoreUnescapedHTML:true }); hljs.highlightAll();</script>
 <script src="/assets/sky.js"></script>
 <script src="/assets/tui.js"></script>
 </body>

@@ -10,8 +10,8 @@
      section names, the prompt and everything interactive (hover, the sound toggle when on, the selected row) */
   --dim:var(--ash); --normal:#C4C0D5; --bright:var(--star); --accent:var(--amber);
   --frame:#535572;
-  --fs:15px; --lh:24px; --cols:134; --lcols:72; --rcols:60;
-  --barh:calc(var(--lh) * 2);   /* the status line; tui.js sets it so its top edge lands on a row of the grid */
+  --fs:15px; --lh:24px; --cols:134;
+  --barh:calc(var(--lh) * 2);   /* the status line: two rows tall, its one line of text centred in it */
 }
 *{box-sizing:border-box}
 html{background:var(--ground)}
@@ -25,16 +25,12 @@ header,main,.hints{position:relative;z-index:1}
 .dim{color:var(--dim)}
 .bright{color:var(--bright)}
 b{font-weight:400}
-/* top row: the name, the nav, the sound toggle as a dim switch at the end */
+/* top row: the name, then the nav at the right */
 .top{display:flex;align-items:baseline;gap:3ch;padding:var(--lh) 0;white-space:pre}
 .top .who{color:var(--bright)}
 .top nav{display:flex;gap:3ch;align-items:baseline;margin-left:auto}
 .top nav a{color:var(--normal)}
 .top nav a.here{color:var(--bright)}
-.top button{font:inherit;color:var(--dim);background:none;border:0;padding:0;cursor:pointer}
-.top button .short{display:none}
-.top button:hover{color:var(--accent)}
-.top button.on{color:var(--accent)}
 /* panes: the top and bottom rules are rows of glyphs on the grid (tui.js writes exactly as many ─ as the pane
    measures); the sides run from the middle of the top rule to the middle of the bottom one, where the corners' strokes are */
 .pane{position:relative;min-width:0;outline:none;display:flex;flex-direction:column;scroll-margin-top:var(--lh);scroll-margin-bottom:calc(var(--barh) + var(--lh))}
@@ -59,7 +55,6 @@ b{font-weight:400}
 .pane.focus::before,.pane.focus::after{border-color:var(--ash)}
 .pane.focus .tt{font-weight:700}
 .stack{display:flex;flex-direction:column;gap:calc(var(--lh) * 2)}
-.cols{display:grid;grid-template-columns:calc(var(--lcols) * 1ch) calc(var(--rcols) * 1ch);gap:calc(var(--lh) * 2) 2ch;align-items:stretch}
 /* the hero: the toy pane with the whoami answer as running text right under it */
 .hero{display:flex;flex-direction:column;gap:var(--lh)}
 .box{height:calc(var(--lh) * 15);display:flex;align-items:center;justify-content:center;cursor:crosshair;touch-action:pan-y;overflow:hidden}
@@ -84,24 +79,32 @@ ol{list-style:none;margin:0;padding:0}
 .list time,.list small,.list .n{color:var(--dim);font-size:inherit}
 .list a{color:var(--bright)}
 .list a:hover{color:var(--accent)}
-/* posts: cursor, date, title, subtitle; the subtitle column starts where the whoami measure ends */
+/* posts: cursor, date, title, subtitle; the subtitle column starts where the whoami measure ends, and a subtitle
+   longer than what is left of the row wraps under itself rather than being cut */
 .posts li{grid-template-columns:1ch 10ch 63ch minmax(0,1fr)}
+.posts li small{white-space:normal}
 /* work: cursor, number, title, client; the work page adds the summary under them at the 70-column measure */
 .work li,.works li{grid-template-columns:1ch 2ch 24ch minmax(0,1fr);row-gap:0}
 .works li p{grid-column:3 / 5;grid-row:2;margin:2px 0 -2px;white-space:normal;line-height:var(--lh);color:var(--dim);max-width:70ch}
 .works li + li{margin-top:calc(var(--lh) - 2px)}
 .bio p{margin:0 0 var(--lh);max-width:70ch}
 .bio p:last-child{margin-bottom:0}
-/* colophon: the mail line */
+/* colophon: where else to find me */
 .colophon{margin-top:calc(var(--lh) * 2);padding:0 2ch;color:var(--dim);font-size:13px;white-space:pre;scroll-margin-bottom:calc(var(--barh) + var(--lh))}
 .colophon a{text-decoration:underline;text-decoration-color:var(--frame);text-underline-offset:3px}
-/* the status line: an opaque strip of its own height at the foot of the viewport; the page ends above it */
+/* the status line: an opaque strip at the foot of the viewport; the page ends above it. Three columns: the keys
+   centred in the middle one, so the position readout at the right edge does not shift them; the sound toggle is
+   the last key of the group */
 .hints{position:fixed;left:0;right:0;bottom:0;height:var(--barh);font-size:13px;line-height:var(--lh);color:var(--dim);white-space:pre;background:var(--ground);border-top:1px solid var(--rule)}
-.hints .wrap{display:flex;justify-content:space-between;gap:2ch;padding-top:calc(var(--barh) - var(--lh) - 1px)}
-.hints .keys{overflow:hidden;text-overflow:ellipsis}
+.hints .wrap{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;height:100%}
+.hints .keys{grid-column:2;display:flex;align-items:center;gap:2ch;min-width:0}
+.hints .k{flex:none}
 .hints .keys b{color:var(--bright)}
-.hints .pos{white-space:pre}
-.hints #whisper{color:var(--accent)}
+.hints button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;flex:none}
+.hints button:hover{color:var(--accent)}
+.hints button.on .lbl{color:var(--accent)}
+.hints .pos{grid-column:3;justify-self:end;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:pre}
+.hints #whisper{grid-column:2;color:var(--accent)}
 .hints:has(#whisper:not([hidden])) .keys{display:none}
 /* an article: one pane; under the title and its subtitle, one row of the keys that leave it, each with where it goes */
 .head h1{font-size:20px;line-height:calc(var(--lh) * 2);font-weight:700;color:var(--bright);margin:0}
@@ -130,6 +133,16 @@ ol{list-style:none;margin:0;padding:0}
 .article code{color:var(--bright);font:inherit}
 .article pre{margin:0;padding:0 2ch;overflow-x:auto;white-space:pre;color:var(--normal);font:inherit;tab-size:4}
 .article pre code{color:inherit}
+/* code, highlighted in the terminal's own roles: keywords and the names that call in the accent, strings and
+   titles bright, comments dim, everything else the body colour; no hue the interface does not already have */
+.article .hljs{background:none;color:inherit}
+.article .hljs-keyword,.article .hljs-built_in,.article .hljs-name,.article .hljs-type,.article .hljs-selector-tag,
+.article .hljs-tag,.article .hljs-section,.article .hljs-doctag{color:var(--accent)}
+.article .hljs-string,.article .hljs-regexp,.article .hljs-title,.article .hljs-attr,.article .hljs-attribute,
+.article .hljs-symbol,.article .hljs-selector-id,.article .hljs-selector-class{color:var(--bright)}
+.article .hljs-comment,.article .hljs-quote,.article .hljs-meta{color:var(--dim)}
+.article .hljs-strong{font-weight:700}
+.article .hljs-emphasis{font-style:italic}
 .article .sub{margin:0 0 var(--lh)}
 .article .sub.pane .bt,.article .sub.pane .bb{color:var(--frame)}
 .article blockquote{position:relative;margin:0 0 var(--lh);padding:0 0 0 3ch}
@@ -159,19 +172,15 @@ ol{list-style:none;margin:0;padding:0}
 .article sup{line-height:0}
 @media (max-width:720px){
   :root{--fs:14px;--lh:22px}
-  /* one row: the name, the four links, s for sound at the right */
+  /* one row: the name, then the four links */
   .top{gap:2ch}
-  .top .who .m4{display:none}
-  .top nav{gap:2ch;margin-left:0}
-  .top button{margin-left:auto}
-  .top button .full{display:none}
-  .top button .short{display:inline}
+  .top .who .handle{display:none}
+  .top nav{gap:2ch}
   .box{height:calc(var(--lh) * 10)}
   /* the wordmark is in the pane, so the pane does not say the name again */
-  #m4nic .tt{display:none}
+  #bitgnosys .tt{display:none}
   .pane .meta{display:none}
   .stack{gap:var(--lh)}
-  .cols{grid-template-columns:1fr;gap:var(--lh)}
   .whoami h1{font-size:24px}
   /* an article title may wrap here: each line is one row, then a row of air before the subtitle */
   .head h1{font-size:18px;line-height:var(--lh);margin-bottom:var(--lh)}
@@ -196,6 +205,8 @@ ol{list-style:none;margin:0;padding:0}
   /* the nav row becomes three rows, a title wrapping under its key */
   .navrow{white-space:normal}
   .navrow .nv{flex:1 0 100%}
+  /* the keys have the whole bar: an article's four pairs fit at one cell apart */
+  .hints .keys{gap:1ch}
   .hints .pos,.hints .kb{display:none}
   .colophon{white-space:normal}
 }

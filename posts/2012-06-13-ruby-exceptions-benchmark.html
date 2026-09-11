@@ -3,9 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Ruby exception handling benchmark - Boy Maas (m4nic)</title>
+<title>Ruby exception handling benchmark - Boy Maas (bitgnosys)</title>
 <meta name="description" content="Getting into the nitty gritty details">
-<link rel="icon" href="/favicon.png">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="alternate" type="application/atom+xml" title="Boy Maas, posts" href="/feed.xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,17 +15,16 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&text=%E2%94%80%E2%94%82%E2%94%8C%E2%94%90%E2%94%94%E2%94%98%E2%94%9C%E2%94%A4%E2%96%88&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/tui.css">
 </head>
-<body data-page="article" data-back="/posts.html" data-pos="posts 4/17" data-prev="/posts/2012-07-03-adam-curtis-all-watched-over-by-machines-of-loving-grace.html" data-next="/posts/2012-02-10-ruby-org-mode-parser-development-log.html">
+<body data-page="article" data-back="/posts.html" data-pos="posts 8/21" data-prev="/posts/2012-07-03-adam-curtis-all-watched-over-by-machines-of-loving-grace.html" data-next="/posts/2012-02-10-ruby-org-mode-parser-development-log.html">
 <canvas id="sky" aria-hidden="true"></canvas>
 <header class="wrap top">
-  <a class="who" href="/">Boy Maas<span class="m4"> <span class="dim">(m4nic)</span></span></a>
+  <a class="who" href="/">Boy Maas<span class="handle"> <span class="dim">(bitgnosys)</span></span></a>
   <nav>
     <a href="/posts.html" class="here">posts</a>
     <a href="/work.html">work</a>
     <a href="/#bio">bio</a>
     <a href="/socials.html">socials</a>
   </nav>
-  <button id="snd" type="button" aria-pressed="false" aria-label="sound off"><span class="full">sound off</span><span class="short" aria-hidden="true">s</span></button>
 </header>
 <main class="wrap stack">
   <article class="pane focus" id="posts" aria-label="posts/2012-06-13-ruby-exceptions-benchmark">
@@ -51,7 +52,7 @@ one myself.</p>
 
 <h2>ruby 1.8.7 (2012-02-08 patchlevel 358) [i686-darwin11.2.0]</h2>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>Rehearsal ----------------------------------------------------
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-ruby">Rehearsal ----------------------------------------------------
 exception          0.770000   0.030000   0.800000 (  0.809420)
 exception with e   0.780000   0.040000   0.820000 (  0.814608)
 multi exception    0.850000   0.040000   0.890000 (  0.885843)
@@ -66,7 +67,7 @@ symbol             0.040000   0.000000   0.040000 (  0.036175)</code></pre><div 
 
 <h2>ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-darwin11.2.0]</h2>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>Rehearsal ----------------------------------------------------
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-ruby">Rehearsal ----------------------------------------------------
 exception          0.890000   0.040000   0.930000 (  0.929162)
 exception with e   0.890000   0.030000   0.920000 (  0.934193)
 multi exception    0.970000   0.040000   1.010000 (  0.999004)
@@ -81,7 +82,7 @@ symbol             0.020000   0.000000   0.020000 (  0.017294)</code></pre><div 
 
 <h2>jruby 1.6.7.2 (ruby-1.8.7-p357) (2012-05-01 26e08ba) (Java HotSpot(TM) 64-Bit Server VM 1.6.0_29) [darwin-x86_64-java]</h2>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>Rehearsal ----------------------------------------------------
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-ruby">Rehearsal ----------------------------------------------------
 exception          8.044000   0.000000   8.044000 (  8.006000)
 exception with e   7.704000   0.000000   7.704000 (  7.704000)
 multi exception    7.791000   0.000000   7.791000 (  7.791000)
@@ -96,7 +97,7 @@ symbol             0.009000   0.000000   0.009000 (  0.009000)</code></pre><div 
 
 <h2>The benchmark code</h2>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code lang='ruby' class='highlight'>require 'benchmark'
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-ruby">require 'benchmark'
 
 class E1 < StandardError; end
 class E2 < StandardError; end
@@ -165,10 +166,16 @@ Benchmark.bmbm { |x|
 
 </main>
 <div class="hints"><div class="wrap">
-  <span class="keys"><b>j/k</b> scroll  <b>h/l</b> prev/next  <b>q</b> back  <span class="kb"><b>gg/G</b> ends  <b>s</b> sound</span></span>
+  <span class="keys"><span class="k"><b>j/k</b> scroll</span><span class="k"><b>h/l</b> prev/next</span><span class="k"><b>q</b> back</span><span class="k kb"><b>gg/G</b> ends</span><button id="snd" type="button" aria-pressed="false"><b>s</b> <span class="lbl">sound off</span></button></span>
   <span class="whisper" id="whisper" hidden>sandbox open: keys 1 to 9 pick a system, space restarts it, type play to close</span>
   <span class="pos" id="pos"></span>
 </div></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.2/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.2/languages/clojure.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.2/languages/scheme.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.2/languages/haskell.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.2/languages/coffeescript.min.js"></script>
+<script>hljs.configure({ languages:["ruby","clojure","scheme","haskell","coffeescript","javascript","bash","xml","css","plaintext"], ignoreUnescapedHTML:true }); hljs.highlightAll();</script>
 <script src="/assets/sky.js"></script>
 <script src="/assets/tui.js"></script>
 </body>

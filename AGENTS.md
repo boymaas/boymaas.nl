@@ -1,6 +1,6 @@
 # boymaas.nl
 
-Personal site of Boy Maas (m4nic), served by GitHub Pages from the root of `master` with no build step on GitHub.
+Personal site of Boy Maas (bitgnosys), served by GitHub Pages from the root of `master` with no build step on GitHub.
 The repo is source plus a generator; generated pages are committed.
 
 ## Layout
@@ -12,6 +12,7 @@ templates/              # base shell, home, list, article
 assets/tui.css          # grid, panes, colour roles, hint line, article typography
 assets/sky.js           # the Nebula sky and the shared fixed clock
 assets/toy.js           # the logo toy, nine systems, home page only
+favicon.svg favicon.png apple-touch-icon.png   # the B of the toy's glyph set; the PNGs are rendered from the SVG with magick
 assets/tui.js           # panes, focus, keys, hint line, per-page modes
 build.py                # python3, standard library only; regenerates every page and checks links
 index.html posts.html work.html posts/ portfolio/ feed.xml feed/   # generated, do not hand-edit

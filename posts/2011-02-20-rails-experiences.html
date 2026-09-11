@@ -3,9 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Rails experiences - Boy Maas (m4nic)</title>
+<title>Rails experiences - Boy Maas (bitgnosys)</title>
 <meta name="description" content="Reasons why rails development seems so productive">
-<link rel="icon" href="/favicon.png">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="alternate" type="application/atom+xml" title="Boy Maas, posts" href="/feed.xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,17 +15,16 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&text=%E2%94%80%E2%94%82%E2%94%8C%E2%94%90%E2%94%94%E2%94%98%E2%94%9C%E2%94%A4%E2%96%88&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/tui.css">
 </head>
-<body data-page="article" data-back="/posts.html" data-pos="posts 8/17" data-prev="/posts/2011-09-07-kinetic-typography.html" data-next="/posts/2010-06-15-clocks-portmortem.html">
+<body data-page="article" data-back="/posts.html" data-pos="posts 12/21" data-prev="/posts/2011-09-07-kinetic-typography.html" data-next="/posts/2010-06-15-clocks-portmortem.html">
 <canvas id="sky" aria-hidden="true"></canvas>
 <header class="wrap top">
-  <a class="who" href="/">Boy Maas<span class="m4"> <span class="dim">(m4nic)</span></span></a>
+  <a class="who" href="/">Boy Maas<span class="handle"> <span class="dim">(bitgnosys)</span></span></a>
   <nav>
     <a href="/posts.html" class="here">posts</a>
     <a href="/work.html">work</a>
     <a href="/#bio">bio</a>
     <a href="/socials.html">socials</a>
   </nav>
-  <button id="snd" type="button" aria-pressed="false" aria-label="sound off"><span class="full">sound off</span><span class="short" aria-hidden="true">s</span></button>
 </header>
 <main class="wrap stack">
   <article class="pane focus" id="posts" aria-label="posts/2011-02-20-rails-experiences">
@@ -39,7 +40,7 @@
         </nav>
       </header>
       <div class="article">
-<p>Revisited rails and the ruby after a few years to implement <a href="http://www.keygamesnetwork.com">Keygames Network</a>, and found it extremely productive. Why?</p>
+<p>Revisited rails and the ruby after a few years to implement <a href="http://www.keygamesnetwork.com" target="_blank" rel="noopener">Keygames Network</a>, and found it extremely productive. Why?</p>
 
 <h2>High level view of a software project</h2>
 
@@ -133,7 +134,7 @@ specific combination of the model names.</p>
 
 <p>A very simple model example:</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code lang='ruby' class='highlight'>class Shop < ActiveRecord::Base
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-ruby">class Shop < ActiveRecord::Base
   has_many :orders
 end
 
@@ -143,13 +144,13 @@ end</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>�
 
 <p>A simple resource_full route definition:</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>resources :shops do
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-ruby">resources :shops do
   resources :orders
 end</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
 <p>Will generate:</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>    shop_orders GET    /shops/:shop_id/orders(.:format)          {:action=&gt;"index", :controller=&gt;"orders"}
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-ruby">    shop_orders GET    /shops/:shop_id/orders(.:format)          {:action=&gt;"index", :controller=&gt;"orders"}
                 POST   /shops/:shop_id/orders(.:format)          {:action=&gt;"create", :controller=&gt;"orders"}
  new_shop_order GET    /shops/:shop_id/orders/new(.:format)      {:action=&gt;"new", :controller=&gt;"orders"}
 edit_shop_order GET    /shops/:shop_id/orders/:id/edit(.:format) {:action=&gt;"edit", :controller=&gt;"orders"}
@@ -172,7 +173,7 @@ technique invented by Rails.</p>
 <p>As you can see above every resource route generates routes to 4 standardised actions inside the targeted controller. Conforming CRUD. Which
 one could split up in 2 categories. Actions manipulating the collection of the resource, and actions which manipulate a member of the collection.</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>* collection -&gt;      shop\_orders
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-ruby">* collection -&gt;      shop\_orders
   * index
   * create
   * new     -&gt; new\_shop\_order
@@ -195,10 +196,16 @@ relations as defined in the data-model is reflected in the routes.</p>
 
 </main>
 <div class="hints"><div class="wrap">
-  <span class="keys"><b>j/k</b> scroll  <b>h/l</b> prev/next  <b>q</b> back  <span class="kb"><b>gg/G</b> ends  <b>s</b> sound</span></span>
+  <span class="keys"><span class="k"><b>j/k</b> scroll</span><span class="k"><b>h/l</b> prev/next</span><span class="k"><b>q</b> back</span><span class="k kb"><b>gg/G</b> ends</span><button id="snd" type="button" aria-pressed="false"><b>s</b> <span class="lbl">sound off</span></button></span>
   <span class="whisper" id="whisper" hidden>sandbox open: keys 1 to 9 pick a system, space restarts it, type play to close</span>
   <span class="pos" id="pos"></span>
 </div></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.2/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.2/languages/clojure.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.2/languages/scheme.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.2/languages/haskell.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.2/languages/coffeescript.min.js"></script>
+<script>hljs.configure({ languages:["ruby","clojure","scheme","haskell","coffeescript","javascript","bash","xml","css","plaintext"], ignoreUnescapedHTML:true }); hljs.highlightAll();</script>
 <script src="/assets/sky.js"></script>
 <script src="/assets/tui.js"></script>
 </body>

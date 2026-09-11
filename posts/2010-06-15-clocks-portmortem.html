@@ -3,9 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Clocks webdsl postmortem - Boy Maas (m4nic)</title>
+<title>Clocks webdsl postmortem - Boy Maas (bitgnosys)</title>
 <meta name="description" content="Designing a webdsl in clojure">
-<link rel="icon" href="/favicon.png">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="alternate" type="application/atom+xml" title="Boy Maas, posts" href="/feed.xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,17 +15,16 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&text=%E2%94%80%E2%94%82%E2%94%8C%E2%94%90%E2%94%94%E2%94%98%E2%94%9C%E2%94%A4%E2%96%88&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/tui.css">
 </head>
-<body data-page="article" data-back="/posts.html" data-pos="posts 9/17" data-prev="/posts/2011-02-20-rails-experiences.html" data-next="/posts/2010-05-24-webapps-haskell-loli-hack.html">
+<body data-page="article" data-back="/posts.html" data-pos="posts 13/21" data-prev="/posts/2011-02-20-rails-experiences.html" data-next="/posts/2010-05-24-webapps-haskell-loli-hack.html">
 <canvas id="sky" aria-hidden="true"></canvas>
 <header class="wrap top">
-  <a class="who" href="/">Boy Maas<span class="m4"> <span class="dim">(m4nic)</span></span></a>
+  <a class="who" href="/">Boy Maas<span class="handle"> <span class="dim">(bitgnosys)</span></span></a>
   <nav>
     <a href="/posts.html" class="here">posts</a>
     <a href="/work.html">work</a>
     <a href="/#bio">bio</a>
     <a href="/socials.html">socials</a>
   </nav>
-  <button id="snd" type="button" aria-pressed="false" aria-label="sound off"><span class="full">sound off</span><span class="short" aria-hidden="true">s</span></button>
 </header>
 <main class="wrap stack">
   <article class="pane focus" id="posts" aria-label="posts/2010-06-15-clocks-portmortem">
@@ -42,14 +43,14 @@
 <p>In this post I will summarize the lessons learned while implementing clocks.
 An opensourced test project to learn the in an outs of macros in clojure.</p>
 
-<p>You can see the code at: <a href="http://www.github.com/boymaas/clocks">http://www.github.com/boymaas/clocks</a></p>
+<p>You can see the code at: <a href="http://www.github.com/boymaas/clocks" target="_blank" rel="noopener">http://www.github.com/boymaas/clocks</a></p>
 
 <h2>On macros</h2>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>if you don't like something in the language, just adapt it.</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-clojure">if you don't like something in the language, just adapt it.</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
 <p>This is a core design choice of lisps. It is called
-<a href="http://en.wikipedia.org/wiki/Homoiconicity">homoiconic</a>.
+<a href="http://en.wikipedia.org/wiki/Homoiconicity" target="_blank" rel="noopener">homoiconic</a>.
 When code is data, data is changable by all the existing routines.</p>
 
 <p>In practice this means when calling a macro you get the unevaluated
@@ -75,7 +76,7 @@ are not yet evaluated.</p>
 <p>Scheme has hygienic macros, which work well for me, Clojure resolves
 all symbols first in the namespace the macro is defined. (when quasiquote is used)</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>outermacro defined in ns outerns
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-clojure">outermacro defined in ns outerns
    body resolved in ns outns
    innermacro defined in ns innerns
      body gets resolved in innerns</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
@@ -89,15 +90,15 @@ can be annoying when you just want to work with symbols.</p>
 a problem since quasiquote will try to resolve every symbol. There is a way
 to unresolve symbols. The <code>name</code> function:</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>(name resolved-symbol) </code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-clojure">(name resolved-symbol) </code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
 <p>will give back the original symbol name as a string</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>(symbol (name resolved-symbol))</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-clojure">(symbol (name resolved-symbol))</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
 <p>will convert the returned string  back to the original symbol</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>(prewalk (fn [exp] (if (symbol? exp) (symbol (name exp)))) sexp)</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-clojure">(prewalk (fn [exp] (if (symbol? exp) (symbol (name exp)))) sexp)</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
 <p>We can combine this with a walker to unresolve all resolved symbols in a form.
 Combine this with a lookup on a symbol map and you will leave
@@ -117,7 +118,7 @@ These have to be converted back.</p>
 
 <p>As can be seen in the code the walk function as defined in clojure.walk does this for you.</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>(defn walk
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-clojure">(defn walk
   "Traverses form, an arbitrary data structure.  inner and outer are
   functions.  Applies inner to each element of form, building up a
   data structure of the same type, then applies outer to the result.
@@ -139,7 +140,7 @@ These have to be converted back.</p>
 
 <p>What exactly happens when calling a macro with the namespaces and the variables.</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>(ns nsdefined)
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-clojure">(ns nsdefined)
 (def rv 100)
 (defmacro nstest [name]
          (let [ns *ns* 
@@ -154,7 +155,7 @@ These have to be converted back.</p>
 <p>Conclusion: macro gets executed inside namespace its defined in. The <em>ns</em> is set to the calling ns, so resolve
 which uses <em>ns</em> to resolve will resolve to nscalling/rv.</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>(defmacro nstest [name]
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-clojure">(defmacro nstest [name]
          (let [ns *ns* 
               rv rv
               rvr (resolve rv)]
@@ -179,10 +180,16 @@ a symbol dsl, It would be nice to have a special quasiquote which does not resol
 
 </main>
 <div class="hints"><div class="wrap">
-  <span class="keys"><b>j/k</b> scroll  <b>h/l</b> prev/next  <b>q</b> back  <span class="kb"><b>gg/G</b> ends  <b>s</b> sound</span></span>
+  <span class="keys"><span class="k"><b>j/k</b> scroll</span><span class="k"><b>h/l</b> prev/next</span><span class="k"><b>q</b> back</span><span class="k kb"><b>gg/G</b> ends</span><button id="snd" type="button" aria-pressed="false"><b>s</b> <span class="lbl">sound off</span></button></span>
   <span class="whisper" id="whisper" hidden>sandbox open: keys 1 to 9 pick a system, space restarts it, type play to close</span>
   <span class="pos" id="pos"></span>
 </div></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.2/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.2/languages/clojure.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.2/languages/scheme.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.2/languages/haskell.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.2/languages/coffeescript.min.js"></script>
+<script>hljs.configure({ languages:["ruby","clojure","scheme","haskell","coffeescript","javascript","bash","xml","css","plaintext"], ignoreUnescapedHTML:true }); hljs.highlightAll();</script>
 <script src="/assets/sky.js"></script>
 <script src="/assets/tui.js"></script>
 </body>

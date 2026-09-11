@@ -3,9 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Gamebattle - Boy Maas (m4nic)</title>
+<title>Gamebattle - Boy Maas (bitgnosys)</title>
 <meta name="description" content="Tagged.nl recently launched the new game platform &quot;GameBattle&quot; (http://www.gamebattle.nl). GameBattle gives consumers the possibility to sharpen their minds and test their skills by playing game battles.">
-<link rel="icon" href="/favicon.png">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="alternate" type="application/atom+xml" title="Boy Maas, posts" href="/feed.xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,14 +18,13 @@
 <body data-page="article" data-back="/work.html" data-pos="work 8/13" data-prev="/portfolio/06_keygamesnetwork.html" data-next="/portfolio/04_transferspel.html">
 <canvas id="sky" aria-hidden="true"></canvas>
 <header class="wrap top">
-  <a class="who" href="/">Boy Maas<span class="m4"> <span class="dim">(m4nic)</span></span></a>
+  <a class="who" href="/">Boy Maas<span class="handle"> <span class="dim">(bitgnosys)</span></span></a>
   <nav>
     <a href="/posts.html">posts</a>
     <a href="/work.html" class="here">work</a>
     <a href="/#bio">bio</a>
     <a href="/socials.html">socials</a>
   </nav>
-  <button id="snd" type="button" aria-pressed="false" aria-label="sound off"><span class="full">sound off</span><span class="short" aria-hidden="true">s</span></button>
 </header>
 <main class="wrap stack">
   <article class="pane focus" id="work" aria-label="work/05_gamebattle">
@@ -40,7 +41,7 @@
       </header>
       <div class="article">
 <p>
-  Tagged.nl recently launched the new game platform "GameBattle" (<a href="http://www.gamebattle.nl">gamebattle.nl</a>). GameBattle gives consumers the possibility to sharpen their minds and test their skills by playing game battles.
+  Tagged.nl recently launched the new game platform "GameBattle" (<a href="http://www.gamebattle.nl" target="_blank" rel="noopener">gamebattle.nl</a>). GameBattle gives consumers the possibility to sharpen their minds and test their skills by playing game battles.
 </p>
 <p>
   Consumers can play for free and can play for money. Subscribers always play against each other; all games at GameBattle are skill games and belong to the most popular games on the internet (like diamond runner, mah jong, solitaire, word puzzles, pacman etc). Chance and luck are of no influence; skill is the only thing that matters. GameBattle grows every week. At this moment you can play more than 15 different games and arcade classics.
@@ -59,11 +60,11 @@
 </p>
 <h2>Gamebattle and "Algemeen Dagblad" News Media (Aug 2006)</h2>
 <p>
-  Tagged started a co-branded platform with AD News Media. AD News Media is promoting Gamebattle online (<a href="http://www.gamebattle.nl/?ref_id=28">the co-branded version</a>) and offline in their newspaper (<a href="/static/gamebattle/gamebattle_1e.pdf">advertisement 1, pdf</a>; <a href="/static/gamebattle/gamebattle_2e.pdf">advertisement 2, pdf</a>).
+  Tagged started a co-branded platform with AD News Media. AD News Media is promoting Gamebattle online (<a href="http://www.gamebattle.nl/?ref_id=28" target="_blank" rel="noopener">the co-branded version</a>) and offline in their newspaper (<a href="/static/gamebattle/gamebattle_1e.pdf">advertisement 1, pdf</a>; <a href="/static/gamebattle/gamebattle_2e.pdf">advertisement 2, pdf</a>).
 </p>
 <h2>Gamebattle and Spele.nl</h2>
 <p>
-  Tagged started a co-branded platform with Spele.nl. Spele.nl is the largest online gaming link farm, doing 400,000 unique visitors a day (<a href="http://www.gamebattle.nl/?ref_id=7">the co-branded version</a>). For more information look at the <a href="/static/gamebattle/metro_artikel.jpg">article in Metro</a> (jpg).
+  Tagged started a co-branded platform with Spele.nl. Spele.nl is the largest online gaming link farm, doing 400,000 unique visitors a day (<a href="http://www.gamebattle.nl/?ref_id=7" target="_blank" rel="noopener">the co-branded version</a>). For more information look at the <a href="/static/gamebattle/metro_artikel.jpg">article in Metro</a> (jpg).
 </p>
 <h2>Business model, subscribers and turnover</h2>
 <p>
@@ -93,10 +94,16 @@
 
 </main>
 <div class="hints"><div class="wrap">
-  <span class="keys"><b>j/k</b> scroll  <b>h/l</b> prev/next  <b>q</b> back  <span class="kb"><b>gg/G</b> ends  <b>s</b> sound</span></span>
+  <span class="keys"><span class="k"><b>j/k</b> scroll</span><span class="k"><b>h/l</b> prev/next</span><span class="k"><b>q</b> back</span><span class="k kb"><b>gg/G</b> ends</span><button id="snd" type="button" aria-pressed="false"><b>s</b> <span class="lbl">sound off</span></button></span>
   <span class="whisper" id="whisper" hidden>sandbox open: keys 1 to 9 pick a system, space restarts it, type play to close</span>
   <span class="pos" id="pos"></span>
 </div></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.2/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.2/languages/clojure.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.2/languages/scheme.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.2/languages/haskell.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.2/languages/coffeescript.min.js"></script>
+<script>hljs.configure({ languages:["ruby","clojure","scheme","haskell","coffeescript","javascript","bash","xml","css","plaintext"], ignoreUnescapedHTML:true }); hljs.highlightAll();</script>
 <script src="/assets/sky.js"></script>
 <script src="/assets/tui.js"></script>
 </body>

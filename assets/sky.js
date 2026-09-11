@@ -1,7 +1,7 @@
 /* boymaas.nl: the Nebula sky. Behaviour that of atelier variant 18; the sky owns the fixed 60Hz clock,
    and the logo toy (toy.js, loaded first on the home page) runs on it, so both replay under ?seed= and ?t=.
-   Everything is painted into one low-resolution buffer of CH-pixel cells (the dither, the stars, the rete,
-   the sigils) and scaled up without smoothing: one pixel grid, hard edges, no blur. */
+   Everything is painted into one low-resolution buffer of CH-pixel cells (the dither, the stars, the sigils)
+   and scaled up without smoothing: one pixel grid, hard edges, no blur. */
 (function () {
 'use strict';
 /* ---------- palette ---------- */
@@ -31,7 +31,7 @@ var seedParam = parseInt(Q.get('seed'), 10);
 var SEED = isFinite(seedParam) ? (seedParam >>> 0) : (Math.floor(Math.random() * 4294967295) >>> 0);
 var T0 = Math.max(0, parseInt(Q.get('t'), 10) || 0);
 var DT = 1 / 60;
-/* ---------- the sky: nebula, rete, stars, sigils ---------- */
+/* ---------- the sky: nebula, stars, sigils ---------- */
 var sky = document.getElementById('sky'), sctx = sky.getContext('2d');
 var SW = 0, SH = 0, SD = 1, CH = 6, GW = 0, GH = 0, FW = 0, NEB_V = 2.5;
 function cellSize(w){ return w < 720 ? 5 : 6; }
@@ -46,7 +46,7 @@ function u32(h){ var c = rgb(h); return (255 << 24 | c[2] << 16 | c[1] << 8 | c[
 var BAYER = [0,32,8,40,2,34,10,42, 48,16,56,24,50,18,58,26, 12,44,4,36,14,46,6,38, 60,28,52,20,62,30,54,22,
              3,35,11,43,1,33,9,41, 51,19,59,27,49,17,57,25, 15,47,7,39,13,45,5,37, 63,31,55,23,61,29,53,21].map(function(v){ return v / 64; });
 var field = null, gain = null, neb = null, lo = null, nimg = null, nbuf = null, nebBuf = null, nebFrame = -1, ov = null, ovc = null;
-var layers = [], rete = null;
+var layers = [];
 var STAR_V = [5, 11, 22];
 /* a star is a whole cell now, so there are fewer and they are fainter: three depths, the nearest still well under the text */
 var STAR_COL = [mixQ(P.ground, P.star, 0.25), mixQ(P.ground, P.star, 0.375), mixQ(P.ground, P.star, 0.625)].map(u32);
@@ -94,20 +94,18 @@ function skyLayout(){
     for (var k = 0; k < n; k++){ st[k * 2] = srng() * SW; st[k * 2 + 1] = srng() * SH; tint[k] = L === 2 && srng() < 0.125 ? (srng() < 0.5 ? 1 : 2) : 0; }
     layers.push({ n:n, p:st, tint:tint, v:STAR_V[L] });
   }
-  var ptr = []; for (var j = 0; j < 7; j++) ptr.push({ a:srng() * 6.2832, r:0.2 + srng() * 0.5, s:srng() < 0.5 ? -1 : 1 });
-  rete = { cx:DEST.x * SW, cy:DEST.y * SH, R:0.36 * Math.min(SW, SH) + 0.12 * Math.max(SW, SH) * 0.3, tilt:0.42, base:srng() * 6.2832, ptr:ptr };
 }
 /* star position on a plane at the fixed clock */
 function starX(l, k, spd){ var m = 40, w = SW + m, x = (l.p[k * 2] - l.v * spd * bt) % w; return (x < -m / 2 ? x + w : x) ; }
 function starY(l, k, spd){ var m = 40, h = SH + m, y = (l.p[k * 2 + 1] + l.v * spd * 0.35 * bt) % h; return y > SH + m / 2 ? y - h : y; }
 /* ---------- states ---------- */
-var STATES = ['drift', 'breath', 'rete', 'sigils', 'shore', 'passing'];
+var STATES = ['drift', 'breath', 'sigils', 'shore', 'passing'];
 var bg = { st:-1, t0:0, dur:0, rot:0, rotT:0, phase:0, phaseT:0, cons:[], passer:null, nextCon:0 };
 function bgEnter(i){
   bg.st = i; bg.t0 = bt; bg.dur = 45 + brng() * 45;
   sky.setAttribute('data-state', STATES[i]);
-  if (i === 3){ bg.nextCon = bt; }
-  if (i === 5){ bg.passer = { g:Math.floor(brng() * 8), y:SH * (0.15 + brng() * 0.7), t0:bt, size:Math.round(0.16 * Math.min(SW, SH)) + 40, v:(SW + 300) / (52 + brng() * 16) }; }
+  if (i === 2){ bg.nextCon = bt; }
+  if (i === 4){ bg.passer = { g:Math.floor(brng() * 8), y:SH * (0.15 + brng() * 0.7), t0:bt, size:Math.round(0.16 * Math.min(SW, SH)) + 40, v:(SW + 300) / (52 + brng() * 16) }; }
 }
 function bgPick(){ var i; do { i = Math.floor(brng() * STATES.length); } while (i === bg.st); bgEnter(i); }
 /* a constellation: three to six stars of the middle plane joined left to right. A segment that runs nearly vertical
@@ -141,7 +139,7 @@ function spawnCon(){
 function skyStep(){
   bt += DT;
   if (bg.st < 0 || bt - bg.t0 >= bg.dur){
-    if (bg.st === 3) bg.cons.forEach(function(c){ c.hold = Math.min(c.hold, bt - c.t0 - c.form); });
+    if (bg.st === 2) bg.cons.forEach(function(c){ c.hold = Math.min(c.hold, bt - c.t0 - c.form); });
     bgPick();
   }
   var st = bg.st, el = bt - bg.t0;
@@ -150,7 +148,7 @@ function skyStep(){
   if (bt - bg.rotT >= rotP){ bg.rotT += rotP; bg.rot = (bg.rot + 1) % 4; }
   if (st === 1 && bt - bg.phaseT >= 0.5){ bg.phaseT = bt; bg.phase = (bg.phase + 1) % 8; }
   /* sigils: chain constellations, two alive at most */
-  if (st === 3 && bt >= bg.nextCon && bg.cons.length < 2){ spawnCon(); bg.nextCon = bt + 6 + brng() * 8; }
+  if (st === 2 && bt >= bg.nextCon && bg.cons.length < 2){ spawnCon(); bg.nextCon = bt + 6 + brng() * 8; }
   for (var i = bg.cons.length - 1; i >= 0; i--){ var c = bg.cons[i]; if (bt - c.t0 > c.form + c.hold + c.diss) bg.cons.splice(i, 1); }
   if (bg.passer && (SW + 200) - bg.passer.v * (bt - bg.passer.t0) < -bg.passer.size - 100) bg.passer = null;
 }
@@ -158,7 +156,7 @@ function skyStep(){
 function nebula(){
   var st = bg.st, el = bt - bg.t0, prog = Math.min(1, el / bg.dur);
   /* shore lifts the whole field a little; the old soft hotspot is gone, the field is the only shape */
-  var lift = st === 4 ? Math.round(0.12 * Math.sin(3.1416 * prog) * 16) / 16 : 0;
+  var lift = st === 3 ? Math.round(0.12 * Math.sin(3.1416 * prog) * 16) / 16 : 0;
   var br = Math.round(0.06 * Math.sin(bt * 6.2832 / 21) * 64) / 64 + lift;
   var off = Math.floor(bt * NEB_V / CH) % FW, ph = bg.phase;
   var pal = new Uint32Array(8);
@@ -172,24 +170,6 @@ function nebula(){
       out[i] = pal[(v * 7 + BAYER[by | ((x + ph) & 7)]) | 0];
     }
   }
-}
-function rp(a, r){ var c = Math.cos(a + rete.ang), s = Math.sin(a + rete.ang); return [rete.cx + r * c * rete.R, rete.cy + r * s * rete.R * rete.tilt]; }
-function ring(r, ox, oy){
-  ox = ox || 0; oy = oy || 0;
-  for (var k = 0; k <= 48; k++){ var a = k / 48 * 6.2832, c = Math.cos(a) * r + ox, s = Math.sin(a) * r + oy;
-    var p = rp(Math.atan2(s, c), Math.sqrt(c * c + s * s)); if (k) ovc.lineTo(p[0], p[1]); else ovc.moveTo(p[0], p[1]); }
-}
-function drawRete(){
-  var st = bg.st, el = bt - bg.t0, lvl = st === 2 ? Math.min(0.3, 0.12 + Math.floor(el / 0.75) * 0.04) : 0.12;
-  rete.ang = rete.base + bt * 6.2832 / 360;
-  ovc.strokeStyle = mixQ(P.ground, P.ash, lvl); ovc.lineWidth = CH; ovc.beginPath();
-  ring(1); ring(0.92); ring(0.72); ring(0.42); ring(0.62, 0, 0.22);
-  var k, p, q;
-  for (k = 0; k < 36; k++){ var a = k / 36 * 6.2832, r0 = k % 3 ? 0.965 : 0.92; p = rp(a, r0); q = rp(a, 1); ovc.moveTo(p[0], p[1]); ovc.lineTo(q[0], q[1]); }
-  for (k = 0; k < 7; k++){ var pt = rete.ptr[k], e = rp(pt.a, 0.62 + 0.22 * Math.sin(pt.a)), m = rp(pt.a + 0.25 * pt.s, (pt.r + 0.62) / 2), t = rp(pt.a + 0.4 * pt.s, pt.r);
-    ovc.moveTo(e[0], e[1]); ovc.lineTo(m[0], m[1]); ovc.lineTo(t[0], t[1]); ovc.moveTo(t[0] - 2, t[1] - 2); ovc.lineTo(t[0] + 2, t[1] + 2); }
-  var ia = bt * 6.2832 / 120; p = rp(ia, 1); q = rp(ia + 3.1416, 1); ovc.moveTo(p[0], p[1]); ovc.lineTo(q[0], q[1]);
-  ovc.stroke();
 }
 /* the glyph library: fire, water, air, earth, sun, moon, mercury, sulfur; unit box, one-pixel lines */
 function glyph(g, x, y, s){
@@ -216,7 +196,7 @@ function drawCons(){
     for (k = 0; k < n; k++){ if (p < k / n + 0.001) break; ovc.strokeStyle = c.nodes[k].col; glyph(c.nodes[k].g, Math.round(pts[k][0]), Math.round(pts[k][1]), gs); }
   }
 }
-function speedMul(){ return bg.st === 4 ? 1 + 0.8 * Math.sin(3.1416 * Math.min(1, (bt - bg.t0) / bg.dur)) : 1; }
+function speedMul(){ return bg.st === 3 ? 1 + 0.8 * Math.sin(3.1416 * Math.min(1, (bt - bg.t0) / bg.dur)) : 1; }
 /* a star is one cell of the grid, plotted straight into the buffer */
 function star(x, y, col){
   var cx = Math.floor(x / CH), cy = Math.floor(y / CH);
@@ -228,12 +208,11 @@ function drawStars(){
     for (var k = 0; k < l.n; k++) star(starX(l, k, spd), starY(l, k, spd), l.tint[k] ? TINT_COL[l.tint[k]] : STAR_COL[L]);
   }
 }
-/* the rete, the sigils and the passer are drawn as lines into an overlay of the same size, then each cell the line
+/* the sigils and the passer are drawn as lines into an overlay of the same size, then each cell the line
    covers by half or more is copied into the buffer whole: a line becomes a run of cells, never a soft edge */
 function overlay(){
   ovc.setTransform(1, 0, 0, 1, 0, 0); ovc.clearRect(0, 0, GW, GH);
   ovc.setTransform(1 / CH, 0, 0, 1 / CH, 0, 0);
-  drawRete();
   drawCons();
   if (bg.passer){ var ps = bg.passer; ovc.strokeStyle = mixQ(P.ground, P.ash, 0.25); ovc.lineWidth = CH;
     glyph(ps.g, Math.round(SW + 200 - ps.v * (bt - ps.t0)), Math.round(ps.y), ps.size); }
@@ -275,6 +254,6 @@ function boot(){
 window.addEventListener('resize', function(){
   if (window.innerWidth !== SW || window.innerHeight !== SH){ skyLayout(); skyPaint(); }
 });
-if (window.Toy) hooks.push(window.Toy({ P:P, rgb:rgb, hex:hex, mix:mix, mixQ:mixQ, mulberry32:mulberry32, SEED:SEED, T0:T0, DT:DT, cell:cellSize }));
+if (window.Toy) hooks.push(window.Toy({ P:P, rgb:rgb, hex:hex, mix:mix, mixQ:mixQ, mulberry32:mulberry32, SEED:SEED, T0:T0, DT:DT }));
 boot();
 })();

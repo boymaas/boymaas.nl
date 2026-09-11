@@ -17,13 +17,44 @@ import urllib.parse
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 SITE = 'https://boymaas.nl'
-NAME = 'Boy Maas (m4nic)'
+NAME = 'Boy Maas (bitgnosys)'
 
+# the hint line: key and label pairs; those marked kb are keyboard-only and leave on a phone. The sound toggle,
+# s, is a button in the base template, so it is not listed here.
 KEYS = {
-    'home': '<b>j/k</b> move  <b>enter</b> open  <b>tab</b> pane  <span class="kb"><b>gg/G</b> ends  <b>esc</b> blur  </span><b>s</b> sound',
-    'list': '<b>j/k</b> move  <b>enter</b> open  <span class="kb"><b>gg/G</b> ends  <b>esc</b> blur  </span><b>s</b> sound',
-    'article': '<b>j/k</b> scroll  <b>h/l</b> prev/next  <b>q</b> back  <span class="kb"><b>gg/G</b> ends  <b>s</b> sound</span>',
+    'home': [('j/k', 'move'), ('enter', 'open'), ('tab', 'pane'), ('gg/G', 'ends', 'kb'), ('esc', 'blur', 'kb')],
+    'list': [('j/k', 'move'), ('enter', 'open'), ('gg/G', 'ends', 'kb'), ('esc', 'blur', 'kb')],
+    'article': [('j/k', 'scroll'), ('h/l', 'prev/next'), ('q', 'back'), ('gg/G', 'ends', 'kb')],
 }
+
+
+def keys(kind):
+    return ''.join('<span class="k%s"><b>%s</b> %s</span>' % (' kb' if len(k) > 2 else '', k[0], k[1]) for k in KEYS[kind])
+
+
+# syntax highlighting on article pages: highlight.js from cdnjs, pinned, the common build plus the languages the
+# old posts use that it lacks. A block says its language with class="language-x" (or the old lang='x'); a post
+# can name the language of its unmarked blocks with a front matter key lang, and the old posts, whose blocks say
+# nothing, take it from this table; what is left is detected among the languages the posts are written in
+CODE_LANG = {
+    '2010-05-04-html5-canvas-element': 'javascript',
+    '2010-05-11-opengl-plt-scheme-programming': 'scheme',
+    '2010-05-14-scheme-call-with-current-continuation': 'scheme',
+    '2010-05-15-web-apps-in-plt-scheme': 'scheme',
+    '2010-05-20-currying-in-scheme': 'scheme',
+    '2010-05-24-webapps-haskell-loli-hack': 'haskell',
+    '2010-06-15-clocks-portmortem': 'clojure',
+    '2011-02-20-rails-experiences': 'ruby',
+    '2012-01-29-software-architecture': 'ruby',
+    '2012-02-10-ruby-org-mode-parser-development-log': 'ruby',
+    '2012-06-13-ruby-exceptions-benchmark': 'ruby',
+}
+HLJS = 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.2/'
+HIGHLIGHT = ''.join('<script src="%s%s"></script>\n' % (HLJS, f) for f in (
+    'highlight.min.js', 'languages/clojure.min.js', 'languages/scheme.min.js', 'languages/haskell.min.js',
+    'languages/coffeescript.min.js')) + (
+    '<script>hljs.configure({ languages:["ruby","clojure","scheme","haskell","coffeescript","javascript","bash",'
+    '"xml","css","plaintext"], ignoreUnescapedHTML:true }); hljs.highlightAll();</script>\n')
 
 SUB_TOP = '<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div>'
 SUB_BOTTOM = '<div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>'
@@ -85,8 +116,20 @@ def render(template, **values):
     return out
 
 
+def external_links(text):
+    """A link to another site opens a new window: target="_blank" rel="noopener" on every http(s) href that is
+    not boymaas.nl."""
+    def fix(m):
+        tag, href = m.group(0), html.unescape(m.group(1))
+        host = urllib.parse.urlsplit(href).hostname or ''
+        if host == 'boymaas.nl' or host.endswith('.boymaas.nl') or 'target=' in tag:
+            return tag
+        return tag[:-1] + ' target="_blank" rel="noopener">'
+    return re.sub(r'<a\b[^>]*\bhref=["\'](https?://[^"\']+)["\'][^>]*>', fix, text)
+
+
 def page(kind, title, main, keys, description='', page_id='', body_attrs='', scripts='', main_class='stack'):
-    return render('base',
+    return external_links(render('base',
                   title=esc(title),
                   description=('<meta name="description" content="%s">\n' % esc(description)) if description else '',
                   page=kind, body_attrs=body_attrs,
@@ -95,7 +138,7 @@ def page(kind, title, main, keys, description='', page_id='', body_attrs='', scr
                   here_posts=' class="here"' if page_id == 'posts' else '',
                   here_work=' class="here"' if page_id == 'work' else '',
                   here_socials=' class="here"' if page_id == 'socials' else '',
-                  main_class=main_class, main=main, keys=keys, scripts=scripts)
+                  main_class=main_class, main=main, keys=keys, scripts=scripts))
 
 
 # ---------- the body of an article ----------
@@ -111,7 +154,7 @@ def dedent_code(text):
     return '\n'.join(l[cut:] if l.strip() else '' for l in lines)
 
 
-def tidy_pre(m):
+def tidy_pre(m, lang=None):
     """Trim and dedent a <pre> block and put it in a bordered sub-pane."""
     block = m.group(0)
     inner = re.fullmatch(r'(<pre\b[^>]*>)(\s*<code\b[^>]*>)?(.*?)(</code>\s*)?(</pre>)', block, re.S)
@@ -122,6 +165,11 @@ def tidy_pre(m):
         return SUB_TOP + block + SUB_BOTTOM
     code = dedent_code(code)
     open_code = (open_code or '').strip()
+    old = re.search(r'\blang=["\']([\w-]+)["\']', open_code)      # the old <code lang='ruby'>: highlight.js reads a class
+    if old:
+        open_code = '<code class="language-%s">' % old.group(1)
+    elif lang and 'language-' not in open_code:
+        open_code = '<code class="language-%s">' % lang
     close_code = '</code>' if close_code else ''
     return SUB_TOP + open_pre + open_code + code + close_code + close_pre + SUB_BOTTOM
 
@@ -151,14 +199,15 @@ def level_headings(body):
     return re.sub(r'<(/?)h([1-6])\b', fix, body)
 
 
-def typeset(body, title=None):
-    """Turn a content body into the article markup the stylesheet expects."""
+def typeset(body, title=None, lang=None):
+    """Turn a content body into the article markup the stylesheet expects; lang names the language of the code
+    blocks that do not name their own."""
     if title:                                                        # a project body that opens by repeating its title
         body = re.sub(r'^\s*<h3>\s*' + re.escape(title) + r'\b[^<]*</h3>\s*', '', body, count=1)
     body = level_headings(body)
     body = re.sub(r'<iframe\b[^>]*>', fit_iframe, body)
     body = re.sub(r'<(canvas|img)\b[^>]*>', lambda m: re.sub(r'\s+style=(["\']).*?\1', '', m.group(0)), body)
-    body = re.sub(r'<pre\b[^>]*>.*?</pre>', tidy_pre, body, flags=re.S)
+    body = re.sub(r'<pre\b[^>]*>.*?</pre>', lambda m: tidy_pre(m, lang), body, flags=re.S)
     return body.strip()
 
 
@@ -210,15 +259,15 @@ def article(kind, items, k):
         description = it['summary']
     main = render('article', id='posts' if is_post else 'work', kind='posts' if is_post else 'work', slug=it['slug'],
                   title=esc(it['title']), sub=sub,
-                  body=typeset(it['body'], None if is_post else it['title']),
+                  body=typeset(it['body'], None if is_post else it['title'], it.get('lang') or CODE_LANG.get(it['slug'])),
                   prev=nav_link(prev, folder), next=nav_link(nxt, folder), back=back, back_label='posts' if is_post else 'work')
     attrs = ' data-back="%s" data-pos="%s %d/%d"' % (back, 'posts' if is_post else 'work', k + 1, len(items))
     if prev:
         attrs += ' data-prev="/%s/%s.html"' % (folder, prev['slug'])
     if nxt:
         attrs += ' data-next="/%s/%s.html"' % (folder, nxt['slug'])
-    return page('article', '%s - %s' % (it['title'], NAME), main, KEYS['article'], description=description,
-                page_id='posts' if is_post else 'work', body_attrs=attrs)
+    return page('article', '%s - %s' % (it['title'], NAME), main, keys('article'), description=description,
+                page_id='posts' if is_post else 'work', body_attrs=attrs, scripts=HIGHLIGHT)
 
 
 # The old site served its feed at /feed; that address now redirects to feed.xml.
@@ -274,18 +323,18 @@ def build():
         'home',
         posts_meta=posts_meta(posts), posts_rows='\n'.join(post_row(p) for p in posts),
         work_meta=work_meta(works), work_rows='\n'.join(work_row(k + 1, w) for k, w in enumerate(works))),
-        KEYS['home'], description='Boy Maas, m4nic. Entrepreneur, programmer, designer, philosopher. A small development studio in Den Haag since 1998.',
+        keys('home'), description='Boy Maas, bitgnosys. Creator, engineer of everything, pixels to protocols. JamZig, Polana Network, Buttler AI and Code 8, from Den Haag.',
         scripts='<script src="/assets/toy.js"></script>\n')
 
     out['posts.html'] = page('list', 'posts - ' + NAME, render(
         'list', id='posts', meta=posts_meta(posts), rows_class='posts', rows='\n'.join(post_row(p) for p in posts),
         foot='<span>─ </span><span class="meta"><a href="/feed.xml">atom feed</a></span><span> </span>'),
-        KEYS['list'], description='All posts by Boy Maas, newest first.', page_id='posts')
+        keys('list'), description='All posts by Boy Maas, newest first.', page_id='posts')
 
     out['work.html'] = page('list', 'work - ' + NAME, render(
         'list', id='work', meta=work_meta(works), rows_class='works',
         rows='\n'.join(work_row(k + 1, w, summary=True) for k, w in enumerate(works)), foot=''),
-        KEYS['list'], description='Projects by Boy Maas: concept, design and code.', page_id='work')
+        keys('list'), description='Projects by Boy Maas: concept, design and code.', page_id='work')
 
     socials = [
         ('https://x.com/bitgnosys', '@bitgnosys', 'X', 'Me. Pixels, protocols, the terminal.'),
@@ -294,15 +343,14 @@ def build():
         ('https://github.com/jamzig', 'jamzig', 'GitHub', 'The JamZig⚡ organisation: conformance releases, test exports, Zig packages.'),
         ('https://www.linkedin.com/in/boy-maas-2b86594/', 'boy-maas', 'LinkedIn', 'The CV, in the format recruiters like.'),
         ('https://matrix.to/#/#jamzig:matrix.org', '#jamzig:matrix.org', 'Matrix', 'The JamZig⚡ room.'),
-        ('https://cd8.dev/', 'cd8.dev', 'Code 8', 'Protocol development and advisory. Mail: contact@cd8.dev.'),
-        ('mailto:boy.maas@gmail.com', 'boy.maas (at) gmail.com', 'mail', 'For everything else.'),
+        ('https://cd8.dev/', 'cd8.dev', 'Code 8', 'Protocol development and advisory.'),
     ]
     rows = '\n'.join(
         '      <li><span class="n">%02d</span><a href="%s">%s</a><small>%s</small><p>%s</p></li>' % (k + 1, href, esc(label), esc(where), esc(blurb))
         for k, (href, label, where, blurb) in enumerate(socials))
     out['socials.html'] = page('list', 'socials - ' + NAME, render(
         'list', id='socials', meta='where to find me', rows_class='works', rows=rows, foot=''),
-        KEYS['list'], description='Where to find Boy Maas: X, GitHub, LinkedIn, Matrix, mail.', page_id='socials')
+        keys('list'), description='Where to find Boy Maas: X, GitHub, LinkedIn, Matrix.', page_id='socials')
 
     for k in range(len(posts)):
         out['posts/%s.html' % posts[k]['slug']] = article('posts', posts, k)

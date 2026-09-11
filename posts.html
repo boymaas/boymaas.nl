@@ -3,9 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>posts - Boy Maas (m4nic)</title>
+<title>posts - Boy Maas (bitgnosys)</title>
 <meta name="description" content="All posts by Boy Maas, newest first.">
-<link rel="icon" href="/favicon.png">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="alternate" type="application/atom+xml" title="Boy Maas, posts" href="/feed.xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,20 +18,23 @@
 <body data-page="list">
 <canvas id="sky" aria-hidden="true"></canvas>
 <header class="wrap top">
-  <a class="who" href="/">Boy Maas<span class="m4"> <span class="dim">(m4nic)</span></span></a>
+  <a class="who" href="/">Boy Maas<span class="handle"> <span class="dim">(bitgnosys)</span></span></a>
   <nav>
     <a href="/posts.html" class="here">posts</a>
     <a href="/work.html">work</a>
     <a href="/#bio">bio</a>
     <a href="/socials.html">socials</a>
   </nav>
-  <button id="snd" type="button" aria-pressed="false" aria-label="sound off"><span class="full">sound off</span><span class="short" aria-hidden="true">s</span></button>
 </header>
 <main class="wrap stack">
   <section class="pane list" id="posts" tabindex="0" aria-label="posts">
-    <div class="bt"><span>┌─</span><span class="tt">posts</span><span>─</span><span class="meta"> 2010 to 2015, newest first </span><span class="ln"></span><span>┐</span></div>
+    <div class="bt"><span>┌─</span><span class="tt">posts</span><span>─</span><span class="meta"> 2010 to 2026, newest first </span><span class="ln"></span><span>┐</span></div>
     <div class="in">
     <ol class="posts">
+      <li><time>2026-09-11</time><a href="/posts/2026-09-11-jamzig-a-jam-client-in-zig.html">JamZig⚡, a JAM client in Zig</a><small>Why Zig, what Milestone 1 meant, what is next</small></li>
+      <li><time>2026-09-10</time><a href="/posts/2026-09-10-polana-solana-on-jam.html">Polana Network: Solana on JAM</a><small>Running the Solana virtual machine on the Polkadot successor</small></li>
+      <li><time>2026-09-09</time><a href="/posts/2026-09-09-dabbling-in-odin.html">Dabbling in Odin</a><small>First impressions from a Zig and Rust hand</small></li>
+      <li><time>2026-09-08</time><a href="/posts/2026-09-08-the-coding-stream.html">The coding stream</a><small>Occasional live coding, chess, and other interests on YouTube</small></li>
       <li><time>2015-10-31</time><a href="/posts/2015-10-31-coffeescript-screencasts.html">CoffeeScript screencasts</a><small>Overflowing backend technologies in the frontend</small></li>
       <li><time>2015-08-05</time><a href="/posts/2015-08-05-clojure-screencasts.html">Clojure screencasts</a><small>what gets measured, gets managed</small></li>
       <li><time>2012-07-03</time><a href="/posts/2012-07-03-adam-curtis-all-watched-over-by-machines-of-loving-grace.html">An alternative view on the foundations of our society</a><small>All watched over by machines of loving grace</small></li>
@@ -54,7 +59,7 @@
 
 </main>
 <div class="hints"><div class="wrap">
-  <span class="keys"><b>j/k</b> move  <b>enter</b> open  <span class="kb"><b>gg/G</b> ends  <b>esc</b> blur  </span><b>s</b> sound</span>
+  <span class="keys"><span class="k"><b>j/k</b> move</span><span class="k"><b>enter</b> open</span><span class="k kb"><b>gg/G</b> ends</span><span class="k kb"><b>esc</b> blur</span><button id="snd" type="button" aria-pressed="false"><b>s</b> <span class="lbl">sound off</span></button></span>
   <span class="whisper" id="whisper" hidden>sandbox open: keys 1 to 9 pick a system, space restarts it, type play to close</span>
   <span class="pos" id="pos"></span>
 </div></div>

@@ -3,9 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Hack, Loli, the rake/webpy for Haskell? - Boy Maas (m4nic)</title>
+<title>Hack, Loli, the rake/webpy for Haskell? - Boy Maas (bitgnosys)</title>
 <meta name="description" content="A minimalistic DSL to webapps in Haskell">
-<link rel="icon" href="/favicon.png">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="alternate" type="application/atom+xml" title="Boy Maas, posts" href="/feed.xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,17 +15,16 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&text=%E2%94%80%E2%94%82%E2%94%8C%E2%94%90%E2%94%94%E2%94%98%E2%94%9C%E2%94%A4%E2%96%88&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/tui.css">
 </head>
-<body data-page="article" data-back="/posts.html" data-pos="posts 10/17" data-prev="/posts/2010-06-15-clocks-portmortem.html" data-next="/posts/2010-05-20-currying-in-scheme.html">
+<body data-page="article" data-back="/posts.html" data-pos="posts 14/21" data-prev="/posts/2010-06-15-clocks-portmortem.html" data-next="/posts/2010-05-20-currying-in-scheme.html">
 <canvas id="sky" aria-hidden="true"></canvas>
 <header class="wrap top">
-  <a class="who" href="/">Boy Maas<span class="m4"> <span class="dim">(m4nic)</span></span></a>
+  <a class="who" href="/">Boy Maas<span class="handle"> <span class="dim">(bitgnosys)</span></span></a>
   <nav>
     <a href="/posts.html" class="here">posts</a>
     <a href="/work.html">work</a>
     <a href="/#bio">bio</a>
     <a href="/socials.html">socials</a>
   </nav>
-  <button id="snd" type="button" aria-pressed="false" aria-label="sound off"><span class="full">sound off</span><span class="short" aria-hidden="true">s</span></button>
 </header>
 <main class="wrap stack">
   <article class="pane focus" id="posts" aria-label="posts/2010-05-24-webapps-haskell-loli-hack">
@@ -45,7 +46,7 @@ database abstraction layer like fe. SQLAlchemy in python. And in retrospect my
 conclusion on Scheme is that I find it a little verbose, expecially compared to
 Haskell.  I like succintness, it gives a lot of power as descibed by Paul
 Graham in
-<a href="http://www.paulgraham.com/power.html">Succintness is Power</a>.</p>
+<a href="http://www.paulgraham.com/power.html" target="_blank" rel="noopener">Succintness is Power</a>.</p>
 
 <blockquote>
   The quantity of meaning compressed into a small space by algebraic signs, is another circumstance that facilitates the reasonings we are accustomed to carry on by their aid.
@@ -58,10 +59,10 @@ Graham in
 <h2>Wat is hack?</h2>
 
 <p>Hack is inspired from ruby's
-<a href="http://chneukirchen.org/blog/archive/2007/02/introducing-rack.html">Rack</a>, WSGI Python,
+<a href="http://chneukirchen.org/blog/archive/2007/02/introducing-rack.html" target="_blank" rel="noopener">Rack</a>, WSGI Python,
 Ring in Clojure. In abstract terms <code>Env -&gt; Reponse</code>. Hack is the Rack protocol implemented
 in Haskell. I stumbled upon hack while examining
-<a href="http://github.com/nfjinjing/loli/tree/">Loli</a> developed by the same author <a href="http://github.com/nfjinjing">Nfjinjing</a>.</p>
+<a href="http://github.com/nfjinjing/loli/tree/" target="_blank" rel="noopener">Loli</a> developed by the same author <a href="http://github.com/nfjinjing" target="_blank" rel="noopener">Nfjinjing</a>.</p>
 
 <h2>MPS notiation</h2>
 
@@ -69,10 +70,10 @@ in Haskell. I stumbled upon hack while examining
 MPS (Message passing style) which turns the order of normal Haskell syntax around making it
 look like a OO language (to relieve his already punished OO brain).</p>
 
-<p>See <a href="http://github.com/nfjinjing/mps/blob/master/src/MPS/Light.hs">MPS</a> for the
+<p>See <a href="http://github.com/nfjinjing/mps/blob/master/src/MPS/Light.hs" target="_blank" rel="noopener">MPS</a> for the
 syntax implmeneted. I have collected the important code snippets from MPS:</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>{-# INLINE (.) #-}
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-haskell">{-# INLINE (.) #-}
 (.) :: a -&gt; (a -&gt; b) -&gt; b
 a . f = f a
 infixl 9 .
@@ -93,7 +94,7 @@ infixl 8 ^</code></pre><div class="bb"><span>└</span><span class="ln"></span><
 
 <h2>How does hack work?</h2>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>type Application = Env -&gt; IO Response
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-haskell">type Application = Env -&gt; IO Response
 
 type Middleware = Application -&gt; Application</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
@@ -130,7 +131,7 @@ enables composition of components in a very flexible decoupled way.</p>
 
 <p>Take as example the regexp router, which is an example of a middleware compononent:</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>type RoutePath = (String, Application)
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-haskell">type RoutePath = (String, Application)
 
 type Middleware = Application -&gt; Application
 
@@ -149,7 +150,7 @@ runs the found_app if a route matches or dispatches to then next in middleware p
 
 <p>Below another example of a middleware, this is static file serving.</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>file :: Maybe String -&gt; Middleware
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-haskell">file :: Maybe String -&gt; Middleware
 file root _ = \env -&gt; do
   let path = env.path_info .unescape_uri
   if ".." `isInfixOf` path
@@ -192,7 +193,7 @@ web apps. As 'webpy' in python.</p>
 
 <h2>Example app</h2>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>main ::  IO ()
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-haskell">main ::  IO ()
 main = run 3000 . loli - do
      get "/bench" - do
         name &lt;- ask ^ params ^ lookup "name" ^ fromMaybe "nobody"
@@ -205,7 +206,7 @@ main = run 3000 . loli - do
 <p>Looks pretty efficient, what exactly happens here? To understand let's
 look at the used types.</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>run ::  Hack.Handler.SimpleServer.Port -&gt; Hack.Application -&gt; IO ()
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-haskell">run ::  Hack.Handler.SimpleServer.Port -&gt; Hack.Application -&gt; IO ()
 
 loli ::  Network.Loli.Type.Unit -&gt; Hack.Application
 
@@ -223,11 +224,11 @@ data Loli = Loli
 
 <p>So in abstracto Loli dsl functions like get. Define an Appunit.</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>get :: String -&gt; Network.Loli.Type.AppUnit -&gt; Network.Loli.Type.Unit</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-haskell">get :: String -&gt; Network.Loli.Type.AppUnit -&gt; Network.Loli.Type.Unit</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
 <p>Appunit is defined as:</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>type AppReader    = Env
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-haskell">type AppReader    = Env
 type AppState     = Response
 type AppUnitT     = ReaderT AppReader (StateT AppState IO)
 type AppUnit      = AppUnitT ()</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
@@ -243,7 +244,7 @@ type AppUnit      = AppUnitT ()</code></pre><div class="bb"><span>└</span><spa
 
 <p>Env and Response are defined inside the Hack libraries and defined below.</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>data Env = Env 
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-haskell">data Env = Env 
   {  requestMethod :: RequestMethod            -- ^ HTTP request method ....
   ,  scriptName :: String                      -- ^ The initial portion o....
   ,  pathInfo :: String                        -- ^ The remainder of the ....
@@ -263,7 +264,7 @@ type AppUnit      = AppUnitT ()</code></pre><div class="bb"><span>└</span><spa
 
 <p>Response defined by</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>data Response = Response
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-haskell">data Response = Response
   {  status :: Int                              -- ^ must be greater than ....
   ,  headers :: [(String, String)]              -- ^ The header must not c....
   ,  body :: B.ByteString                       -- ^ body of the response
@@ -274,7 +275,7 @@ type AppUnit      = AppUnitT ()</code></pre><div class="bb"><span>└</span><spa
 
 <p>Let's take for example the first line of code in our example:</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>name &lt;- ask ^ params ^ lookup "name" ^ fromMaybe "nobody"</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-haskell">name &lt;- ask ^ params ^ lookup "name" ^ fromMaybe "nobody"</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
 <p>What happens here:</p>
 
@@ -297,7 +298,7 @@ returns a <code>Maybe</code>.</p></li>
 <p>Uses <code>StateMonad</code>s update function to update <code>Response</code> setting <code>content-type</code>
 and <code>body</code>.</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>html :: String -&gt; AppUnit
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-haskell">html :: String -&gt; AppUnit
 html x = do
   update - set_content_type _TextHtml
   update - set_body (x.fromString)
@@ -307,20 +308,20 @@ html x = do
 
 <p>Network.Loli.Engine</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>add_middleware :: Middleware -&gt; Loli -&gt; Loli
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-haskell">add_middleware :: Middleware -&gt; Loli -&gt; Loli
 add_middleware x s = 
   let xs = s.middlewares in s {middlewares = xs.insert_last x}</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
 <p>And ofcourse defined in Network.Loli.DSL on unit level.</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>middleware :: Middleware -&gt; Unit
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-haskell">middleware :: Middleware -&gt; Unit
 middleware = add_middleware &gt; update</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
 <h3>Loli Engine</h3>
 
 <p>Contains code</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>loli :: Unit -&gt; Application
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-haskell">loli :: Unit -&gt; Application
 loli unit = run unit not_found_app
   where
     not_found_app = not_found dummy_app
@@ -339,7 +340,7 @@ loli unit = run unit not_found_app
 
 <p>Where <code>use</code> is defined as:</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>-- | usage: app.use [content_type, cache]
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-haskell">-- | usage: app.use [content_type, cache]
 use :: [Middleware] -&gt; Middleware
 use = reduce (&lt;&lt;&lt;)</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
@@ -355,7 +356,7 @@ another:</p>
 
 <h3>Routing</h3>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>data RouteConfig = RouteConfig
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-haskell">data RouteConfig = RouteConfig
   {
     route_path :: RoutePath
   , router     :: Router
@@ -383,10 +384,16 @@ the structure of this approach to web apps inside haskell.</p>
 
 </main>
 <div class="hints"><div class="wrap">
-  <span class="keys"><b>j/k</b> scroll  <b>h/l</b> prev/next  <b>q</b> back  <span class="kb"><b>gg/G</b> ends  <b>s</b> sound</span></span>
+  <span class="keys"><span class="k"><b>j/k</b> scroll</span><span class="k"><b>h/l</b> prev/next</span><span class="k"><b>q</b> back</span><span class="k kb"><b>gg/G</b> ends</span><button id="snd" type="button" aria-pressed="false"><b>s</b> <span class="lbl">sound off</span></button></span>
   <span class="whisper" id="whisper" hidden>sandbox open: keys 1 to 9 pick a system, space restarts it, type play to close</span>
   <span class="pos" id="pos"></span>
 </div></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.2/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.2/languages/clojure.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.2/languages/scheme.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.2/languages/haskell.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.2/languages/coffeescript.min.js"></script>
+<script>hljs.configure({ languages:["ruby","clojure","scheme","haskell","coffeescript","javascript","bash","xml","css","plaintext"], ignoreUnescapedHTML:true }); hljs.highlightAll();</script>
 <script src="/assets/sky.js"></script>
 <script src="/assets/tui.js"></script>
 </body>

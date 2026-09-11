@@ -3,9 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Ying Yang call/cc or the call-with-current-continuation puzzle - Boy Maas (m4nic)</title>
+<title>Ying Yang call/cc or the call-with-current-continuation puzzle - Boy Maas (bitgnosys)</title>
 <meta name="description" content="interesting scheme paradigm">
-<link rel="icon" href="/favicon.png">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="alternate" type="application/atom+xml" title="Boy Maas, posts" href="/feed.xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,17 +15,16 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&text=%E2%94%80%E2%94%82%E2%94%8C%E2%94%90%E2%94%94%E2%94%98%E2%94%9C%E2%94%A4%E2%96%88&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/tui.css">
 </head>
-<body data-page="article" data-back="/posts.html" data-pos="posts 13/17" data-prev="/posts/2010-05-15-web-apps-in-plt-scheme.html" data-next="/posts/2010-05-11-opengl-plt-scheme-programming.html">
+<body data-page="article" data-back="/posts.html" data-pos="posts 17/21" data-prev="/posts/2010-05-15-web-apps-in-plt-scheme.html" data-next="/posts/2010-05-11-opengl-plt-scheme-programming.html">
 <canvas id="sky" aria-hidden="true"></canvas>
 <header class="wrap top">
-  <a class="who" href="/">Boy Maas<span class="m4"> <span class="dim">(m4nic)</span></span></a>
+  <a class="who" href="/">Boy Maas<span class="handle"> <span class="dim">(bitgnosys)</span></span></a>
   <nav>
     <a href="/posts.html" class="here">posts</a>
     <a href="/work.html">work</a>
     <a href="/#bio">bio</a>
     <a href="/socials.html">socials</a>
   </nav>
-  <button id="snd" type="button" aria-pressed="false" aria-label="sound off"><span class="full">sound off</span><span class="short" aria-hidden="true">s</span></button>
 </header>
 <main class="wrap stack">
   <article class="pane focus" id="posts" aria-label="posts/2010-05-14-scheme-call-with-current-continuation">
@@ -50,7 +51,7 @@ value.  This value will become the value of the application of call/cc. Easy heh
 <p>To give an example, this first example does <code>call/cc</code> which does not apply the
 continuation <code>k</code>:</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>(call/cc
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-scheme">(call/cc
  (lambda (k)
   (* 5 4))) =&gt;  20 </code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
@@ -61,14 +62,14 @@ just returns the result of the calculation.</p>
 the return value of the call/cc lambda becomes the value passed to the
 continuation <code>k</code> and thus prints 4.</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>(call/cc
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-scheme">(call/cc
  (lambda (k)
   (* 5 (k 4)))) =&gt; 4 </code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
 <p>We could argue that the continuation acts as a return statement. This
 facilitates returning from a recursion as described below.</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>(define product
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-scheme">(define product
   (lambda (ls)
     (call/cc
       (lambda (break)
@@ -82,7 +83,7 @@ facilitates returning from a recursion as described below.</p>
 
 <p>Try this piece of code which I found in The Scheme Programming Language.</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>(let ((x (call/cc (lambda (k) k))))
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-scheme">(let ((x (call/cc (lambda (k) k))))
   (x (lambda (ignore) "hi"))) =&gt; "hi"</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
 <p>What happens here?</p>
@@ -114,7 +115,7 @@ facilitates returning from a recursion as described below.</p>
 immediatly fascinated as it seemed difficult to explain why the below described call/cc combinations
 deliver the output as described.</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>(let* ((yin
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-scheme">(let* ((yin
          ((lambda (cc) (display #\@) cc) (call-with-current-continuation (lambda (c) c))))
        (yang
          ((lambda (cc) (display #\*) cc) (call-with-current-continuation (lambda (c) c)))))
@@ -122,7 +123,7 @@ deliver the output as described.</p>
 
 <p>Outputs an infinitive sequence, I have extracted the first output of this function below.</p>
 
-<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code>@*@**@***@****@*****@******@*******@********@*********@**********@*******
+<div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-scheme">@*@**@***@****@*****@******@*******@********@*********@**********@*******
 ****@************@*************@**************@***************@**********
 ******@*****************@******************@*******************@*********
 ***********@*********************@**********************@****************
@@ -138,10 +139,16 @@ Try to explain this one .. good luck, heheh</p>
 
 </main>
 <div class="hints"><div class="wrap">
-  <span class="keys"><b>j/k</b> scroll  <b>h/l</b> prev/next  <b>q</b> back  <span class="kb"><b>gg/G</b> ends  <b>s</b> sound</span></span>
+  <span class="keys"><span class="k"><b>j/k</b> scroll</span><span class="k"><b>h/l</b> prev/next</span><span class="k"><b>q</b> back</span><span class="k kb"><b>gg/G</b> ends</span><button id="snd" type="button" aria-pressed="false"><b>s</b> <span class="lbl">sound off</span></button></span>
   <span class="whisper" id="whisper" hidden>sandbox open: keys 1 to 9 pick a system, space restarts it, type play to close</span>
   <span class="pos" id="pos"></span>
 </div></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.2/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.2/languages/clojure.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.2/languages/scheme.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.2/languages/haskell.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.2/languages/coffeescript.min.js"></script>
+<script>hljs.configure({ languages:["ruby","clojure","scheme","haskell","coffeescript","javascript","bash","xml","css","plaintext"], ignoreUnescapedHTML:true }); hljs.highlightAll();</script>
 <script src="/assets/sky.js"></script>
 <script src="/assets/tui.js"></script>
 </body>

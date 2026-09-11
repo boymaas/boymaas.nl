@@ -3,9 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Hakyll blog setup - Boy Maas (m4nic)</title>
+<title>Hakyll blog setup - Boy Maas (bitgnosys)</title>
 <meta name="description" content="Setting up a maintainable blog using haskell">
-<link rel="icon" href="/favicon.png">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="alternate" type="application/atom+xml" title="Boy Maas, posts" href="/feed.xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,17 +15,16 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&text=%E2%94%80%E2%94%82%E2%94%8C%E2%94%90%E2%94%94%E2%94%98%E2%94%9C%E2%94%A4%E2%96%88&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/tui.css">
 </head>
-<body data-page="article" data-back="/posts.html" data-pos="posts 17/17" data-prev="/posts/2010-02-17-procedural-generation.html">
+<body data-page="article" data-back="/posts.html" data-pos="posts 21/21" data-prev="/posts/2010-02-17-procedural-generation.html">
 <canvas id="sky" aria-hidden="true"></canvas>
 <header class="wrap top">
-  <a class="who" href="/">Boy Maas<span class="m4"> <span class="dim">(m4nic)</span></span></a>
+  <a class="who" href="/">Boy Maas<span class="handle"> <span class="dim">(bitgnosys)</span></span></a>
   <nav>
     <a href="/posts.html" class="here">posts</a>
     <a href="/work.html">work</a>
     <a href="/#bio">bio</a>
     <a href="/socials.html">socials</a>
   </nav>
-  <button id="snd" type="button" aria-pressed="false" aria-label="sound off"><span class="full">sound off</span><span class="short" aria-hidden="true">s</span></button>
 </header>
 <main class="wrap stack">
   <article class="pane focus" id="posts" aria-label="posts/2010-02-09-a-haskel-blog">
@@ -40,7 +41,7 @@
       </header>
       <div class="article">
 <p>Wondering for a while on how to setup a blog, one of my favourite languages is
-haskell. One of my <a href="http://www.vim.org">favourite editors is vim</a>. And one of my favourite principles
+haskell. One of my <a href="http://www.vim.org" target="_blank" rel="noopener">favourite editors is vim</a>. And one of my favourite principles
 is to automate as much as possible. It's nice to live life according to
 principle which could be defined as:</p>
 
@@ -52,11 +53,11 @@ principle which could be defined as:</p>
 </ul>
 
 <p>Another favourite principles, next to minimalism, is doing stuff as efficient as possible.
-What is more efficient as serving static pages? Hence <a href="http://jaspervdj.be/hakyll/">the hakyll setup</a>.</p>
+What is more efficient as serving static pages? Hence <a href="http://jaspervdj.be/hakyll/" target="_blank" rel="noopener">the hakyll setup</a>.</p>
 
 <h2>Maintaining my blog</h2>
 
-<p>I really like to write in vim in combination with other linux system tools to automate away all the routine tasks. For this end I have included <a href="http://github.com/nfjinjing/nemesis">nemesis</a> in my toolchain. For 2 reasons:</p>
+<p>I really like to write in vim in combination with other linux system tools to automate away all the routine tasks. For this end I have included <a href="http://github.com/nfjinjing/nemesis" target="_blank" rel="noopener">nemesis</a> in my toolchain. For 2 reasons:</p>
 
 <ul>
 <li>keep everything haskell</li>
@@ -85,10 +86,16 @@ You dont have to worry about security issues.</p>
 
 </main>
 <div class="hints"><div class="wrap">
-  <span class="keys"><b>j/k</b> scroll  <b>h/l</b> prev/next  <b>q</b> back  <span class="kb"><b>gg/G</b> ends  <b>s</b> sound</span></span>
+  <span class="keys"><span class="k"><b>j/k</b> scroll</span><span class="k"><b>h/l</b> prev/next</span><span class="k"><b>q</b> back</span><span class="k kb"><b>gg/G</b> ends</span><button id="snd" type="button" aria-pressed="false"><b>s</b> <span class="lbl">sound off</span></button></span>
   <span class="whisper" id="whisper" hidden>sandbox open: keys 1 to 9 pick a system, space restarts it, type play to close</span>
   <span class="pos" id="pos"></span>
 </div></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.2/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.2/languages/clojure.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.2/languages/scheme.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.2/languages/haskell.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.2/languages/coffeescript.min.js"></script>
+<script>hljs.configure({ languages:["ruby","clojure","scheme","haskell","coffeescript","javascript","bash","xml","css","plaintext"], ignoreUnescapedHTML:true }); hljs.highlightAll();</script>
 <script src="/assets/sky.js"></script>
 <script src="/assets/tui.js"></script>
 </body>

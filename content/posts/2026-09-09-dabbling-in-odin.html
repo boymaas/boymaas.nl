@@ -1,0 +1,52 @@
+---
+title: Dabbling in Odin
+date: 2026-09-09
+subtitle: First impressions from a Zig and Rust hand
+---
+<p>I spend my days in Zig and Rust.
+A new language I am dabbling in is <a href="https://odin-lang.org/">Odin</a>.
+Nothing serious yet, just evenings reading and writing small things.
+These are first impressions, not a review, and definitely not a tutorial.</p>
+
+<h2>What it is</h2>
+
+<p>Odin is Ginger Bill's language, going since 2016.
+The site calls it the data-oriented language for people who ship, and a C alternative for the joy of programming.
+The stated principles are simplicity, high performance, being built for modern machines, and the pleasure of programming itself.
+It compiles to native code, gives you full control over memory, and has custom allocators as a first-class idea.</p>
+
+<h2>Coming from Zig</h2>
+
+<p>The family resemblance is obvious. Both are small, procedural, C-shaped languages that refuse to hide things from you.
+Both make allocation explicit. Both have defer.
+Both treat errors as values rather than exceptions. Odin has multiple return values, which Zig does without.</p>
+
+<p>The difference is in temperament.
+Zig makes you spell out the allocator at every call site and is strict about implicit casts.
+Odin has custom allocators front and centre too, but wears them more lightly, and the code reads closer to the C you would have written on a good day.
+For a protocol client I want Zig's strictness. For a weekend program I can see the appeal of the other.</p>
+
+<h2>Coming from Rust</h2>
+
+<p>There is no borrow checker, and after years of Rust that is the first thing you feel.
+It is not an argument for one or the other. It is a different bet: that a programmer who owns the memory layout can keep it correct without the compiler enforcing it.
+Rust proves the other bet works too. I like having both in the toolbox.</p>
+
+<h2>What stands out</h2>
+
+<ul>
+  <li>Array programming built in: component-wise operations and swizzling on fixed arrays, the way shader languages do it.</li>
+  <li>Structure-of-arrays types, so a data-oriented layout does not mean writing the bookkeeping yourself.</li>
+  <li>Bit sets and enumerated arrays as ordinary language features.</li>
+  <li>SIMD and inline assembly available when you need them.</li>
+  <li>A vendor collection out of the box: OpenGL, Vulkan, Metal, Direct3D, WebGL, wgpu, SDL2, raylib, GLFW, miniaudio.</li>
+</ul>
+
+<p>That last point explains where the language is used. The showcase is graphics tools, a profiler, a video editor, a number of games on Steam.
+That is not the corner I work in, which is partly why it is interesting.</p>
+
+<h2>Verdict, for now</h2>
+
+<p>None. I have not built anything in it that matters, and I will not pretend otherwise.
+What I can say is that it is pleasant and the design has a clear opinion.
+When I have a small graphics or simulation itch, Odin is the language I will scratch it with, and then I will know more.</p>
