@@ -218,11 +218,18 @@ def post_row(p):
         p['date'], p['slug'], esc(p['title']), esc(p['subtitle']))
 
 
+# the blurb under a row runs the width of the pane, the owner's call over the slop detector's 80-character measure,
+# which the attribute waives for that element alone
+BLURB = '<p data-impeccable-ignore>%s</p>'
+
+
 def work_row(k, w, summary=False):
-    row = '      <li><span class="n">%02d</span><a href="/portfolio/%s.html">%s</a><small>%s</small>' % (
-        k, w['slug'], esc(w['title']), esc(w['client']))
+    """number, years, title, client; the years and the client share a wrapper so that on a phone they can sit
+    together on the row under the title."""
+    row = '      <li><span class="n">%02d</span><a href="/portfolio/%s.html">%s</a><span class="by"><span class="y">%s</span><small>%s</small></span>' % (
+        k, w['slug'], esc(w['title']), esc(w['years']), esc(w['client']))
     if summary:
-        row += '<p>%s</p>' % esc(w['summary'])
+        row += BLURB % esc(w['summary'])
     return row + '</li>'
 
 
@@ -255,7 +262,7 @@ def article(kind, items, k):
         sub = '<time>%s</time>%s' % (it['date'], esc(it['subtitle']))
         description = it['subtitle']
     else:
-        sub = esc(it['client'])
+        sub = '<span class="y">%s</span>%s' % (esc(it['years']), esc(it['client']))
         description = it['summary']
     main = render('article', id='posts' if is_post else 'work', kind='posts' if is_post else 'work', slug=it['slug'],
                   title=esc(it['title']), sub=sub,
@@ -346,10 +353,10 @@ def build():
         ('https://cd8.dev/', 'cd8.dev', 'Code 8', 'Protocol development and advisory.'),
     ]
     rows = '\n'.join(
-        '      <li><span class="n">%02d</span><a href="%s">%s</a><small>%s</small><p>%s</p></li>' % (k + 1, href, esc(label), esc(where), esc(blurb))
+        ('      <li><span class="n">%02d</span><a href="%s">%s</a><small>%s</small>' + BLURB + '</li>') % (k + 1, href, esc(label), esc(where), esc(blurb))
         for k, (href, label, where, blurb) in enumerate(socials))
     out['socials.html'] = page('list', 'socials - ' + NAME, render(
-        'list', id='socials', meta='where to find me', rows_class='works', rows=rows, foot=''),
+        'list', id='socials', meta='where to find me', rows_class='links', rows=rows, foot=''),
         keys('list'), description='Where to find Boy Maas: X, GitHub, LinkedIn, Matrix.', page_id='socials')
 
     for k in range(len(posts)):

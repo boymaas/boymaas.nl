@@ -74,42 +74,57 @@ ol{list-style:none;margin:0;padding:0}
 .list li::before{content:" ";grid-column:1;color:var(--frame)}
 .list li.cur::before{content:">";color:var(--accent)}
 .list.focus li.cur{background:var(--accent);color:var(--ground)}
-.list.focus li.cur::before,.list.focus li.cur a,.list.focus li.cur a:hover,.list.focus li.cur small,.list.focus li.cur time,.list.focus li.cur .n,.list.focus li.cur p{color:var(--ground)}
-.list a,.list small,.list time,.list .n{overflow:hidden;text-overflow:ellipsis;min-width:0}
-.list time,.list small,.list .n{color:var(--dim);font-size:inherit}
+.list.focus li.cur::before,.list.focus li.cur a,.list.focus li.cur a:hover,.list.focus li.cur small,.list.focus li.cur time,.list.focus li.cur .n,.list.focus li.cur .y,.list.focus li.cur p{color:var(--ground)}
+.list a,.list small,.list time,.list .n,.list .y{overflow:hidden;text-overflow:ellipsis;min-width:0}
+.list time,.list small,.list .n,.list .y{color:var(--dim);font-size:inherit}
 .list a{color:var(--bright)}
 .list a:hover{color:var(--accent)}
 /* posts: cursor, date, title, subtitle; the subtitle column starts where the whoami measure ends, and a subtitle
    longer than what is left of the row wraps under itself rather than being cut */
 .posts li{grid-template-columns:1ch 10ch 63ch minmax(0,1fr)}
 .posts li small{white-space:normal}
-/* work: cursor, number, title, client; the work page adds the summary under them at the 70-column measure */
-.work li,.works li{grid-template-columns:1ch 2ch 24ch minmax(0,1fr);row-gap:0}
-.works li p{grid-column:3 / 5;grid-row:2;margin:2px 0 -2px;white-space:normal;line-height:var(--lh);color:var(--dim);max-width:70ch}
-.works li + li{margin-top:calc(var(--lh) - 2px)}
-.bio p{margin:0 0 var(--lh);max-width:70ch}
+/* work: cursor, number, years (wide enough for "1998 to 2004"), title, client; the work page adds the summary
+   under them, from the years column to the right edge of the pane */
+.work li,.works li{grid-template-columns:1ch 2ch 12ch 24ch minmax(0,1fr);row-gap:0}
+.work .by,.works .by{display:contents}
+.work li .n,.works li .n{grid-column:2;grid-row:1}
+.work li .y,.works li .y{grid-column:3;grid-row:1}
+.work li a,.works li a{grid-column:4;grid-row:1}
+.work li small,.works li small{grid-column:5;grid-row:1}
+.works li p{grid-column:3 / -1;grid-row:2}
+/* now and socials: cursor, number, title, where; the blurb under them, from the title column to the right edge */
+.links li{grid-template-columns:1ch 2ch 24ch minmax(0,1fr);row-gap:0}
+.links li p{grid-column:3 / -1;grid-row:2}
+.works li p,.links li p{margin:2px 0 -2px;white-space:normal;line-height:var(--lh);color:var(--dim)}
+.works li + li,.links li + li{margin-top:calc(var(--lh) - 2px)}
+/* the bio: two balanced text columns, each about 60 cells, so the four paragraphs fill the pane */
+.bio{columns:2;column-gap:4ch;column-fill:balance}
+.bio p{margin:0 0 var(--lh)}
 .bio p:last-child{margin-bottom:0}
-/* colophon: where else to find me */
-.colophon{margin-top:calc(var(--lh) * 2);padding:0 2ch;color:var(--dim);font-size:13px;white-space:pre;scroll-margin-bottom:calc(var(--barh) + var(--lh))}
+/* colophon: where else to find me, centred under the panes */
+.colophon{margin-top:calc(var(--lh) * 2);padding:0 2ch;color:var(--dim);font-size:13px;white-space:pre;text-align:center;scroll-margin-bottom:calc(var(--barh) + var(--lh))}
 .colophon a{text-decoration:underline;text-decoration-color:var(--frame);text-underline-offset:3px}
-/* the status line: an opaque strip at the foot of the viewport; the page ends above it. Three columns: the keys
-   centred in the middle one, so the position readout at the right edge does not shift them; the sound toggle is
-   the last key of the group */
-.hints{position:fixed;left:0;right:0;bottom:0;height:var(--barh);font-size:13px;line-height:var(--lh);color:var(--dim);white-space:pre;background:var(--ground);border-top:1px solid var(--rule)}
-.hints .wrap{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;height:100%}
-.hints .keys{grid-column:2;display:flex;align-items:center;gap:2ch;min-width:0}
+/* the status line: an opaque strip at the foot of the viewport; the page ends above it. The keys start at the
+   page's left edge and spread evenly over the bar, the sound toggle last among them; the position readout sits at
+   the page's right edge, four cells after the last key at the least */
+/* the bar's text is a size smaller, set on its parts, not on the bar, so the bar's wrap measures its 134 cells in the
+   page's cell and lands on the panes' edges */
+.hints{position:fixed;left:0;right:0;bottom:0;height:var(--barh);line-height:var(--lh);color:var(--dim);white-space:pre;background:var(--ground);border-top:1px solid var(--rule)}
+.hints .wrap{display:flex;align-items:center;gap:4ch;height:100%}
+.hints .keys,.hints .pos,.hints #whisper{font-size:13px}
+.hints .keys{flex:1 1 auto;display:flex;align-items:center;justify-content:space-between;gap:2ch;min-width:0}
 .hints .k{flex:none}
 .hints .keys b{color:var(--bright)}
 .hints button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;flex:none}
 .hints button:hover{color:var(--accent)}
 .hints button.on .lbl{color:var(--accent)}
-.hints .pos{grid-column:3;justify-self:end;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:pre}
-.hints #whisper{grid-column:2;color:var(--accent)}
+.hints .pos{flex:none;margin-left:auto;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:pre}
+.hints #whisper{flex:1 1 auto;color:var(--accent)}
 .hints:has(#whisper:not([hidden])) .keys{display:none}
 /* an article: one pane; under the title and its subtitle, one row of the keys that leave it, each with where it goes */
 .head h1{font-size:20px;line-height:calc(var(--lh) * 2);font-weight:700;color:var(--bright);margin:0}
 .head .sub{color:var(--dim);margin:0;white-space:normal}
-.head .sub time{margin-right:2ch}
+.head .sub time,.head .sub .y{margin-right:2ch}
 /* the row wraps rather than cuts a title: on a wide page only the longest pairs take a second line */
 .navrow{display:flex;flex-wrap:wrap;gap:0 3ch;margin:0 0 var(--lh);white-space:nowrap}
 .navrow .nv{display:flex;gap:2ch;flex:none;max-width:100%}
@@ -191,17 +206,19 @@ ol{list-style:none;margin:0;padding:0}
   .list.focus li.cur{background:none;color:inherit}
   .list.focus li.cur::before{color:var(--accent)}
   .list.focus li.cur a{color:var(--bright)}
-  .list.focus li.cur small,.list.focus li.cur time,.list.focus li.cur .n,.list.focus li.cur p{color:var(--dim)}
+  .list.focus li.cur small,.list.focus li.cur time,.list.focus li.cur .n,.list.focus li.cur .y,.list.focus li.cur p{color:var(--dim)}
   /* post rows: date and title only */
   .posts li{grid-template-columns:1ch 10ch minmax(0,1fr)}
   .posts li a{white-space:normal}
   .posts li small{display:none}
-  /* work rows: the client under the title */
-  .work li,.works li{grid-template-columns:1ch 2ch minmax(0,1fr)}
-  .work li a,.works li a{grid-column:3;grid-row:1;white-space:normal}
-  .work li small,.works li small{grid-column:3;grid-row:2;white-space:normal}
-  .work li + li,.works li + li{margin-top:var(--lh)}
-  .works li p{grid-column:3;grid-row:3;margin:0}
+  /* work rows: the years and the client together under the title, wrapping as one line of text */
+  .work li,.works li,.links li{grid-template-columns:1ch 2ch minmax(0,1fr)}
+  .work li a,.works li a,.links li a{grid-column:3;grid-row:1;white-space:normal}
+  .work .by,.works .by{display:flex;flex-wrap:wrap;gap:0 2ch;grid-column:3;grid-row:2;white-space:normal}
+  .links li small{grid-column:3;grid-row:2;white-space:normal}
+  .work li + li,.works li + li,.links li + li{margin-top:var(--lh)}
+  .works li p,.links li p{grid-column:3;grid-row:3;margin:0}
+  .bio{columns:1}
   /* the nav row becomes three rows, a title wrapping under its key */
   .navrow{white-space:normal}
   .navrow .nv{flex:1 0 100%}
