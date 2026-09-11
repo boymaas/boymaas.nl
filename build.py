@@ -180,7 +180,7 @@ def fit_iframe(m):
     h = re.search(r'\bheight=["\']?(\d+)', tag)
     tag = re.sub(r'\s+style=(["\']).*?\1', '', tag)
     if w and h:
-        tag = tag[:-1] + ' style="width:%spx;aspect-ratio:%s/%s">' % (w.group(1), w.group(1), h.group(1))
+        tag = tag[:-1] + ' style="width:100%%;aspect-ratio:%s/%s">' % (w.group(1), h.group(1))
     return tag
 
 
