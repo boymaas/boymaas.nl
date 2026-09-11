@@ -208,6 +208,8 @@ def typeset(body, title=None, lang=None):
     body = re.sub(r'<iframe\b[^>]*>', fit_iframe, body)
     body = re.sub(r'<(canvas|img)\b[^>]*>', lambda m: re.sub(r'\s+style=(["\']).*?\1', '', m.group(0)), body)
     body = re.sub(r'<pre\b[^>]*>.*?</pre>', lambda m: tidy_pre(m, lang), body, flags=re.S)
+    # the text runs the width of the pane, the owner's call over the detector's measure, waived as on the blurbs
+    body = re.sub(r'<(p|li)\b(?![^>]*data-impeccable-ignore)', r'<\1 data-impeccable-ignore', body)
     return body.strip()
 
 
@@ -246,9 +248,11 @@ def work_meta(works):
 # ---------- pages ----------
 
 def nav_link(item, kind):
+    """A long title is cut with an ellipsis so the nav row stays one row, which the detector reads as overflow;
+    the attribute waives that for the link alone."""
     if item is None:
         return '<span class="none">none</span>'
-    return '<a href="/%s/%s.html">%s</a>' % (kind, item['slug'], esc(item['title']))
+    return '<a href="/%s/%s.html" data-impeccable-ignore>%s</a>' % (kind, item['slug'], esc(item['title']))
 
 
 def article(kind, items, k):

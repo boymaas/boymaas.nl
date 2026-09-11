@@ -34,9 +34,9 @@
         <h1>Playing around with the HTML5 Canvas element</h1>
         <p class="sub"><time>2010-05-04</time>What is the fuzz all about</p>
         <nav class="navrow" aria-label="nav">
-          <span class="nv"><span class="k"><b>h</b> prev</span><a href="/posts/2010-05-11-opengl-plt-scheme-programming.html">Live coding OpenGl in PLT-Scheme</a></span>
-          <span class="nv"><span class="k"><b>l</b> next</span><a href="/posts/2010-02-17-procedural-generation.html">Procedural Generation, a way to go?</a></span>
-          <span class="nv"><span class="k"><b>q</b> back</span><a href="/posts.html">posts</a></span>
+          <span class="nv prev"><span class="k"><b>h</b> prev</span><a href="/posts/2010-05-11-opengl-plt-scheme-programming.html" data-impeccable-ignore>Live coding OpenGl in PLT-Scheme</a></span>
+          <span class="nv back"><span class="k"><b>q</b> back</span><a href="/posts.html">posts</a></span>
+          <span class="nv next"><span class="k"><b>l</b> next</span><a href="/posts/2010-02-17-procedural-generation.html" data-impeccable-ignore>Procedural Generation, a way to go?</a></span>
         </nav>
       </header>
       <div class="article">
@@ -50,10 +50,10 @@
     });
 </script>
 
-<p><canvas id="slutmachine" width=300 height=240>
+<p data-impeccable-ignore><canvas id="slutmachine" width=300 height=240>
 </canvas></p>
 
-<p>After all the fuzz cause by Steve Jobs objections against Flash and indirect
+<p data-impeccable-ignore>After all the fuzz cause by Steve Jobs objections against Flash and indirect
 promotion of HTML5 I wanted to see whats possible using HTML5 and the canvas
 element. After searching a bit online I stumbled upon some interesting articles. One
 implementation of <a href="http://kotaku.com/5507640/google-gets-quake-ii-running-in-html5-just-for-fun" target="_blank" rel="noopener">Quake2 using
@@ -63,7 +63,7 @@ little more and I wanted to see how easy it is to get something on the screen.</
 
 <h2>Simple outline of a tree based renderer</h2>
 
-<p>As an example project I wanted to create a simple tree graph renderer inspired by
+<p data-impeccable-ignore>As an example project I wanted to create a simple tree graph renderer inspired by
 the Flash MovieClip hierarchy. The final outcome should become something like
 this.</p>
 
@@ -74,7 +74,7 @@ canvas.addShape(new Symbol(160, 25));
 canvas.addShape(new Symbol(160, 135));
 canvas.addShape(new Symbol(50, 135));</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
-<p>The Canvas element should take care of the rendering process and render the symbols. Rendering the complete
+<p data-impeccable-ignore>The Canvas element should take care of the rendering process and render the symbols. Rendering the complete
 tree at 20 frames a second will be done using the following code.</p>
 
 <div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-javascript">canvas.init();
@@ -83,17 +83,17 @@ canvas.run(20);</code></pre><div class="bb"><span>└</span><span class="ln"></s
 
 <h2>Shapes</h2>
 
-<p>At a minimum our renderer should be able to place shapes onto the screen. The
+<p data-impeccable-ignore>At a minimum our renderer should be able to place shapes onto the screen. The
 minimal information I want to update through the Tree is the x and y position.
 They should be able to update their state and be capable of rendering themselves on
 a context.</p>
 
 <ul>
-<li>update(timeInMilliseconds), function to update properties of the shape.</li>
-<li>draw(context), actual rendering on the canvas</li>
+<li data-impeccable-ignore>update(timeInMilliseconds), function to update properties of the shape.</li>
+<li data-impeccable-ignore>draw(context), actual rendering on the canvas</li>
 </ul>
 
-<p>The Box as you can see it moving above has been defined as:</p>
+<p data-impeccable-ignore>The Box as you can see it moving above has been defined as:</p>
 
 <div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-javascript">function Box(x, y, width, height) {
     // simple element, just renders a strokeRect
@@ -107,7 +107,7 @@ a context.</p>
     }
 }</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
-<p>This setup enables composition of complex shapes using simpler shapes as can be seen below.</p>
+<p data-impeccable-ignore>This setup enables composition of complex shapes using simpler shapes as can be seen below.</p>
 
 <div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-javascript">function Symbol(x, y) {
     // initialise shape
@@ -120,7 +120,7 @@ a context.</p>
 
 <h2>Behaviours</h2>
 
-<p>To create animations we have multiple options. One can always supply a function
+<p data-impeccable-ignore>To create animations we have multiple options. One can always supply a function
 to update x,y,width,heigh or rotation. But many behaviours are standard, and especially
 with complex behaviours we would like to compose them. So I added the possibility to add
 behaviours to specific shapes.</p>
@@ -140,7 +140,7 @@ behaviours to specific shapes.</p>
     }
 }</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
-<p>To test this behaviour I implemented the Wobble as can be seen above:</p>
+<p data-impeccable-ignore>To test this behaviour I implemented the Wobble as can be seen above:</p>
 
 <div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-javascript">function BehWobble(duration,amplitude) {
     // BehWobble is a behaviour
@@ -159,7 +159,7 @@ behaviours to specific shapes.</p>
 
 <h2>Putting it together</h2>
 
-<p>I update the symbol function to add the behaviour to the boxes. And voila the result can be seen above:</p>
+<p data-impeccable-ignore>I update the symbol function to add the behaviour to the boxes. And voila the result can be seen above:</p>
 
 <div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-javascript">function Symbol(x, y) {
     Shape.call(this, x, y);
@@ -174,11 +174,11 @@ behaviours to specific shapes.</p>
 
 <h2>Conclusion</h2>
 
-<p>Just a little abstraction to rendering stuff in the HTML5 canvas element. So far
+<p data-impeccable-ignore>Just a little abstraction to rendering stuff in the HTML5 canvas element. So far
 I am pretty happy with it but started looking for some existing frameworks. Landed
 on <a href="http://www.processingjs.org" target="_blank" rel="noopener">processing.js</a> which looks promising.</p>
 
-<p>Code can be read here, <a href="/static/2010-05-04-html5-canvas-element/2dengine.js">Simple engine code</a>, and the wobbling
+<p data-impeccable-ignore>Code can be read here, <a href="/static/2010-05-04-html5-canvas-element/2dengine.js">Simple engine code</a>, and the wobbling
 squares are defined <a href="/static/2010-05-04-html5-canvas-element/slutmachine.js">here</a>.</p>
       </div>
     </div>

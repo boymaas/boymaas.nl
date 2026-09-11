@@ -62,15 +62,16 @@ b{font-weight:400}
 .prompt{color:var(--dim);margin:0}
 .prompt .ps{color:var(--accent)}
 .prompt .cmd{color:var(--normal)}
-/* the one display size on the site: two rows tall, then the lede at the 70-column measure */
+/* the one display size on the site: two rows tall, then the lede running the same width as the headline */
 .whoami h1{font-size:32px;line-height:calc(var(--lh) * 2);font-weight:700;color:var(--bright);margin:0}
-.whoami .lede{margin:0;max-width:70ch}
+.whoami .lede{margin:0}
 /* listings: one row per item, columns fixed in cells; the selected row is reverse video: a bar that reaches a cell
    past the text at the sides and four pixels above and below its line, so two pixels into the rows of its neighbours,
    which show nothing there. The rows are a flex column so those two pixels are not collapsed away */
 ol{list-style:none;margin:0;padding:0}
 .list ol{display:flex;flex-direction:column}
-.list li{display:grid;column-gap:2ch;align-items:baseline;white-space:nowrap;margin:-2px -1ch;padding:4px 1ch;line-height:calc(var(--lh) - 4px)}
+/* a row is one link: the whole box opens it (tui.js), so the pointer and the hover colour cover the whole row */
+.list li{display:grid;column-gap:2ch;align-items:baseline;white-space:nowrap;margin:-2px -1ch;padding:4px 1ch;line-height:calc(var(--lh) - 4px);cursor:pointer}
 .list li::before{content:" ";grid-column:1;color:var(--frame)}
 .list li.cur::before{content:">";color:var(--accent)}
 .list.focus li.cur{background:var(--accent);color:var(--ground)}
@@ -78,7 +79,7 @@ ol{list-style:none;margin:0;padding:0}
 .list a,.list small,.list time,.list .n,.list .y{overflow:hidden;text-overflow:ellipsis;min-width:0}
 .list time,.list small,.list .n,.list .y{color:var(--dim);font-size:inherit}
 .list a{color:var(--bright)}
-.list a:hover{color:var(--accent)}
+.list li:hover a{color:var(--accent)}
 /* posts: cursor, date, title, subtitle; the subtitle column starts where the whoami measure ends, and a subtitle
    longer than what is left of the row wraps under itself rather than being cut */
 .posts li{grid-template-columns:1ch 10ch 63ch minmax(0,1fr)}
@@ -125,16 +126,23 @@ ol{list-style:none;margin:0;padding:0}
 .head h1{font-size:20px;line-height:calc(var(--lh) * 2);font-weight:700;color:var(--bright);margin:0}
 .head .sub{color:var(--dim);margin:0;white-space:normal}
 .head .sub time,.head .sub .y{margin-right:2ch}
-/* the row wraps rather than cuts a title: on a wide page only the longest pairs take a second line */
-.navrow{display:flex;flex-wrap:wrap;gap:0 3ch;margin:0 0 var(--lh);white-space:nowrap}
-.navrow .nv{display:flex;gap:2ch;flex:none;max-width:100%}
+/* the nav row is a strip of three rows: a rule, then prev at the left, back in the middle and next at the right,
+   then a rule; the rules are 1px lines on the rows' centre lines, as the panes' sides are, so they read as ─ rows
+   in the frame colour. A long title is cut with an ellipsis, so the strip stays one row */
+.navrow{position:relative;display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);column-gap:3ch;padding:var(--lh) 0;margin:0 0 var(--lh);white-space:nowrap}
+.navrow::before,.navrow::after{content:"";position:absolute;left:0;right:0;height:0;border-top:1px solid var(--frame);pointer-events:none}
+.navrow::before{top:calc(var(--lh) / 2 - 0.5px)}
+.navrow::after{bottom:calc(var(--lh) / 2 - 0.5px)}
+.navrow .nv{display:flex;gap:2ch;min-width:0;max-width:100%}
+.navrow .back{justify-self:center}
+.navrow .next{justify-self:end}
 .navrow .k{color:var(--dim);white-space:pre;flex:none}
 .navrow .k b{color:var(--bright)}
-.navrow a{color:var(--normal)}
+.navrow a{color:var(--normal);min-width:0;max-width:40ch;overflow:hidden;text-overflow:ellipsis}
 .navrow a:hover{color:var(--accent)}
 .navrow .none{color:var(--frame)}
-/* the body of an article, typeset for reading at a 70-column measure */
-.article{max-width:70ch;overflow-wrap:break-word}
+/* the body of an article runs the full width of the pane, the owner's call over a reading measure */
+.article{overflow-wrap:break-word}
 .article > :first-child{margin-top:0}
 .article p{margin:0 0 var(--lh)}
 .article h2,.article h3,.article h4,.article h5,.article h6{font-size:inherit;line-height:inherit;margin:calc(var(--lh) * 2) 0 var(--lh);color:var(--bright);font-weight:700}
@@ -219,9 +227,11 @@ ol{list-style:none;margin:0;padding:0}
   .work li + li,.works li + li,.links li + li{margin-top:var(--lh)}
   .works li p,.links li p{grid-column:3;grid-row:3;margin:0}
   .bio{columns:1}
-  /* the nav row becomes three rows, a title wrapping under its key */
-  .navrow{white-space:normal}
-  .navrow .nv{flex:1 0 100%}
+  /* the nav row's three cells take a row each, prev, next, then back, a long title wrapping under its key */
+  .navrow{display:flex;flex-direction:column;white-space:normal}
+  .navrow .nv{flex:none}
+  .navrow .back{order:1}
+  .navrow a{max-width:none;white-space:normal;overflow:visible}
   /* the keys have the whole bar: an article's four pairs fit at one cell apart */
   .hints .keys{gap:1ch}
   .hints .pos,.hints .kb{display:none}

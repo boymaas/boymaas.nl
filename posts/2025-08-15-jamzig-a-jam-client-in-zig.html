@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JamZig⚡, a JAM client in Zig - Boy Maas (bitgnosys)</title>
+<meta name="description" content="Why Zig, what Milestone 1 meant, what is next">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="alternate" type="application/atom+xml" title="Boy Maas, posts" href="/feed.xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&text=%E2%94%80%E2%94%82%E2%94%8C%E2%94%90%E2%94%94%E2%94%98%E2%94%9C%E2%94%A4%E2%96%88&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/tui.css">
+</head>
+<body data-page="article" data-back="/posts.html" data-pos="posts 4/21" data-prev="/posts/2025-09-10-polana-solana-on-jam.html" data-next="/posts/2015-10-31-coffeescript-screencasts.html">
+<canvas id="sky" aria-hidden="true"></canvas>
+<header class="wrap top">
+  <a class="who" href="/">Boy Maas<span class="handle"> <span class="dim">(bitgnosys)</span></span></a>
+  <nav>
+    <a href="/posts.html" class="here">posts</a>
+    <a href="/work.html">work</a>
+    <a href="/#bio">bio</a>
+    <a href="/socials.html">socials</a>
+  </nav>
+</header>
+<main class="wrap stack">
+  <article class="pane focus" id="posts" aria-label="posts/2025-08-15-jamzig-a-jam-client-in-zig">
+    <div class="bt"><span>┌─</span><span class="tt"><span>posts<span class="s">/2025-08-15-jamzig-a-jam-client-in-zig</span></span></span><span class="ln"></span><span>┐</span></div>
+    <div class="in">
+      <header class="head">
+        <h1>JamZig⚡, a JAM client in Zig</h1>
+        <p class="sub"><time>2025-08-15</time>Why Zig, what Milestone 1 meant, what is next</p>
+        <nav class="navrow" aria-label="nav">
+          <span class="nv prev"><span class="k"><b>h</b> prev</span><a href="/posts/2025-09-10-polana-solana-on-jam.html" data-impeccable-ignore>Polana Network: Solana on JAM</a></span>
+          <span class="nv back"><span class="k"><b>q</b> back</span><a href="/posts.html">posts</a></span>
+          <span class="nv next"><span class="k"><b>l</b> next</span><a href="/posts/2015-10-31-coffeescript-screencasts.html" data-impeccable-ignore>CoffeeScript screencasts</a></span>
+        </nav>
+      </header>
+      <div class="article">
+<p data-impeccable-ignore>The posts on this site stop around 2015. A lot happened since.
+The biggest thing on my desk today is JamZig⚡, a JAM client written in Zig.
+I am the sole developer.
+It was the first implementation to pass Milestone 1 in the systems-language category, and after the M1 interview I am the JAM Prize M1 candidate for it.
+Twenty-two teams entered the prize. JamZig⚡ is the only Zig implementation among them.</p>
+
+<h2>Why a JAM client</h2>
+
+<p data-impeccable-ignore>JAM, the Join-Accumulate Machine, is the protocol Gavin Wood designed as the successor to the Polkadot relay chain.
+The Web3 Foundation runs a prize for independent implementations, split into tiers by language category.
+The point of the prize is not one winner.
+It is many clients, in many languages, from people who share neither a codebase nor an employer.
+When they all agree on every state transition, the specification is the protocol.
+No single codebase is, and no single company is.</p>
+
+<h2>Why Polkadot</h2>
+
+<p data-impeccable-ignore>Most blockchains are maintained by one company or one small circle.
+The protocol changes when those people say so, and everyone else has to trust them.
+The Polkadot Fellowship manifesto names this problem directly.
+It calls technical decision making one of the most pressing areas undermining decentralisation, and describes the usual outcome: an opaque power structure where social cues decide what logic node operators actually run.</p>
+
+<p data-impeccable-ignore>The Fellowship is the answer this ecosystem chose, and it is the part I value most.
+It is a rules-based, ranked-membership organisation that lives on chain and is run by its own members.
+Members are inducted and promoted by the votes of members above them, judged on their work on node internals, consensus, cryptography and the runtime.
+The manifesto calls it a source of expertise and leadership over the technology that keeps the network running, and an incentivisation mechanism to keep that expertise.
+Members receive a monthly allowance in DOT.
+So the people who understand the protocol deepest are recognised, paid, and expected to keep building it.
+That is a team of incentivised knowledge holders, and it belongs to no single party.
+Its power is bounded too: whatever authority it holds is granted by, and held in check by, the wider referendum system.</p>
+
+<p data-impeccable-ignore>Put the two together: many independent clients, and a body of fellows whose job is to hold the knowledge and carry the software forward.
+The technology is not held by one company.
+I think that is a solid foundation for the future, and I think it is beautiful.
+It is why I wanted JamZig⚡ to be one of the clients.</p>
+
+<h2>Why Zig</h2>
+
+<p data-impeccable-ignore>I have been in Rust for years and still like it.
+For a protocol client the appeal of Zig is that nothing is hidden.
+Every allocation takes an allocator you handed over yourself.
+No hidden control flow, no destructor running behind your back, no macro layer between you and the code.
+When a state transition has to match a reference byte for byte, that plainness is worth a lot.
+Comptime covers most of what I would use generics or code generation for elsewhere.
+And the language is small enough to hold in your head next to a protocol.
+That was the bet, and it still feels right.</p>
+
+<h2>The process</h2>
+
+<p data-impeccable-ignore>The specification keeps moving, so keeping up is a constant background task.
+The work went piece by piece.
+First the RISC-V virtual machine, the PVM, which runs services and their refine and accumulate logic.
+Then the cryptography the protocol asks for: Bandersnatch ring VRFs, Ed25519, BLS12-381, Blake2b, Keccak-256.
+Then Reed-Solomon erasure coding and the Merkle structures for availability and state.
+Then block authoring, validation, and the state transition function, checked against the official test vectors.</p>
+
+<p data-impeccable-ignore>Milestone 1 of the prize is about conformance.
+The state transition function has to match the reference implementation under fuzzing: ten runs of one hundred thousand steps each, no divergence.
+Passing it is less a finish line than a change of state.
+Before it, every bug could be anywhere.
+After it, the core of the client is known to agree with everyone else, and work can move outward from there.</p>
+
+<h2>What is next</h2>
+
+<p data-impeccable-ignore>The prize has further milestones past conformance, and those are the road ahead.
+Conformance releases and test exports are published in the org, so other implementations can check themselves against the same runs.</p>
+
+<p data-impeccable-ignore>The project lives at <a href="https://jamzig.dev/" target="_blank" rel="noopener">jamzig.dev</a>, the code at <a href="https://github.com/jamzig" target="_blank" rel="noopener">github.com/jamzig</a>, and the running commentary on X at <a href="https://x.com/jamzig_dev" target="_blank" rel="noopener">@jamzig_dev</a>.
+If you are building a JAM client in another language, say hello.</p>
+      </div>
+    </div>
+    <div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div>
+  </article>
+
+</main>
+<div class="hints"><div class="wrap">
+  <span class="keys"><span class="k"><b>j/k</b> scroll</span><span class="k"><b>h/l</b> prev/next</span><span class="k"><b>q</b> back</span><span class="k kb"><b>gg/G</b> ends</span><button id="snd" type="button" aria-pressed="false"><b>s</b> <span class="lbl">sound off</span></button></span>
+  <span class="whisper" id="whisper" hidden>sandbox open: keys 1 to 9 pick a system, space restarts it, type play to close</span>
+  <span class="pos" id="pos"></span>
+</div></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.2/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.2/languages/clojure.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.2/languages/scheme.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.2/languages/haskell.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.2/languages/coffeescript.min.js"></script>
+<script>hljs.configure({ languages:["ruby","clojure","scheme","haskell","coffeescript","javascript","bash","xml","css","plaintext"], ignoreUnescapedHTML:true }); hljs.highlightAll();</script>
+<script src="/assets/sky.js"></script>
+<script src="/assets/tui.js"></script>
+</body>
+</html>

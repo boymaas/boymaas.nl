@@ -34,9 +34,9 @@
         <h1>Procedural Generation, a way to go?</h1>
         <p class="sub"><time>2010-02-17</time>The art of generating content procedurally</p>
         <nav class="navrow" aria-label="nav">
-          <span class="nv"><span class="k"><b>h</b> prev</span><a href="/posts/2010-05-04-html5-canvas-element.html">Playing around with the HTML5 Canvas element</a></span>
-          <span class="nv"><span class="k"><b>l</b> next</span><a href="/posts/2010-02-09-a-haskel-blog.html">Hakyll blog setup</a></span>
-          <span class="nv"><span class="k"><b>q</b> back</span><a href="/posts.html">posts</a></span>
+          <span class="nv prev"><span class="k"><b>h</b> prev</span><a href="/posts/2010-05-04-html5-canvas-element.html" data-impeccable-ignore>Playing around with the HTML5 Canvas element</a></span>
+          <span class="nv back"><span class="k"><b>q</b> back</span><a href="/posts.html">posts</a></span>
+          <span class="nv next"><span class="k"><b>l</b> next</span><a href="/posts/2010-02-09-a-haskel-blog.html" data-impeccable-ignore>Hakyll blog setup</a></span>
         </nav>
       </header>
       <div class="article">
@@ -48,14 +48,14 @@
     => Boy Maas (2005) <=
 </blockquote>
 
-<p>Working as a small development studio, often in small teams with limited
+<p data-impeccable-ignore>Working as a small development studio, often in small teams with limited
 resources, you start looking at alternative ways to do things. Large development
 studios can spend millions of dollars on top-notch designers to get state of the
 art graphics. But as we all know, on a small salary working as a freelance
 programmer I can't just go the bank and state: I have this brilliant concept,
 please front me a few million because the graphics have to be brilliant.</p>
 
-<p>Working a day job even time is a limited resource, designing all graphics
+<p data-impeccable-ignore>Working a day job even time is a limited resource, designing all graphics
 yourself or even when you find artists willing to put in the time, is almost
 not feasible. But when you have the stamina and determinism you would probably
 have to rewrite your code and graphics for the next quantum computer. Since
@@ -63,11 +63,11 @@ that will be the standard when you finish your product.</p>
 
 <h2>There are more roads to Rome</h2>
 
-<p>I often find myself conflicted while brainstorming on projects, on the one hand
+<p data-impeccable-ignore>I often find myself conflicted while brainstorming on projects, on the one hand
 you have the conceptual world in which everything is possible. On the other side you
 have the real world, and with this real world comes various challenges.</p>
 
-<p>Once you find a way to overcome, or work around the various challenges,
+<p data-impeccable-ignore>Once you find a way to overcome, or work around the various challenges,
 you have a shot at realising your concept. One tool to overcome the practical
 challenges of content is <a href="http://en.wikipedia.org/wiki/Procedural_generation" target="_blank" rel="noopener">procedural generation</a>.</p>
 
@@ -75,7 +75,7 @@ challenges of content is <a href="http://en.wikipedia.org/wiki/Procedural_genera
 
 <iframe width="425" height="344" src="https://www.youtube.com/embed/1VqzjafwCNA" frameborder="0" allowfullscreen style="width:425px;aspect-ratio:425/344"></iframe>
 
-<p>Before studying the process of procedural generation in some more detail let's
+<p data-impeccable-ignore>Before studying the process of procedural generation in some more detail let's
 look at what is done at this moment. A brilliant example of procedural
 generation arose from the demo-scene.
 <a href="http://www.youtube.com/watch?v=1VqzjafwCNA" target="_blank" rel="noopener">.kkrieger</a> A proof that almost all
@@ -88,7 +88,7 @@ functions to manipulate them to get the end result. This way they could pack
 
 <h2>Was this done before?</h2>
 
-<p>A few of the first games ever developed on <a href="http://en.wikipedia.org/wiki/BBC_Micro" target="_blank" rel="noopener">BBC Mirco</a> (16Kb ram)
+<p data-impeccable-ignore>A few of the first games ever developed on <a href="http://en.wikipedia.org/wiki/BBC_Micro" target="_blank" rel="noopener">BBC Mirco</a> (16Kb ram)
 where confronted with severe space constraints. This poses some serious real
 world challenges on what is possible. One has to be very inventive to be able
 to produce an interesting game. The earliest computers where severely limited by
@@ -97,7 +97,7 @@ information, artwork, there was only room for a few elements.</p>
 
 <h3>Elite, the open ended space trader game</h3>
 
-<p>An interesting example of a game I really loved is Elite, the creators designed
+<p data-impeccable-ignore>An interesting example of a game I really loved is Elite, the creators designed
 a formula to store 2<sup>48</sup> (282 trillion) galaxies with 256 solar systems each.
 The solar systems had their own political systems, the trading prices, even the
 names of the planets where generated. They limited the final game to only 8
@@ -107,11 +107,11 @@ the generation functions.</p>
 
 <h3>Exile, the cavern explorer game</h3>
 
-<p>Another Magnum Opus of programming which conquered serious technical challenge is
+<p data-impeccable-ignore>Another Magnum Opus of programming which conquered serious technical challenge is
 <a href="http://en.wikipedia.org/wiki/Exile_(video_game_series" target="_blank" rel="noopener">Exile</a>), I found <a href="http://exile.acornarcade.com/devel.html" target="_blank" rel="noopener">an interesting read</a>
 giving some interesting quotes from the developers:</p>
 
-<blockquote><p>Technical issues aside, and against all modern business rules, the Exile game
+<blockquote><p data-impeccable-ignore>Technical issues aside, and against all modern business rules, the Exile game
 itself was allowed to evolve from little more than having a spaceman exploring
 a cavern system. We didn't know where it was going in the early stages and
 really just thought about new experiences for the hero and new technical
@@ -122,25 +122,25 @@ outset. It takes much longer of course to produce something this way and you
 are in danger of never finishing if you lose sight of the goal, but is worth
 it in the end.</p></blockquote>
 
-<p>Notice the evolutionary process. Planning in detail ahead is a killer for any form of
+<p data-impeccable-ignore>Notice the evolutionary process. Planning in detail ahead is a killer for any form of
 creativity.</p>
 
-<p>The amount of innovating techniques and content creation used in programming
+<p data-impeccable-ignore>The amount of innovating techniques and content creation used in programming
 the gameplay of Exile is stunning. Think only about the map in Exile, another
 quote from the article:</p>
 
-<blockquote><p>The huge map of Exile was generated by an algorithm which from an input of the
+<blockquote><p data-impeccable-ignore>The huge map of Exile was generated by an algorithm which from an input of the
 xy map coordinates created tunnels, solid rock, or one of the few special
 blocks that could have manually defined objects in them, like creatures,
 doors, guns, etc. It took a long time to fiddle with this algorithm to produce
 a tunnel system that was all linked up and interesting, but the storage
 required for it was actually tiny.</p></blockquote>
 
-<p>To see the world which they generated procedurally: <a href="http://c64.tin.at/exile/exile_map.sol.htm" target="_blank" rel="noopener">Exile's complete map</a></p>
+<p data-impeccable-ignore>To see the world which they generated procedurally: <a href="http://c64.tin.at/exile/exile_map.sol.htm" target="_blank" rel="noopener">Exile's complete map</a></p>
 
 <h2>The ideal world</h2>
 
-<p>Imagine a completely generated game world, where even the creatures you interact
+<p data-impeccable-ignore>Imagine a completely generated game world, where even the creatures you interact
 with are generated. Their intelligence adapts to the way you play the game. Keeping the difficulty
 at your level. The AI is finding your weak spots and is trying to exploit them. You have to adapt to
 a world that is adapting to you and challenging you. All you see is generated on the fly. No element of

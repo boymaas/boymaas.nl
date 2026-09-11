@@ -34,46 +34,46 @@
         <h1>Clocks webdsl postmortem</h1>
         <p class="sub"><time>2010-06-15</time>Designing a webdsl in clojure</p>
         <nav class="navrow" aria-label="nav">
-          <span class="nv"><span class="k"><b>h</b> prev</span><a href="/posts/2011-02-20-rails-experiences.html">Rails experiences</a></span>
-          <span class="nv"><span class="k"><b>l</b> next</span><a href="/posts/2010-05-24-webapps-haskell-loli-hack.html">Hack, Loli, the rake/webpy for Haskell?</a></span>
-          <span class="nv"><span class="k"><b>q</b> back</span><a href="/posts.html">posts</a></span>
+          <span class="nv prev"><span class="k"><b>h</b> prev</span><a href="/posts/2011-02-20-rails-experiences.html" data-impeccable-ignore>Rails experiences</a></span>
+          <span class="nv back"><span class="k"><b>q</b> back</span><a href="/posts.html">posts</a></span>
+          <span class="nv next"><span class="k"><b>l</b> next</span><a href="/posts/2010-05-24-webapps-haskell-loli-hack.html" data-impeccable-ignore>Hack, Loli, the rake/webpy for Haskell?</a></span>
         </nav>
       </header>
       <div class="article">
-<p>In this post I will summarize the lessons learned while implementing clocks.
+<p data-impeccable-ignore>In this post I will summarize the lessons learned while implementing clocks.
 An opensourced test project to learn the in an outs of macros in clojure.</p>
 
-<p>You can see the code at: <a href="http://www.github.com/boymaas/clocks" target="_blank" rel="noopener">http://www.github.com/boymaas/clocks</a></p>
+<p data-impeccable-ignore>You can see the code at: <a href="http://www.github.com/boymaas/clocks" target="_blank" rel="noopener">http://www.github.com/boymaas/clocks</a></p>
 
 <h2>On macros</h2>
 
 <div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-clojure">if you don't like something in the language, just adapt it.</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
-<p>This is a core design choice of lisps. It is called
+<p data-impeccable-ignore>This is a core design choice of lisps. It is called
 <a href="http://en.wikipedia.org/wiki/Homoiconicity" target="_blank" rel="noopener">homoiconic</a>.
 When code is data, data is changable by all the existing routines.</p>
 
-<p>In practice this means when calling a macro you get the unevaluated
+<p data-impeccable-ignore>In practice this means when calling a macro you get the unevaluated
 code. You can than do all kinds of operations to this code, return it
 and the returned form will get evaluated.</p>
 
-<p>This gives you the oppertunity to generate/transform/compile code
+<p data-impeccable-ignore>This gives you the oppertunity to generate/transform/compile code
 which will get evaluated after the macroexpantion is done.</p>
 
 <h3>First expand then evalutate</h3>
 
-<p>The macro expander first expands all code recursively and then
+<p data-impeccable-ignore>The macro expander first expands all code recursively and then
 executes it.  So try to keep this in mind when creating more complex
 macro's. Sometimes the two worlds get blurred. Such as I experienced
 while first generating functions in a macro and then storing
 references to these generated functions in expantion time when they
 are not yet evaluated.</p>
 
-<p>It helps to think in two layers, macro-expantion time and evalutation time.</p>
+<p data-impeccable-ignore>It helps to think in two layers, macro-expantion time and evalutation time.</p>
 
 <h2>Pitfall quasiquote symbol resolving</h2>
 
-<p>Scheme has hygienic macros, which work well for me, Clojure resolves
+<p data-impeccable-ignore>Scheme has hygienic macros, which work well for me, Clojure resolves
 all symbols first in the namespace the macro is defined. (when quasiquote is used)</p>
 
 <div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-clojure">outermacro defined in ns outerns
@@ -81,42 +81,42 @@ all symbols first in the namespace the macro is defined. (when quasiquote is use
    innermacro defined in ns innerns
      body gets resolved in innerns</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
-<p>This is a good thing in most cases since it avoids variable capture. But
+<p data-impeccable-ignore>This is a good thing in most cases since it avoids variable capture. But
 can be annoying when you just want to work with symbols.</p>
 
 <h3>When you want unresolved symbols, a problem with quasiquote</h3>
 
-<p>When defining a dsl using symbols not defined in the namespace this can pose
+<p data-impeccable-ignore>When defining a dsl using symbols not defined in the namespace this can pose
 a problem since quasiquote will try to resolve every symbol. There is a way
 to unresolve symbols. The <code>name</code> function:</p>
 
 <div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-clojure">(name resolved-symbol) </code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
-<p>will give back the original symbol name as a string</p>
+<p data-impeccable-ignore>will give back the original symbol name as a string</p>
 
 <div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-clojure">(symbol (name resolved-symbol))</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
-<p>will convert the returned string  back to the original symbol</p>
+<p data-impeccable-ignore>will convert the returned string  back to the original symbol</p>
 
 <div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-clojure">(prewalk (fn [exp] (if (symbol? exp) (symbol (name exp)))) sexp)</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
-<p>We can combine this with a walker to unresolve all resolved symbols in a form.
+<p data-impeccable-ignore>We can combine this with a walker to unresolve all resolved symbols in a form.
 Combine this with a lookup on a symbol map and you will leave
 only specified symbols unresolved.</p>
 
 <h3>Prewalk? tools for transforming code, The walker</h3>
 
-<p><code>clojure.walk</code> provides prewalk and postwalk, the walkers take a
+<p data-impeccable-ignore><code>clojure.walk</code> provides prewalk and postwalk, the walkers take a
 function and replace the walked node by the return value of this
 function.</p>
 
 <h4>Sequence conversion</h4>
 
-<p>While walking a piece of code you wish to convert, clojure has the tendency to convert
+<p data-impeccable-ignore>While walking a piece of code you wish to convert, clojure has the tendency to convert
 the walked forms to sequences.  When walking code you want vectors to stay vectors, etc.
 These have to be converted back.</p>
 
-<p>As can be seen in the code the walk function as defined in clojure.walk does this for you.</p>
+<p data-impeccable-ignore>As can be seen in the code the walk function as defined in clojure.walk does this for you.</p>
 
 <div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-clojure">(defn walk
   "Traverses form, an arbitrary data structure.  inner and outer are
@@ -138,7 +138,7 @@ These have to be converted back.</p>
 
 <h2>Evaluation</h2>
 
-<p>What exactly happens when calling a macro with the namespaces and the variables.</p>
+<p data-impeccable-ignore>What exactly happens when calling a macro with the namespaces and the variables.</p>
 
 <div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-clojure">(ns nsdefined)
 (def rv 100)
@@ -152,7 +152,7 @@ These have to be converted back.</p>
 (def rv 1000)
 (nsdefined/nstest blah) # ns = nscalling, rv = 100, rvr = #'nscalling/rv</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
-<p>Conclusion: macro gets executed inside namespace its defined in. The <em>ns</em> is set to the calling ns, so resolve
+<p data-impeccable-ignore>Conclusion: macro gets executed inside namespace its defined in. The <em>ns</em> is set to the calling ns, so resolve
 which uses <em>ns</em> to resolve will resolve to nscalling/rv.</p>
 
 <div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-clojure">(defmacro nstest [name]
@@ -163,13 +163,13 @@ which uses <em>ns</em> to resolve will resolve to nscalling/rv.</p>
 
 (nsdefined/nstest blah) # ns = nscalling, rv = 100, rvr = #'nscalling/rv</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
-<p>In this case ~'rv will not be resolved by quasiquore and the symbol of nscalling will be used (symbol capture). Thus be bound to 1000.</p>
+<p data-impeccable-ignore>In this case ~'rv will not be resolved by quasiquore and the symbol of nscalling will be used (symbol capture). Thus be bound to 1000.</p>
 
-<p>Summarizing <em>ns</em> is the namespace of the caller, quasiquote will try to resolve symbols inside the namespace the macro was defined. Unresolved symbols can lead to variable capture in the calling namespace.</p>
+<p data-impeccable-ignore>Summarizing <em>ns</em> is the namespace of the caller, quasiquote will try to resolve symbols inside the namespace the macro was defined. Unresolved symbols can lead to variable capture in the calling namespace.</p>
 
 <h2>Conclusion</h2>
 
-<p>It was an interesting journey into the world of macro's inside clojure. A very different
+<p data-impeccable-ignore>It was an interesting journey into the world of macro's inside clojure. A very different
 approach to the hygienic macro's in scheme. Who are more template based. Resolving the symbols
 is a very good feature for the simpler macro's but have to be compensated when designing
 a symbol dsl, It would be nice to have a special quasiquote which does not resolve.</p>

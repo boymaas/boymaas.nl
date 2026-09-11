@@ -34,25 +34,25 @@
         <h1>Live coding OpenGl in PLT-Scheme</h1>
         <p class="sub"><time>2010-05-11</time>Evolutionary coding in scheme</p>
         <nav class="navrow" aria-label="nav">
-          <span class="nv"><span class="k"><b>h</b> prev</span><a href="/posts/2010-05-14-scheme-call-with-current-continuation.html">Ying Yang call/cc or the call-with-current-continuation puzzle</a></span>
-          <span class="nv"><span class="k"><b>l</b> next</span><a href="/posts/2010-05-04-html5-canvas-element.html">Playing around with the HTML5 Canvas element</a></span>
-          <span class="nv"><span class="k"><b>q</b> back</span><a href="/posts.html">posts</a></span>
+          <span class="nv prev"><span class="k"><b>h</b> prev</span><a href="/posts/2010-05-14-scheme-call-with-current-continuation.html" data-impeccable-ignore>Ying Yang call/cc or the call-with-current-continuation puzzle</a></span>
+          <span class="nv back"><span class="k"><b>q</b> back</span><a href="/posts.html">posts</a></span>
+          <span class="nv next"><span class="k"><b>l</b> next</span><a href="/posts/2010-05-04-html5-canvas-element.html" data-impeccable-ignore>Playing around with the HTML5 Canvas element</a></span>
         </nav>
       </header>
       <div class="article">
-<p>Live coding <a href="http://www.pawfal.org/fluxus/" target="_blank" rel="noopener">(fluxus)</a> captured my interest.  Evolutionary
+<p data-impeccable-ignore>Live coding <a href="http://www.pawfal.org/fluxus/" target="_blank" rel="noopener">(fluxus)</a> captured my interest.  Evolutionary
 programming a game system using scheme will be a nice pet project to experiment with.</p>
 
 <h2>PLT-Scheme</h2>
 
-<p>Checking out different versions of scheme i stumbled upon gambit and ypsilon and
+<p data-impeccable-ignore>Checking out different versions of scheme i stumbled upon gambit and ypsilon and
 plt-scheme. After some deliberation i chose plt-scheme. Nicely organised, good
 documentation and standard libraries and big community. Very active irc channel
 on irc.freenode.org #scheme which answered my questions within 5 minutes.</p>
 
-<p>Wikipedia describes PLT scheme in a nice fashion:</p>
+<p data-impeccable-ignore>Wikipedia describes PLT scheme in a nice fashion:</p>
 
-<blockquote><p>From the beginning, the PLT project was also an experiment in evaluating the
+<blockquote><p data-impeccable-ignore>From the beginning, the PLT project was also an experiment in evaluating the
 suitability of Scheme as a programming language for large projects. In a sense,
 the language failed and yet it also proved to be an ideal platform.
 Scheme per se failed because the standard language, as defined in the reports,
@@ -62,47 +62,47 @@ team's expectations.</p></blockquote>
 
 <h2>We need a window to run our app in</h2>
 
-<p>PLT Scheme has a gui toolkit which can be loaded with.</p>
+<p data-impeccable-ignore>PLT Scheme has a gui toolkit which can be loaded with.</p>
 
 <div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-scheme">(require scheme/gui/base)</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
-<p>This library needs primitive graphics support at runtime an cannot
+<p data-impeccable-ignore>This library needs primitive graphics support at runtime an cannot
 be executed with <code>mzscheme</code>. For these programs we have <code>mred</code>.</p>
 
 <h2>MzScheme, MrEd, PLT's graphical user toolkit</h2>
 
-<p>As I understand it, PLT-Scheme has mzscheme as an ideal lightweight scripting
+<p data-impeccable-ignore>As I understand it, PLT-Scheme has mzscheme as an ideal lightweight scripting
 environment. And MrEd for GUI based apps.</p>
 
 <div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-scheme">mred -iz -l readline -l scheme/enter</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
-<p>We load 2 libraries not standard included in my version of <code>mred</code>:</p>
+<p data-impeccable-ignore>We load 2 libraries not standard included in my version of <code>mred</code>:</p>
 
 <ul>
-<li><code>readline</code>, up/down, tab-completion etc</li>
-<li><code>scheme/enter</code>, to be able to reload modules and change evaluation contexts,
+<li data-impeccable-ignore><code>readline</code>, up/down, tab-completion etc</li>
+<li data-impeccable-ignore><code>scheme/enter</code>, to be able to reload modules and change evaluation contexts,
 provides <code>enter!</code> procedure.</li>
 </ul>
 
 <h2>Windowing time</h2>
 
-<p>The gui/base consist of an
+<p data-impeccable-ignore>The gui/base consist of an
 <a href="http://docs.plt-scheme.org/gui/Windowing_Classes.html" target="_blank" rel="noopener">hierarchy of classes</a>,
 interesting for us are:</p>
 
 <ul>
-<li>canvas%, a general-purpose window for drawing and handling events.</li>
-<li>frame%, a top-level container window. It has a title bar (which displays the
+<li data-impeccable-ignore>canvas%, a general-purpose window for drawing and handling events.</li>
+<li data-impeccable-ignore>frame%, a top-level container window. It has a title bar (which displays the
 frame's label), an optional menu bar, and an optional status line.</li>
 </ul>
 
 <h3>Every painter needs a canvas</h3>
 
-<p>For our app to at least draw anything we need an opengl ready canvas. The window
+<p data-impeccable-ignore>For our app to at least draw anything we need an opengl ready canvas. The window
 should also be able to recognize size changes and a method to actually draw
 something on our canvas.</p>
 
-<p>the functions <code>resize</code> and <code>paint</code> will be defined later.</p>
+<p data-impeccable-ignore>the functions <code>resize</code> and <code>paint</code> will be defined later.</p>
 
 <div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-scheme">(define gl-canvas%
   (class* canvas% ()
@@ -123,14 +123,14 @@ something on our canvas.</p>
 
 <h3>Without the frame we cannot hang the painting</h3>
 
-<p>Our canvas needs to <a href="http://docs.plt-scheme.org/gui/frame_.html" target="_blank" rel="noopener">framed</a> for the os to display it.</p>
+<p data-impeccable-ignore>Our canvas needs to <a href="http://docs.plt-scheme.org/gui/frame_.html" target="_blank" rel="noopener">framed</a> for the os to display it.</p>
 
 <div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-scheme">(define window 
   (new frame% (label "Minimal") (min-width 200) (min-height 200)))</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
 <h3>Rendering time</h3>
 
-<p>Now we have setup a minimal frame with a canvas which is opengl ready. Now we
+<p data-impeccable-ignore>Now we have setup a minimal frame with a canvas which is opengl ready. Now we
 can execute OpenGl calls to actually start drawing. <code>resize</code> is called on a
 resize and since this is minimal does nothing. <code>paint</code> is called when the
 canvas is exposed or resized so that the image in the canvas can be repainted.</p>
@@ -159,7 +159,7 @@ canvas is exposed or resized so that the image in the canvas can be repainted.</
 
 <h3>Putting it all together</h3>
 
-<p>To actually create the frame canvas, and fire the on-paint and on-size triggers
+<p data-impeccable-ignore>To actually create the frame canvas, and fire the on-paint and on-size triggers
 send the window instance the show message. This should create all.</p>
 
 <div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-scheme">;; show window
@@ -167,13 +167,13 @@ send the window instance the show message. This should create all.</p>
 
 <h2>And now for live coding!</h2>
 
-<p>The essential element here is the live coding. This is accomplished by changing
+<p data-impeccable-ignore>The essential element here is the live coding. This is accomplished by changing
 the paint function and sending it to your repl. First we need to change the
 evaluation context. This is done by:</p>
 
 <div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-scheme">(enter! "minimal.ss")</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
-<p>and redefining <code>paint</code>:</p>
+<p data-impeccable-ignore>and redefining <code>paint</code>:</p>
 
 <div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-scheme">(define (paint)
   (glClearColor 0.0 0.0 0.0 0.0)
@@ -194,7 +194,7 @@ evaluation context. This is done by:</p>
   (glEnd)
   )</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
-<p>now change size of the window to trigger a <code>on-paint</code> and the colour of the
+<p data-impeccable-ignore>now change size of the window to trigger a <code>on-paint</code> and the colour of the
 square changes. The basic elements of live coding are accomplished.</p>
       </div>
     </div>

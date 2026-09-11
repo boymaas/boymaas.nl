@@ -34,13 +34,13 @@
         <h1>Currying in scheme</h1>
         <p class="sub"><time>2010-05-20</time>define-syntax beauty</p>
         <nav class="navrow" aria-label="nav">
-          <span class="nv"><span class="k"><b>h</b> prev</span><a href="/posts/2010-05-24-webapps-haskell-loli-hack.html">Hack, Loli, the rake/webpy for Haskell?</a></span>
-          <span class="nv"><span class="k"><b>l</b> next</span><a href="/posts/2010-05-15-web-apps-in-plt-scheme.html">Web-apps with PLT-Scheme, snoozing while dispatching?</a></span>
-          <span class="nv"><span class="k"><b>q</b> back</span><a href="/posts.html">posts</a></span>
+          <span class="nv prev"><span class="k"><b>h</b> prev</span><a href="/posts/2010-05-24-webapps-haskell-loli-hack.html" data-impeccable-ignore>Hack, Loli, the rake/webpy for Haskell?</a></span>
+          <span class="nv back"><span class="k"><b>q</b> back</span><a href="/posts.html">posts</a></span>
+          <span class="nv next"><span class="k"><b>l</b> next</span><a href="/posts/2010-05-15-web-apps-in-plt-scheme.html" data-impeccable-ignore>Web-apps with PLT-Scheme, snoozing while dispatching?</a></span>
         </nav>
       </header>
       <div class="article">
-<p>Coming from haskell i was looking around for a way to apply currying inside scheme. I came
+<p data-impeccable-ignore>Coming from haskell i was looking around for a way to apply currying inside scheme. I came
 on the following macro via: <a href="http://paste.lisp.org/display/36324" target="_blank" rel="noopener">this paste</a>.</p>
 
 <div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-scheme">(define-syntax curried
@@ -59,7 +59,7 @@ on the following macro via: <a href="http://paste.lisp.org/display/36324" target
         ((define-curried (name args ...) body ...)
          (define name (curried (args ...) body ...)))))</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
-<p>Notice how <code>define-curried</code> uses the pattern match on <code>name</code> recursively to recursivly apply the curried macro to every
+<p data-impeccable-ignore>Notice how <code>define-curried</code> uses the pattern match on <code>name</code> recursively to recursivly apply the curried macro to every
 argument.</p>
 
 <div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-scheme">(define-curried (mad a b c)

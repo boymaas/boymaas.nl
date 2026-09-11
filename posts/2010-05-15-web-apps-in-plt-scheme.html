@@ -34,31 +34,31 @@
         <h1>Web-apps with PLT-Scheme, snoozing while dispatching?</h1>
         <p class="sub"><time>2010-05-15</time>Web apps in scheme, too good to be true?</p>
         <nav class="navrow" aria-label="nav">
-          <span class="nv"><span class="k"><b>h</b> prev</span><a href="/posts/2010-05-20-currying-in-scheme.html">Currying in scheme</a></span>
-          <span class="nv"><span class="k"><b>l</b> next</span><a href="/posts/2010-05-14-scheme-call-with-current-continuation.html">Ying Yang call/cc or the call-with-current-continuation puzzle</a></span>
-          <span class="nv"><span class="k"><b>q</b> back</span><a href="/posts.html">posts</a></span>
+          <span class="nv prev"><span class="k"><b>h</b> prev</span><a href="/posts/2010-05-20-currying-in-scheme.html" data-impeccable-ignore>Currying in scheme</a></span>
+          <span class="nv back"><span class="k"><b>q</b> back</span><a href="/posts.html">posts</a></span>
+          <span class="nv next"><span class="k"><b>l</b> next</span><a href="/posts/2010-05-14-scheme-call-with-current-continuation.html" data-impeccable-ignore>Ying Yang call/cc or the call-with-current-continuation puzzle</a></span>
         </nav>
       </header>
       <div class="article">
-<p>Doing the tutorial on writing a blog using PLT-Scheme opened my eyes to some of
+<p data-impeccable-ignore>Doing the tutorial on writing a blog using PLT-Scheme opened my eyes to some of
 the possibilities. Working lately primary on webapps using web.py, sqlalchemy I
 wanted to see what could be done using scheme. In this case browsing PLT's
 available libraries. After scanning PLT's PLaneT I have found some interesting
 libs opensourced by a company called <a href="http://www.untyped.com/" target="_blank" rel="noopener">untyped</a>.</p>
 
-<p>The libs I found interesting where:</p>
+<p data-impeccable-ignore>The libs I found interesting where:</p>
 
 <ul>
-<li>untyped/dispatch</li>
-<li>untyped/snooze</li>
-<li>untyped/mirrors</li>
+<li data-impeccable-ignore>untyped/dispatch</li>
+<li data-impeccable-ignore>untyped/snooze</li>
+<li data-impeccable-ignore>untyped/mirrors</li>
 </ul>
 
-<p>I decided to take a closer look at them and how untyped implemented its magic.</p>
+<p data-impeccable-ignore>I decided to take a closer look at them and how untyped implemented its magic.</p>
 
 <h2>Dispatch, declare what you want</h2>
 
-<p>Dispatch is essentially syntax to declare routes and controllers. I wanted to know
+<p data-impeccable-ignore>Dispatch is essentially syntax to declare routes and controllers. I wanted to know
 more so I analysed an example given by the documentation.</p>
 
 <h2>Define your site</h2>
@@ -74,16 +74,16 @@ more so I analysed an example given by the documentation.</p>
               [(url "/archive/" (integer-arg) "/" (integer-arg))
                review-archive]))</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
-<p>Essentially stating that <code>/archive/10</code> will call <code>review-archive</code> with one parameter <code>10</code>.</p>
+<p data-impeccable-ignore>Essentially stating that <code>/archive/10</code> will call <code>review-archive</code> with one parameter <code>10</code>.</p>
 
 <h3>Controllers</h3>
 
-<p>Controllers for the rules above may be defined with:</p>
+<p data-impeccable-ignore>Controllers for the rules above may be defined with:</p>
 
 <div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-scheme">(define-controller (controller request args ...)
     exp ... )</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
-<p>An example being:</p>
+<p data-impeccable-ignore>An example being:</p>
 
 <div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-scheme">; request string -&gt; html-response
 (define-controller (review-post request slug)
@@ -93,7 +93,7 @@ more so I analysed an example given by the documentation.</p>
 
 <h3>Implementation</h3>
 
-<p>To find out what happens behind the syntax it helps to expand the syntax (or macro). The declarative statements above expand to:</p>
+<p data-impeccable-ignore>To find out what happens behind the syntax it helps to expand the syntax (or macro). The declarative statements above expand to:</p>
 
 <div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-scheme">(require (planet untyped/dispatch))
 (begin
@@ -112,27 +112,27 @@ more so I analysed an example given by the documentation.</p>
               review-archive)))
         (values blog index review-post review-archive)))))</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
-<p>Effectively defining <code>blog</code> and the controllers <code>index review-post
+<p data-impeccable-ignore>Effectively defining <code>blog</code> and the controllers <code>index review-post
 review-archive</code> on module level by the function <code>make-site</code>. This procedure
 also assigns an <code>undefined-controller</code> to the controllers <code>index review-post
 review-archive</code> to catch the undefined ones. These syntax-extentions are
 defined in <code>syntax.ss</code>.</p>
 
-<p>One can use the export-helper in a provide as such <code>(provide (site-out blog))</code>
+<p data-impeccable-ignore>One can use the export-helper in a provide as such <code>(provide (site-out blog))</code>
 to export the defined site and the configured controllers.</p>
 
 <h4>Rule based routing</h4>
 
-<p>There is a function defined <code>(controller-url controller args ..)</code> which can be
+<p data-impeccable-ignore>There is a function defined <code>(controller-url controller args ..)</code> which can be
 used to translate back from controller to path.</p>
 
 <h5>Rules</h5>
 
-<p>Rules like <code>[(url "/posts/" (string-arg)) review-post]</code> are declared when configuring the site. This rule effectively states that <code>/posts/([^/]+)</code> maps to controller <code>review-post</code>. This rule will be used to <code>dispatch</code> this request, but will also be used to translate <code>(controller-url 'review-post 10)</code> to the following link <code>/posts/10</code>.</p>
+<p data-impeccable-ignore>Rules like <code>[(url "/posts/" (string-arg)) review-post]</code> are declared when configuring the site. This rule effectively states that <code>/posts/([^/]+)</code> maps to controller <code>review-post</code>. This rule will be used to <code>dispatch</code> this request, but will also be used to translate <code>(controller-url 'review-post 10)</code> to the following link <code>/posts/10</code>.</p>
 
 <h5>Arguments</h5>
 
-<p>How is this implemented. In the files <code>pattern.ss</code> and <code>arg.ss</code> and <code>struct-private.ss</code> contain statements which describes elements
+<p data-impeccable-ignore>How is this implemented. In the files <code>pattern.ss</code> and <code>arg.ss</code> and <code>struct-private.ss</code> contain statements which describes elements
 to build reqexp matches and encode and decode arguments between the url and scheme domain. The args and eventually custom args
 are defined in the following struct. (i removed the display routines for clarity)</p>
 
@@ -143,7 +143,7 @@ are defined in the following struct. (i removed the display routines for clarity
    encoder ;; how to encode from lisp domain to captured arg
   #:transparent)</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
-<p>A working example is <code>string-arg</code>:</p>
+<p data-impeccable-ignore>A working example is <code>string-arg</code>:</p>
 
 <div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-scheme">(define (string-arg)
   (make-arg 
@@ -159,16 +159,16 @@ are defined in the following struct. (i removed the display routines for clarity
 
 <h5>Adding arguments</h5>
 
-<p>Adding cutom arguments is made trivial by this setup since one can just build a structure with encode and decode routines and can
+<p data-impeccable-ignore>Adding cutom arguments is made trivial by this setup since one can just build a structure with encode and decode routines and can
 use it.</p>
 
 <h2>Snooze, ORM for Postgresql or Sqlite</h2>
 
-<p>Will come later ..</p>
+<p data-impeccable-ignore>Will come later ..</p>
 
 <h2>Mirrors, xhtml/xml generation or javascript. Whatever you want ..</h2>
 
-<p>Will come later ..</p>
+<p data-impeccable-ignore>Will come later ..</p>
       </div>
     </div>
     <div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div>

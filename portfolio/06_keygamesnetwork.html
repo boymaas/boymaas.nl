@@ -34,84 +34,84 @@
         <h1>Keygamesnetwork</h1>
         <p class="sub"><span class="y">2008</span>Spele.nl, I-Med</p>
         <nav class="navrow" aria-label="nav">
-          <span class="nv"><span class="k"><b>h</b> prev</span><a href="/portfolio/07_stockers.html">Stockers</a></span>
-          <span class="nv"><span class="k"><b>l</b> next</span><a href="/portfolio/05_gamebattle.html">Gamebattle</a></span>
-          <span class="nv"><span class="k"><b>q</b> back</span><a href="/work.html">work</a></span>
+          <span class="nv prev"><span class="k"><b>h</b> prev</span><a href="/portfolio/07_stockers.html" data-impeccable-ignore>Stockers</a></span>
+          <span class="nv back"><span class="k"><b>q</b> back</span><a href="/work.html">work</a></span>
+          <span class="nv next"><span class="k"><b>l</b> next</span><a href="/portfolio/05_gamebattle.html" data-impeccable-ignore>Gamebattle</a></span>
         </nav>
       </header>
       <div class="article">
-<p>
+<p data-impeccable-ignore>
   I-Med, the publisher of Spele.nl, reaching out to more than 500K unique people every day, proposed to build
   a self-serving advertiser platform. This started a 4 month project to build
   <a href="http://www.keygamesnetwork.com" target="_blank" rel="noopener">Keygamesnetwork.com</a>.
 </p>
 <ul class="shots">
-  <li><a href="/static/portfolio/screenshots/keygamesnetwork/advertisers-home-big.jpg"><img src="/static/portfolio/screenshots/keygamesnetwork/advertisers-home-small.jpg" width="162" height="150" alt="The Keygamesnetwork landing page for advertisers"><span class="cap">Landing page, advertisers</span></a></li>
-  <li><a href="/static/portfolio/screenshots/keygamesnetwork/gamedeveloper-base-big.jpg"><img src="/static/portfolio/screenshots/keygamesnetwork/gamedeveloper-base-small.jpg" width="130" height="150" alt="The game developer overview page with earnings graph and game table"><span class="cap">Game developer overview</span></a></li>
+  <li data-impeccable-ignore><a href="/static/portfolio/screenshots/keygamesnetwork/advertisers-home-big.jpg"><img src="/static/portfolio/screenshots/keygamesnetwork/advertisers-home-small.jpg" width="162" height="150" alt="The Keygamesnetwork landing page for advertisers"><span class="cap">Landing page, advertisers</span></a></li>
+  <li data-impeccable-ignore><a href="/static/portfolio/screenshots/keygamesnetwork/gamedeveloper-base-big.jpg"><img src="/static/portfolio/screenshots/keygamesnetwork/gamedeveloper-base-small.jpg" width="130" height="150" alt="The game developer overview page with earnings graph and game table"><span class="cap">Game developer overview</span></a></li>
 </ul>
-<p>
+<p data-impeccable-ignore>
   Keygamesnetwork intermediates between game developers, publishers and advertisers. It enables <em>game developers</em> to
   speed up the game development process, and <em>publishers</em> to find interesting content for their domains. A great platform
   to advertise emerges through all the games published through the publishers' domains.
 </p>
-<p>
+<p data-impeccable-ignore>
   I will describe below the different roles I performed in helping realise this platform.
 </p>
 <h2>Design challenges</h2>
-<p>
+<p data-impeccable-ignore>
   Setting up the structural design, architecting the key components, and selection of various open-source components
   to form the basis of implementation:
 </p>
 <ul>
-  <li>Rails</li>
-  <li>RSpec</li>
-  <li>Haml</li>
-  <li>Sass</li>
-  <li>Rails Metal using Sinatra</li>
-  <li>PostgreSQL</li>
-  <li>Nginx</li>
-  <li>Varnish</li>
+  <li data-impeccable-ignore>Rails</li>
+  <li data-impeccable-ignore>RSpec</li>
+  <li data-impeccable-ignore>Haml</li>
+  <li data-impeccable-ignore>Sass</li>
+  <li data-impeccable-ignore>Rails Metal using Sinatra</li>
+  <li data-impeccable-ignore>PostgreSQL</li>
+  <li data-impeccable-ignore>Nginx</li>
+  <li data-impeccable-ignore>Varnish</li>
 </ul>
-<p>
+<p data-impeccable-ignore>
   Whenever I select an open-source component, I actually dive into the code to assess the quality. I only select quality components
   to base a system on.
 </p>
 <h2>Technical challenges</h2>
 <h3>Capistrano zero downtime deployment</h3>
-<p>
+<p data-impeccable-ignore>
   Using Capistrano to set up a 3 server production environment and a 1 server staging environment. Running Unicorn, nginx and Varnish. Unicorn configured in such a way that server restarts can be done without any downtime, even taking into account database migrations. Since certain development machines should be able to deploy from outside the firewall, secure access was set up. Capistrano was customised for this process.
 </p>
 <h3>Adobe Flash wrapper</h3>
-<p>
+<p data-impeccable-ignore>
   Flex pipeline enabling game developers to secure and enhance their games. In the technical specification I defined a secure method of communicating with the Keygamesnetwork backend, described different UI enhancing components, such as login and highscore widgets, and described a distributed loading of different reusable, themable components on demand (faster load times, and live updates). The implementation was started in parallel with a hand-picked Flash development team.
 </p>
 <h3>Generic adaptable statistics modules</h3>
-<p>
+<p data-impeccable-ignore>
   Setup of generic components to enable tracking, maintenance and aggregation of database logfiles. The analytics is presented in a professional way to each of Keygamesnetwork's end users. The games and ad components log a lot of information, in many games, with many players. These generic components handle the aggregation and maintenance of these database driven logfiles gracefully.
 </p>
 <h3>Rails configuration and setup</h3>
-<p>
+<p data-impeccable-ignore>
   Coding the controllers and views of the Rails application. Using Haml, Sass, jQuery, CoffeeScript and of course pure clean Ruby code. Adapted Haml core to enable custom tags. Since all was well thought out before, we ended up with a clean model, all recurring patterns nicely included.
 </p>
 <h3>BDD / TDD</h3>
-<p>
+<p data-impeccable-ignore>
   A combination of BDD and TDD is being used to test Keygamesnetwork.
 </p>
 <h3>DRY to the bone</h3>
-<p>
+<p data-impeccable-ignore>
   All mundanities, complexities and repetition were scripted away.
 </p>
 <h2>More screenshots</h2>
 <ul class="shots">
-  <li><a href="/static/portfolio/screenshots/keygamesnetwork/gamedevelopers-home-big.jpg"><img src="/static/portfolio/screenshots/keygamesnetwork/gamedevelopers-home-small.jpg" width="168" height="150" alt="The Keygamesnetwork landing page for game developers"><span class="cap">Landing page, game developers</span></a></li>
-  <li><a href="/static/portfolio/screenshots/keygamesnetwork/publishers-home-big.jpg"><img src="/static/portfolio/screenshots/keygamesnetwork/publishers-home-small.jpg" width="175" height="150" alt="The Keygamesnetwork landing page for publishers"><span class="cap">Landing page, publishers</span></a></li>
+  <li data-impeccable-ignore><a href="/static/portfolio/screenshots/keygamesnetwork/gamedevelopers-home-big.jpg"><img src="/static/portfolio/screenshots/keygamesnetwork/gamedevelopers-home-small.jpg" width="168" height="150" alt="The Keygamesnetwork landing page for game developers"><span class="cap">Landing page, game developers</span></a></li>
+  <li data-impeccable-ignore><a href="/static/portfolio/screenshots/keygamesnetwork/publishers-home-big.jpg"><img src="/static/portfolio/screenshots/keygamesnetwork/publishers-home-small.jpg" width="175" height="150" alt="The Keygamesnetwork landing page for publishers"><span class="cap">Landing page, publishers</span></a></li>
 </ul>
 <h2>Team challenges</h2>
-<p>
+<p data-impeccable-ignore>
   Thinking through the specifications and coming to a detailed technical specification. Selecting appropriate freelancers
   to form a team. And after delivery, transferring knowledge to an offshore maintenance team.
 </p>
-<p>
+<p data-impeccable-ignore>
   After 6 months of hard work the system was ready and performed excellently under medium to high load: an Apdex score of 1, tracked with New Relic.
 </p>
       </div>

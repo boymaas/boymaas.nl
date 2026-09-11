@@ -34,13 +34,13 @@
         <h1>Ying Yang call/cc or the call-with-current-continuation puzzle</h1>
         <p class="sub"><time>2010-05-14</time>interesting scheme paradigm</p>
         <nav class="navrow" aria-label="nav">
-          <span class="nv"><span class="k"><b>h</b> prev</span><a href="/posts/2010-05-15-web-apps-in-plt-scheme.html">Web-apps with PLT-Scheme, snoozing while dispatching?</a></span>
-          <span class="nv"><span class="k"><b>l</b> next</span><a href="/posts/2010-05-11-opengl-plt-scheme-programming.html">Live coding OpenGl in PLT-Scheme</a></span>
-          <span class="nv"><span class="k"><b>q</b> back</span><a href="/posts.html">posts</a></span>
+          <span class="nv prev"><span class="k"><b>h</b> prev</span><a href="/posts/2010-05-15-web-apps-in-plt-scheme.html" data-impeccable-ignore>Web-apps with PLT-Scheme, snoozing while dispatching?</a></span>
+          <span class="nv back"><span class="k"><b>q</b> back</span><a href="/posts.html">posts</a></span>
+          <span class="nv next"><span class="k"><b>l</b> next</span><a href="/posts/2010-05-11-opengl-plt-scheme-programming.html" data-impeccable-ignore>Live coding OpenGl in PLT-Scheme</a></span>
         </nav>
       </header>
       <div class="article">
-<p>One of the more interesting paradigms arising from Scheme is the
+<p data-impeccable-ignore>One of the more interesting paradigms arising from Scheme is the
 <code>call-with-current-continuation</code>.  Let me try to explain this in abstract terms,
 a call/cc is passed a procedure <code>p</code>. This procedure takes one argument <code>k</code>
 which represents the continuation. The continuation <code>k</code> can be applied with a
@@ -48,17 +48,17 @@ value.  This value will become the value of the application of call/cc. Easy heh
 
 <h2>Ok? Let's play a little with them</h2>
 
-<p>To give an example, this first example does <code>call/cc</code> which does not apply the
+<p data-impeccable-ignore>To give an example, this first example does <code>call/cc</code> which does not apply the
 continuation <code>k</code>:</p>
 
 <div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-scheme">(call/cc
  (lambda (k)
   (* 5 4))) =&gt;  20 </code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
-<p>The lambda is called with our current-continuation which is ignored as it
+<p data-impeccable-ignore>The lambda is called with our current-continuation which is ignored as it
 just returns the result of the calculation.</p>
 
-<p>In this next example the continuation is applied with an integer argument of 4,
+<p data-impeccable-ignore>In this next example the continuation is applied with an integer argument of 4,
 the return value of the call/cc lambda becomes the value passed to the
 continuation <code>k</code> and thus prints 4.</p>
 
@@ -66,7 +66,7 @@ continuation <code>k</code> and thus prints 4.</p>
  (lambda (k)
   (* 5 (k 4)))) =&gt; 4 </code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
-<p>We could argue that the continuation acts as a return statement. This
+<p data-impeccable-ignore>We could argue that the continuation acts as a return statement. This
 facilitates returning from a recursion as described below.</p>
 
 <div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-scheme">(define product
@@ -81,37 +81,37 @@ facilitates returning from a recursion as described below.</p>
 
 <h2>This is simple, let's try to find something more interesting</h2>
 
-<p>Try this piece of code which I found in The Scheme Programming Language.</p>
+<p data-impeccable-ignore>Try this piece of code which I found in The Scheme Programming Language.</p>
 
 <div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-scheme">(let ((x (call/cc (lambda (k) k))))
   (x (lambda (ignore) "hi"))) =&gt; "hi"</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
-<p>What happens here?</p>
+<p data-impeccable-ignore>What happens here?</p>
 
 <ul>
-<li><code>x</code> gets bound to the continuation <code>k</code>
+<li data-impeccable-ignore><code>x</code> gets bound to the continuation <code>k</code>
 
 <ul>
-<li>since call/cc calls lambda k: which returns itself</li>
+<li data-impeccable-ignore>since call/cc calls lambda k: which returns itself</li>
 </ul>
 </li>
-<li><code>x</code>, which is the continuation <code>k</code>, is applied with the <code>(lambda (ignore) "h1")</code>
+<li data-impeccable-ignore><code>x</code>, which is the continuation <code>k</code>, is applied with the <code>(lambda (ignore) "h1")</code>
 
 <ul>
-<li>this has the effect of rebinding <code>x</code> to <code>(lambda (ignore) "hi")</code></li>
+<li data-impeccable-ignore>this has the effect of rebinding <code>x</code> to <code>(lambda (ignore) "hi")</code></li>
 </ul>
 </li>
-<li>control continues and comes again to the statement <code>(x (lambda (ignore) .. )</code>
+<li data-impeccable-ignore>control continues and comes again to the statement <code>(x (lambda (ignore) .. )</code>
 
 <ul>
-<li>and thus applies the lambda to the rebond <code>x</code> returning "hi"</li>
+<li data-impeccable-ignore>and thus applies the lambda to the rebond <code>x</code> returning "hi"</li>
 </ul>
 </li>
 </ul>
 
 <h2>Now for something really interesting, the call/cc ying yang puzzle.</h2>
 
-<p>Reading the wikipedia article I stumbled upon this interesting puzzle. I was
+<p data-impeccable-ignore>Reading the wikipedia article I stumbled upon this interesting puzzle. I was
 immediatly fascinated as it seemed difficult to explain why the below described call/cc combinations
 deliver the output as described.</p>
 
@@ -121,7 +121,7 @@ deliver the output as described.</p>
          ((lambda (cc) (display #\*) cc) (call-with-current-continuation (lambda (c) c)))))
     (yin yang))</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
-<p>Outputs an infinitive sequence, I have extracted the first output of this function below.</p>
+<p data-impeccable-ignore>Outputs an infinitive sequence, I have extracted the first output of this function below.</p>
 
 <div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-scheme">@*@**@***@****@*****@******@*******@********@*********@**********@*******
 ****@************@*************@**************@***************@**********
@@ -130,7 +130,7 @@ deliver the output as described.</p>
 *******@************************@*************************@**************
 ************@</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
-<p>Keep in mind that <code>(let* (b1 b2) e1 e2 ..)</code> translates to <code>(let (b1) (let (b2) e1 e2 .. )</code>.
+<p data-impeccable-ignore>Keep in mind that <code>(let* (b1 b2) e1 e2 ..)</code> translates to <code>(let (b1) (let (b2) e1 e2 .. )</code>.
 Try to explain this one .. good luck, heheh</p>
       </div>
     </div>

@@ -15,7 +15,7 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&text=%E2%94%80%E2%94%82%E2%94%8C%E2%94%90%E2%94%94%E2%94%98%E2%94%9C%E2%94%A4%E2%96%88&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/tui.css">
 </head>
-<body data-page="article" data-back="/posts.html" data-pos="posts 2/21" data-prev="/posts/2026-09-11-jamzig-a-jam-client-in-zig.html" data-next="/posts/2026-09-09-dabbling-in-odin.html">
+<body data-page="article" data-back="/posts.html" data-pos="posts 3/21" data-prev="/posts/2026-09-08-the-coding-stream.html" data-next="/posts/2025-08-15-jamzig-a-jam-client-in-zig.html">
 <canvas id="sky" aria-hidden="true"></canvas>
 <header class="wrap top">
   <a class="who" href="/">Boy Maas<span class="handle"> <span class="dim">(bitgnosys)</span></span></a>
@@ -27,50 +27,50 @@
   </nav>
 </header>
 <main class="wrap stack">
-  <article class="pane focus" id="posts" aria-label="posts/2026-09-10-polana-solana-on-jam">
-    <div class="bt"><span>┌─</span><span class="tt"><span>posts<span class="s">/2026-09-10-polana-solana-on-jam</span></span></span><span class="ln"></span><span>┐</span></div>
+  <article class="pane focus" id="posts" aria-label="posts/2025-09-10-polana-solana-on-jam">
+    <div class="bt"><span>┌─</span><span class="tt"><span>posts<span class="s">/2025-09-10-polana-solana-on-jam</span></span></span><span class="ln"></span><span>┐</span></div>
     <div class="in">
       <header class="head">
         <h1>Polana Network: Solana on JAM</h1>
-        <p class="sub"><time>2026-09-10</time>Running the Solana virtual machine on the Polkadot successor</p>
+        <p class="sub"><time>2025-09-10</time>Running the Solana virtual machine on the Polkadot successor</p>
         <nav class="navrow" aria-label="nav">
-          <span class="nv"><span class="k"><b>h</b> prev</span><a href="/posts/2026-09-11-jamzig-a-jam-client-in-zig.html">JamZig⚡, a JAM client in Zig</a></span>
-          <span class="nv"><span class="k"><b>l</b> next</span><a href="/posts/2026-09-09-dabbling-in-odin.html">Dabbling in Odin</a></span>
-          <span class="nv"><span class="k"><b>q</b> back</span><a href="/posts.html">posts</a></span>
+          <span class="nv prev"><span class="k"><b>h</b> prev</span><a href="/posts/2026-09-08-the-coding-stream.html" data-impeccable-ignore>The coding stream</a></span>
+          <span class="nv back"><span class="k"><b>q</b> back</span><a href="/posts.html">posts</a></span>
+          <span class="nv next"><span class="k"><b>l</b> next</span><a href="/posts/2025-08-15-jamzig-a-jam-client-in-zig.html" data-impeccable-ignore>JamZig⚡, a JAM client in Zig</a></span>
         </nav>
       </header>
       <div class="article">
-<p>Besides JamZig⚡ I am a co-founder of <a href="https://polana.network/" target="_blank" rel="noopener">Polana Network</a>.
+<p data-impeccable-ignore>Besides JamZig⚡ I am a co-founder of <a href="https://polana.network/" target="_blank" rel="noopener">Polana Network</a>.
 The site says one line: Solana on JAM Protocol. That line is accurate, and this post is a slightly longer version of it.</p>
 
 <h2>The idea</h2>
 
-<p>JAM is the protocol that succeeds the Polkadot relay chain.
+<p data-impeccable-ignore>JAM is the protocol that succeeds the Polkadot relay chain.
 It runs services on a RISC-V virtual machine, the PVM, and distributes their work over many cores before accumulating the results into one state.
 Solana has a large body of programs, a mature toolchain, and a lot of developers who know how to write for its account model and its bytecode.</p>
 
-<p>Polana puts the two together.
+<p data-impeccable-ignore>Polana puts the two together.
 The goal is to bring the Solana toolchain and the Solana Virtual Machine over to JAM, so that existing Solana code can execute there without being rewritten.
 Not a competitor to Solana, but a second place for the same programs to run, with JAM doing the execution underneath.</p>
 
 <h2>Where it stands</h2>
 
-<p>In an interview last November I could say that the proof of concept was done.
+<p data-impeccable-ignore>In an interview last November I could say that the proof of concept was done.
 The SVM has been ported to the PVM, which means Solana bytecode runs directly on JAM, cross-contract calls included.</p>
 
-<p>The rest of the timeline follows JAM itself.
+<p data-impeccable-ignore>The rest of the timeline follows JAM itself.
 Polana launches when the JAM testnet goes live, not before.
 There is no date, and I am not going to put a number on throughput here.
 When there are measurements from a real network, they will be published with the setup that produced them.</p>
 
 <h2>Why me</h2>
 
-<p>The two halves of this are things I have already spent years in.
+<p data-impeccable-ignore>The two halves of this are things I have already spent years in.
 On the Solana side I built a native runtime harness for fuzzing Hubble Protocol's contracts in 2021, so I know that virtual machine from below.
 On the JAM side, JamZig⚡ is a full client with its own PVM.
 Porting one VM onto the other is the obvious next move from where I was standing.</p>
 
-<p>Follow along on X at <a href="https://x.com/polana_network" target="_blank" rel="noopener">@polana_network</a> or on <a href="https://discord.com/invite/polana" target="_blank" rel="noopener">Discord</a>.
+<p data-impeccable-ignore>Follow along on X at <a href="https://x.com/polana_network" target="_blank" rel="noopener">@polana_network</a> or on <a href="https://discord.com/invite/polana" target="_blank" rel="noopener">Discord</a>.
 I will write more when there is something running that you can try yourself.</p>
       </div>
     </div>

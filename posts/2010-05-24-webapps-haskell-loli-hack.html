@@ -34,13 +34,13 @@
         <h1>Hack, Loli, the rake/webpy for Haskell?</h1>
         <p class="sub"><time>2010-05-24</time>A minimalistic DSL to webapps in Haskell</p>
         <nav class="navrow" aria-label="nav">
-          <span class="nv"><span class="k"><b>h</b> prev</span><a href="/posts/2010-06-15-clocks-portmortem.html">Clocks webdsl postmortem</a></span>
-          <span class="nv"><span class="k"><b>l</b> next</span><a href="/posts/2010-05-20-currying-in-scheme.html">Currying in scheme</a></span>
-          <span class="nv"><span class="k"><b>q</b> back</span><a href="/posts.html">posts</a></span>
+          <span class="nv prev"><span class="k"><b>h</b> prev</span><a href="/posts/2010-06-15-clocks-portmortem.html" data-impeccable-ignore>Clocks webdsl postmortem</a></span>
+          <span class="nv back"><span class="k"><b>q</b> back</span><a href="/posts.html">posts</a></span>
+          <span class="nv next"><span class="k"><b>l</b> next</span><a href="/posts/2010-05-20-currying-in-scheme.html" data-impeccable-ignore>Currying in scheme</a></span>
         </nav>
       </header>
       <div class="article">
-<p>I am investing alternative ways of developing web apps. I've looked at
+<p data-impeccable-ignore>I am investing alternative ways of developing web apps. I've looked at
 PLT-Scheme which was a nice framework to develop in, but missing a nice
 database abstraction layer like fe. SQLAlchemy in python. And in retrospect my
 conclusion on Scheme is that I find it a little verbose, expecially compared to
@@ -58,7 +58,7 @@ Graham in
 
 <h2>Wat is hack?</h2>
 
-<p>Hack is inspired from ruby's
+<p data-impeccable-ignore>Hack is inspired from ruby's
 <a href="http://chneukirchen.org/blog/archive/2007/02/introducing-rack.html" target="_blank" rel="noopener">Rack</a>, WSGI Python,
 Ring in Clojure. In abstract terms <code>Env -&gt; Reponse</code>. Hack is the Rack protocol implemented
 in Haskell. I stumbled upon hack while examining
@@ -66,11 +66,11 @@ in Haskell. I stumbled upon hack while examining
 
 <h2>MPS notiation</h2>
 
-<p>Nfjinjing likes to turn the normal Haskell syntax around and uses his own util library
+<p data-impeccable-ignore>Nfjinjing likes to turn the normal Haskell syntax around and uses his own util library
 MPS (Message passing style) which turns the order of normal Haskell syntax around making it
 look like a OO language (to relieve his already punished OO brain).</p>
 
-<p>See <a href="http://github.com/nfjinjing/mps/blob/master/src/MPS/Light.hs" target="_blank" rel="noopener">MPS</a> for the
+<p data-impeccable-ignore>See <a href="http://github.com/nfjinjing/mps/blob/master/src/MPS/Light.hs" target="_blank" rel="noopener">MPS</a> for the
 syntax implmeneted. I have collected the important code snippets from MPS:</p>
 
 <div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-haskell">{-# INLINE (.) #-}
@@ -90,7 +90,7 @@ infixr 8 &lt;
 (^) = flip fmap
 infixl 8 ^</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
-<p>Nothing really complicated but makes the code more succint. Which can be a good thing ;)</p>
+<p data-impeccable-ignore>Nothing really complicated but makes the code more succint. Which can be a good thing ;)</p>
 
 <h2>How does hack work?</h2>
 
@@ -98,38 +98,38 @@ infixl 8 ^</code></pre><div class="bb"><span>└</span><span class="ln"></span><
 
 type Middleware = Application -&gt; Application</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
-<p>In essence it is a mimimal representation of what every webserver does. It gets
+<p data-impeccable-ignore>In essence it is a mimimal representation of what every webserver does. It gets
 a Request which build an environment to which a Repsonse gets formed.</p>
 
-<p>To see the typedefinitions for <code>Env</code> and response look below. It comes back in
+<p data-impeccable-ignore>To see the typedefinitions for <code>Env</code> and response look below. It comes back in
 Loli. It's a nice and minimal implementation consisting of one file Hacks.hs.
 Very minimal. Nice..</p>
 
 <h2>Hack-contrib</h2>
 
-<p>Contains functions to interact with the hack specification. The hack datatypes:</p>
+<p data-impeccable-ignore>Contains functions to interact with the hack specification. The hack datatypes:</p>
 
 <ul>
-<li>Constants.hs
+<li data-impeccable-ignore>Constants.hs
 constants for headers and other stuff</li>
-<li>Mime.hs
+<li data-impeccable-ignore>Mime.hs
 mime-type map</li>
-<li>Request.hs
+<li data-impeccable-ignore>Request.hs
 which is in essence the Env, or the AppReader type in loli, explained later.</li>
-<li>Response.hs
+<li data-impeccable-ignore>Response.hs
 which is also Response in hack, and the AppState in loli, explained later</li>
-<li>Utils.hs
+<li data-impeccable-ignore>Utils.hs
 handling hack namespaces ... what are they?</li>
 </ul>
 
 <h2>Hack-contrib middleware, or how to extend Hack</h2>
 
-<p>Just as in Clojures Ring, and Ruby's rack, middleware consists of a function
+<p data-impeccable-ignore>Just as in Clojures Ring, and Ruby's rack, middleware consists of a function
 which wraps another function which does something with either dispatching or
 the environment or the response. It is a very clean seperation of concerns which
 enables composition of components in a very flexible decoupled way.</p>
 
-<p>Take as example the regexp router, which is an example of a middleware compononent:</p>
+<p data-impeccable-ignore>Take as example the regexp router, which is an example of a middleware compononent:</p>
 
 <div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-haskell">type RoutePath = (String, Application)
 
@@ -145,10 +145,10 @@ regexp_router h app = \env -&gt;
     Nothing -&gt; app env
     Just (_, found_app) -&gt; found_app env</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
-<p>Returns a lambda which receives environment. Acts upon this evironment and
+<p data-impeccable-ignore>Returns a lambda which receives environment. Acts upon this evironment and
 runs the found_app if a route matches or dispatches to then next in middleware pipeline, ending utlimately in returning an IO Repsonse at the en of the  chain.</p>
 
-<p>Below another example of a middleware, this is static file serving.</p>
+<p data-impeccable-ignore>Below another example of a middleware, this is static file serving.</p>
 
 <div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-haskell">file :: Maybe String -&gt; Middleware
 file root _ = \env -&gt; do
@@ -157,38 +157,38 @@ file root _ = \env -&gt; do
     then forbidden
     else path.serve root</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
-<p>Hack-contrib provides at this moment (Tue May 25 ) the following Middlewares:</p>
+<p data-impeccable-ignore>Hack-contrib provides at this moment (Tue May 25 ) the following Middlewares:</p>
 
 <ul>
-<li>BounceFavicon.hs</li>
-<li>Censor.hs</li>
-<li>Config.hs</li>
-<li>ContentLength.hs</li>
-<li>ContentType.hs</li>
-<li>Debug.hs</li>
-<li>ETag.hs</li>
-<li>File.hs</li>
-<li>Head.hs</li>
-<li>Hub.hs</li>
-<li>IOConfig.hs</li>
-<li>Inspect.hs</li>
-<li>Lambda.hs</li>
-<li>Lucky.hs</li>
-<li>NotFound.hs</li>
-<li>RegexpRouter.hs</li>
-<li>ShowExceptions.hs</li>
-<li>SimpleAccessLogger.hs</li>
-<li>Static.hs</li>
-<li>URLMap.hs</li>
-<li>UTF8Body.hs</li>
-<li>UserMime.hs</li>
+<li data-impeccable-ignore>BounceFavicon.hs</li>
+<li data-impeccable-ignore>Censor.hs</li>
+<li data-impeccable-ignore>Config.hs</li>
+<li data-impeccable-ignore>ContentLength.hs</li>
+<li data-impeccable-ignore>ContentType.hs</li>
+<li data-impeccable-ignore>Debug.hs</li>
+<li data-impeccable-ignore>ETag.hs</li>
+<li data-impeccable-ignore>File.hs</li>
+<li data-impeccable-ignore>Head.hs</li>
+<li data-impeccable-ignore>Hub.hs</li>
+<li data-impeccable-ignore>IOConfig.hs</li>
+<li data-impeccable-ignore>Inspect.hs</li>
+<li data-impeccable-ignore>Lambda.hs</li>
+<li data-impeccable-ignore>Lucky.hs</li>
+<li data-impeccable-ignore>NotFound.hs</li>
+<li data-impeccable-ignore>RegexpRouter.hs</li>
+<li data-impeccable-ignore>ShowExceptions.hs</li>
+<li data-impeccable-ignore>SimpleAccessLogger.hs</li>
+<li data-impeccable-ignore>Static.hs</li>
+<li data-impeccable-ignore>URLMap.hs</li>
+<li data-impeccable-ignore>UTF8Body.hs</li>
+<li data-impeccable-ignore>UserMime.hs</li>
 </ul>
 
 <h2>Loli</h2>
 
 <h2>What is loli?</h2>
 
-<p>Minimal Web DSL written on top of hack. It's a very succint dsl language to define
+<p data-impeccable-ignore>Minimal Web DSL written on top of hack. It's a very succint dsl language to define
 web apps. As 'webpy' in python.</p>
 
 <h2>Example app</h2>
@@ -203,7 +203,7 @@ main = run 3000 . loli - do
 
 <h2>Lets dive in ..</h2>
 
-<p>Looks pretty efficient, what exactly happens here? To understand let's
+<p data-impeccable-ignore>Looks pretty efficient, what exactly happens here? To understand let's
 look at the used types.</p>
 
 <div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-haskell">run ::  Hack.Handler.SimpleServer.Port -&gt; Hack.Application -&gt; IO ()
@@ -222,27 +222,27 @@ data Loli = Loli
   , mimes           :: Assoc
   }</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
-<p>So in abstracto Loli dsl functions like get. Define an Appunit.</p>
+<p data-impeccable-ignore>So in abstracto Loli dsl functions like get. Define an Appunit.</p>
 
 <div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-haskell">get :: String -&gt; Network.Loli.Type.AppUnit -&gt; Network.Loli.Type.Unit</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
-<p>Appunit is defined as:</p>
+<p data-impeccable-ignore>Appunit is defined as:</p>
 
 <div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-haskell">type AppReader    = Env
 type AppState     = Response
 type AppUnitT     = ReaderT AppReader (StateT AppState IO)
 type AppUnit      = AppUnitT ()</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
-<p>And could be seen as the AppUnit which will be run on a Hack Application</p>
+<p data-impeccable-ignore>And could be seen as the AppUnit which will be run on a Hack Application</p>
 
-<p>AppUnitT is a double MonadTransformer</p>
+<p data-impeccable-ignore>AppUnitT is a double MonadTransformer</p>
 
 <ul>
-<li>State over Response (modifyable)</li>
-<li>Read over Env (the hack-environment)</li>
+<li data-impeccable-ignore>State over Response (modifyable)</li>
+<li data-impeccable-ignore>Read over Env (the hack-environment)</li>
 </ul>
 
-<p>Env and Response are defined inside the Hack libraries and defined below.</p>
+<p data-impeccable-ignore>Env and Response are defined inside the Hack libraries and defined below.</p>
 
 <div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-haskell">data Env = Env 
   {  requestMethod :: RequestMethod            -- ^ HTTP request method ....
@@ -262,7 +262,7 @@ type AppUnit      = AppUnitT ()</code></pre><div class="bb"><span>└</span><spa
                   -- loop with certain handlers due to the use of a
                   -- lazy bytestring</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
-<p>Response defined by</p>
+<p data-impeccable-ignore>Response defined by</p>
 
 <div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-haskell">data Response = Response
   {  status :: Int                              -- ^ must be greater than ....
@@ -273,29 +273,29 @@ type AppUnit      = AppUnitT ()</code></pre><div class="bb"><span>└</span><spa
 
 <h3>Let's dive in some more</h3>
 
-<p>Let's take for example the first line of code in our example:</p>
+<p data-impeccable-ignore>Let's take for example the first line of code in our example:</p>
 
 <div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-haskell">name &lt;- ask ^ params ^ lookup "name" ^ fromMaybe "nobody"</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
-<p>What happens here:</p>
+<p data-impeccable-ignore>What happens here:</p>
 
 <ul>
-<li>ask gets State from ReaderT countaining AppReader which is Hacks Env</li>
-<li><p>grabs <code>query_string</code> from Hacks Env and decodes the params</p>
+<li data-impeccable-ignore>ask gets State from ReaderT countaining AppReader which is Hacks Env</li>
+<li data-impeccable-ignore><p data-impeccable-ignore>grabs <code>query_string</code> from Hacks Env and decodes the params</p>
 
-<p>  params :: Env -> [(String, String)]
+<p data-impeccable-ignore>  params :: Env -> [(String, String)]
   params env =
     if env.query_string.empty
       then []
       else env.query_string.formDecode</p></li>
-<li><p>which returns a map of the params on whick <code>lookup</code> is called which
+<li data-impeccable-ignore><p data-impeccable-ignore>which returns a map of the params on whick <code>lookup</code> is called which
 returns a <code>Maybe</code>.</p></li>
-<li>fromMaybe gives a default of nobody on a <code>Nothing</code>.</li>
+<li data-impeccable-ignore>fromMaybe gives a default of nobody on a <code>Nothing</code>.</li>
 </ul>
 
 <h3>Templating using <code>Network.Loly.Template</code></h3>
 
-<p>Uses <code>StateMonad</code>s update function to update <code>Response</code> setting <code>content-type</code>
+<p data-impeccable-ignore>Uses <code>StateMonad</code>s update function to update <code>Response</code> setting <code>content-type</code>
 and <code>body</code>.</p>
 
 <div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-haskell">html :: String -&gt; AppUnit
@@ -306,20 +306,20 @@ html x = do
 
 <h2>Hacks middleware on Loli level</h2>
 
-<p>Network.Loli.Engine</p>
+<p data-impeccable-ignore>Network.Loli.Engine</p>
 
 <div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-haskell">add_middleware :: Middleware -&gt; Loli -&gt; Loli
 add_middleware x s = 
   let xs = s.middlewares in s {middlewares = xs.insert_last x}</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
-<p>And ofcourse defined in Network.Loli.DSL on unit level.</p>
+<p data-impeccable-ignore>And ofcourse defined in Network.Loli.DSL on unit level.</p>
 
 <div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-haskell">middleware :: Middleware -&gt; Unit
 middleware = add_middleware &gt; update</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
 <h3>Loli Engine</h3>
 
-<p>Contains code</p>
+<p data-impeccable-ignore>Contains code</p>
 
 <div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-haskell">loli :: Unit -&gt; Application
 loli unit = run unit not_found_app
@@ -338,20 +338,20 @@ loli unit = run unit not_found_app
       in
       use [pre, mime_filter, stack, route]</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
-<p>Where <code>use</code> is defined as:</p>
+<p data-impeccable-ignore>Where <code>use</code> is defined as:</p>
 
 <div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-haskell">-- | usage: app.use [content_type, cache]
 use :: [Middleware] -&gt; Middleware
 use = reduce (&lt;&lt;&lt;)</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
-<p>essentially right to left composition of all middlewares, thus wrapping them in one
+<p data-impeccable-ignore>essentially right to left composition of all middlewares, thus wrapping them in one
 another:</p>
 
 <ul>
-<li>pre-installed middlewares</li>
-<li>the mime filter</li>
-<li>the subwrapped stack of user defined middlewares (loli-state)</li>
-<li>route config (loli-state)</li>
+<li data-impeccable-ignore>pre-installed middlewares</li>
+<li data-impeccable-ignore>the mime filter</li>
+<li data-impeccable-ignore>the subwrapped stack of user defined middlewares (loli-state)</li>
+<li data-impeccable-ignore>route config (loli-state)</li>
 </ul>
 
 <h3>Routing</h3>
@@ -375,7 +375,7 @@ data Loli = Loli
 
 <h2>Zipping up ..</h2>
 
-<p>This is just a quick glance at how Hack and Loli where implemented. Shedding some light on
+<p data-impeccable-ignore>This is just a quick glance at how Hack and Loli where implemented. Shedding some light on
 the structure of this approach to web apps inside haskell.</p>
       </div>
     </div>

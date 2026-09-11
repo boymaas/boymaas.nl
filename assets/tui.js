@@ -38,6 +38,21 @@ if (window.ResizeObserver){
   var ro = new ResizeObserver(function(entries){ for (var k = 0; k < entries.length; k++) frame(entries[k].target); });
   framed.forEach(function(el){ ro.observe(el); });
 }
+/* a caption in a rule may change width without the pane changing size (the toy writes its system's name into the
+   bottom rule), so the run is measured again whenever a caption's text does; the runs themselves are not watched,
+   as writing one would then measure it again without end */
+if (window.MutationObserver){
+  var mo = new MutationObserver(function(records){
+    var done = [];
+    for (var k = 0; k < records.length; k++){
+      var node = records[k].target, el = (node.nodeType === 1 ? node : node.parentNode).closest('.pane');
+      if (el && done.indexOf(el) < 0){ done.push(el); frame(el); }
+    }
+  });
+  framed.forEach(function(el){
+    el.querySelectorAll(':scope > .bt > :not(.ln), :scope > .bb > :not(.ln)').forEach(function(c){ mo.observe(c, { childList:true, characterData:true, subtree:true }); });
+  });
+}
 grid();
 if (document.fonts && document.fonts.ready) document.fonts.ready.then(grid);
 window.addEventListener('resize', grid);
@@ -105,10 +120,23 @@ function focusPane(k, scroll){
   } else if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
   status();
 }
+/* a row is one link: a click anywhere in its box opens it as a click on the link would, a modifier or the middle
+   button in a new window; the link itself keeps its native click, and selecting text in the row is not a click */
+function rowClick(r, e){
+  var a = r.querySelector('a');
+  if (!a || e.target.closest('a') || e.defaultPrevented) return;
+  var sel = window.getSelection && window.getSelection();
+  if (sel && sel.type === 'Range' && sel.toString()) return;
+  if (e.metaKey || e.ctrlKey || e.shiftKey || e.button === 1) window.open(a.href, '_blank', 'noopener'); else follow(a);
+}
 panes.forEach(function(p, j){
   p.addEventListener('focusin', function(){ if (focused !== j) focusPane(j, false); });
   p.querySelectorAll('a').forEach(function(a){ a.tabIndex = -1; });
-  rowsOf(p).forEach(function(r, k){ r.addEventListener('mouseenter', function(){ if (focused === j) setCur(p, k); }); });
+  rowsOf(p).forEach(function(r, k){
+    r.addEventListener('mouseenter', function(){ if (focused === j) setCur(p, k); });
+    r.addEventListener('click', function(e){ rowClick(r, e); });
+    r.addEventListener('auxclick', function(e){ if (e.button === 1) rowClick(r, e); });
+  });
 });
 var first = document.querySelector('.pane.list') || panes[0];
 window.addEventListener('keydown', function(e){
@@ -127,4 +155,17 @@ window.addEventListener('keydown', function(e){
 });
 /* the list starts highlighted, as a list does when a screen opens */
 focusPane(panes.indexOf(first), false);
+})();
+
+
+/* ---------- the tagline: one line of the set per load, drawn at random; ?seed= makes the draw reproducible ---------- */
+(function(){
+  var h = document.getElementById('tagline'), src = document.getElementById('taglines');
+  if (!h || !src) return;
+  var lines; try { lines = JSON.parse(src.textContent); } catch (e) { return; }
+  if (!lines || !lines.length) return;
+  var q = new URLSearchParams(location.search), seed = parseInt(q.get('seed'), 10), r;
+  if (isFinite(seed)){ var a = (seed ^ 0x7A61) >>> 0; a = Math.imul(a ^ (a >>> 15), 0x2C1B3C6D); a = Math.imul(a ^ (a >>> 12), 0x297A2D39); r = ((a ^ (a >>> 15)) >>> 0) / 4294967296; }
+  else r = Math.random();
+  h.textContent = lines[Math.floor(r * lines.length)];
 })();

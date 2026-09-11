@@ -8,104 +8,10 @@
   <updated>2026-09-11T00:00:00Z</updated>
   <author><name>Boy Maas</name></author>
   <entry>
-    <title>JamZig⚡, a JAM client in Zig</title>
-    <link href="https://boymaas.nl/posts/2026-09-11-jamzig-a-jam-client-in-zig.html"/>
-    <id>https://boymaas.nl/posts/2026-09-11-jamzig-a-jam-client-in-zig.html</id>
-    <updated>2026-09-11T00:00:00Z</updated>
-    <summary>Why Zig, what Milestone 1 meant, what is next</summary>
-    <content type="html">&lt;p&gt;The posts on this site stop around 2015. A lot happened since.
-The biggest thing on my desk today is JamZig⚡, a JAM client written in Zig.
-I am the sole developer. This is a short account of what it is and where it stands.&lt;/p&gt;
-
-&lt;h2&gt;JAM in one paragraph&lt;/h2&gt;
-
-&lt;p&gt;JAM, the Join-Accumulate Machine, is the protocol Gavin Wood designed as the successor to the Polkadot relay chain.
-The Web3 Foundation runs a prize for independent implementations, split into tiers by language category.
-Twenty-two teams entered. JamZig⚡ is the only Zig implementation among them.&lt;/p&gt;
-
-&lt;h2&gt;Why Zig&lt;/h2&gt;
-
-&lt;p&gt;I have been in Rust for years and I still like it.
-For a protocol client the appeal of Zig is that nothing is hidden.
-Every allocation takes an allocator you handed over yourself.
-There is no hidden control flow, no destructor running behind your back, no macro layer between you and the code.
-When a state transition has to match a reference byte for byte, that plainness is worth a lot.
-Comptime replaces most of what I would reach for generics or code generation in other languages.
-And the language is small enough that one person can hold it in their head while also holding a protocol in their head.
-That was the bet, and it still feels right.&lt;/p&gt;
-
-&lt;h2&gt;What is in it&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;A RISC-V virtual machine, the PVM, which runs services and their refine and accumulate logic.&lt;/li&gt;
-  &lt;li&gt;The cryptography the protocol asks for: Bandersnatch ring VRFs, Ed25519, BLS12-381, Blake2b, Keccak-256.&lt;/li&gt;
-  &lt;li&gt;Reed-Solomon erasure coding and the Merkle structures for availability and state.&lt;/li&gt;
-  &lt;li&gt;Block authoring, validation, and the state transition function, checked against the official test vectors.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2&gt;Milestone 1&lt;/h2&gt;
-
-&lt;p&gt;Milestone 1 of the prize is about conformance.
-The state transition function has to match the reference implementation under fuzzing: ten runs of one hundred thousand steps each, no divergence.
-JamZig⚡ was the first to pass in the systems-language category.
-After the M1 interview I am the JAM Prize M1 candidate for it.&lt;/p&gt;
-
-&lt;p&gt;Passing conformance is less a finish line than a change of state.
-Before it, every bug could be anywhere. After it, the core of the client is known to agree with everyone else, and work can move outward from there.&lt;/p&gt;
-
-&lt;h2&gt;What is next&lt;/h2&gt;
-
-&lt;p&gt;The specification keeps moving, so keeping up with it is a constant background task.
-The prize has further milestones past conformance, and those are the road ahead.
-Conformance releases and test exports for other teams are published in the org, so other implementations can check themselves against the same runs.&lt;/p&gt;
-
-&lt;p&gt;The project lives at &lt;a href=&quot;https://jamzig.dev/&quot;&gt;jamzig.dev&lt;/a&gt;, the code at &lt;a href=&quot;https://github.com/jamzig&quot;&gt;github.com/jamzig&lt;/a&gt;, and the running commentary on X at &lt;a href=&quot;https://x.com/jamzig_dev&quot;&gt;@jamzig_dev&lt;/a&gt;.
-If you are building a JAM client in another language, say hello.&lt;/p&gt;</content>
-  </entry>
-  <entry>
-    <title>Polana Network: Solana on JAM</title>
-    <link href="https://boymaas.nl/posts/2026-09-10-polana-solana-on-jam.html"/>
-    <id>https://boymaas.nl/posts/2026-09-10-polana-solana-on-jam.html</id>
-    <updated>2026-09-10T00:00:00Z</updated>
-    <summary>Running the Solana virtual machine on the Polkadot successor</summary>
-    <content type="html">&lt;p&gt;Besides JamZig⚡ I am a co-founder of &lt;a href=&quot;https://polana.network/&quot;&gt;Polana Network&lt;/a&gt;.
-The site says one line: Solana on JAM Protocol. That line is accurate, and this post is a slightly longer version of it.&lt;/p&gt;
-
-&lt;h2&gt;The idea&lt;/h2&gt;
-
-&lt;p&gt;JAM is the protocol that succeeds the Polkadot relay chain.
-It runs services on a RISC-V virtual machine, the PVM, and distributes their work over many cores before accumulating the results into one state.
-Solana has a large body of programs, a mature toolchain, and a lot of developers who know how to write for its account model and its bytecode.&lt;/p&gt;
-
-&lt;p&gt;Polana puts the two together.
-The goal is to bring the Solana toolchain and the Solana Virtual Machine over to JAM, so that existing Solana code can execute there without being rewritten.
-Not a competitor to Solana, but a second place for the same programs to run, with JAM doing the execution underneath.&lt;/p&gt;
-
-&lt;h2&gt;Where it stands&lt;/h2&gt;
-
-&lt;p&gt;In an interview last November I could say that the proof of concept was done.
-The SVM has been ported to the PVM, which means Solana bytecode runs directly on JAM, cross-contract calls included.&lt;/p&gt;
-
-&lt;p&gt;The rest of the timeline follows JAM itself.
-Polana launches when the JAM testnet goes live, not before.
-There is no date, and I am not going to put a number on throughput here.
-When there are measurements from a real network, they will be published with the setup that produced them.&lt;/p&gt;
-
-&lt;h2&gt;Why me&lt;/h2&gt;
-
-&lt;p&gt;The two halves of this are things I have already spent years in.
-On the Solana side I built a native runtime harness for fuzzing Hubble Protocol&#x27;s contracts in 2021, so I know that virtual machine from below.
-On the JAM side, JamZig⚡ is a full client with its own PVM.
-Porting one VM onto the other is the obvious next move from where I was standing.&lt;/p&gt;
-
-&lt;p&gt;Follow along on X at &lt;a href=&quot;https://x.com/polana_network&quot;&gt;@polana_network&lt;/a&gt; or on &lt;a href=&quot;https://discord.com/invite/polana&quot;&gt;Discord&lt;/a&gt;.
-I will write more when there is something running that you can try yourself.&lt;/p&gt;</content>
-  </entry>
-  <entry>
     <title>Dabbling in Odin</title>
-    <link href="https://boymaas.nl/posts/2026-09-09-dabbling-in-odin.html"/>
-    <id>https://boymaas.nl/posts/2026-09-09-dabbling-in-odin.html</id>
-    <updated>2026-09-09T00:00:00Z</updated>
+    <link href="https://boymaas.nl/posts/2026-09-11-dabbling-in-odin.html"/>
+    <id>https://boymaas.nl/posts/2026-09-11-dabbling-in-odin.html</id>
+    <updated>2026-09-11T00:00:00Z</updated>
     <summary>First impressions from a Zig and Rust hand</summary>
     <content type="html">&lt;p&gt;I spend my days in Zig and Rust.
 A new language I am dabbling in is &lt;a href=&quot;https://odin-lang.org/&quot;&gt;Odin&lt;/a&gt;.
@@ -160,10 +66,10 @@ When I have a small graphics or simulation itch, Odin is the language I will scr
     <link href="https://boymaas.nl/posts/2026-09-08-the-coding-stream.html"/>
     <id>https://boymaas.nl/posts/2026-09-08-the-coding-stream.html</id>
     <updated>2026-09-08T00:00:00Z</updated>
-    <summary>Occasional live coding, chess, and other interests on YouTube</summary>
+    <summary>Occasional live coding and other interests on YouTube</summary>
     <content type="html">&lt;p&gt;Back in 2015 I wrote here about recording my hacking sessions and replaying them at ten times speed, to see how I actually work.
 The habit stuck in a looser form: a &lt;a href=&quot;https://www.youtube.com/@boymaas9311&quot;&gt;YouTube channel&lt;/a&gt; that I post to sometimes.
-The channel description says it plainly: some of my many interests, coding, chess, and other fun stuff.&lt;/p&gt;
+The channel description says it plainly: some of my many interests, coding and other fun stuff.&lt;/p&gt;
 
 &lt;h2&gt;What is on it&lt;/h2&gt;
 
@@ -186,13 +92,122 @@ Between JamZig⚡, Polana, and Code 8 there is not much evening left.
 So think of it as an archive that gets a new entry now and then, not a schedule.
 When JamZig⚡ reaches a point where a walkthrough would be useful to other implementers, that is the kind of thing I would record next.&lt;/p&gt;
 
-&lt;h2&gt;Chess&lt;/h2&gt;
-
-&lt;p&gt;Chess is in the description and it is not there by accident.
-I love the game, and I wrote here years ago that software design is like a game of chess.
-So far the videos are all code. That may change.&lt;/p&gt;
-
 &lt;p&gt;If you watch one, start with the Tokio agents series. It is the closest thing on there to how I really build systems: small pieces, message passing, and no shared state you cannot account for.&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <title>Polana Network: Solana on JAM</title>
+    <link href="https://boymaas.nl/posts/2025-09-10-polana-solana-on-jam.html"/>
+    <id>https://boymaas.nl/posts/2025-09-10-polana-solana-on-jam.html</id>
+    <updated>2025-09-10T00:00:00Z</updated>
+    <summary>Running the Solana virtual machine on the Polkadot successor</summary>
+    <content type="html">&lt;p&gt;Besides JamZig⚡ I am a co-founder of &lt;a href=&quot;https://polana.network/&quot;&gt;Polana Network&lt;/a&gt;.
+The site says one line: Solana on JAM Protocol. That line is accurate, and this post is a slightly longer version of it.&lt;/p&gt;
+
+&lt;h2&gt;The idea&lt;/h2&gt;
+
+&lt;p&gt;JAM is the protocol that succeeds the Polkadot relay chain.
+It runs services on a RISC-V virtual machine, the PVM, and distributes their work over many cores before accumulating the results into one state.
+Solana has a large body of programs, a mature toolchain, and a lot of developers who know how to write for its account model and its bytecode.&lt;/p&gt;
+
+&lt;p&gt;Polana puts the two together.
+The goal is to bring the Solana toolchain and the Solana Virtual Machine over to JAM, so that existing Solana code can execute there without being rewritten.
+Not a competitor to Solana, but a second place for the same programs to run, with JAM doing the execution underneath.&lt;/p&gt;
+
+&lt;h2&gt;Where it stands&lt;/h2&gt;
+
+&lt;p&gt;In an interview last November I could say that the proof of concept was done.
+The SVM has been ported to the PVM, which means Solana bytecode runs directly on JAM, cross-contract calls included.&lt;/p&gt;
+
+&lt;p&gt;The rest of the timeline follows JAM itself.
+Polana launches when the JAM testnet goes live, not before.
+There is no date, and I am not going to put a number on throughput here.
+When there are measurements from a real network, they will be published with the setup that produced them.&lt;/p&gt;
+
+&lt;h2&gt;Why me&lt;/h2&gt;
+
+&lt;p&gt;The two halves of this are things I have already spent years in.
+On the Solana side I built a native runtime harness for fuzzing Hubble Protocol&#x27;s contracts in 2021, so I know that virtual machine from below.
+On the JAM side, JamZig⚡ is a full client with its own PVM.
+Porting one VM onto the other is the obvious next move from where I was standing.&lt;/p&gt;
+
+&lt;p&gt;Follow along on X at &lt;a href=&quot;https://x.com/polana_network&quot;&gt;@polana_network&lt;/a&gt; or on &lt;a href=&quot;https://discord.com/invite/polana&quot;&gt;Discord&lt;/a&gt;.
+I will write more when there is something running that you can try yourself.&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <title>JamZig⚡, a JAM client in Zig</title>
+    <link href="https://boymaas.nl/posts/2025-08-15-jamzig-a-jam-client-in-zig.html"/>
+    <id>https://boymaas.nl/posts/2025-08-15-jamzig-a-jam-client-in-zig.html</id>
+    <updated>2025-08-15T00:00:00Z</updated>
+    <summary>Why Zig, what Milestone 1 meant, what is next</summary>
+    <content type="html">&lt;p&gt;The posts on this site stop around 2015. A lot happened since.
+The biggest thing on my desk today is JamZig⚡, a JAM client written in Zig.
+I am the sole developer.
+It was the first implementation to pass Milestone 1 in the systems-language category, and after the M1 interview I am the JAM Prize M1 candidate for it.
+Twenty-two teams entered the prize. JamZig⚡ is the only Zig implementation among them.&lt;/p&gt;
+
+&lt;h2&gt;Why a JAM client&lt;/h2&gt;
+
+&lt;p&gt;JAM, the Join-Accumulate Machine, is the protocol Gavin Wood designed as the successor to the Polkadot relay chain.
+The Web3 Foundation runs a prize for independent implementations, split into tiers by language category.
+The point of the prize is not one winner.
+It is many clients, in many languages, from people who share neither a codebase nor an employer.
+When they all agree on every state transition, the specification is the protocol.
+No single codebase is, and no single company is.&lt;/p&gt;
+
+&lt;h2&gt;Why Polkadot&lt;/h2&gt;
+
+&lt;p&gt;Most blockchains are maintained by one company or one small circle.
+The protocol changes when those people say so, and everyone else has to trust them.
+The Polkadot Fellowship manifesto names this problem directly.
+It calls technical decision making one of the most pressing areas undermining decentralisation, and describes the usual outcome: an opaque power structure where social cues decide what logic node operators actually run.&lt;/p&gt;
+
+&lt;p&gt;The Fellowship is the answer this ecosystem chose, and it is the part I value most.
+It is a rules-based, ranked-membership organisation that lives on chain and is run by its own members.
+Members are inducted and promoted by the votes of members above them, judged on their work on node internals, consensus, cryptography and the runtime.
+The manifesto calls it a source of expertise and leadership over the technology that keeps the network running, and an incentivisation mechanism to keep that expertise.
+Members receive a monthly allowance in DOT.
+So the people who understand the protocol deepest are recognised, paid, and expected to keep building it.
+That is a team of incentivised knowledge holders, and it belongs to no single party.
+Its power is bounded too: whatever authority it holds is granted by, and held in check by, the wider referendum system.&lt;/p&gt;
+
+&lt;p&gt;Put the two together: many independent clients, and a body of fellows whose job is to hold the knowledge and carry the software forward.
+The technology is not held by one company.
+I think that is a solid foundation for the future, and I think it is beautiful.
+It is why I wanted JamZig⚡ to be one of the clients.&lt;/p&gt;
+
+&lt;h2&gt;Why Zig&lt;/h2&gt;
+
+&lt;p&gt;I have been in Rust for years and still like it.
+For a protocol client the appeal of Zig is that nothing is hidden.
+Every allocation takes an allocator you handed over yourself.
+No hidden control flow, no destructor running behind your back, no macro layer between you and the code.
+When a state transition has to match a reference byte for byte, that plainness is worth a lot.
+Comptime covers most of what I would use generics or code generation for elsewhere.
+And the language is small enough to hold in your head next to a protocol.
+That was the bet, and it still feels right.&lt;/p&gt;
+
+&lt;h2&gt;The process&lt;/h2&gt;
+
+&lt;p&gt;The specification keeps moving, so keeping up is a constant background task.
+The work went piece by piece.
+First the RISC-V virtual machine, the PVM, which runs services and their refine and accumulate logic.
+Then the cryptography the protocol asks for: Bandersnatch ring VRFs, Ed25519, BLS12-381, Blake2b, Keccak-256.
+Then Reed-Solomon erasure coding and the Merkle structures for availability and state.
+Then block authoring, validation, and the state transition function, checked against the official test vectors.&lt;/p&gt;
+
+&lt;p&gt;Milestone 1 of the prize is about conformance.
+The state transition function has to match the reference implementation under fuzzing: ten runs of one hundred thousand steps each, no divergence.
+Passing it is less a finish line than a change of state.
+Before it, every bug could be anywhere.
+After it, the core of the client is known to agree with everyone else, and work can move outward from there.&lt;/p&gt;
+
+&lt;h2&gt;What is next&lt;/h2&gt;
+
+&lt;p&gt;The prize has further milestones past conformance, and those are the road ahead.
+Conformance releases and test exports are published in the org, so other implementations can check themselves against the same runs.&lt;/p&gt;
+
+&lt;p&gt;The project lives at &lt;a href=&quot;https://jamzig.dev/&quot;&gt;jamzig.dev&lt;/a&gt;, the code at &lt;a href=&quot;https://github.com/jamzig&quot;&gt;github.com/jamzig&lt;/a&gt;, and the running commentary on X at &lt;a href=&quot;https://x.com/jamzig_dev&quot;&gt;@jamzig_dev&lt;/a&gt;.
+If you are building a JAM client in another language, say hello.&lt;/p&gt;</content>
   </entry>
   <entry>
     <title>CoffeeScript screencasts</title>

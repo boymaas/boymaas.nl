@@ -34,105 +34,105 @@
         <h1>Rails experiences</h1>
         <p class="sub"><time>2011-02-20</time>Reasons why rails development seems so productive</p>
         <nav class="navrow" aria-label="nav">
-          <span class="nv"><span class="k"><b>h</b> prev</span><a href="/posts/2011-09-07-kinetic-typography.html">Kinetic Typography</a></span>
-          <span class="nv"><span class="k"><b>l</b> next</span><a href="/posts/2010-06-15-clocks-portmortem.html">Clocks webdsl postmortem</a></span>
-          <span class="nv"><span class="k"><b>q</b> back</span><a href="/posts.html">posts</a></span>
+          <span class="nv prev"><span class="k"><b>h</b> prev</span><a href="/posts/2011-09-07-kinetic-typography.html" data-impeccable-ignore>Kinetic Typography</a></span>
+          <span class="nv back"><span class="k"><b>q</b> back</span><a href="/posts.html">posts</a></span>
+          <span class="nv next"><span class="k"><b>l</b> next</span><a href="/posts/2010-06-15-clocks-portmortem.html" data-impeccable-ignore>Clocks webdsl postmortem</a></span>
         </nav>
       </header>
       <div class="article">
-<p>Revisited rails and the ruby after a few years to implement <a href="http://www.keygamesnetwork.com" target="_blank" rel="noopener">Keygames Network</a>, and found it extremely productive. Why?</p>
+<p data-impeccable-ignore>Revisited rails and the ruby after a few years to implement <a href="http://www.keygamesnetwork.com" target="_blank" rel="noopener">Keygames Network</a>, and found it extremely productive. Why?</p>
 
 <h2>High level view of a software project</h2>
 
-<p>Doing a new software project incorporates doing the following tasks:</p>
+<p data-impeccable-ignore>Doing a new software project incorporates doing the following tasks:</p>
 
 <ul>
-<li>Idea\
+<li data-impeccable-ignore>Idea\
 Think about and spec the idea, provide the rationale behind the idea and prove design is valid.</li>
-<li>Selecting open source components\
+<li data-impeccable-ignore>Selecting open source components\
 Select and look into the different components to base the implementation on.
 Look into the code-base, read the forums to get an idea on the quality of
 those components.</li>
-<li>Implementation\
+<li data-impeccable-ignore>Implementation\
 start incremental implementation of idea based on components. Every subcomponent will have a test-suite.</li>
-<li>Dependency management\
+<li data-impeccable-ignore>Dependency management\
 put all components into a dependency manager, like the Bundler and RVM combo, to make sure all
 component versions can be included and are documented. This will speed up
 further development with other developers since they will be able to get up
 and running quickly. And this process will ease deployment.</li>
-<li>Deployment\
+<li data-impeccable-ignore>Deployment\
 automate the deployment procedure. Spend some time on this since this will be
 a big time saver in the future. (Capistrano)</li>
 </ul>
 
-<p>Rails, and the extremely productive ruby community provide excellent tools to
+<p data-impeccable-ignore>Rails, and the extremely productive ruby community provide excellent tools to
 handle all these phases of the development process.</p>
 
 <h2>Convention to ease the burden on human memory</h2>
 
-<p>It's a well known fact that most humans, ranging in intelligence can hold only
+<p data-impeccable-ignore>It's a well known fact that most humans, ranging in intelligence can hold only
 7 to 10 items simultaneous in memory. This limitation in cognition explains why
 we as humans structure everything in layers, often every layer consists of
 those 7 or 10 elements. Think of how a business is organised, how a
 text-book is divided into chapters, or how the law of a country is divided.</p>
 
-<p>When building software, one of the challenges is handling complexity in a way
+<p data-impeccable-ignore>When building software, one of the challenges is handling complexity in a way
 you and the other people working on a project can manage this complexity. We
 have different techniques to do this. Modularisation, object oriented designs,
 functional designs, and convention. Rails uses convention extensively, it is
 one of its key features and part of the marketing behind it: "Convention over
 configuration".</p>
 
-<p>The big plus of using convention is that one only has to keep the logical
+<p data-impeccable-ignore>The big plus of using convention is that one only has to keep the logical
 relations into memory. All derived elements can be generated from the naming of
 the defined root elements in combination with the logical relations.</p>
 
-<p>Programmers, which (in my view) essentially means, organisers of information or complexity,
+<p data-impeccable-ignore>Programmers, which (in my view) essentially means, organisers of information or complexity,
 develop a special skill for remembering methods. The "how" does one arrive to a
 specific goal. Facts are of less importance, structures are.</p>
 
-<p>In rails a simple application reflects the naming and relations of the model throughout
+<p data-impeccable-ignore>In rails a simple application reflects the naming and relations of the model throughout
 the system. This makes naming very consistent and predictable.</p>
 
-<p>And as we all know consistency and predictability are measures of quality in
+<p data-impeccable-ignore>And as we all know consistency and predictability are measures of quality in
 software design, how this is implemented will follow.</p>
 
 <h2>One abstract view of Rails application</h2>
 
-<p>Most dynamic web-applications provide an interface to manipulate a model and
+<p data-impeccable-ignore>Most dynamic web-applications provide an interface to manipulate a model and
 provide a certain view to the data stored in the model. These views are
 controlled by a controller. This is the standard M(odel) V(iew) C(ontroller)
 paradigm. Rails is a certain implementation of this paradigm.</p>
 
-<p>One could state that a Model (orders) is a resource which is manipulated by a
+<p data-impeccable-ignore>One could state that a Model (orders) is a resource which is manipulated by a
 view/controller combination. Rails provide a standard way of managing a
 resource using the following actions:</p>
 
 <ul>
-<li>list</li>
-<li>create</li>
-<li>edit</li>
-<li>delete</li>
-<li>show</li>
+<li data-impeccable-ignore>list</li>
+<li data-impeccable-ignore>create</li>
+<li data-impeccable-ignore>edit</li>
+<li data-impeccable-ignore>delete</li>
+<li data-impeccable-ignore>show</li>
 </ul>
 
-<p>Most controllers will implement one or more of these five and some more
+<p data-impeccable-ignore>Most controllers will implement one or more of these five and some more
 complicated actions or specified actions to change state of the specified
 member or collection of the resource. This is the called CRUD.</p>
 
-<p>The end-user will navigate the dynamic web-app using links. Which will point to
+<p data-impeccable-ignore>The end-user will navigate the dynamic web-app using links. Which will point to
 screens to either View, List, or Manipulate state.</p>
 
 <h3>How is it implemented</h3>
 
-<p>Rails makes it easy to create web applications which more or less conform to
+<p data-impeccable-ignore>Rails makes it easy to create web applications which more or less conform to
 the abstract view presented above. The normal method of working goes like this.</p>
 
-<p>One defines a model, one continues to define controllers and routes. From
+<p data-impeccable-ignore>One defines a model, one continues to define controllers and routes. From
 within these definitions the rails system generates url functions which is a
 specific combination of the model names.</p>
 
-<p>A very simple model example:</p>
+<p data-impeccable-ignore>A very simple model example:</p>
 
 <div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-ruby">class Shop < ActiveRecord::Base
   has_many :orders
@@ -142,13 +142,13 @@ class Order < ActiveRecord::Base
   belongs_to :shop
 end</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
-<p>A simple resource_full route definition:</p>
+<p data-impeccable-ignore>A simple resource_full route definition:</p>
 
 <div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-ruby">resources :shops do
   resources :orders
 end</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
-<p>Will generate:</p>
+<p data-impeccable-ignore>Will generate:</p>
 
 <div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-ruby">    shop_orders GET    /shops/:shop_id/orders(.:format)          {:action=&gt;"index", :controller=&gt;"orders"}
                 POST   /shops/:shop_id/orders(.:format)          {:action=&gt;"create", :controller=&gt;"orders"}
@@ -164,13 +164,13 @@ edit_shop_order GET    /shops/:shop_id/orders/:id/edit(.:format) {:action=&gt;"e
            shop GET    /shops/:id(.:format)                      {:action=&gt;"show", :controller=&gt;"shops"}
                 PUT    /shops/:id(.:format)                      {:action=&gt;"update", :controller=&gt;"shops"}</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
-<p>As one can see in this simple example the model is reflected in the routes and
+<p data-impeccable-ignore>As one can see in this simple example the model is reflected in the routes and
 in the generated url functions using linguistic functions. This was a new
 technique invented by Rails.</p>
 
 <h3>Actions</h3>
 
-<p>As you can see above every resource route generates routes to 4 standardised actions inside the targeted controller. Conforming CRUD. Which
+<p data-impeccable-ignore>As you can see above every resource route generates routes to 4 standardised actions inside the targeted controller. Conforming CRUD. Which
 one could split up in 2 categories. Actions manipulating the collection of the resource, and actions which manipulate a member of the collection.</p>
 
 <div class="pane sub"><div class="bt"><span>┌</span><span class="ln"></span><span>┐</span></div><pre><code class="language-ruby">* collection -&gt;      shop\_orders
@@ -183,12 +183,12 @@ one could split up in 2 categories. Actions manipulating the collection of the r
   * update
   * destroy</code></pre><div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div></div>
 
-<p>Notice the pluralization and singularization of the different pars and how the
+<p data-impeccable-ignore>Notice the pluralization and singularization of the different pars and how the
 relations as defined in the data-model is reflected in the routes.</p>
 
 <h2>More to come</h2>
 
-<p>I will specify more functionality in the future. Models and relations, and more on controllers.</p>
+<p data-impeccable-ignore>I will specify more functionality in the future. Models and relations, and more on controllers.</p>
       </div>
     </div>
     <div class="bb"><span>└</span><span class="ln"></span><span>┘</span></div>
