@@ -96,9 +96,9 @@ When JamZig⚡ reaches a point where a walkthrough would be useful to other impl
   </entry>
   <entry>
     <title>Polana Network: Solana on JAM</title>
-    <link href="https://boymaas.nl/posts/2025-09-10-polana-solana-on-jam.html"/>
-    <id>https://boymaas.nl/posts/2025-09-10-polana-solana-on-jam.html</id>
-    <updated>2025-09-10T00:00:00Z</updated>
+    <link href="https://boymaas.nl/posts/2025-12-11-polana-solana-on-jam.html"/>
+    <id>https://boymaas.nl/posts/2025-12-11-polana-solana-on-jam.html</id>
+    <updated>2025-12-11T00:00:00Z</updated>
     <summary>Running the Solana virtual machine on the Polkadot successor</summary>
     <content type="html">&lt;p&gt;Besides JamZig⚡ I am a co-founder of &lt;a href=&quot;https://polana.network/&quot;&gt;Polana Network&lt;/a&gt;.
 The site says one line: Solana on JAM Protocol. That line is accurate, and this post is a slightly longer version of it.&lt;/p&gt;
@@ -135,9 +135,9 @@ I will write more when there is something running that you can try yourself.&lt;
   </entry>
   <entry>
     <title>JamZig⚡, a JAM client in Zig</title>
-    <link href="https://boymaas.nl/posts/2025-08-15-jamzig-a-jam-client-in-zig.html"/>
-    <id>https://boymaas.nl/posts/2025-08-15-jamzig-a-jam-client-in-zig.html</id>
-    <updated>2025-08-15T00:00:00Z</updated>
+    <link href="https://boymaas.nl/posts/2024-08-15-jamzig-a-jam-client-in-zig.html"/>
+    <id>https://boymaas.nl/posts/2024-08-15-jamzig-a-jam-client-in-zig.html</id>
+    <updated>2024-08-15T00:00:00Z</updated>
     <summary>Why Zig, what Milestone 1 meant, what is next</summary>
     <content type="html">&lt;p&gt;The posts on this site stop around 2015. A lot happened since.
 The biggest thing on my desk today is JamZig⚡, a JAM client written in Zig.
